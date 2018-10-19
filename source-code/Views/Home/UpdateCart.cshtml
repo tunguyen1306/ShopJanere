@@ -1,0 +1,176 @@
+﻿@using WebApplication1.Models
+@model PagedList.IPagedList<CartItem>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "ShoppingCart";
+    Layout = "~/Views/Shared/_Layout _NoMenu.cshtml";
+}
+
+@if (Session["ShoppingCart"] == null)
+{
+    <div style="padding:30px">Your shopping cart is empty.</div>
+}
+else
+{
+    WebApplication1.Models.ShoppingCart ShoppingCart = (WebApplication1.Models.ShoppingCart)Session["ShoppingCart"];
+    using (Html.BeginForm("UpdateCart", "Home", FormMethod.Post, new { id = "UpdateCart", name = "UpdateCart" }))
+    {
+        <div class="row">
+
+            <div class="col-lg-12" style="font-weight:bold;padding-top:15px;">
+                <span>Home / </span><span style="color: #2ea3f2;">Cart</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12" style="font-weight: bold; font-size: 36px; font-family: 'OpenSansExtraBold'; margin: 15px 0px; color: #2ea3f2;">
+                Shopping Cart
+            </div>
+        </div>
+        <div class="row" style="background-color: #235d91; color: white;margin:0px">
+            <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-2" style="width: 100%; padding:10px 15px;font-weight:bold;">
+                    Item Number
+                </div>
+            </div>
+            <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-1" style="width: 100%; padding: 10px 15px;; font-weight: bold;">
+                    BarCode
+                </div>
+            </div>
+            <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-3" style="width: 100%; padding: 10px 15px;; font-weight: bold;">
+                    Product Name
+                </div>
+            </div>
+            <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-3" style="width: 100%; padding: 10px 15px; font-weight: bold;">
+                    Description
+                </div>
+            </div>
+            <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-1" style="width: 100%; padding: 10px 15px; font-weight: bold;;">
+                    Quantity
+                </div>
+            </div>
+            <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-1" style="width: 100%; padding: 10px 15px;; font-weight: bold;">
+                    Price
+                </div>
+            </div>
+            
+            <div class="col-lg-1" style="border-right: 1px solid white; padding: 0px;">
+                <div class="col-lg-1">
+
+                </div>
+            </div>
+        </div>
+        for (int i = 0; i < Model.Count(); i++)
+        {
+            WebApplication1.Models.CartItem cartItem = Model[i];
+            int index = i + 1;
+            string background = "background-color:#e4e4e4;";
+            <div class="row" style="margin:0px;text-align:left; @if (i % 2 == 0)
+                                                                {@background }">
+                <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-2" style="width: 100%; padding: 10px 15px;">
+                        @cartItem.Code
+                    </div>
+                </div>
+                <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-1" style="width: 100%; padding: 10px 15px;">
+                        @cartItem.Code
+                        <input type="hidden" name="code[]" value="@cartItem.Code" />
+                    </div>
+                </div>
+                <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-3" style="width: 100%; padding: 10px 15px;">
+                        @cartItem.Name
+                    </div>
+                </div>
+                <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-3" style="width: 100%; padding: 10px 15px;">
+                        @cartItem.Name
+                    </div>
+                </div>
+                <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-1" style="width: 100%; padding: 10px 15px; height: 44px;">
+                        <div style="width:20px;float:right;">
+                            <a href="#" onclick="bulkitemup(@i)">
+                                <img src="~/Content/cart_plus.png" style="margin-top:-9px" /></a>
+                            <a href="#" onclick="bulkitemdown(@i)"><img src="~/Content/cart_minus.png" style="margin-top:-24px" /></a>
+</div>
+                        <input type="text" name="qty[]" id="@i" value="@cartItem.Qty" style="width: 44px;height:25px;text-align:center;background-color:white;color:black;" />
+                        
+
+                    </div>
+                </div>
+                <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-1" style="width: 100%; padding: 10px 15px;text-align:center">
+                        $@cartItem.Price
+                        <input type="hidden" name="price[]" value="@cartItem.Price" />
+                    </div>
+                </div>
+                
+                <div class="col-lg-1" style="padding: 0px;">
+                    <div class="col-lg-1" style="width: 100%; padding: 10px 15px;text-align:right;">
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img src="~/Content/cart_delete.png" /></a>
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img src="~/Content/cart_edit.png" /></a>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div>
+            <div class="row" style="margin: 15px 0px;">
+                <div class="col-lg-5" style="color: #666666;">
+                    @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount Pages
+                    <select id="Size_Of_PageCart" name="Size_Of_PageCart" class="classic" style="background-color: #f4f4f4; color: #666666; width:160px;height:30px;">
+                        <option value="10" @(ViewBag.ValueToSet == 10 ? "selected" : "")>10 items per page</option>
+                        <option value="20" @(ViewBag.ValueToSet == 20 ? "selected" : "")>20 items per page</option>
+                        <option value="50" @(ViewBag.ValueToSet == 50 ? "selected" : "")>50 items per page</option>
+                        <option value="100" @(ViewBag.ValueToSet == 100 ? "selected" : "")>100 items per page</option>
+                        <option value="200" @(ViewBag.ValueToSet == 200 ? "selected" : "")>200 items per page</option>
+                    </select>
+
+
+                </div>
+                <div class="col-lg-7" style="text-align: right; font-size: 12px; 0px 15px 0px 0px; ">
+                    @Html.PagedListPager(Model, Page_No => Url.Action("UpdateCart",
+     new { Page_No, Page_Size = ViewBag.ValueToSet, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top:35px 0px 0px 0px;">
+            <div class="col-lg-4">
+                <a href="@Url.Action("MasterGroup", "Home")"><input type="button" style="padding: 10px 15px; background-color: #235d91; font-family: 'OpenSansBold';" value="Continue Shopping" /></a>
+</div>
+            <div class="col-lg-4">
+                &nbsp;
+            </div>
+            <div class="col-lg-2" style="text-align:left;padding:0px;">
+                <input type="submit" style="padding: 10px 15px; background-color: #235d91; font-family: 'OpenSansBold';" value="Update Shopping Cart" />
+            </div>
+            <div class="col-lg-2" style="text-align:right;padding:0px 15px 0px 0px;">
+                <a href="@Url.Action("ClearCart", "Home")"><input type="button" style="padding: 10px 15px; background-color: #235d91; font-family: 'OpenSansBold'; " value="Clear Shopping Cart" /></a>
+</div>
+        </div>
+    <div class="row" style="margin-top:35px;padding:15px;">
+        <div class="col-lg-8">
+            &nbsp;
+        </div>
+
+        <div class="col-lg-4" style="border-top: 10px solid #235d91;padding:15px 15px 0px 0px;text-align:right;">
+    <span style="font-weight: bold; color: #333333; font-size: 25px; "><span style="font-family: 'OpenSansBold';">Subtotal : </span>$@ShoppingCart.taxTotal</span>
+</div>
+    </div>
+        <div class="row">
+            <div class="col-lg-12" style="text-align: right;">
+                <input type="button" style="padding: 10px 15px; background-color: #235d91; " value="Proceed To Checkout" />
+            </div>
+        </div>
+    }
+
+}
+

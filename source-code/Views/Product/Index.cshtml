@@ -1,0 +1,68 @@
+﻿@using WebApplication1.Models
+@model PagedList.IPagedList<WebApplication1.item>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div>
+    Page Size: <select id="Size_Of_Page" name="Size_Of_Page">
+        <option value="20" @(ViewBag.ValueToSet == 20 ? "selected" : "")>20</option>
+        <option value="40" @(ViewBag.ValueToSet == 40 ? "selected" : "")>40</option>
+        <option value="100" @(ViewBag.ValueToSet == 100 ? "selected" : "")>100</option>
+        <option value="500" @(ViewBag.ValueToSet == 500 ? "selected" : "")>500</option>
+        <option value="1000" @(ViewBag.ValueToSet == 1000 ? "selected" : "")>1000</option>
+    </select>
+    Page: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("BulkProducts",
+     new { Page_No, Page_Size = ViewBag.ValueToSet, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Name
+        </th>
+        
+        <th>
+            Image Name
+        </th>
+        <th>
+            Is Best Seller
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ARTCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ARTNAME)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.PICTURENAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsBestSeller)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ARTNO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ARTNO })
+        </td>
+    </tr>
+}
+
+</table>

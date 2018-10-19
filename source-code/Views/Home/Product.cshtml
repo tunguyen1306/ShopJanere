@@ -1,0 +1,239 @@
+﻿@model WebApplication1.item
+
+@{
+    ViewBag.Title = "Product Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12" style="padding:15px 15px;">
+        Home /<a href="@Url.Action("Products", "Home", new { categoryid = @ViewBag.categoryId })">@ViewBag.categoryName</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-5">
+        <div class="row">
+            <div class="col-lg-12" style="padding: 2px 2px 2px 15px;">
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                {
+
+                    <img src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+
+                }
+                else
+                {
+
+                    <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                }
+
+            </div>
+        </div>
+        <div class="row" style="padding: 0px 0px 0px 15px;">
+            <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                {
+
+                    <img src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+
+                }
+                else
+                {
+
+                    <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                }
+            </div>
+
+            <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                {
+
+                    <img src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+
+                }
+                else
+                {
+
+                    <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                }
+            </div>
+            <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                {
+
+                    <img src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+
+                }
+                else
+                {
+
+                    <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                }
+            </div>
+            <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                {
+
+                    <img src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+
+                }
+                else
+                {
+
+                    <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+    @using (Html.BeginForm("UpdateCart", "Home"))
+    {
+        <div class="col-lg-7">
+            <div class="row" style="color: #666666">
+                <input type="hidden" name="code[]" value="@Model.ARTCODE" />
+                <input type="hidden" name="price[]" value="@Model.WEBPRICE" />
+                <div class="col-lg-12" style="font-size:30px;color:#2ea3f2;font-weight:bold">@Model.ARTNAME</div>
+                <div class="col-lg-12" style="font-size: 36px; color: #002f6c;font-weight:bold;">$@Model.WEBPRICE</div>
+                <div class="col-lg-4"><span style="font-weight:bold">Width:</span> @Model.WIDTH Mm</div>
+                <div class="col-lg-4"><span style="font-weight:bold">Height:</span> @Model.HEIGHT</div>
+                <div class="col-lg-4"><span style="font-weight:bold">Length:</span>  @Model.LEN Mm</div>
+                <div class="col-lg-4"><span style="font-weight:bold">Weight:</span> @Model.WEIGHT  Mm</div>
+                <div class="col-lg-4"><span style="font-weight:bold">Unit:</span> @Model.UNITNAME</div>
+                <div class="col-lg-4"><span style="font-weight:bold">Payment:</span> @Model.PAYMENTTERM</div>
+                <div class="col-lg-12"><span style="font-weight:bold">Unit Desc:</span> @Model.UNITDESCR</div>
+                <div class="col-lg-12" style="padding:30px 15px;">
+                    <span style="font-weight: bold; color: #000c38;margin-right:10px;">Quantity:</span>
+                    <input type="button" value="-" id="qtydown" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d;padding:0px; ">
+                    <input type="text" id=qty name=qty[] value="1" style="width: 55px; height: 30px; color: #000c38;text-align:center;background-color:white; ">
+                    <input type="button" value="+" id="qtyup" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d; padding: 0px;" />
+                </div>
+
+                <div class="col-lg-12"><input type="submit" value="Add to Cart" style="width: 230px; height: 55px; color: white; background-color: #002f6c;font-size:24px;" /></div>
+                <div class="col-lg-12">
+                    <a href="#">
+                        <img src="~/Content/body/others/addtocompare.jpg" />
+                    </a>
+                    <a href="mailto:">
+                        <img src="~/Content/body/others/emailtofriend.jpg" />
+                    </a>
+                </div>
+            </div>
+            <!-- <img src="~/Content/menu/down-arrow.png" /><img src="~/Content/menu/vertical-arrow.png" />-->
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-lg-12" style="margin: 30px 0px;">
+
+        <div class="col-lg-5" style="text-align: left;"><span style="font-size: 38px; color: #2ea3f2; font-weight: bold; font-family: OpenSansExtraBold; ">More Products</span></div>
+        <div class="col-lg-7" style="text-align: left; padding-top: 15px; margin-left: -20px;">
+            <img src="~/Content/ProductImage/back.png" />
+            <img src="~/Content/ProductImage/next.png" />
+        </div>
+    </div>
+    <div class="col-lg-12" style="clear:both;padding-top:30px;">
+        @{
+            List<item> relatedProducts = new List<item>();
+            if (Session["BestSellerProducts"] != null)
+            {
+                relatedProducts = (List<item>)Session["BestSellerProducts"];
+            }
+            else
+            {
+                relatedProducts = (List<item>)Session["relatedProducts"];
+            }
+                
+            
+            if (relatedProducts.Count() > 4)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    <div class="col-lg-3">
+                        <a href="@Url.Action("Product", "Home", new { Code = @relatedProducts[i].ARTCODE })">
+                            <div class="row" style="color: #666666;">
+                                <div class="col-lg-12">
+                                    @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @relatedProducts[i].PICTURENAME)))
+                                    {
+
+                                        <img src="~/Content/ProductImage/@relatedProducts[i].PICTURENAME" style="width:100%">
+
+                                    }
+                                    else
+                                    {
+
+                                        <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                                    }
+
+                                </div>
+                                <div class="col-lg-12" style="font-size: 13.54px; color: #59b1f4;padding:10px 15px;font-weight:bold;">
+                                    @relatedProducts[i].ARTNAME
+                                </div>
+                                <div class="col-lg-12" style="font-size: 13.54px; color: #002f6c;font-weight:bold;">
+                                    <!--$@relatedProducts[i].WEBPRICE-->
+                                </div>
+                                <div class="col-lg-12">
+                                    <span style="font-weight: bold;">Width:</span> @relatedProducts[i].WIDTH
+                                </div>
+                                <div class="col-lg-12">
+                                    <span style="font-weight: bold; color:#666666;">Height:</span> @relatedProducts[i].HEIGHT
+                                </div>
+                                <div class="col-lg-12">
+                                    <span style="font-weight: bold; color:#666666;">ArtCode:</span>@relatedProducts[i].ARTCODE
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                for (int i = 0; i < relatedProducts.Count(); i++)
+                {
+                    <div class="col-lg-3">
+                        <a href="@Url.Action("Product", "Home", new { Code = @relatedProducts[i].ARTCODE })">
+                            <div class="row" style="color: #666666;">
+                                <div class="col-lg-12">
+                                    @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @relatedProducts[i].PICTURENAME)))
+                                    {
+
+                                        <img src="~/Content/ProductImage/@relatedProducts[i].PICTURENAME" style="width:100%">
+
+                                    }
+                                    else
+                                    {
+
+                                        <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                                    }
+
+                                </div>
+                                <div class="col-lg-12" style="font-size: 13.54px; color: #59b1f4; padding: 10px 15px;">
+                                   <!-- @relatedProducts[i].ARTNAME-->
+                                </div>
+                                <div class="col-lg-12" style="font-size: 13.54px;font-weight:bold; color: #002f6c;">
+                                    $@relatedProducts[i].WEBPRICE
+                                </div>
+                                <div class="col-lg-12">
+                                    <span style="font-weight: bold;">Width:</span> @relatedProducts[i].WIDTH
+                                </div>
+                                <div class="col-lg-12">
+                                    <span style="font-weight: bold; color:#666666;">Height:</span> @relatedProducts[i].HEIGHT
+                                </div>
+                                <div class="col-lg-12">
+                                    <span style="font-weight: bold; color:#666666;">ArtCode:</span>@relatedProducts[i].ARTCODE
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+
+        }
+    </div>
+</div>

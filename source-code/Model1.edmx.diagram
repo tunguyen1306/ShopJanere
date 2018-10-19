@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="85bdebdd24fc4b4ab40db5caaae9378c" Name="Diagram1">
+        <EntityTypeShape EntityType="veebdbModel.artdimension" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="veebdbModel.artgrp" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="veebdbModel.artlink" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="veebdbModel.artname" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="veebdbModel.artsize" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="veebdbModel.barcode" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="veebdbModel.boundart" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="veebdbModel.card" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="veebdbModel.color" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="veebdbModel.cumain" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="veebdbModel.cuperson" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="veebdbModel.custgroup" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="veebdbModel.eligibility" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="veebdbModel.invoice" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="veebdbModel.invoice_log" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="veebdbModel.langname" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="veebdbModel.language" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="veebdbModel.ordritm" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="veebdbModel.outitem" Width="1.5" PointX="12.75" PointY="10.75" />
+        <EntityTypeShape EntityType="veebdbModel.payment" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="veebdbModel.pricelist" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="veebdbModel.price" Width="1.5" PointX="2.75" PointY="14.75" />
+        <EntityTypeShape EntityType="veebdbModel.producer" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="veebdbModel.promotion" Width="1.5" PointX="14.75" PointY="6.75" />
+        <EntityTypeShape EntityType="veebdbModel.promotionrule" Width="1.5" PointX="14.75" PointY="10.75" />
+        <EntityTypeShape EntityType="veebdbModel.stgrp" Width="1.5" PointX="12.75" PointY="14.75" />
+        <EntityTypeShape EntityType="veebdbModel.stgrp2" Width="1.5" PointX="14.75" PointY="14.75" />
+        <EntityTypeShape EntityType="veebdbModel.stgrpmap" Width="1.5" PointX="4.75" PointY="15.75" />
+        <EntityTypeShape EntityType="veebdbModel.stgrpmap2" Width="1.5" PointX="6.75" PointY="15.75" />
+        <EntityTypeShape EntityType="veebdbModel.stock" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="veebdbModel.stockcod" Width="1.5" PointX="16.75" PointY="4.75" />
+        <EntityTypeShape EntityType="veebdbModel.supplycycle" Width="1.5" PointX="16.75" PointY="7.75" />
+        <EntityTypeShape EntityType="veebdbModel.trans_log" Width="1.5" PointX="16.75" PointY="10.75" />
+        <EntityTypeShape EntityType="veebdbModel.vw_disc_rule" Width="1.5" PointX="16.75" PointY="13.75" />
+        <EntityTypeShape EntityType="veebdbModel.accountlogin" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="veebdbModel.warehouse" Width="1.5" PointX="5.375" PointY="18.75" />
+        <EntityTypeShape EntityType="veebdbModel.catalogue" Width="1.5" PointX="7.375" PointY="18.75" />
+        <EntityTypeShape EntityType="veebdbModel.category" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="veebdbModel.store" Width="1.5" PointX="13.375" PointY="18.75" />
+        <EntityTypeShape EntityType="veebdbModel.file" Width="1.5" PointX="15.375" PointY="18.75" />
+        <EntityTypeShape EntityType="veebdbModel.role" Width="1.5" PointX="17.375" PointY="18.75" />
+        <EntityTypeShape EntityType="veebdbModel.user" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="veebdbModel.user_role" Width="1.5" PointX="19.375" PointY="4.75" />
+        <EntityTypeShape EntityType="veebdbModel.userdata" Width="1.5" PointX="19.375" PointY="7.75" />
+        <EntityTypeShape EntityType="veebdbModel.metagrup" Width="1.5" PointX="19.375" PointY="14.75" />
+        <EntityTypeShape EntityType="veebdbModel.item" Width="1.5" PointX="9.375" PointY="11.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

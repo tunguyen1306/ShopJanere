@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WebApplication1.category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CATEGORYCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CATEGORYNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LASTCHANGE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CatalogueCode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATEGORYCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATEGORYNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LASTCHANGE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CatalogueCode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CATEGORYNO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CATEGORYNO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CATEGORYNO })
+        </td>
+    </tr>
+}
+
+</table>

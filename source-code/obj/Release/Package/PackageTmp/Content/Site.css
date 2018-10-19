@@ -1,0 +1,201 @@
+﻿
+@font-face {
+  font-family: 'OpenSans';
+src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+/* 
+    url('../fonts/OpenSans-Regular.woff') format('woff'), url('../fonts/OpenSans-Regular.ttf') format('truetype'), 
+    url('../fonts/OpenSans-Regular.svg#OpenSans-Regular') format('svg');*/
+  /*src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+      url('../fonts/glyphicons-halflings-regular.woff') format('woff'), 
+      url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+      url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');*/
+}
+@font-face {
+  font-family: 'OpenSansBold';
+  src: url('../fonts/OPENSANS-BOLD.ttf') format('truetype');
+    /*url('../fonts/OPENSANS-BOLD.woff') format('woff'), url('../fonts/OPENSANS-BOLD.ttf') format('truetype'), 
+    url('../fonts/OPENSANS-BOLD.svg#OPENSANS-BOLD') format('svg');*/
+  /*src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/glyphicons-halflings-regular.woff') format('woff'), 
+      url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+       url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');*/
+}
+@font-face {
+  font-family: 'OpenSansExtraBold';
+src: url('../fonts/OPENSANS-EXTRABOLD.ttf') format('truetype');
+     /*url('../fonts/OPENSANS-EXTRABOLD.woff') format('woff'), 
+    url('../fonts/OPENSANS-EXTRABOLD.ttf') format('truetype'),
+     url('../fonts/OPENSANS-EXTRABOLD.svg#OPENSANS-EXTRABOLD') format('svg');*/
+  /*src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/glyphicons-halflings-regular.woff') format('woff'), 
+      url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+      url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');*/
+}
+body {
+    padding-top: 100px;
+    padding-bottom: 20px;
+    font-family:"OpenSans";
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+textarea {
+    background-color:#002f6c;
+    color:white;
+    padding: 2px;
+    font-weight:bold;
+}
+select {
+  /*margin: 50px;
+  width: 150px;
+  padding: 5px 35px 5px 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  height: 34px;
+      background: url(http://www.stackoverflow.com/favicon.ico) 96% / 15% no-repeat #eee;
+      */
+  height:27px;
+  color:white;
+    padding: 2px 5px;;
+    font-weight:bold;
+    font-size:12px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url(dropdown-icon.png) 100% / 24px no-repeat #002f6c;
+  
+}
+
+/* CAUTION: IE hackery ahead */
+select::-ms-expand { 
+    display: none; /* remove default arrow on ie10 and ie11 */
+}
+
+/* target Internet Explorer 9 to undo the custom arrow */
+@media screen and (min-width:0\0) {
+    select {
+        background:none\9;
+        padding: 5px\9;
+    } 
+}
+
+ 
+/*select.classic {
+  background-image:
+    linear-gradient(45deg, transparent 50%, blue 50%),
+    linear-gradient(135deg, blue 50%, transparent 50%),
+    linear-gradient(to right, #0f497d, #0f497d);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+
+
+}
+
+select.classic:focus {
+  background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    linear-gradient(to right, gray, gray);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+  border-color: grey;
+  outline: 0;
+}*/
+
+.top-menu-normal {
+    color:white;
+    text-align:center;
+        height: 49px;
+    font-size: 20px;
+    padding-top:10px;
+
+}
+.top-menu-focus {
+    height: 49px;
+    font-size: 20px;
+    color:white;
+    text-align:center;
+    background-color:#235d91;
+    padding-top:10px;
+
+}
+.search {
+padding : 0px 1px;
+}
+.home-bestseller {
+    background-color:#d1d9de;
+    margin:7px;
+}
+.allqty {
+text-align:center;
+}
+.submenu:hover{
+    border:4px solid #2ea3f2;
+}
+
+.img__wrap {
+  position: relative;
+  /*height: 200px;
+  width: 257px;*/
+}
+
+.img__description {
+  position: absolute;
+  top: 0;
+  bottom: 340px;
+  left: 0;
+  right: 0;
+  background: rgba(24, 28, 31, 0.72);
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  text-align:center;
+  font-size:35px;
+  padding:15px 0px;
+  /* transition effect. not necessary */
+  transition: opacity .2s, visibility .2s;
+}
+
+.img__wrap:hover .img__description {
+  visibility: visible;
+  opacity: 1;
+}
+.products {
+    padding:3px 15px;
+}
+.products-name {
+    padding:10px 15px 3px 15px;
+    font-weight:bold;
+}
+/********/
+
+
+
+/*! jQuery Editable Select - v2.2.5 - https://github.com/indrimuska/jquery-editable-select - (c) 2016 Indri Muska - MIT */
+input.es-input{padding-right:20px!important;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAYAAADJEc7MAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG2YAABzjgAA4DIAAIM2AAB5CAAAxgwAADT6AAAgbL5TJ5gAAABGSURBVHjaYvz//z8DOYCJgUzA0tnZidPK8vJyRpw24pLEpwnuVHRFhDQxMDAwMPz//x+OOzo6/iPz8WFGuocqAAAA//8DAD/sORHYg7kaAAAAAElFTkSuQmCC) right center no-repeat}input.es-input.open{-webkit-border-bottom-left-radius:0;-moz-border-radius-bottomleft:0;border-bottom-left-radius:0;-webkit-border-bottom-right-radius:0;-moz-border-radius-bottomright:0;border-bottom-right-radius:0}.es-list{position:absolute;padding:0;margin:0;border:1px solid #d1d1d1;display:none;z-index:1000;background:#fff;max-height:160px;overflow-y:auto;-moz-box-shadow:0 2px 3px #ccc;-webkit-box-shadow:0 2px 3px #ccc;box-shadow:0 2px 3px #ccc}.es-list li{display:block;padding:5px 10px;margin:0}.es-list li.selected{background:#f3f3f3}.es-list li[disabled]{opacity:.5}

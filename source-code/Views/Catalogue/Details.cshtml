@@ -1,0 +1,43 @@
+﻿@model WebApplication1.catalogue
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>catalogue</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CatalogueCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatalogueCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatalogueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatalogueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MetaGroupId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetaGroupId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

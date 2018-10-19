@@ -1,0 +1,109 @@
+﻿@model WebApplication1.item
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    veebdbEntities data = new veebdbEntities();
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data", @class = "material" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>item</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ARTNO)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ARTCODE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ARTCODE)
+                @Html.ValidationMessageFor(model => model.ARTCODE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ARTNAME, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ARTNAME)
+                @Html.ValidationMessageFor(model => model.ARTNAME)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WEBPRICE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WEBPRICE)
+                @Html.ValidationMessageFor(model => model.WEBPRICE)
+            </div>
+        </div>
+
+        <div class="form-group">
+        @Html.LabelFor(model => model.CATEGORYNO, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="CATEGORYNO" name="CATEGORYNO">
+                @foreach (var item in data.categories)
+                {
+                    if (int.Parse(item.CATEGORYNO.ToString()) == Model.CATEGORYNO)
+                    {
+                        <option value="@item.CATEGORYNO" selected>@item.CATEGORYNAME</option>
+                    }
+                    else
+                    {
+                        <option value="@item.CATEGORYNO">@item.CATEGORYNAME</option>
+                    }
+                }
+            </select>
+
+        </div>
+    </div>
+        
+
+
+
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PICTURENAME, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PICTURENAME)
+                @Html.ValidationMessageFor(model => model.PICTURENAME)
+            </div>
+        </div>
+        <div class="form-group">
+            
+            <div class="col-md-10">
+                <input type="file" id="inputfile" name="inputfile" />
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsBestSeller, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsBestSeller)
+                @Html.ValidationMessageFor(model => model.IsBestSeller)
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

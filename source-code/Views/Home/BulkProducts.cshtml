@@ -1,0 +1,287 @@
+﻿@using WebApplication1.Models
+@model PagedList.IPagedList<WebApplication1.item>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Bulk Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Session["SearchModel"] != null)
+    {
+        var search = (SearchModel)Session["SearchModel"];
+    }
+    List<WebApplication1.item> list = Model.ToList();
+}
+
+<div class="row" style="; padding: 15px 0px;">
+
+    <div class="col-lg-12" style="margin: 30px 0px;font-weight:bold;">
+        <span>Home / </span><span style="color: #2ea3f2;">@ViewBag.CategoryName</span>
+    </div>
+
+    <div class="col-lg-12">
+        <img src="~/Content/body/catalogue/category.png" style="width:100%" />
+        <span style="font-size: 36px; color: white; position: absolute; top: 15px; left: 30px;font-weight:bold;">@ViewBag.CategoryName</span>
+    </div>
+    <div></div>
+</div>
+
+@using (Html.BeginForm("BulkProducts", "Home", FormMethod.Post, new { id = "productfom" }))
+{
+    /*<div>
+        Page Size: <select id="Size_Of_Page" name="Size_Of_Page">
+            <option value="20" @(ViewBag.ValueToSet == 20 ? "selected" : "")>20</option>
+            <option value="40" @(ViewBag.ValueToSet == 40 ? "selected" : "")>40</option>
+            <option value="100" @(ViewBag.ValueToSet == 100 ? "selected" : "")>100</option>
+            <option value="500" @(ViewBag.ValueToSet == 500 ? "selected" : "")>500</option>
+            <option value="1000" @(ViewBag.ValueToSet == 1000 ? "selected" : "")>1000</option>
+        </select>
+        Page: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, Page_No => Url.Action("BulkProducts",
+     new { Page_No, Page_Size = ViewBag.ValueToSet, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+
+    </div>*/
+    <input type="hidden" id="vddlPosition" value="@Session["ddlPosition"]" />
+    <input type="hidden" id="vddlGetGroup" value="@Session["ddlGetGroup"]" />
+    <input type="hidden" id="vddlGetCategory" value="@Session["ddlGetCategory"]" />
+    <div class="row" style="padding: 0px 15px;">
+        <div class="col-lg-3 search">
+            <select id="ddlPosition" name="ddlPosition" style="width:100%">
+                @if (Session["ddlPosition"] == null || Session["ddlPosition"].ToString() == "0")
+                {
+                    <option value="0" selected>ESC</option>
+                    <option value="1">DESC</option>
+                }
+                else
+                {
+                    <option value="0">ESC</option>
+                    <option value="1" selected>DESC</option>
+                }
+            </select>
+        </div>
+        <div class="col-lg-9 search">
+        <input type="text" id="AllKey" name="AllKey" value="@Session["allkey"]" style=" width:100%" />
+        <input type="submit" value="" style=" width: 25px; position: absolute; top: 2px; right: 3px; border: none;background-image:url(../Content/search-icon.png)" />
+
+        </div>
+    </div>
+    <div class="row" style="margin-top: 2px; padding: 0px 15px;">
+        <div class="col-lg-3 search">
+            <select id="ddlGetGroup" name="ddlGetGroup" style="width:100%"></select>
+        </div>
+        <div class="col-lg-3 search">
+            <select id="ddlGetCategory" name="ddlGetCategory" style="width:100%"></select>
+        </div>
+        <div class="col-lg-3 search">
+            <select id="ddlGetItem" name="ddlGetItem" style="width:100%">
+                <option value="0">Select Item - not yet</option>
+            </select>
+        </div>
+
+        <div class="col-lg-3 search">
+            <select id="ddlLength" name="ddlLength" style="width:100%">
+                <option value="0">Select Length - not yet</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 2px; padding:0px 15px;">
+        
+
+        <div class="col-lg-3 search">
+            <select id="ddlGetDINCode" name="ddlGetDINCode" style="width:100%">
+                <option value="0">Select Dincode - not yet</option>
+            </select>
+        </div>
+        <div class="col-lg-3 search">
+            <select id="ddlGetDimension" name="ddlGetDimension" style="width:100%">
+                <option value="0">Select Dimemsion - not yet</option>
+            </select>
+        </div>
+        <div class="col-lg-3 search">
+            <select id="ddlGetInterFace" name="ddlGetInterFace" style="width:100%">
+                <option value="0">Select Interface - not yet</option>
+            </select>
+        </div>
+        <div class="col-lg-3 search">
+            <select id="ddlGetMaterial" name="ddlGetMaterial" style="width:100%">
+                <option value="0">Select Material - not yet</option>
+            </select>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-lg-12" style="color: #f4f4f4;; margin-top: 15px">
+        <a href="@Url.Action("BulkProducts", "Home", new { categoryid = ViewBag.CategoryId })"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">List view</div></a>
+        <span style="margin:0px 5px;">|</span>
+        <a href="@Url.Action("Products", "Home", new { categoryid = ViewBag.CategoryId })"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">Grid view</div></a>
+
+    </div>
+    </div>
+    @using (Html.BeginForm("UpdateCart", "Home"))
+    {
+
+        <div class="row" style="background-color: #235d91; color: white;margin:0px">
+            <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-1" style="width: 100%; padding: 10px; font-weight: bold;">
+                    <input type="checkbox" id="chkbox_all" value="chkall" />
+                </div>
+            </div>
+            <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-2" style="width: 100%; padding:10px;font-weight:bold;">
+                    Item Number
+                </div>
+            </div>
+            <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-1" style="width: 100%; padding: 10px ; font-weight: bold;">
+                    BarCode
+                </div>
+            </div>
+            <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-2" style="width: 100%; padding: 10px; font-weight: bold;">
+                    Product Name
+                </div>
+            </div>
+            <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-3" style="width: 100%; padding: 10px; font-weight: bold;">
+                    Description
+                </div>
+            </div>
+            <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-1" style="width: 100%; padding: 10px; font-weight: bold;">
+                    Quantity
+                </div>
+            </div>
+            <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                <div class="col-lg-1" style="width: 100%; padding: 10px; font-weight: bold;">
+                    Price
+                </div>
+            </div>
+
+            <div class="col-lg-1" style="border-right: 1px solid white; padding: 0px;">
+                <div class="col-lg-1">
+
+                </div>
+            </div>
+        </div>
+
+        for (int i = 0; i < list.Count(); i++)
+        {
+            var item = list[i];
+            string tempCheck = "chkbox_" + item.ARTCODE;
+            string fullInfo = item.ARTCODE + "|" + item.WEBPRICE + "|" + i;
+
+            int index = i + 1;
+            string background = "background-color:#e4e4e4;";
+
+            <div class="row wrap_product_list" style="margin:0px;text-align:left; @if (i % 2 == 0)
+                                                                {@background }">
+                <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="list_checkbox inner_list_product">
+                        <input type="checkbox" id="@tempCheck" name="chkbox[]" class="chkbox" value="@fullInfo" />
+                    </div>
+                </div>
+                <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="list_itemnumber inner_list_product product_hover">
+                        @item.ARTCODE
+                    </div>
+                </div>
+                <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="list_barcode inner_list_product product_hover">
+                        @item.ARTCODE
+                        <input type="hidden" name="code[]" value="@item.ARTCODE" />
+                    </div>
+                </div>
+                <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="list_productname inner_list_product product_hover">
+                        @item.ARTNAME
+                    </div>
+                </div>
+                <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="list_product_description inner_list_product product_hover">
+                        @item.ARTNAME
+                    </div>
+                </div>
+                <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-1" style="width: 100%; padding: 10px 0px; height: 44px;">
+                        @{
+            
+                        }
+                        <div style="width:20px;float:right;">
+                            <a href="#" onclick="bulkitemup(@i)"><img src="~/Content/cart_plus.png" style="margin-top:-9px" /></a>
+                            <a href="#" onclick="bulkitemdown(@i)"><img src="~/Content/cart_minus.png" style="margin-top:-24px" /></a>
+</div>
+                        
+                        <input type="text" name="qty[]" id="@i" value="100" style="width: 44px;height:25px;text-align:center;background-color:white;color:black;" />
+
+
+                    </div>
+                </div>
+                <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                    <div class="col-lg-1" style="width: 100%; padding: 10px 15px;text-align:center">
+                      <!-- $@item.WEBPRICE-->
+                        <input type="hidden" name="price[]" value="@item.WEBPRICE" />
+                    </div>
+                </div>
+
+                <div class="col-lg-1" style="padding: 0px;">
+                    <div class="col-lg-1" style="width: 100%; padding: 10px 13px;text-align:right;">
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @item.ARTCODE.ToString() })"><img src="~/Content/cart_delete.png" /></a>
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @item.ARTCODE.ToString() })"><img src="~/Content/cart_edit.png" /></a>
+                    </div>
+                </div>
+                <div class="product_hover_info">
+                    @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @item.PICTURENAME)))
+                    {
+                        <img src="~/Content/ProductImage/@item.PICTURENAME" style="width:100%">
+                    }
+                    else
+                    {
+                        <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+                    }
+                    <h3>@item.ARTNAME</h3>
+                    <span class="product_hover_info_price">$@item.WEBPRICE</span>
+                    <div class="product_hover_info_desc">@item.ARTNAME</div>
+                    <a href="@Url.Action("Product","Home",new {Code = item.ARTCODE})" class="btn product_hover_info_check">Check price & Availability</a>
+                    <a href= "@Url.Action("UpdateCart", "Home", new { qty = 1, code = item.ARTCODE, price = item.WEBPRICE == null ? 0 : item.WEBPRICE })" class="btn product_hover_info_addtocart">Add to Cart</a>
+                     <!--string[] chkbox, int[] qty, string[] code, float[] price,int? Page_No,int? Page_Size-->
+                </div>
+            </div><!--wrap_product_list-->
+
+        }
+
+        <div class="row" style="margin-top:15px;">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="color: #666666;">
+                @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount Pages
+                <select id="Size_Of_Page" name="Size_Of_Page" class="classic" style="background-color: #f4f4f4; color: #666666; width:160px;height:30px;">
+                    <option value="20" @(ViewBag.ValueToSet == 20 ? "selected" : "")>20 items per page</option>
+                    <option value="40" @(ViewBag.ValueToSet == 40 ? "selected" : "")>40 items per page</option>
+                    <option value="100" @(ViewBag.ValueToSet == 100 ? "selected" : "")>100 items per page</option>
+                    <option value="500" @(ViewBag.ValueToSet == 500 ? "selected" : "")>500 items per page</option>
+                    <option value="1000" @(ViewBag.ValueToSet == 1000 ? "selected" : "")>1000 items per page</option>
+                </select>
+
+
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="padding:0px;text-align:right;font-size:12px;">
+                @Html.PagedListPager(Model, Page_No => Url.Action("Products",
+     new { Page_No, Page_Size = ViewBag.ValueToSet, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+            </div>
+        </div>
+
+    <div class="row" style="margin-top:30px;">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+            <input type="button" value="Go to cart" style="width:100%;font-size:15px;text-align:center;" onclick="window.location.href='@Url.Action("Updatecart","Home")'" />
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align:right;">
+            &nbsp;
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align:right;">
+            <input type="submit" value="Add all selected  to shopping cart" style="width:100%;font-size:15px;" />
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+            <input type="button" value="Reset search" style="width: 100%; font-size: 15px; text-align: center; " onclick="window.location.href='@Url.Action("BulkProducts", "Home")'" />
+        </div>
+    </div>
+
+
+    }
+@{Html.RenderAction("FileList", "Home");}

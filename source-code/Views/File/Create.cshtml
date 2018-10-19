@@ -1,0 +1,51 @@
+﻿@model WebApplication1.file
+
+@{
+    ViewBag.Title = "FileCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>FileCreate</h2>
+
+@using (Html.BeginForm("Create", "File", FormMethod.Post, new { enctype = "multipart/form-data", @class = "material" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        <div class="form-full-list row clearfix">
+            <div class="grid_6">
+                <div class="field">
+                    <div class="input-box">
+                        @Html.TextBoxFor(m => m.Title, new { title = "Title", placeholder = "Title", @class = "input-text required-entry validate-date", id = "Title" })
+                    </div>
+                </div>
+            </div>
+            <div class="grid_6">
+                <div class="field">
+                    <div class="input-box">
+                        @Html.TextBoxFor(m => m.Description, new { title = "Description", placeholder = "Description", @class = "input-text required-entry validate-date", id = "Description" })
+                    </div>
+                </div>
+            </div>
+            <div class="grid_6">
+                <div class="field">
+                    <div class="input-box">
+                        <input type="file" id="inputfile" name="inputfile" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons-set clearfix">
+            <button onclick="window.location = '@Url.Action("index")'" type="button" title="cancel" class="btngray inverted"><span><span>cancel</span></span></button>
+            <button type="submit" title="save" class="right btnviolet gototab" data-current="contact" data-goto="1"><span><span>save</span></span></button>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

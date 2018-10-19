@@ -1,0 +1,85 @@
+﻿@model WebApplication1.category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    veebdbEntities data = new veebdbEntities();
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>category</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.CATEGORYNO)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CATEGORYCODE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CATEGORYCODE)
+                @Html.ValidationMessageFor(model => model.CATEGORYCODE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CATEGORYNAME, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CATEGORYNAME)
+                @Html.ValidationMessageFor(model => model.CATEGORYNAME)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LASTCHANGE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LASTCHANGE)
+                @Html.ValidationMessageFor(model => model.LASTCHANGE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CREATED, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CREATED)
+                @Html.ValidationMessageFor(model => model.CREATED)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CatalogueCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="CatalogueCode" name="CatalogueCode">
+                    <option value="0">This is Master</option>
+                    @foreach (var item in data.catalogues)
+                    {
+                        if (int.Parse(item.CatalogueCode) == Model.CatalogueCode)
+                        {
+                            <option value="@item.CatalogueCode" selected>@item.CatalogueName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.CatalogueCode">@item.CatalogueName</option>
+                        }
+                    }
+                </select>
+                <!--@Html.EditorFor(model => model.CatalogueCode)
+                @Html.ValidationMessageFor(model => model.CatalogueCode)-->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

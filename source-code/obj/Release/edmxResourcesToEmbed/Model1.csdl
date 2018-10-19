@@ -1,0 +1,632 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="veebdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="artdimension">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="WEIGHT" Type="Decimal" />
+    <Property Name="LEN" Type="Decimal" />
+    <Property Name="HEIGHT" Type="Decimal" />
+    <Property Name="WIDTH" Type="Decimal" />
+    <Property Name="FRAGILE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="artgrp">
+    <Key>
+      <PropertyRef Name="GROUPNO" />
+    </Key>
+    <Property Name="GROUPNO" Type="Int32" Nullable="false" />
+    <Property Name="GROUPCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GROUPNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="METAGROUPNO" Type="Int32" />
+    <Property Name="EXPORTABLE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="artlink">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="LINK" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="veebdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="artdimensions" EntityType="Self.artdimension" />
+    <EntitySet Name="artgrps" EntityType="Self.artgrp" />
+    <EntitySet Name="artlinks" EntityType="Self.artlink" />
+    <EntitySet Name="artnames" EntityType="veebdbModel.artname" />
+    <EntitySet Name="artsizes" EntityType="veebdbModel.artsize" />
+    <EntitySet Name="barcodes" EntityType="veebdbModel.barcode" />
+    <EntitySet Name="boundarts" EntityType="veebdbModel.boundart" />
+    <EntitySet Name="cards" EntityType="veebdbModel.card" />
+    <EntitySet Name="colors" EntityType="veebdbModel.color" />
+    <EntitySet Name="cumains" EntityType="veebdbModel.cumain" />
+    <EntitySet Name="cupersons" EntityType="veebdbModel.cuperson" />
+    <EntitySet Name="custgroups" EntityType="veebdbModel.custgroup" />
+    <EntitySet Name="eligibilities" EntityType="veebdbModel.eligibility" />
+    <EntitySet Name="invoices" EntityType="veebdbModel.invoice" />
+    <EntitySet Name="invoice_log" EntityType="veebdbModel.invoice_log" />
+    <EntitySet Name="items" EntityType="veebdbModel.item" />
+    <EntitySet Name="langnames" EntityType="veebdbModel.langname" />
+    <EntitySet Name="languages" EntityType="veebdbModel.language" />
+    <EntitySet Name="metagrups" EntityType="veebdbModel.metagrup" />
+    <EntitySet Name="ordritms" EntityType="veebdbModel.ordritm" />
+    <EntitySet Name="outitems" EntityType="veebdbModel.outitem" />
+    <EntitySet Name="payments" EntityType="veebdbModel.payment" />
+    <EntitySet Name="pricelists" EntityType="veebdbModel.pricelist" />
+    <EntitySet Name="prices" EntityType="veebdbModel.price" />
+    <EntitySet Name="producers" EntityType="veebdbModel.producer" />
+    <EntitySet Name="promotions" EntityType="veebdbModel.promotion" />
+    <EntitySet Name="promotionrules" EntityType="veebdbModel.promotionrule" />
+    <EntitySet Name="stgrps" EntityType="veebdbModel.stgrp" />
+    <EntitySet Name="stgrp2" EntityType="veebdbModel.stgrp2" />
+    <EntitySet Name="stgrpmaps" EntityType="veebdbModel.stgrpmap" />
+    <EntitySet Name="stgrpmap2" EntityType="veebdbModel.stgrpmap2" />
+    <EntitySet Name="stocks" EntityType="veebdbModel.stock" />
+    <EntitySet Name="stockcods" EntityType="veebdbModel.stockcod" />
+    <EntitySet Name="supplycycles" EntityType="veebdbModel.supplycycle" />
+    <EntitySet Name="trans_log" EntityType="veebdbModel.trans_log" />
+    <EntitySet Name="vw_disc_rule" EntityType="veebdbModel.vw_disc_rule" />
+    <EntitySet Name="accountlogins" EntityType="veebdbModel.accountlogin" />
+    <EntitySet Name="warehouses" EntityType="veebdbModel.warehouse" />
+    <EntitySet Name="catalogues" EntityType="veebdbModel.catalogue" />
+    <EntitySet Name="categories" EntityType="veebdbModel.category" />
+    <EntitySet Name="stores" EntityType="veebdbModel.store" />
+    <EntitySet Name="files" EntityType="veebdbModel.file" />
+  </EntityContainer>
+  <EntityType Name="artname">
+    <Key>
+      <PropertyRef Name="ARTNO" />
+      <PropertyRef Name="LANGNO" />
+    </Key>
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="LANGNO" Type="Int16" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="INFO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="artsize">
+    <Key>
+      <PropertyRef Name="SIZENO" />
+    </Key>
+    <Property Name="SIZENO" Type="Int16" Nullable="false" />
+    <Property Name="SIZETBLNO" Type="Int16" Nullable="false" />
+    <Property Name="SIZENAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="SIZECODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="barcode">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="BARCODE1" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="ISDEFAULT" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="boundart">
+    <Key>
+      <PropertyRef Name="BOUNDARTNO" />
+    </Key>
+    <Property Name="BOUNDARTNO" Type="Int32" Nullable="false" />
+    <Property Name="MASTERARTNO" Type="Int32" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="card">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="CARDNO" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTNO" Type="Int32" Nullable="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="color">
+    <Key>
+      <PropertyRef Name="COLORNO" />
+    </Key>
+    <Property Name="COLORNO" Type="Int32" Nullable="false" />
+    <Property Name="COLORCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="COLORNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cumain">
+    <Key>
+      <PropertyRef Name="CUSTNO" />
+    </Key>
+    <Property Name="CUSTNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CUSTCODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TYPENO" Type="Int16" Nullable="false" />
+    <Property Name="ADDRESS" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS2" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS3" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS4" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS5" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="PHONE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="INFO" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+    <Property Name="FIRM" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTGROUPNO" Type="Int16" />
+    <Property Name="SPAMBYEMAIL" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SEX" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BIRTHDAY" Type="DateTime" />
+    <Property Name="PASSIVE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DISCOUNT" Type="Decimal" Nullable="false" />
+    <Property Name="DISCCLASS" Type="Int16" />
+    <Property Name="PRICEGROUPNO" Type="Int16" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cuperson">
+    <Key>
+      <PropertyRef Name="CUSTPERSONNO" />
+    </Key>
+    <Property Name="CUSTPERSONNO" Type="Int32" Nullable="false" />
+    <Property Name="CUSTPERSONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="PERSONCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTNO" Type="Int32" Nullable="false" />
+    <Property Name="STATUSNO" Type="Int16" />
+    <Property Name="REGDATE" Type="DateTime" Nullable="false" />
+    <Property Name="VALIDDATE" Type="DateTime" />
+    <Property Name="PHONE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="INFO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="POSONLY" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTPERSONCODE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="custgroup">
+    <Key>
+      <PropertyRef Name="custgroupno" />
+    </Key>
+    <Property Name="custgroupno" Type="Int32" Nullable="false" />
+    <Property Name="custgroupname" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="custgroupcode" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="eligibility">
+    <Key>
+      <PropertyRef Name="ELIGIBILITYNO" />
+    </Key>
+    <Property Name="ELIGIBILITYNO" Type="Int32" Nullable="false" />
+    <Property Name="TYPENO" Type="Int16" Nullable="false" />
+    <Property Name="IDNO" Type="Int32" />
+    <Property Name="THRESHOLDAMOUNT" Type="Decimal" Nullable="false" />
+    <Property Name="THRESHOLDQUANTITY" Type="Decimal" Nullable="false" />
+    <Property Name="LIMITAMOUNT" Type="Decimal" Nullable="false" />
+    <Property Name="LIMITQUANTITY" Type="Decimal" Nullable="false" />
+    <Property Name="MASTERELIGIBILITYNO" Type="Int32" />
+    <Property Name="STOCKNO" Type="Int16" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="invoice">
+    <Key>
+      <PropertyRef Name="INVNO" />
+    </Key>
+    <Property Name="INVNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="INVOICE1" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTCODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TYPE" Type="Int32" Nullable="false" />
+    <Property Name="INVOICEDATE" Type="DateTime" Nullable="false" />
+    <Property Name="CUSTNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="PHONE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS2" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS3" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS4" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS5" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="COMMENT" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="OINFO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="REFNUM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AMOUNT" Type="Decimal" />
+    <Property Name="VATAMOUNT" Type="Decimal" />
+    <Property Name="STOCKNO" Type="Int16" />
+    <Property Name="CAUSENO" Type="Int16" />
+    <Property Name="CUSTPERSONNO" Type="Int16" />
+    <Property Name="TABLENO" Type="Int16" />
+  </EntityType>
+  <EntityType Name="invoice_log">
+    <Key>
+      <PropertyRef Name="INVOICE_LOG_ID" />
+    </Key>
+    <Property Name="INVOICE_LOG_ID" Type="Int64" Nullable="false" />
+    <Property Name="EVENT_TIME" Type="DateTime" Nullable="false" />
+    <Property Name="WEB_INVOICE" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="WEB_INVOICE_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="INVOICE" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="INVOICE_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="TYPE" Type="Int16" Nullable="false" />
+    <Property Name="CLASS" Type="Int16" />
+    <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="item">
+    <Key>
+      <PropertyRef Name="ARTNO" />
+    </Key>
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="ARTCODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ARTNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LONGNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ARTTYPE" Type="Int16" Nullable="false" />
+    <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="STOCKITEM" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PRODUCERNO" Type="Int32" />
+    <Property Name="CATEGORYNO" Type="Int32" />
+    <Property Name="COLORNO" Type="Int32" />
+    <Property Name="INFO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="WEBPRICE" Type="Decimal" />
+    <Property Name="SPECIALOFFER" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PICTURENAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="NEWUNTIL" Type="DateTime" />
+    <Property Name="GROUPNO" Type="Int32" />
+    <Property Name="AUTHORIZABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="RESTRICTED" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="NOTPOST" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="NOTADDPOSTAGEFEE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="WEIGHT" Type="Decimal" />
+    <Property Name="COLLATIONUNIT" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="INFO1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="INFO2" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="INFO3" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="INFO4" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="INFO5" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="INFO6" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LEN" Type="Decimal" />
+    <Property Name="HEIGHT" Type="Decimal" />
+    <Property Name="WIDTH" Type="Decimal" />
+    <Property Name="UNITNAME" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="UNITDESCR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CHECKBOX1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CHECKBOX2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CHECKBOX3" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CHECKBOX4" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CHECKBOX5" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CHECKBOX6" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="VAT" Type="Decimal" />
+    <Property Name="PACKAGEVOLUME" Type="Decimal" />
+    <Property Name="PACKAGEVOLUME2" Type="Decimal" />
+    <Property Name="SIZENO" Type="Int16" />
+    <Property Name="SIZETBLNO" Type="Int16" />
+    <Property Name="SUPPLYCYCLENO" Type="Int16" />
+    <Property Name="DISCGROUP" Type="Int16" />
+    <Property Name="WEBID" Type="Int32" />
+    <Property Name="PAYMENTTERM" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="langname">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="TABLEID" Type="Int32" Nullable="false" />
+    <Property Name="LINEID" Type="Int32" Nullable="false" />
+    <Property Name="LANGNO" Type="Int16" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="INFO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="language">
+    <Key>
+      <PropertyRef Name="LANGNO" />
+    </Key>
+    <Property Name="LANGNO" Type="Int16" Nullable="false" />
+    <Property Name="LANGNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="metagrup">
+    <Key>
+      <PropertyRef Name="METAGROUPNO" />
+    </Key>
+    <Property Name="METAGROUPNO" Type="Int32" Nullable="false" />
+    <Property Name="METAGROUPCODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="METAGROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="PARENTNO" Type="Int32" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ordritm">
+    <Key>
+      <PropertyRef Name="ORDERNO" />
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="ORDERNO" Type="Int32" Nullable="false" />
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="QTY" Type="Decimal" Nullable="false" />
+    <Property Name="ARRIVEDATE" Type="DateTime" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="outitem">
+    <Key>
+      <PropertyRef Name="INVNO" />
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="INVNO" Type="Int32" Nullable="false" />
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="QTY" Type="Decimal" Nullable="false" />
+    <Property Name="AMOUNT" Type="Decimal" Nullable="false" />
+    <Property Name="VATAMOUNT" Type="Decimal" />
+    <Property Name="RCOMMENT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="SIZENO" Type="Int16" />
+  </EntityType>
+  <EntityType Name="payment">
+    <Key>
+      <PropertyRef Name="INVNO" />
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="INVNO" Type="Int32" Nullable="false" />
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="AMOUNT" Type="Decimal" Nullable="false" />
+    <Property Name="PAYDATE" Type="DateTime" Nullable="false" />
+    <Property Name="PAYDOC" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="pricelist">
+    <Key>
+      <PropertyRef Name="PRICELISTNO" />
+    </Key>
+    <Property Name="PRICELISTNO" Type="Int16" Nullable="false" />
+    <Property Name="PRICELISTCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="PRICELISTNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="FIRSTDATE" Type="DateTime" />
+    <Property Name="LASTDATE" Type="DateTime" />
+    <Property Name="CUSTNO" Type="Int32" />
+    <Property Name="PRICEBLOCKED" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CURRENCY_CODE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="PRICEGROUPNO" Type="Int16" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="price">
+    <Key>
+      <PropertyRef Name="PRICENO" />
+    </Key>
+    <Property Name="PRICENO" Type="Int32" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="PRICELISTNO" Type="Int16" Nullable="false" />
+    <Property Name="PRICE1" Type="Decimal" Nullable="false" />
+    <Property Name="PASSIVE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="producer">
+    <Key>
+      <PropertyRef Name="PRODUCERNO" />
+    </Key>
+    <Property Name="PRODUCERNO" Type="Int32" Nullable="false" />
+    <Property Name="PRODUCERCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="PRODUCERNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="promotion">
+    <Key>
+      <PropertyRef Name="PROMOTIONNO" />
+    </Key>
+    <Property Name="PROMOTIONNO" Type="Int16" Nullable="false" />
+    <Property Name="PROMOTIONCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PROMOTIONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TYPENO" Type="Int16" Nullable="false" />
+    <Property Name="FIRSTDATE" Type="DateTime" Nullable="false" />
+    <Property Name="LASTDATE" Type="DateTime" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="promotionrule">
+    <Key>
+      <PropertyRef Name="PROMOTIONRULENO" />
+    </Key>
+    <Property Name="PROMOTIONRULENO" Type="Int32" Nullable="false" />
+    <Property Name="PROMOTIONNO" Type="Int16" Nullable="false" />
+    <Property Name="ELIGIBILITYNO" Type="Int32" Nullable="false" />
+    <Property Name="TYPENO" Type="Int16" Nullable="false" />
+    <Property Name="ADJUSTMENTTYPENO" Type="Int16" Nullable="false" />
+    <Property Name="ADJUSTMENTVALUE" Type="Decimal" />
+    <Property Name="PRICEGROUPNO" Type="Int16" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="stgrp">
+    <Key>
+      <PropertyRef Name="STOCKGROUPNO" />
+    </Key>
+    <Property Name="STOCKGROUPNO" Type="Int16" Nullable="false" />
+    <Property Name="STOCKGROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="STOCKGROUPCODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="stgrp2">
+    <Key>
+      <PropertyRef Name="STOCKGROUP2NO" />
+    </Key>
+    <Property Name="STOCKGROUP2NO" Type="Int16" Nullable="false" />
+    <Property Name="STOCKGROUP2NAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="STOCKGROUP2CODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="PARENTNO" Type="Int32" />
+    <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="stgrpmap">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="STOCKGROUPNO" Type="Int16" Nullable="false" />
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="stgrpmap2">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="STOCKGROUP2NO" Type="Int16" Nullable="false" />
+    <Property Name="LINENO" Type="Int32" Nullable="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="stock">
+    <Key>
+      <PropertyRef Name="LINENO" />
+    </Key>
+    <Property Name="LINENO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="STOCKNO" Type="Int16" Nullable="false" />
+    <Property Name="ARTNO" Type="Int32" Nullable="false" />
+    <Property Name="VOLUME" Type="Decimal" Nullable="false" />
+    <Property Name="SIZENO" Type="Int16" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="stockcod">
+    <Key>
+      <PropertyRef Name="STOCKNO" />
+    </Key>
+    <Property Name="STOCKNO" Type="Int16" Nullable="false" />
+    <Property Name="STOCKCODE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="STOCKNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="supplycycle">
+    <Key>
+      <PropertyRef Name="SUPPLYCYCLENO" />
+    </Key>
+    <Property Name="SUPPLYCYCLENO" Type="Int16" Nullable="false" />
+    <Property Name="SUPPLYCYCLECODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="SUPPLYCYCLENAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="trans_log">
+    <Key>
+      <PropertyRef Name="TRANS_LOG_ID" />
+    </Key>
+    <Property Name="TRANS_LOG_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TABLE_NAME" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="EVENT_CODE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="EVENT_TIME" Type="DateTime" Nullable="false" />
+    <Property Name="RETRY_COUNT" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vw_disc_rule">
+    <Key>
+      <PropertyRef Name="PROMOTIONCODE" />
+      <PropertyRef Name="PROMOTIONNAME" />
+      <PropertyRef Name="FIRSTDATE" />
+      <PropertyRef Name="THRESHOLDQUANTITY" />
+      <PropertyRef Name="LIMITQUANTITY" />
+      <PropertyRef Name="THRESHOLDAMOUNT" />
+      <PropertyRef Name="LIMITAMOUNT" />
+      <PropertyRef Name="ADJUSTMENTTYPENO" />
+      <PropertyRef Name="LASTCHANGE" />
+      <PropertyRef Name="CREATED" />
+    </Key>
+    <Property Name="PROMOTIONCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PROMOTIONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="FIRSTDATE" Type="DateTime" Nullable="false" />
+    <Property Name="LASTDATE" Type="DateTime" />
+    <Property Name="DISCGROUP" Type="Int32" />
+    <Property Name="DISCCLASS" Type="Int32" />
+    <Property Name="THRESHOLDQUANTITY" Type="Decimal" Nullable="false" />
+    <Property Name="LIMITQUANTITY" Type="Decimal" Nullable="false" />
+    <Property Name="THRESHOLDAMOUNT" Type="Decimal" Nullable="false" />
+    <Property Name="LIMITAMOUNT" Type="Decimal" Nullable="false" />
+    <Property Name="ADJUSTMENTTYPENO" Type="Int16" Nullable="false" />
+    <Property Name="ADJUSTMENTVALUE" Type="Decimal" />
+    <Property Name="PRICEGROUPNO" Type="Int16" />
+    <Property Name="STOCKNO" Type="Int16" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="accountlogin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="permission" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="warehouse">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="catalogue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CatalogueCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CatalogueName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="MetaGroupId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="CATEGORYNO" />
+    </Key>
+    <Property Name="CATEGORYNO" Type="Int32" Nullable="false" />
+    <Property Name="CATEGORYCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="CATEGORYNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" />
+    <Property Name="CatalogueCode" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="store">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="file">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Kind" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="UploadDate" Type="DateTime" Nullable="false" />
+    <Property Name="UploadBy" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FileAddress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>
