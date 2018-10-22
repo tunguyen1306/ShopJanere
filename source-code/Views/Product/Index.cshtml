@@ -9,7 +9,7 @@
 
 <h1>Product</h1>
 <div class="page_action">
-    <a href="">Add New</a>
+    <a href="@Url.Action("Create","Product")">Add New</a>
     <a href="">Import</a>
     <a href="">Export</a>
 </div>
@@ -35,18 +35,9 @@
             @Html.DropDownList("filter_warhouse", new SelectList(((List<WebApplication1.warehouse>)ViewBag.WarhouseList), "Id", "name"), "Warhouse", new { @class = "filter" })
 
 
-            <select class="filter" name="filter_warhouse">
-                <option value="">Warhouse</option>
-                <option value="">--000--</option>
-            </select>
-            <select class="filter" name="filter_stock">
-                <option value="">Stock</option>
-                <option value="">--000--</option>
-            </select>
-            <select class="filter" name="filter_store">
-                <option value="">Store</option>
-                <option value="">--000--</option>
-            </select>
+            @Html.DropDownList("filter_stock", new SelectList(((List<WebApplication1.stockcod>)ViewBag.StockList), "STOCKNO", "STOCKNAME"), "Stockcod", new { @class = "filter" })
+            @Html.DropDownList("filter_store", new SelectList(((List<WebApplication1.store>)ViewBag.StoreList), "Id", "Name"), "Store", new { @class = "filter" })
+           
             <input type="submit" id="do_filter_action" class="button btn-sm" value="Go">
         </div>
     </div><!-- wrap_filter -->

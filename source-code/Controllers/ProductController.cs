@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -35,7 +36,9 @@ namespace WebApplication1.Controllers
             ViewBag.ValueToSet = defaSize;
             int No_Of_Page = (Page_No ?? 1);
             ViewBag.CategoryList = db.categories.ToList();
-            ViewBag.WarhouseList = db.categories.ToList();
+            ViewBag.WarhouseList = db.warehouses.ToList();
+            ViewBag.stockList = db.stockcods.ToList();
+            ViewBag.StoreList = db.stores.ToList();
 
             return View(result.ToPagedList(No_Of_Page, defaSize));
 
@@ -61,7 +64,11 @@ namespace WebApplication1.Controllers
         // GET: /Product/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.CategoryList = db.categories.ToList();
+            ViewBag.WarhouseList = db.warehouses.ToList();
+            ViewBag.stockList = db.stockcods.ToList();
+            ViewBag.StoreList = db.stores.ToList();
+            return View(new item());
         }
 
         // POST: /Product/Create
@@ -69,7 +76,7 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ARTNO,ARTCODE,ARTNAME,LONGNAME,ARTTYPE,EXPORTABLE,STOCKITEM,PRODUCERNO,CATEGORYNO,COLORNO,INFO,WEBPRICE,SPECIALOFFER,PICTURENAME,NEWUNTIL,GROUPNO,AUTHORIZABLE,RESTRICTED,NOTPOST,NOTADDPOSTAGEFEE,WEIGHT,COLLATIONUNIT,INFO1,INFO2,INFO3,INFO4,INFO5,INFO6,LEN,HEIGHT,WIDTH,UNITNAME,UNITDESCR,CHECKBOX1,CHECKBOX2,CHECKBOX3,CHECKBOX4,CHECKBOX5,CHECKBOX6,VAT,PACKAGEVOLUME,PACKAGEVOLUME2,SIZENO,SIZETBLNO,SUPPLYCYCLENO,DISCGROUP,WEBID,PAYMENTTERM,LASTCHANGE,CREATED")] item item)
+        public ActionResult Create(item item, HttpPostedFileBase inputfile)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +84,30 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+          
+            try
+            {
+                string path = "";
+                path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile.FileName));
+                inputfile.SaveAs(path);
+                item.CREATED =DateTime.Now;
+                item.PICTURENAME = inputfile.FileName;
+                db.items.Add(item);
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            }
             return View(item);
         }
 
@@ -101,7 +131,7 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ARTNO,ARTCODE,ARTNAME,WEBPRICE,CATEGORYNO,,PICTURENAME,IsBestSeller")] item item, HttpPostedFileBase inputfile)
+        public ActionResult Edit(item item, HttpPostedFileBase inputfile)
         {
             if (ModelState.IsValid)
             {
