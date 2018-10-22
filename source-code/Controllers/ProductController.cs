@@ -34,7 +34,13 @@ namespace WebApplication1.Controllers
             }
             ViewBag.ValueToSet = defaSize;
             int No_Of_Page = (Page_No ?? 1);
+            ViewBag.CategoryList = db.categories.ToList();
+            ViewBag.WarhouseList = db.categories.ToList();
+
             return View(result.ToPagedList(No_Of_Page, defaSize));
+
+
+
         }
 
         // GET: /Product/Details/5
