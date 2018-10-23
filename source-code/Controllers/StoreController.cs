@@ -17,9 +17,19 @@ namespace WebApplication1.Controllers
         // GET: /Store/
         public ActionResult Index()
         {
-            return View(db.stores.ToList());
+            return View();
         }
-
+        public ActionResult IndexAjax(int start = 0, int view = 10)
+        {
+            var listStore = db.stores.ToList();
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = listStore.Count;
+            listStore= listStore.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listStore.Count;
+          
+            return PartialView(listStore);
+        }
         // GET: /Store/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,15 +48,15 @@ namespace WebApplication1.Controllers
         // GET: /Store/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new store());
         }
 
         // POST: /Store/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name,Location,Description")] store store)
+       
+        public ActionResult Create( store store)
         {
             if (ModelState.IsValid)
             {
@@ -77,8 +87,8 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Name,Location,Description")] store store)
+
+        public ActionResult Edit( store store)
         {
             if (ModelState.IsValid)
             {
@@ -92,28 +102,22 @@ namespace WebApplication1.Controllers
         // GET: /Store/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            store store = db.stores.Find(id);
-            if (store == null)
-            {
-                return HttpNotFound();
-            }
-            return View(store);
-        }
-
-        // POST: /Store/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
             store store = db.stores.Find(id);
             db.stores.Remove(store);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //// POST: /Store/Delete/5
+        //[HttpPost, ActionName("Delete")]
+
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    store store = db.stores.Find(id);
+        //    db.stores.Remove(store);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {

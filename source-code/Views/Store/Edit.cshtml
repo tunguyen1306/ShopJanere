@@ -5,50 +5,41 @@
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>EDIT STORE</h2>
+<h2>CREATE NEW STORE</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>store</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
-            </div>
-        </div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Location)
-                @Html.ValidationMessageFor(model => model.Location)
-            </div>
-        </div>
+        <div id="main_content" class="col-sm-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description)
-            </div>
-        </div>
+            <div class="product_content">
+                @using (Html.BeginForm("Edit", "Store", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+
+                    @Html.Partial("_Input")
+
+                    <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
+                    <a class="button button-sm" href="@Url.Action("Index","Store")">Cancel</a>
+                }
+
+            </div><!-- product_content -->
+
+        </div><!-- main_content -->
+
+
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+
+    $("#submitbutton").on('click', function (e) {
+        e.preventDefault();
+        bootbox.confirm("Lưu", function (isOK) {
+            if (isOK) {
+                $('#submitbutton').parents("form").submit();
+            }
+        });
+    });
+</script>

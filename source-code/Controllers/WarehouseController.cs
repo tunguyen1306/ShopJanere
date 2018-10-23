@@ -14,13 +14,23 @@ namespace WebApplication1.Controllers
     {
         private veebdbEntities db = new veebdbEntities();
 
-        // GET: /Warehouse/
+        // GET: /warehouse/
         public ActionResult Index()
         {
-            return View(db.warehouses.ToList());
+            return View();
         }
+        public ActionResult IndexAjax(int start = 0, int view = 10)
+        {
+            var listwarehouse = db.warehouses.ToList();
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = listwarehouse.Count;
+            listwarehouse = listwarehouse.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listwarehouse.Count;
 
-        // GET: /Warehouse/Details/5
+            return PartialView(listwarehouse);
+        }
+        // GET: /warehouse/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,18 +45,18 @@ namespace WebApplication1.Controllers
             return View(warehouse);
         }
 
-        // GET: /Warehouse/Create
+        // GET: /warehouse/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new warehouse());
         }
 
-        // POST: /Warehouse/Create
+        // POST: /warehouse/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,name,Location,Description")] warehouse warehouse)
+
+        public ActionResult Create(warehouse warehouse)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +68,7 @@ namespace WebApplication1.Controllers
             return View(warehouse);
         }
 
-        // GET: /Warehouse/Edit/5
+        // GET: /warehouse/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,12 +83,12 @@ namespace WebApplication1.Controllers
             return View(warehouse);
         }
 
-        // POST: /Warehouse/Edit/5
+        // POST: /warehouse/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,name,Location,Description")] warehouse warehouse)
+
+        public ActionResult Edit(warehouse warehouse)
         {
             if (ModelState.IsValid)
             {
@@ -89,31 +99,25 @@ namespace WebApplication1.Controllers
             return View(warehouse);
         }
 
-        // GET: /Warehouse/Delete/5
+        // GET: /warehouse/Delete/5
         public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            warehouse warehouse = db.warehouses.Find(id);
-            if (warehouse == null)
-            {
-                return HttpNotFound();
-            }
-            return View(warehouse);
-        }
-
-        // POST: /Warehouse/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
         {
             warehouse warehouse = db.warehouses.Find(id);
             db.warehouses.Remove(warehouse);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //// POST: /warehouse/Delete/5
+        //[HttpPost, ActionName("Delete")]
+
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    warehouse warehouse = db.warehouses.Find(id);
+        //    db.warehouses.Remove(warehouse);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {

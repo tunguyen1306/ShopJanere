@@ -1,0 +1,38 @@
+﻿@model WebApplication1.warehouse
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>Store Name</label>
+     
+            @Html.TextBoxFor(x=>x.name, new {@class= "form-control" })
+
+        </div>
+       
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>Location Name</label>
+           
+           
+            @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
+        </div>
+       
+
+    </div>
+</div>
+<div class="row">
+   
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>Description</label>
+         
+            @Html.TextAreaFor(x=>x.Description, new { @class = "form-control" })
+
+        </div>
+
+    </div>
+</div>
+
+
+@Html.HiddenFor(x=>x.Id)

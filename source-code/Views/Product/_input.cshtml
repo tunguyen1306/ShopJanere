@@ -1,124 +1,59 @@
 ﻿@using System.Configuration
 @model WebApplication1.item
-
-<div class="row">
-    <div class="col-lg-6">
-        <div class="form-group">
-            <label>ARTCODE</label>
-            @Html.EditorFor(model => model.ARTCODE, new {htmlAttributes = new {@class = "form-control"}})
-
-
-        </div>
-        <div class="form-group">
-            <label>ARTNAME</label>
-            @Html.EditorFor(model => model.ARTNAME, new {htmlAttributes = new {@class = "form-control"}})
-
-
-        </div>
-        <div class="form-group">
-            <label>Category</label>
-            @Html.DropDownListFor(model => model.CATEGORYNO, new SelectList(ViewBag.CategoryList, "CATEGORYNO", "CATEGORYNAME"), "Category", new {@class = "form-control js-select2"})
-
-        </div>
-        <div class="form-group">
-            <label>Category</label>
-            @Html.DropDownListFor(model => model.CATEGORYNO, new SelectList(ViewBag.CategoryList, "CATEGORYNO", "CATEGORYNAME"), "Category", new {@class = "form-control js-select2"})
-
-        </div>
-        <div class="form-group">
-            <label>Category</label>
-            @Html.DropDownListFor(model => model.CATEGORYNO, new SelectList(ViewBag.CategoryList, "CATEGORYNO", "CATEGORYNAME"), "Category", new {@class = "form-control js-select2"})
-
-        </div>
-        <div class="form-group">
-
-            <label>Upload Images</label>
-
-            <div>
-                <style>
-                    .thumb {
-                        height: 75px;
-                        border: 1px solid #000;
-                        margin: 10px 5px 0 0;
-                    }
-                </style>
-
-                <input type="file" class="form-control" id="files" name="files" accept="image/*" />
-                <script>
-                    function handleFileSelect(evt) {
-                        var files = evt.target.files; // FileList object
-
-                        // Loop through the FileList and render image files as thumbnails.
-                        for (var i = 0, f; f = files[i]; i++) {
-
-                            // Only process image files.
-                            if (!f.type.match('image.*')) {
-                                continue;
-                            }
-
-                            var reader = new FileReader();
-
-                            // Closure to capture the file information.
-                            reader.onload = (function (theFile) {
-                                return function (e) {
-                                    // Render thumbnail.
-                                    var span = document.createElement('span');
-                                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '"/>'].join('');
-                                    document.getElementById('list').insertBefore(span, null);
-                                };
-                            })(f);
-
-                            // Read in the image file as a data URL.
-                            reader.readAsDataURL(f);
-                        }
-                    }
-
-                    document.getElementById('files').addEventListener('change', handleFileSelect, false);
-                </script>
-
-            </div>
-            <div>
-                <output id="list"></output>
-            </div>
-            @{
-                if (Model.ARTNO > 0 && Model.PICTURENAME != null && Model.PICTURENAME.Any())
-                {
-                    <div>
-                        <output>
-                            @{
-
-                                <span><img class="thumb" src="@ConfigurationManager.AppSettings["domain"]@Model.PICTURENAME.Split('_')[0]/@Model.PICTURENAME" title=""></span>
-
-                            }
-                        </output>
-                    </div>
-                                }
-            }
-        </div>
-    </div>
-    <div class="col-lg-6">
-      
-
-        <div class="form-group">
-            <label>ARTCODE</label>
-            @Html.EditorFor(model => model.ARTCODE, new {htmlAttributes = new {@class = "form-control"}})
-
-
-        </div>
-        <div class="form-group">
-            <label>ARTNAME</label>
-            @Html.EditorFor(model => model.ARTNAME, new {htmlAttributes = new {@class = "form-control"}})
-
-
-        </div>
-
-        <div class="form-group">
-            <label>Category</label>
-            @Html.DropDownListFor(model => model.CATEGORYNO, new SelectList(ViewBag.CategoryList, "CATEGORYNO", "CATEGORYNAME"), "Category", new {@class = "form-control js-select2"})
-
-        </div>
-    </div>
-    @Html.HiddenFor(x=>x.ARTNO)
-    @Html.HiddenFor(x=>x.CREATED)
+<input type="text" name="product_name" size="30" value="" id="product_name" placeholder="Product Name" class="form-control">
+<span>Link: http://shop.janere.ee/product?Code=123456</span>
+<div class="product_description">
+    <label>Description</label>
+    <div id="mceu_11" class="mce-tinymce mce-container mce-panel" hidefocus="1" tabindex="-1" role="application" style="visibility: hidden; border-width: 1px; width: 100%;"><div id="mceu_11-body" class="mce-container-body mce-stack-layout"><div id="mceu_12" class="mce-top-part mce-container mce-stack-layout-item mce-first"><div id="mceu_12-body" class="mce-container-body"><div id="mceu_13" class="mce-container mce-menubar mce-toolbar mce-first" role="menubar" style="border-width: 0px 0px 1px;"><div id="mceu_13-body" class="mce-container-body mce-flow-layout"><div id="mceu_14" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-first mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_14" role="menuitem" aria-haspopup="true"><button id="mceu_14-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">File</span> <i class="mce-caret"></i></button></div><div id="mceu_15" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_15" role="menuitem" aria-haspopup="true"><button id="mceu_15-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Edit</span> <i class="mce-caret"></i></button></div><div id="mceu_16" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_16" role="menuitem" aria-haspopup="true"><button id="mceu_16-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">View</span> <i class="mce-caret"></i></button></div><div id="mceu_17" class="mce-widget mce-btn mce-menubtn mce-flow-layout-item mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_17" role="menuitem" aria-haspopup="true"><button id="mceu_17-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Format</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_18" class="mce-toolbar-grp mce-container mce-panel mce-last" hidefocus="1" tabindex="-1" role="group"><div id="mceu_18-body" class="mce-container-body mce-stack-layout"><div id="mceu_19" class="mce-container mce-toolbar mce-stack-layout-item mce-first mce-last" role="toolbar"><div id="mceu_19-body" class="mce-container-body mce-flow-layout"><div id="mceu_20" class="mce-container mce-flow-layout-item mce-first mce-btn-group" role="group"><div id="mceu_20-body"><div id="mceu_0" class="mce-widget mce-btn mce-first mce-disabled" tabindex="-1" role="button" aria-label="Undo" aria-disabled="true"><button id="mceu_0-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-undo"></i></button></div><div id="mceu_1" class="mce-widget mce-btn mce-last mce-disabled" tabindex="-1" role="button" aria-label="Redo" aria-disabled="true"><button id="mceu_1-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-redo"></i></button></div></div></div><div id="mceu_21" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_21-body"><div id="mceu_2" class="mce-widget mce-btn mce-menubtn mce-first mce-last mce-btn-has-text" tabindex="-1" aria-labelledby="mceu_2" role="button" aria-haspopup="true"><button id="mceu_2-open" role="presentation" type="button" tabindex="-1"><span class="mce-txt">Formats</span> <i class="mce-caret"></i></button></div></div></div><div id="mceu_22" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_22-body"><div id="mceu_3" class="mce-widget mce-btn mce-first" tabindex="-1" aria-pressed="false" role="button" aria-label="Bold"><button id="mceu_3-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-bold"></i></button></div><div id="mceu_4" class="mce-widget mce-btn mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Italic"><button id="mceu_4-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-italic"></i></button></div></div></div><div id="mceu_23" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_23-body"><div id="mceu_5" class="mce-widget mce-btn mce-first" tabindex="-1" aria-pressed="false" role="button" aria-label="Align left"><button id="mceu_5-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignleft"></i></button></div><div id="mceu_6" class="mce-widget mce-btn" tabindex="-1" aria-pressed="false" role="button" aria-label="Align center"><button id="mceu_6-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-aligncenter"></i></button></div><div id="mceu_7" class="mce-widget mce-btn" tabindex="-1" aria-pressed="false" role="button" aria-label="Align right"><button id="mceu_7-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignright"></i></button></div><div id="mceu_8" class="mce-widget mce-btn mce-last" tabindex="-1" aria-pressed="false" role="button" aria-label="Justify"><button id="mceu_8-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-alignjustify"></i></button></div></div></div><div id="mceu_24" class="mce-container mce-flow-layout-item mce-btn-group" role="group"><div id="mceu_24-body"><div id="mceu_9" class="mce-widget mce-btn mce-first" tabindex="-1" role="button" aria-label="Decrease indent"><button id="mceu_9-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-outdent"></i></button></div><div id="mceu_10" class="mce-widget mce-btn mce-last" tabindex="-1" role="button" aria-label="Increase indent"><button id="mceu_10-button" role="presentation" type="button" tabindex="-1"><i class="mce-ico mce-i-indent"></i></button></div></div></div><div id="mceu_25" class="mce-container mce-flow-layout-item mce-last mce-btn-group" role="group"><div id="mceu_25-body"></div></div></div></div></div></div></div></div><div id="mceu_26" class="mce-edit-area mce-container mce-panel mce-stack-layout-item" hidefocus="1" tabindex="-1" role="group" style="border-width: 1px 0px 0px;"><iframe id="product_description_ifr" frameborder="0" allowtransparency="true" title="Rich Text Area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help" style="width: 100%; height: 100px; display: block;"></iframe></div><div id="mceu_27" class="mce-statusbar mce-container mce-panel mce-stack-layout-item mce-last" hidefocus="1" tabindex="-1" role="group" style="border-width: 1px 0px 0px;"><div id="mceu_27-body" class="mce-container-body mce-flow-layout"><div id="mceu_28" class="mce-path mce-flow-layout-item mce-first"><div class="mce-path-item">&nbsp;</div></div><div id="mceu_29" class="mce-flow-layout-item mce-resizehandle"><i class="mce-ico mce-i-resize"></i></div><span id="mceu_30" class="mce-branding mce-widget mce-label mce-flow-layout-item mce-last"> Powered by <a href="https://www.tinymce.com/?utm_campaign=editor_referral&amp;utm_medium=poweredby&amp;utm_source=tinymce" rel="noopener" target="_blank" role="presentation" tabindex="-1">tinymce</a></span></div></div></div></div><textarea name="product_description" id="product_description" aria-hidden="true" style="display: none;">Next, use our Get Started docs to setup Tiny!</textarea>
 </div>
+<div class="product_group">
+    <label>Product Group</label>
+    <ul class="sub_action">
+        <li class="active"><a href="#">All</a></li>
+        <li><a href="#">Popular</a></li>
+    </ul>
+    <ul class="product_group_list">
+        <li><input type="checkbox" name="product_group" value="Product Group 1">Product Group 1</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 2">Product Group 2</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 3">Product Group 3</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 4">Product Group 4</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 5">Product Group 5</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 6">Product Group 6</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 7">Product Group 7</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 8">Product Group 8</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 9">Product Group 9</li>
+        <li><input type="checkbox" name="product_group" value="Product Group 10">Product Group 10</li>
+    </ul>
+</div><!-- product_group -->
+<div class="product_image">
+    <label>Product Image:</label>
+    <div class="row">
+        <div class="col-sm-3">
+            <img src="~/Content/admin/images/1.jpg" />
+            <a href="#">Delete</a>
+        </div>
+        <div class="col-sm-9">
+            <ul class="sub_action">
+                <li class="active"><a href="#">Upload</a></li>
+                <li><a href="#">Choose from libaray</a></li>
+            </ul>
+            <div class="file_path">D://path-file/product1.jpg</div>
+            <a href="#" class="button_a">Upload</a>
+        </div>
+    </div>
+</div><!-- product_image -->
+<div class="product_detail">
+    <label>Product Detail</label>
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="dincode" name="dincode" placeholder="Din code">
+            <input type="text" class="form-control" id="length" name="length" placeholder="Length">
+            <input type="text" class="form-control" id="dimention" name="dimention" placeholder="Dimention">
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="barcode" name="barcode" placeholder="Barcode">
+            <input type="text" class="form-control" id="height" name="height" placeholder="Height">
+            <input type="text" class="form-control" id="other" name="other" placeholder="Other">
+        </div>
+    </div>
+</div><!-- product_detail -->
