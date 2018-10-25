@@ -92,6 +92,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+             
                 db.Entry(store).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

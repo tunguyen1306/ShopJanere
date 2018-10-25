@@ -5,54 +5,51 @@
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CATEGORYCODE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CATEGORYNAME)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LASTCHANGE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CREATED)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CatalogueCode)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CATEGORYCODE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CATEGORYNAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LASTCHANGE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CREATED)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CatalogueCode)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CATEGORYNO }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CATEGORYNO }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CATEGORYNO })
-        </td>
-    </tr>
+<h1>Category</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","Category")">Add New</a>
+   
+</div>
+
+
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "category-result",
+    OnBegin = "categorysearchOnBegin",
+    OnSuccess = "categorysearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="category-btsubmit">Tìm</button>
 }
+<div id="category-result">
+    @{
+        Html.RenderAction("IndexAjax", "Category");
+    }
 
-</table>
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function category_seacrch() {
+        $('#category-btsubmit').click();
+    }
+    category_seacrch();
+    function categorysearchOnBegin() {
+
+    }
+
+    function categorysearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

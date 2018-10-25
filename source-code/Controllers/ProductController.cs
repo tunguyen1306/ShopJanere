@@ -17,34 +17,76 @@ namespace WebApplication1.Controllers
     public class ProductController : Controller
     {
         private veebdbEntities db = new veebdbEntities();
-
-        // GET: /Product/
-        public ActionResult Index(FormCollection FormCollection, int? Page_No,int? Page_Size)
+        public ActionResult Index()
         {
-            var result = db.items.ToList();
-            //result[0].
-            var testdata = FormCollection["ddlPosition"];
-            int defaSize = 20;
-            if (FormCollection["Size_Of_Page"] != null)
-            {
-                defaSize = int.Parse(FormCollection["Size_Of_Page"]);
-            }
-            if (Page_Size != null)
-            {
-                defaSize = Page_Size ?? 20;
-            }
-            ViewBag.ValueToSet = defaSize;
-            int No_Of_Page = (Page_No ?? 1);
             ViewBag.CategoryList = db.categories.ToList();
             ViewBag.WarhouseList = db.warehouses.ToList();
             ViewBag.stockList = db.stockcods.ToList();
             ViewBag.StoreList = db.stores.ToList();
 
-            return View(result.ToPagedList(No_Of_Page, defaSize));
+            return View();
+        }
+        public ActionResult IndexAjax(int start = 0, int view = 10,int catId=0,int storeId=0,int stockId=0,int ware=0)
+        {
 
+            var listProduct = db.items.ToList();
+            if (catId!=0)
+            {
+                listProduct = listProduct.Where(x => x.CATEGORYNO == catId).ToList();
+            }
+            if (storeId != 0)
+            {
+                listProduct = listProduct.Where(x => x.CATEGORYNO == storeId).ToList();
+            }
+            if (stockId != 0)
+            {
+                listProduct = listProduct.Where(x => x.CATEGORYNO == stockId).ToList();
+            }
+            if (ware != 0)
+            {
+                listProduct = listProduct.Where(x => x.CATEGORYNO == ware).ToList();
+            }
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = listProduct.Count;
+            listProduct = listProduct.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listProduct.Count;
+            ViewBag.CategoryList = db.categories.ToList();
+            ViewBag.WarhouseList = db.warehouses.ToList();
+            ViewBag.stockList = db.stockcods.ToList();
+            ViewBag.StoreList = db.stores.ToList();
+
+            return PartialView(listProduct);
 
 
         }
+        // GET: /Product/
+        //public ActionResult Index(FormCollection FormCollection, int? Page_No,int? Page_Size)
+        //{
+        //    var result = db.items.ToList();
+        //    //result[0].
+        //    var testdata = FormCollection["ddlPosition"];
+        //    int defaSize = 20;
+        //    if (FormCollection["Size_Of_Page"] != null)
+        //    {
+        //        defaSize = int.Parse(FormCollection["Size_Of_Page"]);
+        //    }
+        //    if (Page_Size != null)
+        //    {
+        //        defaSize = Page_Size ?? 20;
+        //    }
+        //    ViewBag.ValueToSet = defaSize;
+        //    int No_Of_Page = (Page_No ?? 1);
+        //    ViewBag.CategoryList = db.categories.ToList();
+        //    ViewBag.WarhouseList = db.warehouses.ToList();
+        //    ViewBag.stockList = db.stockcods.ToList();
+        //    ViewBag.StoreList = db.stores.ToList();
+
+        //    return View(result.ToPagedList(No_Of_Page, defaSize));
+
+
+
+        //}
 
         // GET: /Product/Details/5
         public ActionResult Details(int? id)
@@ -68,6 +110,9 @@ namespace WebApplication1.Controllers
             ViewBag.WarhouseList = db.warehouses.ToList();
             ViewBag.stockList = db.stockcods.ToList();
             ViewBag.StoreList = db.stores.ToList();
+            var metagroup=db.metagrups.ToList();
+            metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
+            ViewBag.MetaGroupList = metagroup;
             return View(new item());
         }
 
@@ -84,13 +129,13 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-          
+
             try
             {
                 string path = "";
                 path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile.FileName));
                 inputfile.SaveAs(path);
-                item.CREATED =DateTime.Now;
+                item.CREATED = DateTime.Now;
                 item.PICTURENAME = inputfile.FileName;
                 db.items.Add(item);
                 db.SaveChanges();
@@ -182,7 +227,7 @@ namespace WebApplication1.Controllers
                     return RedirectToAction("Index");
                 }
 
-                
+
             }
             return View(item);
         }
@@ -219,6 +264,21 @@ namespace WebApplication1.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult _pGetGroupByIdMeta(int id=0)
+        {
+            var groupList = new List<artgrp>();
+            if (id != 0)
+            {
+                groupList = db.artgrps.ToList().Where(x => x.METAGROUPNO == id).ToList();
+            }
+     
+            
+
+
+
+            return PartialView(groupList);
         }
     }
 }

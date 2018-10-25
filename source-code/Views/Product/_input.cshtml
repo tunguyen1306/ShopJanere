@@ -8,22 +8,17 @@
 </div>
 <div class="product_group">
     <label>Product Group</label>
-    <ul class="sub_action">
-        <li class="active"><a href="#">All</a></li>
-        <li><a href="#">Popular</a></li>
-    </ul>
-    <ul class="product_group_list">
-        <li><input type="checkbox" name="product_group" value="Product Group 1">Product Group 1</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 2">Product Group 2</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 3">Product Group 3</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 4">Product Group 4</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 5">Product Group 5</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 6">Product Group 6</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 7">Product Group 7</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 8">Product Group 8</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 9">Product Group 9</li>
-        <li><input type="checkbox" name="product_group" value="Product Group 10">Product Group 10</li>
-    </ul>
+    <div class="row">
+        <div class="col-sm-6">@Html.DropDownList("DropGroup", new SelectList(((List<metagrup>)ViewBag.MetaGroupList), "METAGROUPNO", "METAGROUPNAME","Select Meta Group"), new { @class = "form-control select2" })</div>
+        <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="showGroupByIdMeta">
+          @{Html.RenderAction("_pGetGroupByIdMeta", "Product");}
+        </div>
+      
+    </div>
+    
 </div><!-- product_group -->
 <div class="product_image">
     <label>Product Image:</label>
@@ -57,3 +52,21 @@
         </div>
     </div>
 </div><!-- product_detail -->
+
+<script>
+  
+    $('#DropGroup').on('change', function () {
+        var id = $(this).val();
+        onPageChange(id);
+    });
+    function onPageChange(el) {
+
+        $.get('@Url.Action("_pGetGroupByIdMeta", "Product")?id=' + el, function (data) {
+            $('#showGroupByIdMeta').html(data);
+
+        });
+
+
+
+    }
+</script>

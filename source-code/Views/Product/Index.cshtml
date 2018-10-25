@@ -41,116 +41,46 @@
             <input type="submit" id="do_filter_action" class="button btn-sm" value="Go">
         </div>
     </div><!-- wrap_filter -->
-    <table class="table list_product">
-        <thead>
-            <tr>
-                <th id="cb" class="manage_column column_check"><input id="cb_select_all" type="checkbox"></th>
-                <th scope="col" id="thumb" class="manage_column column_thumb"><i class="far fa-image"></i></th>
-                <th scope="col" id="barcode" class="manage_column column_barcode">Barcode</th>
-                <th scope="col" class="manage_column column_number"></th>
-                <th scope="col" id="product_name" class="manage_column column_product_name">Product Name</th>
-                <th scope="col" id="description" class="manage_column column_description">Description</th>
-                <th scope="col" id="category" class="manage_column column_category">Category</th>
-                <th scope="col" id="price" class="manage_column column_price">Price</th>
-                <th scope="col" class="manage_column column_action"></th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
-                <td scope="col"  class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
-                <td scope="col"  class="manage_column column_barcode">@item.ARTCODE</td>
-                <td scope="col" class="manage_column column_number">4741444192161</td>
-                <td scope="col" class="manage_column column_product_name">@item.ARTNAME</td>
-                <td scope="col"  class="manage_column column_description">100 tk</td>
-                <td scope="col"  class="manage_column column_category">Category</td>
-                <td scope="col"  class="manage_column column_price">10,38$</td>
-                <td scope="col" class="manage_column column_action">
-                    <a class="delete_action" href=""><i class="fas fa-times"></i></a>
-                     <a class="edit_action" href=""><i class="fas fa-edit"></i></a>
-                </td>
-            </tr>
-        }
-       
-
-        </tbody>
-    </table>
-    <div class="wrap_product_nav">
-        <span>10 of 30 items</span>
-        <select class="filter" name="filter_nav">
-            <option value="10">10 items per page</option>
-            <option value="20">20 items per page</option>
-            <option value="30">30 items per page</option>
-        </select>
-        <ul class="product_nav">
-            <li class="prev disabled"><a href=""><i class="fas fa-angle-left"></i></a></li>
-            <li class="current"><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li class="next"><a href=""><i class="fas fa-angle-right"></i></a></li>
-        </ul>
-    </div><!-- wrap_product_nav -->
+ 
 </form>
 
-@*<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<div>
-    Page Size: <select id="Size_Of_Page" name="Size_Of_Page">
-        <option value="20" @(ViewBag.ValueToSet == 20 ? "selected" : "")>20</option>
-        <option value="40" @(ViewBag.ValueToSet == 40 ? "selected" : "")>40</option>
-        <option value="100" @(ViewBag.ValueToSet == 100 ? "selected" : "")>100</option>
-        <option value="500" @(ViewBag.ValueToSet == 500 ? "selected" : "")>500</option>
-        <option value="1000" @(ViewBag.ValueToSet == 1000 ? "selected" : "")>1000</option>
-    </select>
-    Page: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, Page_No => Url.Action("BulkProducts",
-     new { Page_No, Page_Size = ViewBag.ValueToSet, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "product-result",
+    OnBegin = "productsearchOnBegin",
+    OnSuccess = "productsearchOnSuccess"
+}, new { @class = "", @id = "formLoadProduct" }))
+{
+
+    <button style="display: none;" type="submit" id="product-btsubmit">Tìm</button>
+}
+<div id="product-result">
+    @{
+        Html.RenderAction("IndexAjax", "Product");
+    }
+
 
 </div>
-<table class="table">
-    <tr>
-        <th>
-            Code
-        </th>
-        <th>
-            Name
-        </th>
-        
-        <th>
-            Image Name
-        </th>
-        <th>
-            Is Best Seller
-        </th>
-        <th></th>
-    </tr>
+<script>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ARTCODE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ARTNAME)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.PICTURENAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsBestSeller)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ARTNO }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ARTNO })
-        </td>
-    </tr>
-}
 
-</table>*@
+    //#region tdg form
+
+    function product_seacrch() {
+        $('#product-btsubmit').click();
+    }
+    product_seacrch();
+    function productsearchOnBegin() {
+        //fbLoading("#formLoadProduct");
+    }
+
+    function productsearchOnSuccess() {
+
+        //fbRemoveLoading("#formLoadProduct");
+    }
+    //#endregion
+
+</script>
