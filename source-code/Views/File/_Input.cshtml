@@ -1,41 +1,45 @@
-﻿@model WebApplication1.store
+﻿@model WebApplication1.file
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Store Name</label>
-     
-            @Html.TextBoxFor(x=>x.Name,new {@class= "form-control" })
+            <label>file Code</label>
+
+            @Html.TextBoxFor(x => x.Title, new {@class = "form-control"})
 
         </div>
-       
+        <div class="form-group">
+            <label>file Name</label>
+
+            @Html.TextBoxFor(x => x.Description, new {@class = "form-control"})
+
+        </div>
+
 
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Location Name</label>
-           
-           
-            @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
-        </div>
-       
-
-    </div>
-</div>
-<div class="row">
-   
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label>Description</label>
-         
-            @Html.TextAreaFor(x=>x.Description, new { @class = "form-control" })
+            <label>File</label>
+            <input type="file" name="inputfile" class="form-control"/>
 
         </div>
+        @if (Model.Id > 0)
+        {
+            <div class="form-group">
+                <label> File Name:</label>@Model.FileName <br/>
+                <label> Link File:</label>@Model.FileAddress
 
+            </div>
+        }
     </div>
+
 </div>
-
-
 @Html.HiddenFor(x=>x.Id)
+@Html.HiddenFor(x=>x.FileAddress)
+@Html.HiddenFor(x=>x.FileName)
+@Html.HiddenFor(x=>x.Status)
+@Html.HiddenFor(x=>x.Kind)
+@Html.HiddenFor(x=>x.UploadBy)
+@Html.HiddenFor(x=>x.UploadDate)
 
 <script>
 
@@ -45,21 +49,21 @@
             focusInvalid: false,
             ignore: "",
             rules: {
-                Name: {
+                Title: {
                     required: true
                 },
-                Location: {
+                inputfile: {
                     required: true
-
+                   
                 }
-
+               
 
             },
 
             messages: {
-                Name: "Store Name do not empty",
-                Location: "Location Name do not empty"
-
+                Title: "Title do not empty",
+                inputfile: "Select file"
+               
 
             },
 

@@ -1,40 +1,31 @@
-﻿@model WebApplication1.store
+﻿@model WebApplication1.catalogue
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Store Name</label>
-     
-            @Html.TextBoxFor(x=>x.Name,new {@class= "form-control" })
+            <label>Catalogue Code</label>
+
+            @Html.TextBoxFor(x => x.CatalogueCode, new {@class = "form-control"})
 
         </div>
-       
+        <div class="form-group">
+            <label>Catalogue Name</label>
+
+            @Html.TextBoxFor(x => x.CatalogueName, new {@class = "form-control"})
+
+        </div>
+
 
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Location Name</label>
-           
-           
-            @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
-        </div>
-       
+            <label>Meta Group</label>
 
-    </div>
-</div>
-<div class="row">
-   
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label>Description</label>
-         
-            @Html.TextAreaFor(x=>x.Description, new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.MetaGroupId, new SelectList(((List<metagrup>)ViewBag.ListMetagroup), "METAGROUPNO", "METAGROUPNAME", "Select Metagroup"), new { @class = "form-control select2" })
 
         </div>
-
     </div>
+
 </div>
-
-
 @Html.HiddenFor(x=>x.Id)
 
 <script>
@@ -45,10 +36,14 @@
             focusInvalid: false,
             ignore: "",
             rules: {
-                Name: {
+                CatalogueCode: {
                     required: true
                 },
-                Location: {
+                CatalogueName: {
+                    required: true
+
+                },
+                MetaGroupId: {
                     required: true
 
                 }
@@ -57,8 +52,9 @@
             },
 
             messages: {
-                Name: "Store Name do not empty",
-                Location: "Location Name do not empty"
+                CatalogueCode: "Catalogue Code do not empty",
+                CatalogueName: "Catalogue Name do not empty",
+                MetaGroupId: "Select Meta Group",
 
 
             },

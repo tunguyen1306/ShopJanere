@@ -1,95 +1,45 @@
-﻿@model WebApplication1.metagrup
+﻿
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
-    veebdbEntities data = new veebdbEntities();
-    var listMetaGroup = data.metagrups.Where(m => m.PARENTNO == 0);
 }
 
-<h2>EDIT MASTER METAGROUP AND METAGROUP</h2>
+<h2>CREATE NEW META GROUP</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>metagrup</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.METAGROUPNO)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.METAGROUPCODE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.METAGROUPCODE)
-                @Html.ValidationMessageFor(model => model.METAGROUPCODE)
-            </div>
-        </div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.METAGROUPNAME, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.METAGROUPNAME)
-                @Html.ValidationMessageFor(model => model.METAGROUPNAME)
-            </div>
-        </div>
+        <div id="main_content" class="col-sm-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PARENTNO, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="PARENTNO" name="PARENTNO">
-                    <option value="0">This is Master</option>
-                    @foreach (var item in listMetaGroup)
-                    {
-                        if (item.METAGROUPNO == Model.PARENTNO)
-                        { 
-                            <option value="@item.METAGROUPNO" selected>@item.METAGROUPNAME</option>
-                        }
-                        else
-                        {
-                            <option value="@item.METAGROUPNO">@item.METAGROUPNAME</option>
-                        }
-                        
-                    }
-                </select>
-                <!-- @Html.EditorFor(model => model.PARENTNO)
-                @Html.ValidationMessageFor(model => model.PARENTNO)-->
-            </div>
-        </div>
+            <div class="product_content">
+                @using (Html.BeginForm("Edit", "MasterMetaGroup", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form" }))
+                {
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LASTCHANGE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LASTCHANGE)
-                @Html.ValidationMessageFor(model => model.LASTCHANGE)
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CREATED, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CREATED)
-                @Html.ValidationMessageFor(model => model.CREATED)
-            </div>
-        </div>
+                    @Html.Partial("_Input")
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsActive)
-                @Html.ValidationMessageFor(model => model.IsActive)
-            </div>
-        </div>
+                    <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
+                    <a class="button button-sm" href="@Url.Action("Index","MasterMetaGroup")">Cancel</a>
+                }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+            </div><!-- product_content -->
+
+        </div><!-- main_content -->
+
+
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+
+    $("#submitbutton").on('click', function (e) {
+        e.preventDefault();
+        if ($('#validation-form').valid()) {
+            $('#submitbutton').parents("form").submit();
+        }
+
+
+    });
+</script>

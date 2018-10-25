@@ -15,14 +15,14 @@
         <div id="main_content" class="col-sm-12">
 
             <div class="product_content">
-                @using (Html.BeginForm("Create", "Warehouse", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Create", "Store", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form" }))
                 {
 
 
                     @Html.Partial("_Input")
 
                     <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
-                    <a class="button button-sm" href="@Url.Action("Index","Warehouse")">Cancel</a>
+                    <a class="button button-sm" href="@Url.Action("Index","Store")">Cancel</a>
                 }
 
             </div><!-- product_content -->
@@ -36,11 +36,10 @@
 
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
-        $('#submitbutton').parents("form").submit();
-        //bootbox.confirm("Lưu", function (isOK) {
-        //    if (isOK) {
-               
-        //    }
-        //});
+        if ($('#validation-form').valid()) {
+            $('#submitbutton').parents("form").submit();
+        }
+
+
     });
 </script>

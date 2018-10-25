@@ -15,12 +15,22 @@ namespace WebApplication1.Controllers
     {
         //
         // GET: /File/
-        private veebdbEntities data = new veebdbEntities();
+        private veebdbEntities db = new veebdbEntities();
         public ActionResult Index()
         {
-                return View(data.files.Where(m => m.Status == "Active").ToList());
+                return View();
         }
+        public ActionResult IndexAjax(int start = 0, int view = 10)
+        {
+            var listStore = db.files.Where(m => m.Status == "Active").ToList();
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = listStore.Count;
+            listStore = listStore.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listStore.Count;
 
+            return PartialView(listStore);
+        }
         // GET: /Containt/Details/5
         public ActionResult Detail(int? id)
         {
@@ -28,7 +38,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            file file = data.files.Find(id);
+            file file = db.files.Find(id);
             if (file == null)
             {
                 return HttpNotFound();
@@ -40,14 +50,14 @@ namespace WebApplication1.Controllers
         public ActionResult Create()
         {
             ViewBag.Filepath = Path.Combine(Server.MapPath("/UploadFile"));
-            return View();
+            return View(new file());
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description")] file file, HttpPostedFileBase inputfile)
+      
+        public ActionResult Create(file file, HttpPostedFileBase inputfile)
         {
             //  if (ModelState.IsValid)
             // {
@@ -69,8 +79,8 @@ namespace WebApplication1.Controllers
                         file.UploadDate = DateTime.Now;
                         file.UploadBy = User.Identity.Name;
                         file.Kind = inputfile.ContentType;
-                        data.files.Add(file);
-                        data.SaveChanges();
+                        db.files.Add(file);
+                        db.SaveChanges();
                         ViewBag.Message = "File uploaded successfully";
                         //save other infomation
                     }
@@ -108,7 +118,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            file file = data.files.Find(id);
+            file file = db.files.Find(id);
             if (file == null)
             {
                 return HttpNotFound();
@@ -120,20 +130,71 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,FileName,Description,Kind,UploadDate,UploadBy,Status")] file file)
+       
+        public ActionResult Edit( file file, HttpPostedFileBase inputfile)
         {
-            if (ModelState.IsValid)
+            try
             {
-                data.Entry(file).State = EntityState.Modified;
-                data.SaveChanges();
-                return RedirectToAction("Index");
+                var ftblile = db.files.Find(file.Id);
+                ftblile.Title = file.Title;
+                ftblile.FileName = file.FileName;
+                ftblile.FileAddress = file.FileAddress;
+                ftblile.Status = file.Status;
+                ftblile.Kind = file.Kind;
+                ftblile.Description = file.Description;
+                //save file
+                if ( inputfile!=null)
+                {
+                    string path = "";
+                    try
+                    {
+                        path = Path.Combine(Server.MapPath("/UploadFile"), Path.GetFileName(inputfile.FileName));
+
+                        inputfile.SaveAs(path);
+                        //save other infomation
+                        ftblile.FileName = inputfile.FileName;
+                        ftblile.FileAddress = path;
+                        ftblile.UploadDate = DateTime.Now;
+                        ftblile.UploadBy = User.Identity.Name;
+                        ftblile.Kind = inputfile.ContentType;
+                        db.Entry(ftblile).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index");
+                        //save other infomation
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                   
+                    db.Entry(ftblile).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+               
             }
+            catch (Exception ex)
+            {
+
+                
+            }
+               
             return View(file);
+          
         }
-
-
-        [HttpPost]
 
         public ActionResult FileDeletes(int[] id)
         {
@@ -144,9 +205,9 @@ namespace WebApplication1.Controllers
             //file file = data.files.Find(id);
             foreach (var item in id)
             {
-                file file = data.files.Find(item);
+                file file = db.files.Find(item);
                 file.Status = "no";
-                data.SaveChanges();
+                db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
@@ -157,15 +218,15 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FileDeleteConfirmed(int id)
         {
-            file file = data.files.Find(id);
+            file file = db.files.Find(id);
             file.Status = "deleted";
-            data.SaveChanges();
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
         public FileResult Download(int id)
         {
 
-            file file = data.files.Find(id);
+            file file = db.files.Find(id);
             //var FileVirtualPath = "~/UploadFile/" + file.FileName;
             var FileVirtualPath = Path.Combine(Server.MapPath("/UploadFile/"), Path.GetFileName(file.FileName));
 
@@ -185,7 +246,7 @@ namespace WebApplication1.Controllers
                         List<string> FilesNames = new List<string>();
                         foreach (int item in id)
                         {
-                            FilesNames.Add(data.files.Find(item).FileName);
+                            FilesNames.Add(db.files.Find(item).FileName);
                         }
                         // var FileNames = files.Select(f => f.Name).ToList();
                         foreach (var item in FilesNames)

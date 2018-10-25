@@ -1,41 +1,34 @@
-﻿@model WebApplication1.store
+﻿@model WebApplication1.metagrup
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Store Name</label>
-     
-            @Html.TextBoxFor(x=>x.Name,new {@class= "form-control" })
+            <label>metagrup Code</label>
+
+            @Html.TextBoxFor(x => x.METAGROUPCODE, new {@class = "form-control"})
 
         </div>
-       
+        <div class="form-group">
+            <label>metagrup Name</label>
+
+            @Html.TextBoxFor(x => x.METAGROUPNAME, new {@class = "form-control"})
+
+        </div>
+
 
     </div>
     <div class="col-sm-6">
-        <div class="form-group">
-            <label>Location Name</label>
-           
-           
-            @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
-        </div>
-       
+        @*<div class="form-group">
+            <label>Meta Group</label>
 
+            @Html.DropDownListFor(m => m.PARENTNO, new SelectList(((List<metagrup>)ViewBag.ListMetagroup), "METAGROUPNO", "METAGROUPNAME", "Select Metagroup"), new { @class = "form-control select2" })
+
+        </div>*@
     </div>
+
 </div>
-<div class="row">
-   
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label>Description</label>
-         
-            @Html.TextAreaFor(x=>x.Description, new { @class = "form-control" })
-
-        </div>
-
-    </div>
-</div>
-
-
-@Html.HiddenFor(x=>x.Id)
+@Html.HiddenFor(x=>x.METAGROUPNO)
+@Html.HiddenFor(x=>x.CREATED)
+@Html.HiddenFor(x=>x.IsActive)
 
 <script>
 
@@ -45,10 +38,14 @@
             focusInvalid: false,
             ignore: "",
             rules: {
-                Name: {
+                METAGROUPCODE: {
                     required: true
                 },
-                Location: {
+                METAGROUPNAME: {
+                    required: true
+
+                },
+                METAGROUPCODE: {
                     required: true
 
                 }
@@ -57,8 +54,9 @@
             },
 
             messages: {
-                Name: "Store Name do not empty",
-                Location: "Location Name do not empty"
+                METAGROUPCODE: "metagrup Code do not empty",
+                METAGROUPNAME: "metagrup Name do not empty",
+                MetaGroupId: "Select Meta Group",
 
 
             },

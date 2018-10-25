@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
         // GET: /Category/
         public ActionResult Index()
         {
-            return View(db.categories.ToList());
+            return View();
         }
         public ActionResult IndexAjax(int start = 0, int view = 10)
         {

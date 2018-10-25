@@ -1,64 +1,55 @@
-﻿@model IEnumerable<WebApplication1.metagrup>
+﻿
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>MASTER METAGROUP AND METAGROUP</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.METAGROUPCODE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.METAGROUPNAME)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PARENTNO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LASTCHANGE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CREATED)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.METAGROUPCODE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.METAGROUPNAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PARENTNO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LASTCHANGE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CREATED)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.METAGROUPNO }) |
-            @Html.ActionLink("Details", "Details", new { id=item.METAGROUPNO }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.METAGROUPNO })
-        </td>
-    </tr>
+<h1>META GROUP</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","MasterMetaGroup")">Add New</a>
+   
+</div>
+
+
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "metagrup-result",
+    OnBegin = "metagrupsearchOnBegin",
+    OnSuccess = "metagrupsearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="metagrup-btsubmit">Tìm</button>
 }
+<div id="metagrup-result">
+    @{
+        Html.RenderAction("IndexAjax", "MasterMetaGroup");
+    }
 
-</table>
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function metagrup_seacrch() {
+        $('#metagrup-btsubmit').click();
+    }
+    metagrup_seacrch();
+    function metagrupsearchOnBegin() {
+
+    }
+
+    function metagrupsearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

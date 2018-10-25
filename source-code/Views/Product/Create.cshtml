@@ -14,7 +14,7 @@
             <div id="main_content" class="col-sm-12">
                
                     <div class="product_content">
-                        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form" }))
                         {
 
 

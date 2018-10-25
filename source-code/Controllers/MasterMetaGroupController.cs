@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -17,9 +18,24 @@ namespace WebApplication1.Controllers
         // GET: /MasterMetaGroup/
         public ActionResult Index()
         {
-            return View(db.metagrups.ToList());
+            return View();
         }
+        public ActionResult IndexAjax(int start = 0, int view = 10)
+        {
+            var listMetagroup = (from cat in db.metagrups
+                                 //join catl in db.metagrups on cat.MetaGroupId equals catl.METAGROUPNO, tblMetaGroup = catl
+                                 select new AllModel { tblMetaGroup = cat }).ToList();
 
+
+
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = listMetagroup.Count;
+            listMetagroup = listMetagroup.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listMetagroup.Count;
+
+            return PartialView(listMetagroup);
+        }
         // GET: /MasterMetaGroup/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,24 +54,21 @@ namespace WebApplication1.Controllers
         // GET: /MasterMetaGroup/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new metagrup());
         }
 
         // POST: /MasterMetaGroup/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="METAGROUPNO,METAGROUPCODE,METAGROUPNAME,PARENTNO,LASTCHANGE,CREATED,IsActive")] metagrup metagrup)
+        public ActionResult Create( metagrup metagrup)
         {
-            if (ModelState.IsValid)
-            {
+            metagrup.IsActive = true;
+            metagrup.CREATED = DateTime.Now;
                 db.metagrups.Add(metagrup);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
 
-            return View(metagrup);
         }
 
         // GET: /MasterMetaGroup/Edit/5
@@ -77,13 +90,12 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="METAGROUPNO,METAGROUPCODE,METAGROUPNAME,PARENTNO,LASTCHANGE,CREATED,IsActive")] metagrup metagrup)
+        public ActionResult Edit(metagrup metagrup)
         {
             if (ModelState.IsValid)
             {
+                metagrup.LASTCHANGE = DateTime.Now;
                 db.Entry(metagrup).State = EntityState.Modified;
-
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -97,12 +109,11 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+          
             metagrup metagrup = db.metagrups.Find(id);
-            if (metagrup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(metagrup);
+            db.metagrups.Remove(metagrup);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: /MasterMetaGroup/Delete/5

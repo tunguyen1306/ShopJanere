@@ -1,46 +1,55 @@
-﻿@model IEnumerable<WebApplication1.catalogue>
+﻿
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CatalogueCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CatalogueName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MetaGroupId)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CatalogueCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CatalogueName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MetaGroupId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+<h1>Catalogue</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","Catalogue")">Add New</a>
+   
+</div>
+
+
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "catalogue-result",
+    OnBegin = "cataloguesearchOnBegin",
+    OnSuccess = "cataloguesearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="catalogue-btsubmit">Tìm</button>
 }
+<div id="catalogue-result">
+    @{
+        Html.RenderAction("IndexAjax", "Catalogue");
+    }
 
-</table>
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function catalogue_seacrch() {
+        $('#catalogue-btsubmit').click();
+    }
+    catalogue_seacrch();
+    function cataloguesearchOnBegin() {
+
+    }
+
+    function cataloguesearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -17,9 +18,24 @@ namespace WebApplication1.Controllers
         // GET: /Catalogue/
         public ActionResult Index()
         {
-            return View(db.catalogues.ToList());
+            return View();
         }
+        public ActionResult IndexAjax(int start = 0, int view = 10)
+        {
+            var listCatalogue = (from cat in db.catalogues
+                             join catl in db.metagrups on cat.MetaGroupId equals catl.METAGROUPNO
+                             select new AllModel { tblCatalog = cat, tblMetaGroup = catl }).ToList();
 
+
+
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = listCatalogue.Count;
+            listCatalogue = listCatalogue.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listCatalogue.Count;
+
+            return PartialView(listCatalogue);
+        }
         // GET: /Catalogue/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,15 +54,16 @@ namespace WebApplication1.Controllers
         // GET: /Catalogue/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.ListMetagroup = db.metagrups.ToList();
+            return View(new catalogue());
         }
 
         // POST: /Catalogue/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,CatalogueCode,CatalgoueName,MetaGroupId")] catalogue catalogue)
+       
+        public ActionResult Create(catalogue catalogue)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +78,7 @@ namespace WebApplication1.Controllers
         // GET: /Catalogue/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.ListMetagroup = db.metagrups.ToList();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -77,8 +95,8 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CatalogueCode,CatalogueName,MetaGroupId")] catalogue catalogue)
+       
+        public ActionResult Edit(catalogue catalogue)
         {
             if (ModelState.IsValid)
             {
@@ -96,21 +114,15 @@ namespace WebApplication1.Controllers
         // GET: /Catalogue/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             catalogue catalogue = db.catalogues.Find(id);
-            if (catalogue == null)
-            {
-                return HttpNotFound();
-            }
-            return View(catalogue);
+            db.catalogues.Remove(catalogue);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: /Catalogue/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult DeleteConfirmed(int id)
         {
             catalogue catalogue = db.catalogues.Find(id);

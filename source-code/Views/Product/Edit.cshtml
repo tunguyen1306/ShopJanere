@@ -8,7 +8,7 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data", @class = "material" }))
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form", @class = "material" }))
 {
     @Html.AntiForgeryToken()
 

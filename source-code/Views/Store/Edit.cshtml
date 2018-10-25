@@ -15,7 +15,7 @@
         <div id="main_content" class="col-sm-12">
 
             <div class="product_content">
-                @using (Html.BeginForm("Edit", "Store", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Edit", "Store", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form" }))
                 {
 
 
@@ -36,11 +36,10 @@
 
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
-        $('#submitbutton').parents("form").submit();
-        //bootbox.confirm("Lưu", function (isOK) {
-        //    if (isOK) {
-               
-        //    }
-        //});
+        if ($('#validation-form').valid()) {
+            $('#submitbutton').parents("form").submit();
+        }
+
+
     });
 </script>

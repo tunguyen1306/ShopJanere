@@ -1,76 +1,55 @@
-﻿@model IEnumerable<WebApplication1.file>
+﻿
 
 @{
-    ViewBag.Title = "FileIndex";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>FileIndex</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileName)
-        </th>
-        <!--<th>
-            @Html.DisplayNameFor(model => model.Kind)
-        </th>-->
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <!--<th>
-            @Html.DisplayNameFor(model => model.UploadDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UploadBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileAddress)
-        </th>-->
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileName)
-        </td>
-        <!--<td>
-            @Html.DisplayFor(modelItem => item.Kind)
-        </td>-->
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <!--<td>
-            @Html.DisplayFor(modelItem => item.UploadDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileAddress)
-        </td>-->
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+<h1>FILE</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","File")">Add New</a>
+   
+</div>
+
+
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "file-result",
+    OnBegin = "filesearchOnBegin",
+    OnSuccess = "filesearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="file-btsubmit">Tìm</button>
 }
+<div id="file-result">
+    @{
+        Html.RenderAction("IndexAjax", "File");
+    }
 
-</table>
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function file_seacrch() {
+        $('#file-btsubmit').click();
+    }
+    file_seacrch();
+    function filesearchOnBegin() {
+
+    }
+
+    function filesearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>
