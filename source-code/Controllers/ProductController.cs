@@ -106,7 +106,9 @@ namespace WebApplication1.Controllers
         // GET: /Product/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryList = db.categories.ToList();
+            var category = db.categories.ToList();
+            category.Insert(0, new category { CATEGORYNO = 0, CATEGORYNAME = "Select Category" });
+            ViewBag.CategoryList = category;
             ViewBag.WarhouseList = db.warehouses.ToList();
             ViewBag.stockList = db.stockcods.ToList();
             ViewBag.StoreList = db.stores.ToList();
@@ -123,13 +125,26 @@ namespace WebApplication1.Controllers
 
         public ActionResult Create(item item, HttpPostedFileBase[] inputfile)
         {
-
+            var category = db.categories.ToList();
+            category.Insert(0, new category { CATEGORYNO = 0, CATEGORYNAME = "Select Category" });
+            ViewBag.CategoryList = category;
+           
+            ViewBag.WarhouseList = db.warehouses.ToList();
+            ViewBag.stockList = db.stockcods.ToList();
+            ViewBag.StoreList = db.stores.ToList();
+            var metagroup = db.metagrups.ToList();
+            metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
+            ViewBag.MetaGroupList = metagroup;
             try
             {
 
-
-
+                var proId = db.items.OrderByDescending(x => x.ARTNO).FirstOrDefault();
+                item.ARTTYPE = 1;
+                item.EXPORTABLE = "";
+                item.ARTCODE = Guid.NewGuid().ToString().Substring(0,6).ToUpper();
                 item.CREATED = DateTime.Now;
+                item.LASTCHANGE = DateTime.Now;
+                item.ARTNO = proId.ARTNO + 1;
                 db.items.Add(item);
                 db.SaveChanges();
                 for (int i = 0; i < inputfile.Length; i++)
@@ -173,7 +188,9 @@ namespace WebApplication1.Controllers
         // GET: /Product/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.CategoryList = db.categories.ToList();
+            var category = db.categories.ToList();
+            category.Insert(0, new category { CATEGORYNO = 0, CATEGORYNAME = "Select Category" });
+            ViewBag.CategoryList = category;
             ViewBag.WarhouseList = db.warehouses.ToList();
             ViewBag.stockList = db.stockcods.ToList();
             ViewBag.StoreList = db.stores.ToList();
