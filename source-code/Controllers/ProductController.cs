@@ -26,11 +26,11 @@ namespace WebApplication1.Controllers
 
             return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10,int catId=0,int storeId=0,int stockId=0,int ware=0)
+        public ActionResult IndexAjax(int start = 0, int view = 10, int catId = 0, int storeId = 0, int stockId = 0, int ware = 0)
         {
 
             var listProduct = db.items.ToList();
-            if (catId!=0)
+            if (catId != 0)
             {
                 listProduct = listProduct.Where(x => x.CATEGORYNO == catId).ToList();
             }
@@ -110,7 +110,7 @@ namespace WebApplication1.Controllers
             ViewBag.WarhouseList = db.warehouses.ToList();
             ViewBag.stockList = db.stockcods.ToList();
             ViewBag.StoreList = db.stores.ToList();
-            var metagroup=db.metagrups.ToList();
+            var metagroup = db.metagrups.ToList();
             metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.MetaGroupList = metagroup;
             return View(new item());
@@ -120,24 +120,38 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(item item, HttpPostedFileBase inputfile)
+
+        public ActionResult Create(item item, HttpPostedFileBase[] inputfile)
         {
-            if (ModelState.IsValid)
-            {
-                db.items.Add(item);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
             try
             {
-                string path = "";
-                path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile.FileName));
-                inputfile.SaveAs(path);
+
+
+
                 item.CREATED = DateTime.Now;
-                item.PICTURENAME = inputfile.FileName;
                 db.items.Add(item);
+                db.SaveChanges();
+                for (int i = 0; i < inputfile.Length; i++)
+                {
+                    if (inputfile[i] != null)
+                    {
+
+                        string path = "";
+                        path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                        inputfile[i].SaveAs(path);
+                        var tblPic = new artlink
+                        {
+                            ARTNO = item.ARTNO,
+                            LASTCHANGE = DateTime.Now,
+                            CREATED = DateTime.Now,
+                            LINK = path
+
+                        };
+                        db.artlinks.Add(tblPic);
+
+                    }
+                }
                 db.SaveChanges();
             }
             catch (DbEntityValidationException e)
@@ -159,6 +173,13 @@ namespace WebApplication1.Controllers
         // GET: /Product/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.CategoryList = db.categories.ToList();
+            ViewBag.WarhouseList = db.warehouses.ToList();
+            ViewBag.stockList = db.stockcods.ToList();
+            ViewBag.StoreList = db.stores.ToList();
+            var metagroup = db.metagrups.ToList();
+            metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
+            ViewBag.MetaGroupList = metagroup;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -175,60 +196,41 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(item item, HttpPostedFileBase inputfile)
+
+        public ActionResult Edit(item item, HttpPostedFileBase[] inputfile)
         {
-            if (ModelState.IsValid)
+
+            var tem = db.items.FirstOrDefault(m => m.ARTCODE == item.ARTCODE);
+            tem.WEBPRICE = item.WEBPRICE;
+            tem.CATEGORYNO = item.CATEGORYNO;
+            tem.ARTNO = item.ARTNO;
+            tem.ARTNAME = item.ARTNAME;
+            tem.IsBestSeller = item.IsBestSeller;
+
+            for (int i = 0; i < inputfile.Length; i++)
             {
-                //save file
-                if (inputfile != null)//have image
+                if (inputfile[i] != null)
                 {
-                    if (inputfile.ContentLength > 0)
+
+                    string path = "";
+                    path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                    inputfile[i].SaveAs(path);
+                    var tblPic = new artlink
                     {
-                        string path = "";
-                        try
-                        {
-                            path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile.FileName));
-                            inputfile.SaveAs(path);
-                            var tem = db.items.Where(m => m.ARTCODE == item.ARTCODE).FirstOrDefault();
-                            tem.ARTNO = item.ARTNO;
-                            tem.WEBPRICE = item.WEBPRICE;
-                            tem.CATEGORYNO = item.CATEGORYNO;
-                            tem.ARTNAME = item.ARTNAME;
-                            tem.IsBestSeller = item.IsBestSeller;
-                            tem.PICTURENAME = inputfile.FileName;
-                            db.SaveChanges();
-                        }
-                        catch (DbEntityValidationException e)
-                        {
-                            foreach (var eve in e.EntityValidationErrors)
-                            {
-                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                                foreach (var ve in eve.ValidationErrors)
-                                {
-                                    Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                        ve.PropertyName, ve.ErrorMessage);
-                                }
-                            }
-                        }
-                        return RedirectToAction("Index");
-                    }
-                }
-                else
-                {
-                    var tem = db.items.Where(m => m.ARTCODE == item.ARTCODE).FirstOrDefault();
-                    tem.WEBPRICE = item.WEBPRICE;
-                    tem.CATEGORYNO = item.CATEGORYNO;
-                    tem.ARTNO = item.ARTNO;
-                    tem.ARTNAME = item.ARTNAME;
-                    tem.IsBestSeller = item.IsBestSeller;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                        ARTNO = tem.ARTNO,
+                        LASTCHANGE = DateTime.Now,
+                        CREATED = DateTime.Now,
+                        LINK = path
 
+                    };
+                    db.artlinks.Add(tblPic);
 
+                }
             }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+
             return View(item);
         }
         // GET: /Product/Delete/5
@@ -266,15 +268,15 @@ namespace WebApplication1.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult _pGetGroupByIdMeta(int id=0)
+        public ActionResult _pGetGroupByIdMeta(int id = 0)
         {
             var groupList = new List<artgrp>();
             if (id != 0)
             {
                 groupList = db.artgrps.ToList().Where(x => x.METAGROUPNO == id).ToList();
             }
-     
-            
+
+
 
 
 

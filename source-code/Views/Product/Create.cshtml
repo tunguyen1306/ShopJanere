@@ -31,13 +31,12 @@
     </div>
 </div>
 <script>
-
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
-        bootbox.confirm("Lưu", function (isOK) {
-            if (isOK) {
-                $('#submitbutton').parents("form").submit();
-            }
-        });
+        if ($('#validation-form').valid()) {
+            $('#submitbutton').parents("form").submit();
+        }
+
+
     });
 </script>

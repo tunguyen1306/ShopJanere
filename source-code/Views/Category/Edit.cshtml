@@ -36,11 +36,10 @@
 
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
-        $('#submitbutton').parents("form").submit();
-        //bootbox.confirm("Lưu", function (isOK) {
-        //    if (isOK) {
-               
-        //    }
-        //});
+        if ($('#validation-form').valid()) {
+            $('#submitbutton').parents("form").submit();
+        }
+
+
     });
 </script>
