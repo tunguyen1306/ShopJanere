@@ -154,9 +154,11 @@ namespace WebApplication1.Controllers
 
                         string path = "";
                         path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                        var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
                         inputfile[i].SaveAs(path);
                         var tblPic = new artlink
                         {
+                            LINENO = picId.LINENO+1,
                             ARTNO = item.ARTNO,
                             LASTCHANGE = DateTime.Now,
                             CREATED = DateTime.Now,
@@ -164,10 +166,10 @@ namespace WebApplication1.Controllers
 
                         };
                         db.artlinks.Add(tblPic);
-
+                        db.SaveChanges();
                     }
                 }
-                db.SaveChanges();
+               
             }
             catch (DbEntityValidationException e)
             {
@@ -182,7 +184,7 @@ namespace WebApplication1.Controllers
                     }
                 }
             }
-            return View(item);
+            return RedirectToAction("Index");
         }
 
         // GET: /Product/Edit/5
