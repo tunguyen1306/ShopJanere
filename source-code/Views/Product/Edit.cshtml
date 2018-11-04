@@ -1,109 +1,43 @@
 ﻿@model WebApplication1.item
-
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
     veebdbEntities data = new veebdbEntities();
 }
 
-<h2>Edit</h2>
+<h2>CREATE NEW PRODUCT</h2>
 
-@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form", @class = "material" }))
-{
-    @Html.AntiForgeryToken()
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
 
-    <div class="form-horizontal">
-        <h4>item</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.ARTNO)
+        <div id="main_content" class="col-sm-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ARTCODE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ARTCODE)
-                @Html.ValidationMessageFor(model => model.ARTCODE)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ARTNAME, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ARTNAME)
-                @Html.ValidationMessageFor(model => model.ARTNAME)
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.WEBPRICE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.WEBPRICE)
-                @Html.ValidationMessageFor(model => model.WEBPRICE)
-            </div>
-        </div>
-
-        <div class="form-group">
-        @Html.LabelFor(model => model.CATEGORYNO, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <select id="CATEGORYNO" name="CATEGORYNO">
-                @foreach (var item in data.categories)
+            <div class="product_content">
+                @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
                 {
-                    if (int.Parse(item.CATEGORYNO.ToString()) == Model.CATEGORYNO)
-                    {
-                        <option value="@item.CATEGORYNO" selected>@item.CATEGORYNAME</option>
-                    }
-                    else
-                    {
-                        <option value="@item.CATEGORYNO">@item.CATEGORYNAME</option>
-                    }
+
+
+                    @Html.Partial("_Input")
+
+                    <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
+                    <a href="@Url.Action("Index","Product")">Cancel</a>
                 }
-            </select>
 
-        </div>
+            </div><!-- product_content -->
+
+        </div><!-- main_content -->
+
+
     </div>
-        
-
-
-
-
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PICTURENAME, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PICTURENAME)
-                @Html.ValidationMessageFor(model => model.PICTURENAME)
-            </div>
-        </div>
-        <div class="form-group">
-            
-            <div class="col-md-10">
-                <input type="file" id="inputfile" name="inputfile" />
-            </div>
-        </div>
-
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsBestSeller, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsBestSeller)
-                @Html.ValidationMessageFor(model => model.IsBestSeller)
-            </div>
-        </div>
-        
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    $("#submitbutton").on('click', function (e) {
+        e.preventDefault();
+        if ($('#validation-form').valid()) {
+            $('#submitbutton').parents("form").submit();
+        }
+
+
+    });
+</script>

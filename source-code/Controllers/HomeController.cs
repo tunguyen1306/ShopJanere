@@ -210,7 +210,7 @@ namespace WebApplication1.Controllers
             var restult = data.warehouses;
             return View(restult);
         }
-        public ActionResult Products(FormCollection FormCollection, int? Page_No,int? Page_Size,int categoryid=0)
+        public ActionResult Products(FormCollection FormCollection, int? Page_No, int? Page_Size, int groupno = 0)
         {
            /* int i = 0;
             int name = 1;
@@ -241,7 +241,7 @@ namespace WebApplication1.Controllers
             }
             ViewBag.ValueToSet = defaSize;
             int No_Of_Page = (Page_No ?? 1);
-            if (categoryid != 0)
+            /*if (groupid != 0)
             {
                 ViewBag.CategoryName = data.categories.Where(m => m.CATEGORYNO == categoryid).FirstOrDefault().CATEGORYNAME;
                 ViewBag.CategoryId = categoryid;
@@ -250,7 +250,7 @@ namespace WebApplication1.Controllers
             else
             {
                 @ViewBag.CategoryName = "Search";
-            }
+            }*/
             if (testdata != null)
             {
 
@@ -315,7 +315,7 @@ namespace WebApplication1.Controllers
             }
             else
             {
-                return View(result.ToPagedList(No_Of_Page, defaSize));
+                return View(result.Where(m=>m.GROUPNO == groupno).ToPagedList(No_Of_Page, defaSize));
             }
 
 
@@ -446,6 +446,11 @@ namespace WebApplication1.Controllers
             Session["ShoppingCart"] = null;
             return RedirectToAction("UpdateCart", "Home");
         }
+        public ActionResult Checkout()
+        {
+
+            return View();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -470,6 +475,13 @@ namespace WebApplication1.Controllers
         {
             List<metagrup> obj = new List<metagrup>();
             obj = data.metagrups.ToList();
+            SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
+            return Json(obg, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetMetaGroupMenu(int mastermetagroupid)
+        {
+            List<metagrup> obj = new List<metagrup>();
+            obj = data.metagrups.Where(m=>m.PARENTNO == mastermetagroupid).ToList();
             SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -500,11 +512,25 @@ namespace WebApplication1.Controllers
             SelectList obg = new SelectList(obj, "CatalogueCode", "CatalogueName", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetGroupMenu(int metagroupId)
+        {
+            List<artgrp> obj = new List<artgrp>();
+            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId).ToList();
+            SelectList obg = new SelectList(obj, "GroupNo", "GroupName", 0);
+            return Json(obg, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Catalogue(int metagroupId)
         {
             List<catalogue> obj = new List<catalogue>();
             obj = data.catalogues.Where(m => m.MetaGroupId == metagroupId).ToList();
             Session["Catalogue"] = data.metagrups.Where(m => m.METAGROUPNO == metagroupId).FirstOrDefault().METAGROUPNAME;
+            return View(obj);
+        }
+        public ActionResult Group(int metagroupId)
+        {
+            List<artgrp> obj = new List<artgrp>();
+            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId).ToList();
+            Session["Group"] = data.metagrups.Where(m => m.METAGROUPNO == metagroupId).FirstOrDefault().METAGROUPNAME;
             return View(obj);
         }
         public ActionResult GetCategory()

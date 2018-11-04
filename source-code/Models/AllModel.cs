@@ -10,6 +10,7 @@ namespace WebApplication1.Models
         public category tblCategory { get; set;}
         public catalogue tblCatalog { get; set;}
         public metagrup tblMetaGroup { get; set;}
+        public item tblitem { get; set;}
        
     }
 }

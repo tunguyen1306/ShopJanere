@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.item>
+﻿@model IEnumerable<WebApplication1.Models.AllModel>
 <table class="table list_product">
     <thead>
         <tr>
@@ -18,16 +18,20 @@
         {
             <tr>
                 <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
-                <td scope="col" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
-                <td scope="col" class="manage_column column_barcode">@item.ARTCODE</td>
+                <td scope="col" class="manage_column column_thumb">
+                    <img src="@item.tblitem.PICTURENAME" alt="">
+                </td>
+                <td scope="col" class="manage_column column_barcode">@item.tblitem.ARTCODE</td>
                 <td scope="col" class="manage_column column_number">4741444192161</td>
-                <td scope="col" class="manage_column column_product_name">@item.ARTNAME</td>
+                <td scope="col" class="manage_column column_product_name">@item.tblitem.ARTNAME</td>
                 <td scope="col" class="manage_column column_description">100 tk</td>
-                <td scope="col" class="manage_column column_category">Category</td>
+                <td scope="col" class="manage_column column_category">@item.tblCategory.CATEGORYNAME</td>
                 <td scope="col" class="manage_column column_price">10,38$</td>
                 <td scope="col" class="manage_column column_action">
-                    <a class="delete_action" href=""><i class="fas fa-times"></i></a>
-                    <a class="edit_action" href=""><i class="fas fa-edit"></i></a>
+                    <a class="edit_action" href="@Url.Action("Edit", "Product", new {id = item.tblitem.ARTNO})"><i class="fas fa-edit"></i></a>
+                    <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "Product", new {id = item.tblitem.ARTNO})"><i class="fas fa-times"></i></a>
+
+
                 </td>
             </tr>
         }

@@ -20,7 +20,8 @@
 
                             @Html.Partial("_Input")
                            
-                            <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
+                            <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">                      
+                                  <a href="@Url.Action("Index","Product")">Cancel</a>
                         }
                         
                     </div><!-- product_content -->
@@ -36,7 +37,5 @@
         if ($('#validation-form').valid()) {
             $('#submitbutton').parents("form").submit();
         }
-
-
     });
 </script>
