@@ -17,7 +17,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                <td id="" class="manage_column column_check item_check"><input value="@item.tblitem.ARTNO" name="ids" type="checkbox"></td>
                 <td scope="col" class="manage_column column_thumb">
                     <img src="@item.tblitem.PICTURENAME" alt="">
                 </td>
@@ -62,14 +62,33 @@
     $('#dropPage').on('change', function () {
         onPageChange($('#product-result').find('a[data-page="1"]'));
     });
+    $('#do_filter_action').on('click', function () {
+        onPageChange($('#product-result').find('a[data-page="1"]'));
+    });
+    $('#cb_select_all').on('click', function () {
 
+        $(".item_check input").prop("checked", this.checked);
+    });
+    $('.item_check input').on('click', function () {
+        var count = $(".item_check input").length;
+        var _count = $(".item_check input:checked").length;
+
+        $('#cb_select_all').prop("checked", count == _count);
+
+    });
+    
     function onPageChange(el) {
         if (!$(el).hasClass('disable')) {
             var page = $(el).attr('data-page');
             var view = $('#dropPage').val();
             var start = (page - 1) * view;
+            var tab = '@(ViewBag.Tab==null?"all":ViewBag.Tab)';
+            var cat = $('#filter_cat').val();
+            var wh = $('#filter_warhouse').val();
+            var stock = $('#filter_stock').val();
+            var store = $('#filter_store').val();
+            $.get('@Url.Action("IndexAjax", "Product")?tab=' + tab + '&cat=' + cat + '&wh=' + wh + '&stk=' + stock + '&str=' + store + '&start=' + start + '&view=' + view, function (data) {
 
-            $.get('@Url.Action("IndexAjax", "Product")?start=' + start + '&view=' + view, function (data) {
                 $('#product-result').html(data);
 
             });

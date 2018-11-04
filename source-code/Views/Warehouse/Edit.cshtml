@@ -36,7 +36,7 @@
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
         if ($('#validation-form').valid()) {
-            $('#submitbutton').parents("form").submit();
+            $('#validation-form')[0].submit();
         }
 
 

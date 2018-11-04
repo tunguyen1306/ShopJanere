@@ -94,7 +94,7 @@
     @foreach (var item in Model)
     {
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6" style="padding:1px;height:310px;">
-            <a href="@Url.Action("Catalogue", "Home", new { metagroupId = item.METAGROUPNO })">
+            <a href="@Url.Action("Group", "Home", new { metagroupId = item.METAGROUPNO })">
                 <div class="row">
                     <div class="col-lg-12">
                             <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
