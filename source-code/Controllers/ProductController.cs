@@ -277,13 +277,13 @@ namespace WebApplication1.Controllers
         public ActionResult Edit(item item, HttpPostedFileBase[] inputfile)
         {
 
-            var tem = db.items.FirstOrDefault(m => m.ARTCODE == item.ARTCODE);
+            var tem = db.items.Find(item.ARTNO);
             tem.WEBPRICE = item.WEBPRICE;
             tem.CATEGORYNO = item.CATEGORYNO;
-            tem.ARTNO = item.ARTNO;
             tem.ARTNAME = item.ARTNAME;
             tem.IsBestSeller = item.IsBestSeller;
-
+            db.Entry(tem).State = EntityState.Modified;
+            db.SaveChanges();
             for (int i = 0; i < inputfile.Length; i++)
             {
                 if (inputfile[i] != null)
@@ -291,24 +291,23 @@ namespace WebApplication1.Controllers
 
                     string path = "";
                     path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                    var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
                     inputfile[i].SaveAs(path);
                     var tblPic = new artlink
                     {
-                        ARTNO = tem.ARTNO,
+                        LINENO = picId.LINENO + 1,
+                        ARTNO = item.ARTNO,
                         LASTCHANGE = DateTime.Now,
                         CREATED = DateTime.Now,
                         LINK = path
 
                     };
                     db.artlinks.Add(tblPic);
-
+                    db.SaveChanges();
                 }
             }
-            db.SaveChanges();
+          
             return RedirectToAction("Index");
-
-
-            return View(item);
         }
         // GET: /Product/Delete/5
         public ActionResult Delete(int? id)
@@ -480,6 +479,18 @@ namespace WebApplication1.Controllers
             }
             return View();
 
+        }
+        public ActionResult DeleteImg(int? id)
+        {
+            
+            var item = db.artlinks.Find(id);
+            if (item!=null)
+            {
+                db.artlinks.Remove(item);
+                db.SaveChanges();
+            }
+            
+            return Json("");
         }
     }
 }

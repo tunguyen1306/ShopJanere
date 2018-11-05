@@ -3,7 +3,8 @@
     @{
          veebdbEntities db = new veebdbEntities();
     }
-<input type="text" name="ARTNAME" size="30" value="" id="product_name" placeholder="Product Name" class="form-control">
+
+@Html.TextBoxFor(x => x.ARTNAME, new { @class = "form-control", @placeholder = "Product Name" })
 <span>Link: http://shop.janere.ee/product?Code=123456</span>
 
 <div class="product_group">
@@ -98,11 +99,17 @@
                             var span = document.createElement('div');
                             span.setAttribute("class", "col-sm-2 cusDiv");
                             span.innerHTML = [
-                                '  <a class="delete_action btnDeleteImg" href=""><i class="fas fa-times"></i></a><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/> '
+                                '  <a class="delete_action btnDeleteImg" rel="0"><i class="fas fa-times"></i></a><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/> '
                             ].join('');
                             
                             document.getElementById('list').insertBefore(span, null);
-                            
+                            $(".delete_action").on('click', function (e) {
+                                var rs = confirm('Bạn muốn xóa hình này?');
+                                if (rs == true) {
+                                    $(this).parents('div').eq(0).remove();
+                                }
+
+                            });
                         };
                     })(f);
 
@@ -124,9 +131,9 @@
                     if (!string.IsNullOrEmpty(item.LINK))
                     {
 
-                        <div class="col-sm-3">
-                            <img src="~/Content/admin/images/1.jpg"/>
-                            <a href="#">Delete</a>
+                        <div class="col-sm-2 cusDiv">
+                            <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
+                            <img class="thumb" src="@item.LINK" title="24FB2DC8-3D38-4171-9FA2-695EA9C937CE.jpg">
                         </div>
                     }
                 }
@@ -229,7 +236,20 @@
 </div><!-- product_detail -->
 @Html.HiddenFor(x=>x.ARTNO)
 <script>
-  
+    $(".delete_action").on('click', function (e) {
+        var rs = confirm('Bạn muốn xóa hình này?');
+        if (rs == true) {
+            $(this).parents('div').eq(0).remove();
+        }
+        var idPic = $(this).attr('rel');
+        if (idPic!=0) {
+            $.get('@Url.Action("DeleteImg", "Product")?id=' + idPic, function (data) {
+
+              
+            });
+        }
+
+    });
     $('#GROUPNO').on('change', function () {
         var id = $(this).val();
         onPageChange(id);
@@ -250,14 +270,14 @@
             ARTNAME: {
                 required: true
             }
-           
+
 
 
         },
 
         messages: {
             ARTNAME: "Product Name do not empty"
-           
+
         },
 
 
