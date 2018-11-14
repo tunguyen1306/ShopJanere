@@ -1,255 +1,45 @@
-﻿@model WebApplication1.Models.AllLoggedUserInfo
+﻿@model WebApplication1.user
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>CREATE NEW user</h2>
 
-@using (Html.BeginForm("Edit", "AccountLogin", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>user</h4>
-        <hr />
-        @Html.ValidationSummary(true)
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
 
-        @Html.HiddenFor(model => model.user.Id)
+        <div id="main_content" class="col-sm-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.user.display, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.user.display)
-                @Html.ValidationMessageFor(model => model.user.display)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.user.username, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.user.username)
-                @Html.ValidationMessageFor(model => model.user.username)
-            </div>
-        </div>
+            <div class="product_content">
+                @using (Html.BeginForm("Edit", "AccountLogin", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form" }))
+                {
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.user.password, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.user.password)
-                @Html.ValidationMessageFor(model => model.user.password)
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.user.status, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.user.status)
-                @Html.ValidationMessageFor(model => model.user.status)
-            </div>
-        </div>
+                    @Html.Partial("_Input")
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.user.createdate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.user.createdate)
-                @Html.ValidationMessageFor(model => model.user.createdate)
-            </div>
-        </div>
+                    <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
+                    <a class="button button-sm" href="@Url.Action("Index","AccountLogin")">Cancel</a>
+                }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.user.updatedate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.user.updatedate)
-                @Html.ValidationMessageFor(model => model.user.updatedate)
-            </div>
-        </div>
-        <!--END USER -->
-        <!--START USERROLE -->
-        <div class="form-group">
-            <span>User role : </span>
-        </div>
-        <div class="form-group">
-            <select id="user_role.roleid">
-                <option value="2">Sale Manger</option>
-                <option value="3">Sale</option>
-                <option value="4">SEO</option>
-                <option value="5">Credit User</option>
-                <option value="6">Contract User</option>
-            </select>
+            </div><!-- product_content -->
 
-        </div>
-        <!--END USERROLE -->
-        <!--START USERDATA -->
-        <div class="form-group">
-            <span> firstname: </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.firstname)
-        </div>
+        </div><!-- main_content -->
 
-        <div class="form-group">
-            <span> lasname: </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.lasname)
-        </div>
 
-        <div class="form-group">
-            <span> contact_email: </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.contact_email)
-        </div>
-
-        <div class="form-group">
-            <span> contact_phone: </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.contact_phone)
-        </div>
-
-        <div class="form-group">
-            <span> company_name: </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.company_name)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_name : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_name)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_email : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_email)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_phone : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_phone)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_address1 : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_address1)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_address2 : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_address2)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_suburb : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_suburb)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_postcode : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_postcode)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_state : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_state)
-        </div>
-
-        <div class="form-group">
-            <span>delivery_contry : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.delivery_contry)
-        </div>
-
-        <div class="form-group">
-            <span>billing_name : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_name)
-        </div>
-
-        <div class="form-group">
-            <span>billing_email : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_email)
-        </div>
-
-        <div class="form-group">
-            <span>billing_phone : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_phone)
-        </div>
-
-        <div class="form-group">
-            <span>billing_address1 : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_address1)
-        </div>
-
-        <div class="form-group">
-            <span>billing_address2 : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_address2)
-        </div>
-
-        <div class="form-group">
-            <span>billing_suburb : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_suburb)
-        </div>
-
-        <div class="form-group">
-            <span>billing_poscode : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_poscode)
-        </div>
-
-        <div class="form-group">
-            <span>billing_state : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_state)
-        </div>
-
-        <div class="form-group">
-            <span>billing_country : </span>
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(model => model.userdata.billing_country)
-        </div>
-        <!--END END USERDATA -->
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+
+    $("#submitbutton").on('click', function (e) {
+        e.preventDefault();
+        if ($('#validation-form').valid()) {
+            $('#validation-form')[0].submit();
+        }
+
+
+    });
+</script>

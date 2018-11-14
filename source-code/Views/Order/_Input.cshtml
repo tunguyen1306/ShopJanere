@@ -1,0 +1,685 @@
+﻿@using System.Configuration
+@model WebApplication1.order
+@{
+    veebdbEntities db = new veebdbEntities();
+}
+
+<div class="row">
+    <div class="col-sm-4">
+
+        <div class="row">
+            <div class="col-md-12">
+                <label>General</label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Date</label>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="date" disabled="disabled" class="form-control" style="float: left; width: 100px;" />
+                            <div style="float: left; width: 10px; margin-left: 5px; margin-right: 5px;">@("@")</div>
+                            <input disabled="disabled" class="form-control" style="float: left; width: 30px; margin-left: 5px; margin-right: 5px;" />
+                            <div style="float: left; width: 10px; margin-left: 5px; margin-right: 5px;">:</div>
+                            <input disabled="disabled" class="form-control" style="float: left; width: 30px; margin-left: 5px; margin-right: 5px;" />
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    @Html.DropDownListFor(c => c.status, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+
+
+                </div>
+                <div class="form-group">
+                    <label>Clients</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+
+        <div class="row">
+            <div class="col-md-12">
+                <label>Payment Detail</label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>First Name</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Last Name</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Company</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Address</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+                    <br />
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Post Code</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Country</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>District</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Email</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Phone</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Payment method</label>
+                    @Html.DropDownListFor(c => c.status, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-4">
+
+        <div class="row">
+            <div class="col-md-12">
+                <label>Delivery Detail</label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>First Name</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Last Name</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Company</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Address</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+                    <br />
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Post Code</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Country</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>District</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Email</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Phone</label>
+                    @Html.TextBoxFor(x => x.clientID, new { @class = "form-control" })
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Payment method</label>
+                    @Html.DropDownListFor(c => c.status, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 table-responsive">
+        <table class="table list_product">
+            <thead>
+                <tr>
+                    <th id="cb" class="manage_column column_check"><input id="cb_select_all" type="checkbox"></th>
+
+                    <th scope="col" id="barcode" class="manage_column column_barcode">Order</th>
+                    <th scope="col" class="manage_column column_number">Amount</th>
+                    <th scope="col" id="product_name" class="manage_column column_product_name">Metagroup</th>
+                    <th scope="col" id="description" class="manage_column column_description">Item Description</th>
+                    <th scope="col" id="category" class="manage_column column_category">Notes</th>
+
+                    <th scope="col" class="manage_column column_action">Action</th>
+                </tr>
+            </thead>
+            <tbody class="addRowParent">
+               
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Items</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table list_product">
+                    <thead>
+                        <tr>
+                            <th id="cb" class="manage_column column_check">Product</th>
+
+                            <th scope="col" id="barcode" class="manage_column column_barcode">Amount</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="addRow"></tbody>
+                    <tfoot>
+                        <tr>
+                            <td><input type="text" name="country" id="_pBoxSearch_title" class="form-control" /></td>
+                            <td><input type="number" name="country" value="0" class="form-control" /></td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="page_action">
+                    <a class="btnAddOnTable">Add</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function typeAH(elid, url) {
+
+        @*function change_alias_space(alias) {
+            var str = alias;
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            // str = str.replace(/!|@("@")|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+            str = str.replace(/ + /g, " ");
+            if (str.indexOf('tai') > -1) {
+                str = str.replace(/tai /g, "tai ");
+            }
+            str = str.trim();
+            return str;
+        }*@
+        var timeout = null;
+        $("#" + elid).typeahead({
+            hint: false,
+            highlight: true,
+            autoSelect: false,
+            selectOnBlur: false,
+            changeInputOnMove: false,
+            changeInputOnSelect: false,
+            select: function () {
+                console.log("select");
+                var a = this.$menu.find(".active").data("value");
+                if (this.$element.data("active", a), this.autoSelect || a) {
+                    var b = this.updater(a);
+                    b || (b = ""), this.$element.val(this.displayText(b) || b).text(this.displayText(b) || b).change(), this.afterSelect(b), this.followLinkOnSelect && this.itemLink(a) ? (document.location = this.itemLink(a), this.afterSelect(b)) : this.followLinkOnSelect && !this.itemLink(a) ? this.afterEmptySelect(b) : this.afterSelect(b)
+                } else this.afterEmptySelect(b);
+
+
+
+                var rowTbale = "";
+                rowTbale += "<tr rel='" + map[b].id + "' class='tr_" + map[b].id + "'>" +
+                    "<td class=\"hiddeTd hidden\"><input type=\"checkbox\" id=\"cb_" + map[b].id + "\" value=\"" + map[b].id + "\"/></td>" +
+                    "<td><input type=\"hidden\" id=\"IdProduct_" + map[b].id + "\" name=\"IdProduct\" value=\"" + map[b].id + "\" />" + map[b].name + "</td>" +
+                    "<td><input id='amount_" + map[b].id + "' type='number' name='country' value='0' class='form-control' /></td>" +
+                    "<td class=\"hiddeTd hidden\">" + map[b].grp + "</td>" +
+                    "<td class=\"hiddeTd hidden\">" + map[b].des + "</td>" +
+                    "<td class=\"hiddeTd hidden\">" + map[b].des + "</td>" +
+                    "<td class=\"hiddeTd hidden\"> <a class=\"edit_action\" href=\"@Url.Action("Edit", "Order")/" + map[b].id + "\"><i class=\"fas fa-edit\"></i></a><a class=\"delete_action\" onclick=\"return confirm('Are you want delete ?')\" href=\"@Url.Action("Delete", "Order")/" + map[b].id + "\"><i class=\"fas fa-times\"></i></a></td>" +
+                    "</tr>";
+              
+                var check = $('.addRow').find('input[name="IdProduct"][value="' + map[b].id + '"]');
+                if (check.length==0) {
+                    $('.addRow').append(rowTbale);
+                    $('.addRow').find('.hiddeTd').addClass('hidden');
+
+                } else {
+                    var total = $('#amount_' + map[b].id).val();
+                    $('#amount_' + map[b].id).val(parseInt(total) + 1);
+                }
+                $('#_pBoxSearch_title').val('');
+                return this.hide();
+            },
+            click: function (a) {
+                console.log("click");
+                a.preventDefault(), this.skipShowHintOnFocus = !0, this.select(), this.$element.focus(), this.hide();
+            },
+            mouseenter: function (b) {
+                console.log("mouseenter");
+                this.mousedover = !0, this.$menu.find(".active").removeClass("active"), a(b.currentTarget).addClass("active");
+            },
+            mouseleave: function (a) {
+                console.log("mouseleave");
+                this.mousedover = !1, !this.focused && this.shown && this.hide();
+            },
+            mousedown: function (a) {
+                console.log("mousedown");
+                this.mouseddown = !0, this.$menu.one("mouseup", function(a) {
+                    this.mouseddown = !1;
+                }.bind(this));
+            },
+            touchstart: function (b) {
+                b.preventDefault(), this.$menu.find(".active").removeClass("active"), a(b.currentTarget).addClass("active");
+            },
+            touchend: function (a) {
+                a.preventDefault(), this.select(), this.$element.focus();
+            },
+            move: function (a) {
+                console.log("move");
+                if (this.shown) switch (a.keyCode) {
+                    case 9:
+                    case 13:
+                    case 27:
+                        a.preventDefault();
+                        break;
+                    case 38:
+                        if (a.shiftKey) return;
+                        a.preventDefault(), this.prev();
+                        break;
+                    case 40:
+                        if (a.shiftKey) return;
+                        a.preventDefault(), this.next();
+                }
+            },
+            display: 'value',
+            minLength: 2,
+            mousedover: false,
+            highlighter: function (item, value) {
+                var q =this.query.toLowerCase();
+                var hl = item.toLowerCase().replace(new RegExp('(' + q + ')', 'ig'),
+                    function ($1, match) {
+                        return '<strong>' + match + '</strong>';
+                    });
+                var item2 = value;
+                var bb = 0;
+                while (hl.indexOf("<strong>", bb) !== -1) {
+                    var begin = hl.indexOf("<strong>", bb);
+                    item2 = item2.substr(0, begin) + '<strong>' + item2.substr(begin, q.length) + '</strong>' + item2.substr(begin + q.length);
+                    bb = hl.indexOf("</strong>", bb) + "</strong>".length;
+                }
+                return item2;
+            }, matcher: function (item) {
+                var dd = ~item.toLowerCase().indexOf(this.query.toLowerCase());
+
+                return dd;
+            }
+            , render: function (items) {
+                var that = this;
+
+                items = $(items).map(function (i, item) {
+                    i = $(that.options.item).attr('data-value', JSON.stringify(item));
+                    var value = item;
+                    var id = item;
+                    i.find('a').html(that.highlighter(id, value));
+                    return i[0];
+                });
+
+                // items.first().addClass('active');
+                this.$menu.html(items);
+                return this;
+            },
+
+            source: function (request, response) {
+
+
+                if (timeout == null) {
+                    timeout = setTimeout(function () {
+                        $.ajax({
+                            url: url,
+                            data: "{ 'query': '" + request + "'}",
+                            dataType: "json",
+                            type: "POST",
+                            global: false,
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                items = [];
+                                map = {};
+                                $.each(data.data, function (i, item) {
+                                    var id = item.value;
+                                    var name = item.label;
+                                    var des = item.des;
+                                    var grp = item.grp;
+
+                                    map[name] = { id: id, name: name, des: des, grp: grp };
+                                    items.push(name);
+                                });
+                                response(items);
+                                $('#' + elid).parents('div').eq(0).find(".dropdown-menu").css("height", "auto");
+                            },
+                            error: function (response) {
+                                //alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                //  alert(response.responseText);
+                            }
+                        });
+                    }, 300);
+                } else {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function () {
+                        $.ajax({
+                            url: url,
+                            data: "{ 'query': '" + request + "'}",
+                            dataType: "json",
+                            type: "POST",
+                            global: false,
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                items = [];
+                                map = {};
+                                $.each(data.data, function (i, item) {
+                                    var id = item.value;
+                                    var name = item.label;
+                                    var des = item.des;
+                                    var grp = item.grp;
+
+                                    map[name] = { id: id, name: name, des: des, grp: grp };
+                                    items.push(name);
+                                });
+                                response(items);
+                                $('#' + elid).parents('div').eq(0).find(".dropdown-menu").css("height", "auto");
+                            },
+                            error: function (response) {
+                                //alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                //  alert(response.responseText);
+                            }
+                        });
+                    }, 300);
+                }
+
+
+            },
+            afterEmptySelect: function (val) {
+                this.hide();
+                console.log("===>");
+                //$('form#form-search').submit();
+            },
+
+            afterSelect: function (val) {
+                console.log("===>");
+                // window.location = "/admin/" + map[val].link + "/Details/" + map[val].id;
+            },
+            updater: function (item) {
+                /// $('#_pBoxSearch_title').val(item.substr(1, item.length - 2));
+                console.log("===>");
+                return item.substr(1, item.length - 2);
+            }
+        });
+    }
+
+    typeAH("_pBoxSearch_title", '@Url.Action("_AjaxAutoComplete","Order")');
+    $('.btnAddOnTable').on('click', function () {
+        addOnTable();
+    });
+    function addOnTable() {
+        $('.addRowParent').html($('.addRow').html());
+        $('.addRowParent').find('.hiddeTd').removeClass('hidden');
+        $('#myModal').modal('toggle');
+    }
+
+</script>
+@Html.HiddenFor(x => x.ocid)
+<script>
+    $('#validation-form').validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+            ARTNAME: {
+                required: true
+            }
+
+
+
+        },
+
+        messages: {
+            ARTNAME: "Order Name do not empty"
+
+        },
+
+
+        highlight: function (e) {
+
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+            } else {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            }
+
+
+        },
+
+        success: function (e) {
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+            }
+            else {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).closest('.form-group').find('.help-block').remove();
+            }
+
+        },
+
+        errorPlacement: function (error, element) {
+
+            if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                var controls = element.closest('div[class*="col-"]');
+                if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+            }
+            else if (element.is('.select2') || element.is('.js-select2-1')) {
+                if (element.parents('div').eq(0).is('.input-group')) {
+                    error.insertAfter(element.parents('div').eq(0));
+                } else {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+
+
+            }
+            else if (element.is('.file-upload')) {
+                error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+            }
+            else if (element.is('.chosen-select')) {
+                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+            }
+            else error.insertAfter(element);
+        },
+
+        submitHandler: function (form) {
+        },
+        invalidHandler: function (form) {
+        }
+    });
+</script>

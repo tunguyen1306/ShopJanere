@@ -21,7 +21,17 @@ namespace WebApplication1.Controllers
 
             return View(db.users);
         }
+        public ActionResult IndexAjax(int start = 0, int view = 10)
+        {
+            var listuser = db.users.ToList();
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = listuser.Count;
+            listuser = listuser.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listuser.Count;
 
+            return PartialView(listuser);
+        }
 
         // GET: /AccountLogin/Details/5
         public ActionResult Details(long? id)
@@ -30,12 +40,12 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            accountlogin accountlogin = db.accountlogins.Find(id);
-            if (accountlogin == null)
-            {
-                return HttpNotFound();
-            }
-            return View(accountlogin);
+            //accountlogin accountlogin = db.accountlogins.Find(id);
+            //if (accountlogin == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View();
         }
 
         // GET: /AccountLogin/Create
@@ -49,8 +59,8 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,display,username,password")] user user)
+       
+        public ActionResult Create(user user)
         {
             if (ModelState.IsValid)
             {
@@ -94,12 +104,13 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(AllLoggedUserInfo model)
+      
+        public ActionResult Edit(user model)
         {
-            var user = db.users.Where(m => m.Id == model.user.Id).FirstOrDefault();
+            var user = db.users.Find( model.Id);
+                db.Entry(user).State=EntityState.Modified;
                 db.SaveChanges();
-                return View(model);
+            return RedirectToAction("Index");
         }
 
         // GET: /AccountLogin/Delete/5
@@ -109,21 +120,21 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            accountlogin accountlogin = db.accountlogins.Find(id);
-            if (accountlogin == null)
-            {
-                return HttpNotFound();
-            }
-            return View(accountlogin);
+            //accountlogin accountlogin = db.accountlogins.Find(id);
+            //if (accountlogin == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View();
         }
 
         // POST: /AccountLogin/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult DeleteConfirmed(long id)
         {
-            accountlogin accountlogin = db.accountlogins.Find(id);
-            db.accountlogins.Remove(accountlogin);
+           // accountlogin accountlogin = db.accountlogins.Find(id);
+            //db.accountlogins.Remove(accountlogin);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,0 +1,108 @@
+﻿@model WebApplication1.settingtype
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>Setting Type Name</label>
+     
+            @Html.TextBoxFor(x=>x.name,new {@class= "form-control" })
+
+        </div>
+       
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>Status</label>
+
+
+            @Html.DropDownListFor(c => c.status, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@Html.HiddenFor(x=>x.id)
+
+<script>
+
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                name: {
+                    required: true
+                }
+
+
+            },
+
+            messages: {
+                name: "Setting Type Name do not empty"
+               
+
+
+            },
+
+
+            highlight: function (e) {
+
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+                } else {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                }
+
+
+            },
+
+            success: function (e) {
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+                }
+                else {
+                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).closest('.form-group').find('.help-block').remove();
+                }
+
+            },
+
+            errorPlacement: function (error, element) {
+
+                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if (element.is('.select2') || element.is('.js-select2-1')) {
+                    if (element.parents('div').eq(0).is('.input-group')) {
+                        error.insertAfter(element.parents('div').eq(0));
+                    } else {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+
+
+                }
+                else if (element.is('.file-upload')) {
+                    error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+                }
+                else if (element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else error.insertAfter(element);
+            },
+
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+            }
+        });
+
+
+</script>

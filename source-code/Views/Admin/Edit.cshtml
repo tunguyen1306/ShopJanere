@@ -1,0 +1,43 @@
+﻿@model WebApplication1.item
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    veebdbEntities data = new veebdbEntities();
+}
+
+<h2>CREATE NEW PRODUCT</h2>
+
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <div id="main_content" class="col-sm-12">
+
+            <div class="product_content">
+                @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
+                {
+
+
+                    @Html.Partial("_Input")
+
+                    <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
+                    <a href="@Url.Action("Index","Admin")">Cancel</a>
+                }
+
+            </div><!-- product_content -->
+
+        </div><!-- main_content -->
+
+
+    </div>
+</div>
+<script>
+    $("#submitbutton").on('click', function (e) {
+        e.preventDefault();
+        if ($('#validation-form').valid()) {
+            $('#validation-form')[0].submit();
+        }
+
+
+    });
+</script>
