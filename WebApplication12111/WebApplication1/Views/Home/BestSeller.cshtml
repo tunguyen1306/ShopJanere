@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+@model IEnumerable<WebApplication1.item>
+    @{
+        List<item> BestSellerProducts = (List<item>)Session["BestSellerProducts"];
+        if (BestSellerProducts.Count() > 4)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                <div class="col-lg-3 col-md-3  col-sm-3 col-xs-6" style="padding:0px;">
+                    <a href="@Url.Action("Product", "Home", new { Code = @BestSellerProducts[i].ARTCODE })">
+                        <div class="row home-bestseller" style="color: #666666;height:350px;">
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding:10px;">
+                                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @BestSellerProducts[i].PICTURENAME)))
+                                {
+                                    <img src="~/Content/ProductImage/@BestSellerProducts[i].PICTURENAME" style="width:100%;">
+                                }
+                                else
+                                {
+                                    <img src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;" />
+
+                                }
+                                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4;font-weight:bold;height:60px;">
+                                    @BestSellerProducts[i].ARTNAME
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
+                                <!-- $@BestSellerProducts[i].WEBPRICE-->
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold;">Width:</span> @BestSellerProducts[i].WIDTH
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold; color:#666666;">Height:</span> @BestSellerProducts[i].HEIGHT
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+                                <span style="font-weight: bold; color:#666666;">ArtCode:</span>@BestSellerProducts[i].ARTCODE
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            for (int i = 0; i < BestSellerProducts.Count(); i++)
+            {
+                <div class="col-lg-3 col-md-3  col-sm-3 col-xs-6" style="padding:1px;">
+                    <a href="@Url.Action("Product", "Home", new { Code = @BestSellerProducts[i].ARTCODE })">
+                        <div class="row  home-bestseller" style="color: #666666;">
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @BestSellerProducts[i].PICTURENAME)))
+                                {
+
+                                    <img src="~/Content/ProductImage/@BestSellerProducts[i].PICTURENAME" style="width: 100%;padding:15px 0px;">
+
+                                }
+                                else
+                                {
+
+                                    <img src="~/Content/ProductImage/notavailable.jpg" style="width: 100%; padding:15px 0px;" />
+
+                                }
+                                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4;height:60px;">
+                                    @BestSellerProducts[i].ARTNAME
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
+                                <!-- $@BestSellerProducts[i].WEBPRICE-->
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold;">Width:</span> @BestSellerProducts[i].WIDTH
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold; color:#666666;">Height:</span> @BestSellerProducts[i].HEIGHT
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+                                <span style="font-weight: bold; color:#666666;">ArtCode:</span>@BestSellerProducts[i].ARTCODE
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+
+    }

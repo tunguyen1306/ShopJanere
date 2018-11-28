@@ -4,6 +4,7 @@
         <tr>
 
 
+            <th scope="col" id="barcode" class="manage_column column_name">Id</th>
             <th scope="col" id="barcode" class="manage_column column_name">Name</th>
             <th scope="col" id="barcode" class="manage_column column_location">Status</th>
   
@@ -15,6 +16,9 @@
       @foreach (var item in Model)
       {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.name)
             </td>

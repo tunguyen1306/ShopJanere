@@ -5,17 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="veebdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="accountlogin">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="permission" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="artdimensions">
           <Key>
             <PropertyRef Name="LINENO" />
@@ -27,8 +16,8 @@
           <Property Name="HEIGHT" Type="decimal" Precision="18" Scale="3" />
           <Property Name="WIDTH" Type="decimal" Precision="18" Scale="3" />
           <Property Name="FRAGILE" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="artgrp">
           <Key>
@@ -39,8 +28,8 @@
           <Property Name="GROUPNAME" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="METAGROUPNO" Type="int" />
           <Property Name="EXPORTABLE" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="artlinks">
           <Key>
@@ -49,8 +38,8 @@
           <Property Name="LINENO" Type="int" Nullable="false" />
           <Property Name="ARTNO" Type="int" Nullable="false" />
           <Property Name="LINK" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="artnames">
           <Key>
@@ -61,8 +50,8 @@
           <Property Name="LANGNO" Type="smallint" Nullable="false" />
           <Property Name="NAME" Type="varchar" MaxLength="120" />
           <Property Name="INFO" Type="varchar" MaxLength="5000" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="artsize">
           <Key>
@@ -72,8 +61,8 @@
           <Property Name="SIZETBLNO" Type="smallint" Nullable="false" />
           <Property Name="SIZENAME" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="SIZECODE" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="barcode">
           <Key>
@@ -83,8 +72,8 @@
           <Property Name="ARTNO" Type="int" Nullable="false" />
           <Property Name="BARCODE" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="ISDEFAULT" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="boundart">
           <Key>
@@ -93,8 +82,8 @@
           <Property Name="BOUNDARTNO" Type="int" Nullable="false" />
           <Property Name="MASTERARTNO" Type="int" Nullable="false" />
           <Property Name="ARTNO" Type="int" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="cards">
           <Key>
@@ -103,8 +92,8 @@
           <Property Name="LINENO" Type="int" Nullable="false" />
           <Property Name="CARDNO" Type="varchar" MaxLength="19" Nullable="false" />
           <Property Name="CUSTNO" Type="int" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="catalogue">
           <Key>
@@ -122,8 +111,8 @@
           <Property Name="CATEGORYNO" Type="int" Nullable="false" />
           <Property Name="CATEGORYCODE" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="CATEGORYNAME" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CatalogueCode" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="color">
@@ -133,8 +122,8 @@
           <Property Name="COLORNO" Type="int" Nullable="false" />
           <Property Name="COLORCODE" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="COLORNAME" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="cumain">
           <Key>
@@ -161,8 +150,8 @@
           <Property Name="DISCOUNT" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="DISCCLASS" Type="smallint" />
           <Property Name="PRICEGROUPNO" Type="smallint" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="cuperson">
           <Key>
@@ -180,8 +169,8 @@
           <Property Name="INFO" Type="varchar" MaxLength="40" />
           <Property Name="POSONLY" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="CUSTPERSONCODE" Type="varchar" MaxLength="12" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="custgroup">
           <Key>
@@ -190,8 +179,8 @@
           <Property Name="custgroupno" Type="int" Nullable="false" />
           <Property Name="custgroupname" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="custgroupcode" Type="varchar" MaxLength="12" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="eligibility">
           <Key>
@@ -206,8 +195,8 @@
           <Property Name="LIMITQUANTITY" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="MASTERELIGIBILITYNO" Type="int" />
           <Property Name="STOCKNO" Type="smallint" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="file">
           <Key>
@@ -231,7 +220,7 @@
           <Property Name="INVOICE" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="CUSTCODE" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="TYPE" Type="int" Nullable="false" />
-          <Property Name="INVOICEDATE" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="INVOICEDATE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CUSTNAME" Type="varchar" MaxLength="40" />
           <Property Name="PHONE" Type="varchar" MaxLength="25" />
           <Property Name="EMAIL" Type="varchar" MaxLength="40" />
@@ -255,7 +244,7 @@
             <PropertyRef Name="INVOICE_LOG_ID" />
           </Key>
           <Property Name="INVOICE_LOG_ID" Type="bigint" Nullable="false" />
-          <Property Name="EVENT_TIME" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="EVENT_TIME" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WEB_INVOICE" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="WEB_INVOICE_DATE" Type="date" Nullable="false" />
           <Property Name="INVOICE" Type="varchar" MaxLength="16" Nullable="false" />
@@ -263,7 +252,7 @@
           <Property Name="TYPE" Type="smallint" Nullable="false" />
           <Property Name="CLASS" Type="smallint" />
           <Property Name="STATUS" Type="char" MaxLength="1" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -317,8 +306,8 @@
           <Property Name="DISCGROUP" Type="smallint" />
           <Property Name="WEBID" Type="int" />
           <Property Name="PAYMENTTERM" Type="varchar" MaxLength="5" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IsBestSeller" Type="bool" />
         </EntityType>
         <EntityType Name="langnames">
@@ -331,8 +320,8 @@
           <Property Name="LANGNO" Type="smallint" Nullable="false" />
           <Property Name="NAME" Type="varchar" MaxLength="120" />
           <Property Name="INFO" Type="varchar" MaxLength="5000" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="language">
           <Key>
@@ -340,8 +329,20 @@
           </Key>
           <Property Name="LANGNO" Type="smallint" Nullable="false" />
           <Property Name="LANGNAME" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="500" />
+          <Property Name="parentId" Type="int" />
+          <Property Name="isparent" Type="int" />
+          <Property Name="link" Type="varchar" MaxLength="255" />
+          <Property Name="order" Type="int" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="metagrup">
           <Key>
@@ -351,9 +352,107 @@
           <Property Name="METAGROUPCODE" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="METAGROUPNAME" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="PARENTNO" Type="int" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IsActive" Type="bool" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="ocid" />
+          </Key>
+          <Property Name="ocid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fname" Type="varchar" MaxLength="100" />
+          <Property Name="lname" Type="varchar" MaxLength="100" />
+          <Property Name="companyname" Type="varchar" MaxLength="100" />
+          <Property Name="tradingname" Type="varchar" MaxLength="100" />
+          <Property Name="promotionName" Type="varchar" MaxLength="200" />
+          <Property Name="abn" Type="varchar" MaxLength="100" />
+          <Property Name="addr1" Type="varchar" MaxLength="100" />
+          <Property Name="addr2" Type="varchar" MaxLength="100" />
+          <Property Name="addr3" Type="varchar" MaxLength="100" />
+          <Property Name="postcode" Type="varchar" MaxLength="10" />
+          <Property Name="mobile" Type="varchar" MaxLength="20" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="fax" Type="varchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="country" Type="int" />
+          <Property Name="showsubtotal" Type="varchar" MaxLength="20" />
+          <Property Name="clientID" Type="int" />
+          <Property Name="submitDate" Type="datetime" Precision="0" />
+          <Property Name="lastupdate" Type="datetime" Precision="0" />
+          <Property Name="visible" Type="varchar" MaxLength="20" />
+          <Property Name="tradeterms" Type="varchar" MaxLength="100" />
+          <Property Name="ordertotal" Type="float" />
+          <Property Name="ordertotalexc" Type="float" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+          <Property Name="currency" Type="varchar" MaxLength="20" />
+          <Property Name="exchangerate" Type="float" />
+          <Property Name="profileID" Type="int" />
+          <Property Name="closedDate" Type="datetime" Precision="0" />
+          <Property Name="d_attention" Type="varchar" MaxLength="100" />
+          <Property Name="d_fname" Type="varchar" MaxLength="100" />
+          <Property Name="d_lname" Type="varchar" MaxLength="100" />
+          <Property Name="d_addr1" Type="varchar" MaxLength="200" />
+          <Property Name="d_addr2" Type="varchar" MaxLength="200" />
+          <Property Name="d_addr3" Type="varchar" MaxLength="200" />
+          <Property Name="d_postcode" Type="varchar" MaxLength="10" />
+          <Property Name="d_companyname" Type="varchar" MaxLength="100" />
+          <Property Name="d_country" Type="varchar" MaxLength="50" />
+          <Property Name="d_email" Type="varchar" MaxLength="100" />
+          <Property Name="d_mobile" Type="varchar" MaxLength="20" />
+          <Property Name="d_phone" Type="varchar" MaxLength="20" />
+          <Property Name="d_fax" Type="varchar" MaxLength="100" />
+          <Property Name="d_notes" Type="varchar" MaxLength="200" />
+          <Property Name="payoption" Type="varchar" MaxLength="100" />
+          <Property Name="tobeinvoiced" Type="varchar" MaxLength="20" />
+          <Property Name="order_group" Type="varchar" MaxLength="100" />
+          <Property Name="d_status" Type="varchar" MaxLength="100" />
+          <Property Name="b_attention" Type="varchar" MaxLength="100" />
+          <Property Name="b_fname" Type="varchar" MaxLength="100" />
+          <Property Name="b_lname" Type="varchar" MaxLength="100" />
+          <Property Name="b_companyname" Type="varchar" MaxLength="100" />
+          <Property Name="b_abn" Type="varchar" MaxLength="20" />
+          <Property Name="b_addr1" Type="varchar" MaxLength="100" />
+          <Property Name="b_addr2" Type="varchar" MaxLength="100" />
+          <Property Name="b_addr3" Type="varchar" MaxLength="100" />
+          <Property Name="b_postcode" Type="varchar" MaxLength="10" />
+          <Property Name="b_country" Type="varchar" MaxLength="50" />
+          <Property Name="b_mobile" Type="varchar" MaxLength="20" />
+          <Property Name="b_phone" Type="varchar" MaxLength="20" />
+          <Property Name="b_fax" Type="varchar" MaxLength="100" />
+          <Property Name="b_email" Type="varchar" MaxLength="100" />
+          <Property Name="b_addrid" Type="int" />
+          <Property Name="onhold" Type="varchar" MaxLength="20" />
+          <Property Name="ocupdatedby" Type="int" />
+          <Property Name="oclastupdated" Type="datetime" Precision="0" />
+          <Property Name="notes" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="orderdetails">
+          <Key>
+            <PropertyRef Name="prodetailid" />
+          </Key>
+          <Property Name="prodetailid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ocid" Type="bigint" Nullable="false" />
+          <Property Name="ocdetailcode" Type="varchar" MaxLength="20" />
+          <Property Name="ocdetailname" Type="varchar" MaxLength="200" />
+          <Property Name="ocdetailqty" Type="int" />
+          <Property Name="ocdetailprice" Type="float" />
+          <Property Name="ocdetailgst" Type="float" />
+          <Property Name="imagepath" Type="int" />
+          <Property Name="itemtype" Type="varchar" MaxLength="50" />
+          <Property Name="totalrequest" Type="tinyint" />
+          <Property Name="qtysent" Type="tinyint" />
+          <Property Name="taxRate" Type="float" />
+          <Property Name="PriceInTax" Type="float" />
+          <Property Name="PriceExTax" Type="float" />
+          <Property Name="itemId" Type="int" />
+        </EntityType>
+        <EntityType Name="orderstatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="ordritms">
           <Key>
@@ -365,7 +464,7 @@
           <Property Name="ARTNO" Type="int" Nullable="false" />
           <Property Name="QTY" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="ARRIVEDATE" Type="timestamp" Precision="0" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
         </EntityType>
         <EntityType Name="outitems">
@@ -390,7 +489,7 @@
           <Property Name="INVNO" Type="int" Nullable="false" />
           <Property Name="LINENO" Type="int" Nullable="false" />
           <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="PAYDATE" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="PAYDATE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PAYDOC" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <EntityType Name="pricelist">
@@ -406,8 +505,8 @@
           <Property Name="PRICEBLOCKED" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="CURRENCY_CODE" Type="varchar" MaxLength="3" />
           <Property Name="PRICEGROUPNO" Type="smallint" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="prices">
           <Key>
@@ -418,8 +517,8 @@
           <Property Name="PRICELISTNO" Type="smallint" Nullable="false" />
           <Property Name="PRICE" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="PASSIVE" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="producer">
           <Key>
@@ -428,8 +527,8 @@
           <Property Name="PRODUCERNO" Type="int" Nullable="false" />
           <Property Name="PRODUCERCODE" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="PRODUCERNAME" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="promotion">
           <Key>
@@ -441,8 +540,8 @@
           <Property Name="TYPENO" Type="smallint" Nullable="false" />
           <Property Name="FIRSTDATE" Type="date" Nullable="false" />
           <Property Name="LASTDATE" Type="date" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="promotionrule">
           <Key>
@@ -455,8 +554,8 @@
           <Property Name="ADJUSTMENTTYPENO" Type="smallint" Nullable="false" />
           <Property Name="ADJUSTMENTVALUE" Type="decimal" Precision="18" Scale="4" />
           <Property Name="PRICEGROUPNO" Type="smallint" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -464,6 +563,41 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="status" Type="int" />
+          <Property Name="typeId" Type="int" />
+          <Property Name="createdate" Type="datetime" Precision="0" />
+          <Property Name="lastupdate" Type="datetime" Precision="0" />
+          <Property Name="description" Type="varchar" MaxLength="2550" />
+          <Property Name="urlimage" Type="varchar" MaxLength="2550" />
+          <Property Name="link" Type="varchar" MaxLength="2550" />
+          <Property Name="order" Type="int" />
+          <Property Name="IdGroup" Type="int" />
+          <Property Name="code" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="settingtype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <EntityType Name="sliders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+          <Property Name="Images" Type="varchar" MaxLength="255" />
+          <Property Name="Code" Type="int" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="stgrp">
           <Key>
@@ -473,8 +607,8 @@
           <Property Name="STOCKGROUPNAME" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="STOCKGROUPCODE" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="EXPORTABLE" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="stgrp2">
           <Key>
@@ -485,8 +619,8 @@
           <Property Name="STOCKGROUP2CODE" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="PARENTNO" Type="int" />
           <Property Name="EXPORTABLE" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="stgrpmap">
           <Key>
@@ -495,8 +629,8 @@
           <Property Name="ARTNO" Type="int" Nullable="false" />
           <Property Name="STOCKGROUPNO" Type="smallint" Nullable="false" />
           <Property Name="LINENO" Type="int" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="stgrpmap2">
           <Key>
@@ -505,8 +639,8 @@
           <Property Name="ARTNO" Type="int" Nullable="false" />
           <Property Name="STOCKGROUP2NO" Type="smallint" Nullable="false" />
           <Property Name="LINENO" Type="int" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="stock">
           <Key>
@@ -517,8 +651,8 @@
           <Property Name="ARTNO" Type="int" Nullable="false" />
           <Property Name="VOLUME" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="SIZENO" Type="smallint" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="stockcod">
           <Key>
@@ -527,8 +661,8 @@
           <Property Name="STOCKNO" Type="smallint" Nullable="false" />
           <Property Name="STOCKCODE" Type="varchar" MaxLength="12" />
           <Property Name="STOCKNAME" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="stores">
           <Key>
@@ -546,8 +680,8 @@
           <Property Name="SUPPLYCYCLENO" Type="smallint" Nullable="false" />
           <Property Name="SUPPLYCYCLECODE" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="SUPPLYCYCLENAME" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="trans_log">
           <Key>
@@ -557,7 +691,7 @@
           <Property Name="TABLE_NAME" Type="varchar" MaxLength="31" Nullable="false" />
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="EVENT_CODE" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="EVENT_TIME" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="EVENT_TIME" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RETRY_COUNT" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
@@ -620,109 +754,116 @@
           <Property Name="Location" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.veebdb.vw_disc_rule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vw_disc_rule">
-          <Key>
-            <PropertyRef Name="PROMOTIONCODE" />
-            <PropertyRef Name="PROMOTIONNAME" />
-            <PropertyRef Name="FIRSTDATE" />
-            <PropertyRef Name="THRESHOLDQUANTITY" />
-            <PropertyRef Name="LIMITQUANTITY" />
-            <PropertyRef Name="THRESHOLDAMOUNT" />
-            <PropertyRef Name="LIMITAMOUNT" />
-            <PropertyRef Name="ADJUSTMENTTYPENO" />
-            <PropertyRef Name="LASTCHANGE" />
-            <PropertyRef Name="CREATED" />
-          </Key>
-          <Property Name="PROMOTIONCODE" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="PROMOTIONNAME" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="FIRSTDATE" Type="date" Nullable="false" />
-          <Property Name="LASTDATE" Type="date" />
-          <Property Name="DISCGROUP" Type="int" />
-          <Property Name="DISCCLASS" Type="int" />
-          <Property Name="THRESHOLDQUANTITY" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="LIMITQUANTITY" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="THRESHOLDAMOUNT" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="LIMITAMOUNT" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="ADJUSTMENTTYPENO" Type="smallint" Nullable="false" />
-          <Property Name="ADJUSTMENTVALUE" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="PRICEGROUPNO" Type="smallint" />
-          <Property Name="STOCKNO" Type="smallint" />
-          <Property Name="LASTCHANGE" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CREATED" Type="timestamp" Precision="0" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="veebdbModelStoreContainer">
-          <EntitySet Name="accountlogin" EntityType="Self.accountlogin" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="artdimensions" EntityType="Self.artdimensions" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="artgrp" EntityType="Self.artgrp" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="artlinks" EntityType="Self.artlinks" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="artnames" EntityType="Self.artnames" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="artsize" EntityType="Self.artsize" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="barcode" EntityType="Self.barcode" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="boundart" EntityType="Self.boundart" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="cards" EntityType="Self.cards" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="catalogue" EntityType="Self.catalogue" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="category" EntityType="Self.category" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="color" EntityType="Self.color" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="cumain" EntityType="Self.cumain" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="cuperson" EntityType="Self.cuperson" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="custgroup" EntityType="Self.custgroup" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="eligibility" EntityType="Self.eligibility" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="file" EntityType="Self.file" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="invoice" EntityType="Self.invoice" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="invoice_log" EntityType="Self.invoice_log" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="item" EntityType="Self.item" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="langnames" EntityType="Self.langnames" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="language" EntityType="Self.language" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="metagrup" EntityType="Self.metagrup" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="ordritms" EntityType="Self.ordritms" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="outitems" EntityType="Self.outitems" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="payments" EntityType="Self.payments" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="pricelist" EntityType="Self.pricelist" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="prices" EntityType="Self.prices" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="producer" EntityType="Self.producer" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="promotion" EntityType="Self.promotion" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="promotionrule" EntityType="Self.promotionrule" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="role" EntityType="Self.role" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="stgrp" EntityType="Self.stgrp" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="stgrp2" EntityType="Self.stgrp2" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="stgrpmap" EntityType="Self.stgrpmap" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="stgrpmap2" EntityType="Self.stgrpmap2" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="stock" EntityType="Self.stock" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="stockcod" EntityType="Self.stockcod" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="stores" EntityType="Self.stores" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="supplycycle" EntityType="Self.supplycycle" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="trans_log" EntityType="Self.trans_log" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="user" EntityType="Self.user" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="user_role" EntityType="Self.user_role" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="userdata" EntityType="Self.userdata" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="warehouse" EntityType="Self.warehouse" Schema="veebdb" store:Type="Tables" />
-          <EntitySet Name="vw_disc_rule" EntityType="Self.vw_disc_rule" store:Type="Views" store:Schema="veebdb">
-            <DefiningQuery>SELECT
-`vw_disc_rule`.`PROMOTIONCODE`, 
-`vw_disc_rule`.`PROMOTIONNAME`, 
-`vw_disc_rule`.`FIRSTDATE`, 
-`vw_disc_rule`.`LASTDATE`, 
-`vw_disc_rule`.`DISCGROUP`, 
-`vw_disc_rule`.`DISCCLASS`, 
-`vw_disc_rule`.`THRESHOLDQUANTITY`, 
-`vw_disc_rule`.`LIMITQUANTITY`, 
-`vw_disc_rule`.`THRESHOLDAMOUNT`, 
-`vw_disc_rule`.`LIMITAMOUNT`, 
-`vw_disc_rule`.`ADJUSTMENTTYPENO`, 
-`vw_disc_rule`.`ADJUSTMENTVALUE`, 
-`vw_disc_rule`.`PRICEGROUPNO`, 
-`vw_disc_rule`.`STOCKNO`, 
-`vw_disc_rule`.`LASTCHANGE`, 
-`vw_disc_rule`.`CREATED`
-FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="artdimensions" EntityType="Self.artdimensions" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="artgrp" EntityType="Self.artgrp" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="artlinks" EntityType="Self.artlinks" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="artnames" EntityType="Self.artnames" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="artsize" EntityType="Self.artsize" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="barcode" EntityType="Self.barcode" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="boundart" EntityType="Self.boundart" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="cards" EntityType="Self.cards" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="catalogue" EntityType="Self.catalogue" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="color" EntityType="Self.color" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="cumain" EntityType="Self.cumain" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="cuperson" EntityType="Self.cuperson" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="custgroup" EntityType="Self.custgroup" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="eligibility" EntityType="Self.eligibility" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="file" EntityType="Self.file" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="invoice" EntityType="Self.invoice" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="invoice_log" EntityType="Self.invoice_log" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="item" EntityType="Self.item" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="langnames" EntityType="Self.langnames" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="language" EntityType="Self.language" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="menu" EntityType="Self.menu" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="metagrup" EntityType="Self.metagrup" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="orderdetails" EntityType="Self.orderdetails" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="orderstatus" EntityType="Self.orderstatus" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="ordritms" EntityType="Self.ordritms" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="outitems" EntityType="Self.outitems" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="payments" EntityType="Self.payments" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="pricelist" EntityType="Self.pricelist" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="prices" EntityType="Self.prices" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="producer" EntityType="Self.producer" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="promotion" EntityType="Self.promotion" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="promotionrule" EntityType="Self.promotionrule" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="setting" EntityType="Self.setting" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="settingtype" EntityType="Self.settingtype" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="sliders" EntityType="Self.sliders" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="stgrp" EntityType="Self.stgrp" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="stgrp2" EntityType="Self.stgrp2" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="stgrpmap" EntityType="Self.stgrpmap" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="stgrpmap2" EntityType="Self.stgrpmap2" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="stock" EntityType="Self.stock" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="stockcod" EntityType="Self.stockcod" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="stores" EntityType="Self.stores" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="supplycycle" EntityType="Self.supplycycle" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="trans_log" EntityType="Self.trans_log" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="user_role" EntityType="Self.user_role" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="userdata" EntityType="Self.userdata" Schema="shopjanere" store:Type="Tables" />
+          <EntitySet Name="warehouse" EntityType="Self.warehouse" Schema="shopjanere" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="veebdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="veebdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="artdimensions" EntityType="veebdbModel.artdimension" />
+          <EntitySet Name="artgrps" EntityType="veebdbModel.artgrp" />
+          <EntitySet Name="artlinks" EntityType="veebdbModel.artlink" />
+          <EntitySet Name="artnames" EntityType="veebdbModel.artname" />
+          <EntitySet Name="artsizes" EntityType="veebdbModel.artsize" />
+          <EntitySet Name="barcodes" EntityType="veebdbModel.barcode" />
+          <EntitySet Name="boundarts" EntityType="veebdbModel.boundart" />
+          <EntitySet Name="cards" EntityType="veebdbModel.card" />
+          <EntitySet Name="catalogues" EntityType="veebdbModel.catalogue" />
+          <EntitySet Name="categories" EntityType="veebdbModel.category" />
+          <EntitySet Name="colors" EntityType="veebdbModel.color" />
+          <EntitySet Name="cumains" EntityType="veebdbModel.cumain" />
+          <EntitySet Name="cupersons" EntityType="veebdbModel.cuperson" />
+          <EntitySet Name="custgroups" EntityType="veebdbModel.custgroup" />
+          <EntitySet Name="eligibilities" EntityType="veebdbModel.eligibility" />
+          <EntitySet Name="files" EntityType="veebdbModel.file" />
+          <EntitySet Name="invoices" EntityType="veebdbModel.invoice" />
+          <EntitySet Name="invoice_log" EntityType="veebdbModel.invoice_log" />
+          <EntitySet Name="items" EntityType="veebdbModel.item" />
+          <EntitySet Name="langnames" EntityType="veebdbModel.langname" />
+          <EntitySet Name="languages" EntityType="veebdbModel.language" />
+          <EntitySet Name="metagrups" EntityType="veebdbModel.metagrup" />
+          <EntitySet Name="orderdetails" EntityType="veebdbModel.orderdetail" />
+          <EntitySet Name="ordritms" EntityType="veebdbModel.ordritm" />
+          <EntitySet Name="outitems" EntityType="veebdbModel.outitem" />
+          <EntitySet Name="payments" EntityType="veebdbModel.payment" />
+          <EntitySet Name="pricelists" EntityType="veebdbModel.pricelist" />
+          <EntitySet Name="prices" EntityType="veebdbModel.price" />
+          <EntitySet Name="producers" EntityType="veebdbModel.producer" />
+          <EntitySet Name="promotions" EntityType="veebdbModel.promotion" />
+          <EntitySet Name="promotionrules" EntityType="veebdbModel.promotionrule" />
+          <EntitySet Name="roles" EntityType="veebdbModel.role" />
+          <EntitySet Name="stgrps" EntityType="veebdbModel.stgrp" />
+          <EntitySet Name="stgrp2" EntityType="veebdbModel.stgrp2" />
+          <EntitySet Name="stgrpmaps" EntityType="veebdbModel.stgrpmap" />
+          <EntitySet Name="stgrpmap2" EntityType="veebdbModel.stgrpmap2" />
+          <EntitySet Name="stocks" EntityType="veebdbModel.stock" />
+          <EntitySet Name="stockcods" EntityType="veebdbModel.stockcod" />
+          <EntitySet Name="stores" EntityType="veebdbModel.store" />
+          <EntitySet Name="supplycycles" EntityType="veebdbModel.supplycycle" />
+          <EntitySet Name="trans_log" EntityType="veebdbModel.trans_log" />
+          <EntitySet Name="users" EntityType="veebdbModel.user" />
+          <EntitySet Name="user_role" EntityType="veebdbModel.user_role" />
+          <EntitySet Name="userdatas" EntityType="veebdbModel.userdata" />
+          <EntitySet Name="warehouses" EntityType="veebdbModel.warehouse" />
+          <EntitySet Name="settings" EntityType="veebdbModel.setting" />
+          <EntitySet Name="settingtypes" EntityType="veebdbModel.settingtype" />
+          <EntitySet Name="menus" EntityType="veebdbModel.menu" />
+          <EntitySet Name="orders" EntityType="veebdbModel.order" />
+          <EntitySet Name="sliders" EntityType="veebdbModel.slider" />
+          <EntitySet Name="orderstatus" EntityType="veebdbModel.orderstatu" />
+        </EntityContainer>
         <EntityType Name="artdimension">
           <Key>
             <PropertyRef Name="LINENO" />
@@ -733,21 +874,21 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="LEN" Type="Decimal" />
           <Property Name="HEIGHT" Type="Decimal" />
           <Property Name="WIDTH" Type="Decimal" />
-          <Property Name="FRAGILE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="FRAGILE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="artgrp">
           <Key>
             <PropertyRef Name="GROUPNO" />
           </Key>
           <Property Name="GROUPNO" Type="Int32" Nullable="false" />
-          <Property Name="GROUPCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GROUPNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GROUPCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="METAGROUPNO" Type="Int32" />
-          <Property Name="EXPORTABLE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="artlink">
           <Key>
@@ -755,58 +896,10 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           </Key>
           <Property Name="LINENO" Type="Int32" Nullable="false" />
           <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="LINK" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LINK" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityContainer Name="veebdbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="artdimensions" EntityType="Self.artdimension" />
-          <EntitySet Name="artgrps" EntityType="Self.artgrp" />
-          <EntitySet Name="artlinks" EntityType="Self.artlink" />
-          <EntitySet Name="artnames" EntityType="veebdbModel.artname" />
-          <EntitySet Name="artsizes" EntityType="veebdbModel.artsize" />
-          <EntitySet Name="barcodes" EntityType="veebdbModel.barcode" />
-          <EntitySet Name="boundarts" EntityType="veebdbModel.boundart" />
-          <EntitySet Name="cards" EntityType="veebdbModel.card" />
-          <EntitySet Name="colors" EntityType="veebdbModel.color" />
-          <EntitySet Name="cumains" EntityType="veebdbModel.cumain" />
-          <EntitySet Name="cupersons" EntityType="veebdbModel.cuperson" />
-          <EntitySet Name="custgroups" EntityType="veebdbModel.custgroup" />
-          <EntitySet Name="eligibilities" EntityType="veebdbModel.eligibility" />
-          <EntitySet Name="invoices" EntityType="veebdbModel.invoice" />
-          <EntitySet Name="invoice_log" EntityType="veebdbModel.invoice_log" />
-          <EntitySet Name="langnames" EntityType="veebdbModel.langname" />
-          <EntitySet Name="languages" EntityType="veebdbModel.language" />
-          <EntitySet Name="ordritms" EntityType="veebdbModel.ordritm" />
-          <EntitySet Name="outitems" EntityType="veebdbModel.outitem" />
-          <EntitySet Name="payments" EntityType="veebdbModel.payment" />
-          <EntitySet Name="pricelists" EntityType="veebdbModel.pricelist" />
-          <EntitySet Name="prices" EntityType="veebdbModel.price" />
-          <EntitySet Name="producers" EntityType="veebdbModel.producer" />
-          <EntitySet Name="promotions" EntityType="veebdbModel.promotion" />
-          <EntitySet Name="promotionrules" EntityType="veebdbModel.promotionrule" />
-          <EntitySet Name="stgrps" EntityType="veebdbModel.stgrp" />
-          <EntitySet Name="stgrp2" EntityType="veebdbModel.stgrp2" />
-          <EntitySet Name="stgrpmaps" EntityType="veebdbModel.stgrpmap" />
-          <EntitySet Name="stgrpmap2" EntityType="veebdbModel.stgrpmap2" />
-          <EntitySet Name="stocks" EntityType="veebdbModel.stock" />
-          <EntitySet Name="stockcods" EntityType="veebdbModel.stockcod" />
-          <EntitySet Name="supplycycles" EntityType="veebdbModel.supplycycle" />
-          <EntitySet Name="trans_log" EntityType="veebdbModel.trans_log" />
-          <EntitySet Name="vw_disc_rule" EntityType="veebdbModel.vw_disc_rule" />
-          <EntitySet Name="accountlogins" EntityType="veebdbModel.accountlogin" />
-          <EntitySet Name="warehouses" EntityType="veebdbModel.warehouse" />
-          <EntitySet Name="catalogues" EntityType="veebdbModel.catalogue" />
-          <EntitySet Name="categories" EntityType="veebdbModel.category" />
-          <EntitySet Name="stores" EntityType="veebdbModel.store" />
-          <EntitySet Name="files" EntityType="veebdbModel.file" />
-          <EntitySet Name="roles" EntityType="veebdbModel.role" />
-          <EntitySet Name="users" EntityType="veebdbModel.user" />
-          <EntitySet Name="user_role" EntityType="veebdbModel.user_role" />
-          <EntitySet Name="userdatas" EntityType="veebdbModel.userdata" />
-          <EntitySet Name="metagrups" EntityType="veebdbModel.metagrup" />
-          <EntitySet Name="items" EntityType="veebdbModel.item" />
-        </EntityContainer>
         <EntityType Name="artname">
           <Key>
             <PropertyRef Name="ARTNO" />
@@ -816,8 +909,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="LANGNO" Type="Int16" Nullable="false" />
           <Property Name="NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="INFO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="artsize">
           <Key>
@@ -827,8 +920,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="SIZETBLNO" Type="Int16" Nullable="false" />
           <Property Name="SIZENAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="SIZECODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="barcode">
           <Key>
@@ -838,8 +931,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="ARTNO" Type="Int32" Nullable="false" />
           <Property Name="BARCODE1" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="ISDEFAULT" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="boundart">
           <Key>
@@ -848,8 +941,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="BOUNDARTNO" Type="Int32" Nullable="false" />
           <Property Name="MASTERARTNO" Type="Int32" Nullable="false" />
           <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="card">
           <Key>
@@ -858,8 +951,28 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="LINENO" Type="Int32" Nullable="false" />
           <Property Name="CARDNO" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
           <Property Name="CUSTNO" Type="Int32" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="catalogue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatalogueCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CatalogueName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MetaGroupId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="CATEGORYNO" />
+          </Key>
+          <Property Name="CATEGORYNO" Type="Int32" Nullable="false" />
+          <Property Name="CATEGORYCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="CATEGORYNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatalogueCode" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="color">
           <Key>
@@ -868,8 +981,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="COLORNO" Type="Int32" Nullable="false" />
           <Property Name="COLORCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="COLORNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="cumain">
           <Key>
@@ -896,8 +1009,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="DISCOUNT" Type="Decimal" Nullable="false" />
           <Property Name="DISCCLASS" Type="Int16" />
           <Property Name="PRICEGROUPNO" Type="Int16" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="cuperson">
           <Key>
@@ -915,8 +1028,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="INFO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="POSONLY" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="CUSTPERSONCODE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="custgroup">
           <Key>
@@ -925,8 +1038,8 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="custgroupno" Type="Int32" Nullable="false" />
           <Property Name="custgroupname" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="custgroupcode" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="eligibility">
           <Key>
@@ -941,8 +1054,22 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="LIMITQUANTITY" Type="Decimal" Nullable="false" />
           <Property Name="MASTERELIGIBILITYNO" Type="Int32" />
           <Property Name="STOCKNO" Type="Int16" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="UploadDate" Type="DateTime" Nullable="false" />
+          <Property Name="UploadBy" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FileAddress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="invoice">
           <Key>
@@ -952,7 +1079,7 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="INVOICE1" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="CUSTCODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="TYPE" Type="Int32" Nullable="false" />
-          <Property Name="INVOICEDATE" Type="DateTime" Nullable="false" />
+          <Property Name="INVOICEDATE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CUSTNAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="PHONE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
@@ -976,7 +1103,7 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
             <PropertyRef Name="INVOICE_LOG_ID" />
           </Key>
           <Property Name="INVOICE_LOG_ID" Type="Int64" Nullable="false" />
-          <Property Name="EVENT_TIME" Type="DateTime" Nullable="false" />
+          <Property Name="EVENT_TIME" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WEB_INVOICE" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="WEB_INVOICE_DATE" Type="DateTime" Nullable="false" />
           <Property Name="INVOICE" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
@@ -984,381 +1111,7 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="TYPE" Type="Int16" Nullable="false" />
           <Property Name="CLASS" Type="Int16" />
           <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="langname">
-          <Key>
-            <PropertyRef Name="LINENO" />
-          </Key>
-          <Property Name="LINENO" Type="Int32" Nullable="false" />
-          <Property Name="TABLEID" Type="Int32" Nullable="false" />
-          <Property Name="LINEID" Type="Int32" Nullable="false" />
-          <Property Name="LANGNO" Type="Int16" Nullable="false" />
-          <Property Name="NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="INFO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="language">
-          <Key>
-            <PropertyRef Name="LANGNO" />
-          </Key>
-          <Property Name="LANGNO" Type="Int16" Nullable="false" />
-          <Property Name="LANGNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ordritm">
-          <Key>
-            <PropertyRef Name="ORDERNO" />
-            <PropertyRef Name="LINENO" />
-          </Key>
-          <Property Name="ORDERNO" Type="Int32" Nullable="false" />
-          <Property Name="LINENO" Type="Int32" Nullable="false" />
-          <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="QTY" Type="Decimal" Nullable="false" />
-          <Property Name="ARRIVEDATE" Type="DateTime" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="outitem">
-          <Key>
-            <PropertyRef Name="INVNO" />
-            <PropertyRef Name="LINENO" />
-          </Key>
-          <Property Name="INVNO" Type="Int32" Nullable="false" />
-          <Property Name="LINENO" Type="Int32" Nullable="false" />
-          <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="QTY" Type="Decimal" Nullable="false" />
-          <Property Name="AMOUNT" Type="Decimal" Nullable="false" />
-          <Property Name="VATAMOUNT" Type="Decimal" />
-          <Property Name="RCOMMENT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="SIZENO" Type="Int16" />
-        </EntityType>
-        <EntityType Name="payment">
-          <Key>
-            <PropertyRef Name="INVNO" />
-            <PropertyRef Name="LINENO" />
-          </Key>
-          <Property Name="INVNO" Type="Int32" Nullable="false" />
-          <Property Name="LINENO" Type="Int32" Nullable="false" />
-          <Property Name="AMOUNT" Type="Decimal" Nullable="false" />
-          <Property Name="PAYDATE" Type="DateTime" Nullable="false" />
-          <Property Name="PAYDOC" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="pricelist">
-          <Key>
-            <PropertyRef Name="PRICELISTNO" />
-          </Key>
-          <Property Name="PRICELISTNO" Type="Int16" Nullable="false" />
-          <Property Name="PRICELISTCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="PRICELISTNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="FIRSTDATE" Type="DateTime" />
-          <Property Name="LASTDATE" Type="DateTime" />
-          <Property Name="CUSTNO" Type="Int32" />
-          <Property Name="PRICEBLOCKED" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="CURRENCY_CODE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="PRICEGROUPNO" Type="Int16" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="price">
-          <Key>
-            <PropertyRef Name="PRICENO" />
-          </Key>
-          <Property Name="PRICENO" Type="Int32" Nullable="false" />
-          <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="PRICELISTNO" Type="Int16" Nullable="false" />
-          <Property Name="PRICE1" Type="Decimal" Nullable="false" />
-          <Property Name="PASSIVE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="producer">
-          <Key>
-            <PropertyRef Name="PRODUCERNO" />
-          </Key>
-          <Property Name="PRODUCERNO" Type="Int32" Nullable="false" />
-          <Property Name="PRODUCERCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="PRODUCERNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="promotion">
-          <Key>
-            <PropertyRef Name="PROMOTIONNO" />
-          </Key>
-          <Property Name="PROMOTIONNO" Type="Int16" Nullable="false" />
-          <Property Name="PROMOTIONCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="PROMOTIONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="TYPENO" Type="Int16" Nullable="false" />
-          <Property Name="FIRSTDATE" Type="DateTime" Nullable="false" />
-          <Property Name="LASTDATE" Type="DateTime" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="promotionrule">
-          <Key>
-            <PropertyRef Name="PROMOTIONRULENO" />
-          </Key>
-          <Property Name="PROMOTIONRULENO" Type="Int32" Nullable="false" />
-          <Property Name="PROMOTIONNO" Type="Int16" Nullable="false" />
-          <Property Name="ELIGIBILITYNO" Type="Int32" Nullable="false" />
-          <Property Name="TYPENO" Type="Int16" Nullable="false" />
-          <Property Name="ADJUSTMENTTYPENO" Type="Int16" Nullable="false" />
-          <Property Name="ADJUSTMENTVALUE" Type="Decimal" />
-          <Property Name="PRICEGROUPNO" Type="Int16" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="stgrp">
-          <Key>
-            <PropertyRef Name="STOCKGROUPNO" />
-          </Key>
-          <Property Name="STOCKGROUPNO" Type="Int16" Nullable="false" />
-          <Property Name="STOCKGROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="STOCKGROUPCODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="stgrp2">
-          <Key>
-            <PropertyRef Name="STOCKGROUP2NO" />
-          </Key>
-          <Property Name="STOCKGROUP2NO" Type="Int16" Nullable="false" />
-          <Property Name="STOCKGROUP2NAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="STOCKGROUP2CODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="PARENTNO" Type="Int32" />
-          <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="stgrpmap">
-          <Key>
-            <PropertyRef Name="LINENO" />
-          </Key>
-          <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="STOCKGROUPNO" Type="Int16" Nullable="false" />
-          <Property Name="LINENO" Type="Int32" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="stgrpmap2">
-          <Key>
-            <PropertyRef Name="LINENO" />
-          </Key>
-          <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="STOCKGROUP2NO" Type="Int16" Nullable="false" />
-          <Property Name="LINENO" Type="Int32" Nullable="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="stock">
-          <Key>
-            <PropertyRef Name="LINENO" />
-          </Key>
-          <Property Name="LINENO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="STOCKNO" Type="Int16" Nullable="false" />
-          <Property Name="ARTNO" Type="Int32" Nullable="false" />
-          <Property Name="VOLUME" Type="Decimal" Nullable="false" />
-          <Property Name="SIZENO" Type="Int16" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="stockcod">
-          <Key>
-            <PropertyRef Name="STOCKNO" />
-          </Key>
-          <Property Name="STOCKNO" Type="Int16" Nullable="false" />
-          <Property Name="STOCKCODE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="STOCKNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="supplycycle">
-          <Key>
-            <PropertyRef Name="SUPPLYCYCLENO" />
-          </Key>
-          <Property Name="SUPPLYCYCLENO" Type="Int16" Nullable="false" />
-          <Property Name="SUPPLYCYCLECODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="SUPPLYCYCLENAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="trans_log">
-          <Key>
-            <PropertyRef Name="TRANS_LOG_ID" />
-          </Key>
-          <Property Name="TRANS_LOG_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TABLE_NAME" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="EVENT_CODE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="EVENT_TIME" Type="DateTime" Nullable="false" />
-          <Property Name="RETRY_COUNT" Type="Int16" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_disc_rule">
-          <Key>
-            <PropertyRef Name="PROMOTIONCODE" />
-            <PropertyRef Name="PROMOTIONNAME" />
-            <PropertyRef Name="FIRSTDATE" />
-            <PropertyRef Name="THRESHOLDQUANTITY" />
-            <PropertyRef Name="LIMITQUANTITY" />
-            <PropertyRef Name="THRESHOLDAMOUNT" />
-            <PropertyRef Name="LIMITAMOUNT" />
-            <PropertyRef Name="ADJUSTMENTTYPENO" />
-            <PropertyRef Name="LASTCHANGE" />
-            <PropertyRef Name="CREATED" />
-          </Key>
-          <Property Name="PROMOTIONCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="PROMOTIONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="FIRSTDATE" Type="DateTime" Nullable="false" />
-          <Property Name="LASTDATE" Type="DateTime" />
-          <Property Name="DISCGROUP" Type="Int32" />
-          <Property Name="DISCCLASS" Type="Int32" />
-          <Property Name="THRESHOLDQUANTITY" Type="Decimal" Nullable="false" />
-          <Property Name="LIMITQUANTITY" Type="Decimal" Nullable="false" />
-          <Property Name="THRESHOLDAMOUNT" Type="Decimal" Nullable="false" />
-          <Property Name="LIMITAMOUNT" Type="Decimal" Nullable="false" />
-          <Property Name="ADJUSTMENTTYPENO" Type="Int16" Nullable="false" />
-          <Property Name="ADJUSTMENTVALUE" Type="Decimal" />
-          <Property Name="PRICEGROUPNO" Type="Int16" />
-          <Property Name="STOCKNO" Type="Int16" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="accountlogin">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="permission" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="warehouse">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Location" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="catalogue">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CatalogueCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CatalogueName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="MetaGroupId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="category">
-          <Key>
-            <PropertyRef Name="CATEGORYNO" />
-          </Key>
-          <Property Name="CATEGORYNO" Type="Int32" Nullable="false" />
-          <Property Name="CATEGORYCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="CATEGORYNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-          <Property Name="CatalogueCode" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="store">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Location" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="file">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Kind" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="UploadDate" Type="DateTime" Nullable="false" />
-          <Property Name="UploadBy" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FileAddress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="display" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="createdate" Type="DateTime" Nullable="false" />
-          <Property Name="updatedate" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="user_role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userid" Type="Int32" Nullable="false" />
-          <Property Name="roleid" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="userdata">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userid" Type="Int32" Nullable="false" />
-          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="lasname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="contact_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="contact_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="company_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_suburb" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="delivery_postcode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="delivery_contry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="billing_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="billing_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="billing_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="billing_address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="billing_address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="billing_suburb" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="billing_poscode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="billing_state" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="billing_country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="metagrup">
-          <Key>
-            <PropertyRef Name="METAGROUPNO" />
-          </Key>
-          <Property Name="METAGROUPNO" Type="Int32" Nullable="false" />
-          <Property Name="METAGROUPCODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="METAGROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="PARENTNO" Type="Int32" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -1412,11 +1165,455 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <Property Name="DISCGROUP" Type="Int16" />
           <Property Name="WEBID" Type="Int32" />
           <Property Name="PAYMENTTERM" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" />
-          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IsBestSeller" Type="Boolean" />
         </EntityType>
-      </Schema>
+        <EntityType Name="langname">
+          <Key>
+            <PropertyRef Name="LINENO" />
+          </Key>
+          <Property Name="LINENO" Type="Int32" Nullable="false" />
+          <Property Name="TABLEID" Type="Int32" Nullable="false" />
+          <Property Name="LINEID" Type="Int32" Nullable="false" />
+          <Property Name="LANGNO" Type="Int16" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="INFO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="language">
+          <Key>
+            <PropertyRef Name="LANGNO" />
+          </Key>
+          <Property Name="LANGNO" Type="Int16" Nullable="false" />
+          <Property Name="LANGNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="metagrup">
+          <Key>
+            <PropertyRef Name="METAGROUPNO" />
+          </Key>
+          <Property Name="METAGROUPNO" Type="Int32" Nullable="false" />
+          <Property Name="METAGROUPCODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="METAGROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PARENTNO" Type="Int32" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="orderdetail">
+          <Key>
+            <PropertyRef Name="prodetailid" />
+          </Key>
+          <Property Name="prodetailid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ocid" Type="Int64" Nullable="false" />
+          <Property Name="ocdetailcode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ocdetailname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ocdetailqty" Type="Int32" />
+          <Property Name="ocdetailprice" Type="Single" />
+          <Property Name="ocdetailgst" Type="Single" />
+          <Property Name="imagepath" Type="Int32" />
+          <Property Name="itemtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="totalrequest" Type="SByte" />
+          <Property Name="qtysent" Type="SByte" />
+          <Property Name="taxRate" Type="Single" />
+          <Property Name="PriceInTax" Type="Single" />
+          <Property Name="PriceExTax" Type="Single" />
+          <Property Name="itemId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ordritm">
+          <Key>
+            <PropertyRef Name="ORDERNO" />
+            <PropertyRef Name="LINENO" />
+          </Key>
+          <Property Name="ORDERNO" Type="Int32" Nullable="false" />
+          <Property Name="LINENO" Type="Int32" Nullable="false" />
+          <Property Name="ARTNO" Type="Int32" Nullable="false" />
+          <Property Name="QTY" Type="Decimal" Nullable="false" />
+          <Property Name="ARRIVEDATE" Type="DateTime" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="outitem">
+          <Key>
+            <PropertyRef Name="INVNO" />
+            <PropertyRef Name="LINENO" />
+          </Key>
+          <Property Name="INVNO" Type="Int32" Nullable="false" />
+          <Property Name="LINENO" Type="Int32" Nullable="false" />
+          <Property Name="ARTNO" Type="Int32" Nullable="false" />
+          <Property Name="QTY" Type="Decimal" Nullable="false" />
+          <Property Name="AMOUNT" Type="Decimal" Nullable="false" />
+          <Property Name="VATAMOUNT" Type="Decimal" />
+          <Property Name="RCOMMENT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SIZENO" Type="Int16" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="INVNO" />
+            <PropertyRef Name="LINENO" />
+          </Key>
+          <Property Name="INVNO" Type="Int32" Nullable="false" />
+          <Property Name="LINENO" Type="Int32" Nullable="false" />
+          <Property Name="AMOUNT" Type="Decimal" Nullable="false" />
+          <Property Name="PAYDATE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PAYDOC" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="pricelist">
+          <Key>
+            <PropertyRef Name="PRICELISTNO" />
+          </Key>
+          <Property Name="PRICELISTNO" Type="Int16" Nullable="false" />
+          <Property Name="PRICELISTCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="PRICELISTNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="FIRSTDATE" Type="DateTime" />
+          <Property Name="LASTDATE" Type="DateTime" />
+          <Property Name="CUSTNO" Type="Int32" />
+          <Property Name="PRICEBLOCKED" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CURRENCY_CODE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="PRICEGROUPNO" Type="Int16" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="price">
+          <Key>
+            <PropertyRef Name="PRICENO" />
+          </Key>
+          <Property Name="PRICENO" Type="Int32" Nullable="false" />
+          <Property Name="ARTNO" Type="Int32" Nullable="false" />
+          <Property Name="PRICELISTNO" Type="Int16" Nullable="false" />
+          <Property Name="PRICE1" Type="Decimal" Nullable="false" />
+          <Property Name="PASSIVE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="producer">
+          <Key>
+            <PropertyRef Name="PRODUCERNO" />
+          </Key>
+          <Property Name="PRODUCERNO" Type="Int32" Nullable="false" />
+          <Property Name="PRODUCERCODE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="PRODUCERNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="promotion">
+          <Key>
+            <PropertyRef Name="PROMOTIONNO" />
+          </Key>
+          <Property Name="PROMOTIONNO" Type="Int16" Nullable="false" />
+          <Property Name="PROMOTIONCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PROMOTIONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="TYPENO" Type="Int16" Nullable="false" />
+          <Property Name="FIRSTDATE" Type="DateTime" Nullable="false" />
+          <Property Name="LASTDATE" Type="DateTime" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="promotionrule">
+          <Key>
+            <PropertyRef Name="PROMOTIONRULENO" />
+          </Key>
+          <Property Name="PROMOTIONRULENO" Type="Int32" Nullable="false" />
+          <Property Name="PROMOTIONNO" Type="Int16" Nullable="false" />
+          <Property Name="ELIGIBILITYNO" Type="Int32" Nullable="false" />
+          <Property Name="TYPENO" Type="Int16" Nullable="false" />
+          <Property Name="ADJUSTMENTTYPENO" Type="Int16" Nullable="false" />
+          <Property Name="ADJUSTMENTVALUE" Type="Decimal" />
+          <Property Name="PRICEGROUPNO" Type="Int16" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="stgrp">
+          <Key>
+            <PropertyRef Name="STOCKGROUPNO" />
+          </Key>
+          <Property Name="STOCKGROUPNO" Type="Int16" Nullable="false" />
+          <Property Name="STOCKGROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="STOCKGROUPCODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="stgrp2">
+          <Key>
+            <PropertyRef Name="STOCKGROUP2NO" />
+          </Key>
+          <Property Name="STOCKGROUP2NO" Type="Int16" Nullable="false" />
+          <Property Name="STOCKGROUP2NAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="STOCKGROUP2CODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="PARENTNO" Type="Int32" />
+          <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="stgrpmap">
+          <Key>
+            <PropertyRef Name="LINENO" />
+          </Key>
+          <Property Name="ARTNO" Type="Int32" Nullable="false" />
+          <Property Name="STOCKGROUPNO" Type="Int16" Nullable="false" />
+          <Property Name="LINENO" Type="Int32" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="stgrpmap2">
+          <Key>
+            <PropertyRef Name="LINENO" />
+          </Key>
+          <Property Name="ARTNO" Type="Int32" Nullable="false" />
+          <Property Name="STOCKGROUP2NO" Type="Int16" Nullable="false" />
+          <Property Name="LINENO" Type="Int32" Nullable="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="stock">
+          <Key>
+            <PropertyRef Name="LINENO" />
+          </Key>
+          <Property Name="LINENO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STOCKNO" Type="Int16" Nullable="false" />
+          <Property Name="ARTNO" Type="Int32" Nullable="false" />
+          <Property Name="VOLUME" Type="Decimal" Nullable="false" />
+          <Property Name="SIZENO" Type="Int16" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="stockcod">
+          <Key>
+            <PropertyRef Name="STOCKNO" />
+          </Key>
+          <Property Name="STOCKNO" Type="Int16" Nullable="false" />
+          <Property Name="STOCKCODE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="STOCKNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="supplycycle">
+          <Key>
+            <PropertyRef Name="SUPPLYCYCLENO" />
+          </Key>
+          <Property Name="SUPPLYCYCLENO" Type="Int16" Nullable="false" />
+          <Property Name="SUPPLYCYCLECODE" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="SUPPLYCYCLENAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="trans_log">
+          <Key>
+            <PropertyRef Name="TRANS_LOG_ID" />
+          </Key>
+          <Property Name="TRANS_LOG_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TABLE_NAME" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="EVENT_CODE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="EVENT_TIME" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RETRY_COUNT" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="createdate" Type="DateTime" Nullable="false" />
+          <Property Name="updatedate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="roleid" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="userdata">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lasname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contact_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contact_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="company_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_suburb" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="delivery_postcode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_contry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="billing_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="billing_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="billing_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="billing_address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="billing_address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="billing_suburb" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="billing_poscode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="billing_state" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="billing_country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="typeId" Type="Int32" />
+          <Property Name="createdate" Type="DateTime" />
+          <Property Name="lastupdate" Type="DateTime" />
+          <Property Name="description" Type="String" MaxLength="2550" FixedLength="false" Unicode="false" />
+          <Property Name="urlimage" Type="String" MaxLength="2550" FixedLength="false" Unicode="false" />
+          <Property Name="link" Type="String" MaxLength="2550" FixedLength="false" Unicode="false" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="IdGroup" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="settingtype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="parentId" Type="Int32" />
+          <Property Name="isparent" Type="Int32" />
+          <Property Name="link" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="ocid" />
+          </Key>
+          <Property Name="ocid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="companyname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="tradingname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="promotionName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="abn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="addr1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="addr2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="addr3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fax" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="Int32" />
+          <Property Name="showsubtotal" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="clientID" Type="Int32" />
+          <Property Name="submitDate" Type="DateTime" />
+          <Property Name="lastupdate" Type="DateTime" />
+          <Property Name="visible" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="tradeterms" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ordertotal" Type="Single" />
+          <Property Name="ordertotalexc" Type="Single" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="currency" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="exchangerate" Type="Single" />
+          <Property Name="profileID" Type="Int32" />
+          <Property Name="closedDate" Type="DateTime" />
+          <Property Name="d_attention" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="d_fname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="d_lname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="d_addr1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="d_addr2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="d_addr3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="d_postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="d_companyname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="d_country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="d_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="d_mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="d_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="d_fax" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="d_notes" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="payoption" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="tobeinvoiced" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="order_group" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="d_status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_attention" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_fname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_lname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_companyname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_abn" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="b_addr1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_addr2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_addr3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="b_country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="b_mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="b_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="b_fax" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="b_addrid" Type="Int32" />
+          <Property Name="onhold" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ocupdatedby" Type="Int32" />
+          <Property Name="oclastupdated" Type="DateTime" />
+          <Property Name="notes" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="slider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Images" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="orderstatu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1425,39 +1622,39 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
           <EntitySetMapping Name="artdimensions">
             <EntityTypeMapping TypeName="veebdbModel.artdimension">
               <MappingFragment StoreEntitySet="artdimensions">
-                <ScalarProperty Name="LINENO" ColumnName="LINENO" />
-                <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
-                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
-                <ScalarProperty Name="LEN" ColumnName="LEN" />
-                <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
-                <ScalarProperty Name="WIDTH" ColumnName="WIDTH" />
-                <ScalarProperty Name="FRAGILE" ColumnName="FRAGILE" />
-                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
                 <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+                <ScalarProperty Name="FRAGILE" ColumnName="FRAGILE" />
+                <ScalarProperty Name="WIDTH" ColumnName="WIDTH" />
+                <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
+                <ScalarProperty Name="LEN" ColumnName="LEN" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+                <ScalarProperty Name="LINENO" ColumnName="LINENO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="artgrps">
             <EntityTypeMapping TypeName="veebdbModel.artgrp">
               <MappingFragment StoreEntitySet="artgrp">
-                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
-                <ScalarProperty Name="GROUPCODE" ColumnName="GROUPCODE" />
-                <ScalarProperty Name="GROUPNAME" ColumnName="GROUPNAME" />
-                <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
-                <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
-                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
                 <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+                <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
+                <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
+                <ScalarProperty Name="GROUPNAME" ColumnName="GROUPNAME" />
+                <ScalarProperty Name="GROUPCODE" ColumnName="GROUPCODE" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="artlinks">
             <EntityTypeMapping TypeName="veebdbModel.artlink">
               <MappingFragment StoreEntitySet="artlinks">
-                <ScalarProperty Name="LINENO" ColumnName="LINENO" />
-                <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
-                <ScalarProperty Name="LINK" ColumnName="LINK" />
-                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
                 <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+                <ScalarProperty Name="LINK" ColumnName="LINK" />
+                <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+                <ScalarProperty Name="LINENO" ColumnName="LINENO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1516,6 +1713,28 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
                 <ScalarProperty Name="CUSTNO" ColumnName="CUSTNO" />
                 <ScalarProperty Name="CARDNO" ColumnName="CARDNO" />
                 <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catalogues">
+            <EntityTypeMapping TypeName="veebdbModel.catalogue">
+              <MappingFragment StoreEntitySet="catalogue">
+                <ScalarProperty Name="MetaGroupId" ColumnName="MetaGroupId" />
+                <ScalarProperty Name="CatalogueName" ColumnName="CatalogueName" />
+                <ScalarProperty Name="CatalogueCode" ColumnName="CatalogueCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="veebdbModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="CatalogueCode" ColumnName="CatalogueCode" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+                <ScalarProperty Name="CATEGORYNAME" ColumnName="CATEGORYNAME" />
+                <ScalarProperty Name="CATEGORYCODE" ColumnName="CATEGORYCODE" />
+                <ScalarProperty Name="CATEGORYNO" ColumnName="CATEGORYNO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1607,6 +1826,21 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="files">
+            <EntityTypeMapping TypeName="veebdbModel.file">
+              <MappingFragment StoreEntitySet="file">
+                <ScalarProperty Name="FileAddress" ColumnName="FileAddress" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UploadBy" ColumnName="UploadBy" />
+                <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="invoices">
             <EntityTypeMapping TypeName="veebdbModel.invoice">
               <MappingFragment StoreEntitySet="invoice">
@@ -1651,6 +1885,63 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="veebdbModel.item">
+              <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="IsBestSeller" ColumnName="IsBestSeller" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+                <ScalarProperty Name="PAYMENTTERM" ColumnName="PAYMENTTERM" />
+                <ScalarProperty Name="WEBID" ColumnName="WEBID" />
+                <ScalarProperty Name="DISCGROUP" ColumnName="DISCGROUP" />
+                <ScalarProperty Name="SUPPLYCYCLENO" ColumnName="SUPPLYCYCLENO" />
+                <ScalarProperty Name="SIZETBLNO" ColumnName="SIZETBLNO" />
+                <ScalarProperty Name="SIZENO" ColumnName="SIZENO" />
+                <ScalarProperty Name="PACKAGEVOLUME2" ColumnName="PACKAGEVOLUME2" />
+                <ScalarProperty Name="PACKAGEVOLUME" ColumnName="PACKAGEVOLUME" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="CHECKBOX6" ColumnName="CHECKBOX6" />
+                <ScalarProperty Name="CHECKBOX5" ColumnName="CHECKBOX5" />
+                <ScalarProperty Name="CHECKBOX4" ColumnName="CHECKBOX4" />
+                <ScalarProperty Name="CHECKBOX3" ColumnName="CHECKBOX3" />
+                <ScalarProperty Name="CHECKBOX2" ColumnName="CHECKBOX2" />
+                <ScalarProperty Name="CHECKBOX1" ColumnName="CHECKBOX1" />
+                <ScalarProperty Name="UNITDESCR" ColumnName="UNITDESCR" />
+                <ScalarProperty Name="UNITNAME" ColumnName="UNITNAME" />
+                <ScalarProperty Name="WIDTH" ColumnName="WIDTH" />
+                <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
+                <ScalarProperty Name="LEN" ColumnName="LEN" />
+                <ScalarProperty Name="INFO6" ColumnName="INFO6" />
+                <ScalarProperty Name="INFO5" ColumnName="INFO5" />
+                <ScalarProperty Name="INFO4" ColumnName="INFO4" />
+                <ScalarProperty Name="INFO3" ColumnName="INFO3" />
+                <ScalarProperty Name="INFO2" ColumnName="INFO2" />
+                <ScalarProperty Name="INFO1" ColumnName="INFO1" />
+                <ScalarProperty Name="COLLATIONUNIT" ColumnName="COLLATIONUNIT" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="NOTADDPOSTAGEFEE" ColumnName="NOTADDPOSTAGEFEE" />
+                <ScalarProperty Name="NOTPOST" ColumnName="NOTPOST" />
+                <ScalarProperty Name="RESTRICTED" ColumnName="RESTRICTED" />
+                <ScalarProperty Name="AUTHORIZABLE" ColumnName="AUTHORIZABLE" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="NEWUNTIL" ColumnName="NEWUNTIL" />
+                <ScalarProperty Name="PICTURENAME" ColumnName="PICTURENAME" />
+                <ScalarProperty Name="SPECIALOFFER" ColumnName="SPECIALOFFER" />
+                <ScalarProperty Name="WEBPRICE" ColumnName="WEBPRICE" />
+                <ScalarProperty Name="INFO" ColumnName="INFO" />
+                <ScalarProperty Name="COLORNO" ColumnName="COLORNO" />
+                <ScalarProperty Name="CATEGORYNO" ColumnName="CATEGORYNO" />
+                <ScalarProperty Name="PRODUCERNO" ColumnName="PRODUCERNO" />
+                <ScalarProperty Name="STOCKITEM" ColumnName="STOCKITEM" />
+                <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
+                <ScalarProperty Name="ARTTYPE" ColumnName="ARTTYPE" />
+                <ScalarProperty Name="LONGNAME" ColumnName="LONGNAME" />
+                <ScalarProperty Name="ARTNAME" ColumnName="ARTNAME" />
+                <ScalarProperty Name="ARTCODE" ColumnName="ARTCODE" />
+                <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="langnames">
             <EntityTypeMapping TypeName="veebdbModel.langname">
               <MappingFragment StoreEntitySet="langnames">
@@ -1672,6 +1963,40 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
                 <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
                 <ScalarProperty Name="LANGNAME" ColumnName="LANGNAME" />
                 <ScalarProperty Name="LANGNO" ColumnName="LANGNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="metagrups">
+            <EntityTypeMapping TypeName="veebdbModel.metagrup">
+              <MappingFragment StoreEntitySet="metagrup">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+                <ScalarProperty Name="PARENTNO" ColumnName="PARENTNO" />
+                <ScalarProperty Name="METAGROUPNAME" ColumnName="METAGROUPNAME" />
+                <ScalarProperty Name="METAGROUPCODE" ColumnName="METAGROUPCODE" />
+                <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orderdetails">
+            <EntityTypeMapping TypeName="veebdbModel.orderdetail">
+              <MappingFragment StoreEntitySet="orderdetails">
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="PriceExTax" ColumnName="PriceExTax" />
+                <ScalarProperty Name="PriceInTax" ColumnName="PriceInTax" />
+                <ScalarProperty Name="taxRate" ColumnName="taxRate" />
+                <ScalarProperty Name="qtysent" ColumnName="qtysent" />
+                <ScalarProperty Name="totalrequest" ColumnName="totalrequest" />
+                <ScalarProperty Name="itemtype" ColumnName="itemtype" />
+                <ScalarProperty Name="imagepath" ColumnName="imagepath" />
+                <ScalarProperty Name="ocdetailgst" ColumnName="ocdetailgst" />
+                <ScalarProperty Name="ocdetailprice" ColumnName="ocdetailprice" />
+                <ScalarProperty Name="ocdetailqty" ColumnName="ocdetailqty" />
+                <ScalarProperty Name="ocdetailname" ColumnName="ocdetailname" />
+                <ScalarProperty Name="ocdetailcode" ColumnName="ocdetailcode" />
+                <ScalarProperty Name="ocid" ColumnName="ocid" />
+                <ScalarProperty Name="prodetailid" ColumnName="prodetailid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1783,6 +2108,14 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="veebdbModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="stgrps">
             <EntityTypeMapping TypeName="veebdbModel.stgrp">
               <MappingFragment StoreEntitySet="stgrp">
@@ -1854,6 +2187,16 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="stores">
+            <EntityTypeMapping TypeName="veebdbModel.store">
+              <MappingFragment StoreEntitySet="stores">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="supplycycles">
             <EntityTypeMapping TypeName="veebdbModel.supplycycle">
               <MappingFragment StoreEntitySet="supplycycle">
@@ -1874,105 +2217,6 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TABLE_NAME" ColumnName="TABLE_NAME" />
                 <ScalarProperty Name="TRANS_LOG_ID" ColumnName="TRANS_LOG_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_disc_rule">
-            <EntityTypeMapping TypeName="veebdbModel.vw_disc_rule">
-              <MappingFragment StoreEntitySet="vw_disc_rule">
-                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
-                <ScalarProperty Name="STOCKNO" ColumnName="STOCKNO" />
-                <ScalarProperty Name="PRICEGROUPNO" ColumnName="PRICEGROUPNO" />
-                <ScalarProperty Name="ADJUSTMENTVALUE" ColumnName="ADJUSTMENTVALUE" />
-                <ScalarProperty Name="ADJUSTMENTTYPENO" ColumnName="ADJUSTMENTTYPENO" />
-                <ScalarProperty Name="LIMITAMOUNT" ColumnName="LIMITAMOUNT" />
-                <ScalarProperty Name="THRESHOLDAMOUNT" ColumnName="THRESHOLDAMOUNT" />
-                <ScalarProperty Name="LIMITQUANTITY" ColumnName="LIMITQUANTITY" />
-                <ScalarProperty Name="THRESHOLDQUANTITY" ColumnName="THRESHOLDQUANTITY" />
-                <ScalarProperty Name="DISCCLASS" ColumnName="DISCCLASS" />
-                <ScalarProperty Name="DISCGROUP" ColumnName="DISCGROUP" />
-                <ScalarProperty Name="LASTDATE" ColumnName="LASTDATE" />
-                <ScalarProperty Name="FIRSTDATE" ColumnName="FIRSTDATE" />
-                <ScalarProperty Name="PROMOTIONNAME" ColumnName="PROMOTIONNAME" />
-                <ScalarProperty Name="PROMOTIONCODE" ColumnName="PROMOTIONCODE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="accountlogins">
-            <EntityTypeMapping TypeName="veebdbModel.accountlogin">
-              <MappingFragment StoreEntitySet="accountlogin">
-                <ScalarProperty Name="lastname" ColumnName="lastname" />
-                <ScalarProperty Name="firstname" ColumnName="firstname" />
-                <ScalarProperty Name="permission" ColumnName="permission" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="warehouses">
-            <EntityTypeMapping TypeName="veebdbModel.warehouse">
-              <MappingFragment StoreEntitySet="warehouse">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="catalogues">
-            <EntityTypeMapping TypeName="veebdbModel.catalogue">
-              <MappingFragment StoreEntitySet="catalogue">
-                <ScalarProperty Name="MetaGroupId" ColumnName="MetaGroupId" />
-                <ScalarProperty Name="CatalogueName" ColumnName="CatalogueName" />
-                <ScalarProperty Name="CatalogueCode" ColumnName="CatalogueCode" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="categories">
-            <EntityTypeMapping TypeName="veebdbModel.category">
-              <MappingFragment StoreEntitySet="category">
-                <ScalarProperty Name="CatalogueCode" ColumnName="CatalogueCode" />
-                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
-                <ScalarProperty Name="CATEGORYNAME" ColumnName="CATEGORYNAME" />
-                <ScalarProperty Name="CATEGORYCODE" ColumnName="CATEGORYCODE" />
-                <ScalarProperty Name="CATEGORYNO" ColumnName="CATEGORYNO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="stores">
-            <EntityTypeMapping TypeName="veebdbModel.store">
-              <MappingFragment StoreEntitySet="stores">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="files">
-            <EntityTypeMapping TypeName="veebdbModel.file">
-              <MappingFragment StoreEntitySet="file">
-                <ScalarProperty Name="FileAddress" ColumnName="FileAddress" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UploadBy" ColumnName="UploadBy" />
-                <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Kind" ColumnName="Kind" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="veebdbModel.role">
-              <MappingFragment StoreEntitySet="role">
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2030,73 +2274,144 @@ FROM `vw_disc_rule` AS `vw_disc_rule`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="metagrups">
-            <EntityTypeMapping TypeName="veebdbModel.metagrup">
-              <MappingFragment StoreEntitySet="metagrup">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
-                <ScalarProperty Name="PARENTNO" ColumnName="PARENTNO" />
-                <ScalarProperty Name="METAGROUPNAME" ColumnName="METAGROUPNAME" />
-                <ScalarProperty Name="METAGROUPCODE" ColumnName="METAGROUPCODE" />
-                <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
+          <EntitySetMapping Name="warehouses">
+            <EntityTypeMapping TypeName="veebdbModel.warehouse">
+              <MappingFragment StoreEntitySet="warehouse">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="items">
-            <EntityTypeMapping TypeName="veebdbModel.item">
-              <MappingFragment StoreEntitySet="item">
-                <ScalarProperty Name="IsBestSeller" ColumnName="IsBestSeller" />
-                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-                <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
-                <ScalarProperty Name="PAYMENTTERM" ColumnName="PAYMENTTERM" />
-                <ScalarProperty Name="WEBID" ColumnName="WEBID" />
-                <ScalarProperty Name="DISCGROUP" ColumnName="DISCGROUP" />
-                <ScalarProperty Name="SUPPLYCYCLENO" ColumnName="SUPPLYCYCLENO" />
-                <ScalarProperty Name="SIZETBLNO" ColumnName="SIZETBLNO" />
-                <ScalarProperty Name="SIZENO" ColumnName="SIZENO" />
-                <ScalarProperty Name="PACKAGEVOLUME2" ColumnName="PACKAGEVOLUME2" />
-                <ScalarProperty Name="PACKAGEVOLUME" ColumnName="PACKAGEVOLUME" />
-                <ScalarProperty Name="VAT" ColumnName="VAT" />
-                <ScalarProperty Name="CHECKBOX6" ColumnName="CHECKBOX6" />
-                <ScalarProperty Name="CHECKBOX5" ColumnName="CHECKBOX5" />
-                <ScalarProperty Name="CHECKBOX4" ColumnName="CHECKBOX4" />
-                <ScalarProperty Name="CHECKBOX3" ColumnName="CHECKBOX3" />
-                <ScalarProperty Name="CHECKBOX2" ColumnName="CHECKBOX2" />
-                <ScalarProperty Name="CHECKBOX1" ColumnName="CHECKBOX1" />
-                <ScalarProperty Name="UNITDESCR" ColumnName="UNITDESCR" />
-                <ScalarProperty Name="UNITNAME" ColumnName="UNITNAME" />
-                <ScalarProperty Name="WIDTH" ColumnName="WIDTH" />
-                <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
-                <ScalarProperty Name="LEN" ColumnName="LEN" />
-                <ScalarProperty Name="INFO6" ColumnName="INFO6" />
-                <ScalarProperty Name="INFO5" ColumnName="INFO5" />
-                <ScalarProperty Name="INFO4" ColumnName="INFO4" />
-                <ScalarProperty Name="INFO3" ColumnName="INFO3" />
-                <ScalarProperty Name="INFO2" ColumnName="INFO2" />
-                <ScalarProperty Name="INFO1" ColumnName="INFO1" />
-                <ScalarProperty Name="COLLATIONUNIT" ColumnName="COLLATIONUNIT" />
-                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
-                <ScalarProperty Name="NOTADDPOSTAGEFEE" ColumnName="NOTADDPOSTAGEFEE" />
-                <ScalarProperty Name="NOTPOST" ColumnName="NOTPOST" />
-                <ScalarProperty Name="RESTRICTED" ColumnName="RESTRICTED" />
-                <ScalarProperty Name="AUTHORIZABLE" ColumnName="AUTHORIZABLE" />
-                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
-                <ScalarProperty Name="NEWUNTIL" ColumnName="NEWUNTIL" />
-                <ScalarProperty Name="PICTURENAME" ColumnName="PICTURENAME" />
-                <ScalarProperty Name="SPECIALOFFER" ColumnName="SPECIALOFFER" />
-                <ScalarProperty Name="WEBPRICE" ColumnName="WEBPRICE" />
-                <ScalarProperty Name="INFO" ColumnName="INFO" />
-                <ScalarProperty Name="COLORNO" ColumnName="COLORNO" />
-                <ScalarProperty Name="CATEGORYNO" ColumnName="CATEGORYNO" />
-                <ScalarProperty Name="PRODUCERNO" ColumnName="PRODUCERNO" />
-                <ScalarProperty Name="STOCKITEM" ColumnName="STOCKITEM" />
-                <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
-                <ScalarProperty Name="ARTTYPE" ColumnName="ARTTYPE" />
-                <ScalarProperty Name="LONGNAME" ColumnName="LONGNAME" />
-                <ScalarProperty Name="ARTNAME" ColumnName="ARTNAME" />
-                <ScalarProperty Name="ARTCODE" ColumnName="ARTCODE" />
-                <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="veebdbModel.setting">
+              <MappingFragment StoreEntitySet="setting">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="urlimage" ColumnName="urlimage" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="typeId" ColumnName="typeId" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settingtypes">
+            <EntityTypeMapping TypeName="veebdbModel.settingtype">
+              <MappingFragment StoreEntitySet="settingtype">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="menus">
+            <EntityTypeMapping TypeName="veebdbModel.menu">
+              <MappingFragment StoreEntitySet="menu">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="isparent" ColumnName="isparent" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="veebdbModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="oclastupdated" ColumnName="oclastupdated" />
+                <ScalarProperty Name="ocupdatedby" ColumnName="ocupdatedby" />
+                <ScalarProperty Name="onhold" ColumnName="onhold" />
+                <ScalarProperty Name="b_addrid" ColumnName="b_addrid" />
+                <ScalarProperty Name="b_email" ColumnName="b_email" />
+                <ScalarProperty Name="b_fax" ColumnName="b_fax" />
+                <ScalarProperty Name="b_phone" ColumnName="b_phone" />
+                <ScalarProperty Name="b_mobile" ColumnName="b_mobile" />
+                <ScalarProperty Name="b_country" ColumnName="b_country" />
+                <ScalarProperty Name="b_postcode" ColumnName="b_postcode" />
+                <ScalarProperty Name="b_addr3" ColumnName="b_addr3" />
+                <ScalarProperty Name="b_addr2" ColumnName="b_addr2" />
+                <ScalarProperty Name="b_addr1" ColumnName="b_addr1" />
+                <ScalarProperty Name="b_abn" ColumnName="b_abn" />
+                <ScalarProperty Name="b_companyname" ColumnName="b_companyname" />
+                <ScalarProperty Name="b_lname" ColumnName="b_lname" />
+                <ScalarProperty Name="b_fname" ColumnName="b_fname" />
+                <ScalarProperty Name="b_attention" ColumnName="b_attention" />
+                <ScalarProperty Name="d_status" ColumnName="d_status" />
+                <ScalarProperty Name="order_group" ColumnName="order_group" />
+                <ScalarProperty Name="tobeinvoiced" ColumnName="tobeinvoiced" />
+                <ScalarProperty Name="payoption" ColumnName="payoption" />
+                <ScalarProperty Name="d_notes" ColumnName="d_notes" />
+                <ScalarProperty Name="d_fax" ColumnName="d_fax" />
+                <ScalarProperty Name="d_phone" ColumnName="d_phone" />
+                <ScalarProperty Name="d_mobile" ColumnName="d_mobile" />
+                <ScalarProperty Name="d_email" ColumnName="d_email" />
+                <ScalarProperty Name="d_country" ColumnName="d_country" />
+                <ScalarProperty Name="d_companyname" ColumnName="d_companyname" />
+                <ScalarProperty Name="d_postcode" ColumnName="d_postcode" />
+                <ScalarProperty Name="d_addr3" ColumnName="d_addr3" />
+                <ScalarProperty Name="d_addr2" ColumnName="d_addr2" />
+                <ScalarProperty Name="d_addr1" ColumnName="d_addr1" />
+                <ScalarProperty Name="d_lname" ColumnName="d_lname" />
+                <ScalarProperty Name="d_fname" ColumnName="d_fname" />
+                <ScalarProperty Name="d_attention" ColumnName="d_attention" />
+                <ScalarProperty Name="closedDate" ColumnName="closedDate" />
+                <ScalarProperty Name="profileID" ColumnName="profileID" />
+                <ScalarProperty Name="exchangerate" ColumnName="exchangerate" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="ordertotalexc" ColumnName="ordertotalexc" />
+                <ScalarProperty Name="ordertotal" ColumnName="ordertotal" />
+                <ScalarProperty Name="tradeterms" ColumnName="tradeterms" />
+                <ScalarProperty Name="visible" ColumnName="visible" />
+                <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+                <ScalarProperty Name="submitDate" ColumnName="submitDate" />
+                <ScalarProperty Name="clientID" ColumnName="clientID" />
+                <ScalarProperty Name="showsubtotal" ColumnName="showsubtotal" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="postcode" ColumnName="postcode" />
+                <ScalarProperty Name="addr3" ColumnName="addr3" />
+                <ScalarProperty Name="addr2" ColumnName="addr2" />
+                <ScalarProperty Name="addr1" ColumnName="addr1" />
+                <ScalarProperty Name="abn" ColumnName="abn" />
+                <ScalarProperty Name="promotionName" ColumnName="promotionName" />
+                <ScalarProperty Name="tradingname" ColumnName="tradingname" />
+                <ScalarProperty Name="companyname" ColumnName="companyname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="ocid" ColumnName="ocid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sliders">
+            <EntityTypeMapping TypeName="veebdbModel.slider">
+              <MappingFragment StoreEntitySet="sliders">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orderstatus">
+            <EntityTypeMapping TypeName="veebdbModel.orderstatu">
+              <MappingFragment StoreEntitySet="orderstatus">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

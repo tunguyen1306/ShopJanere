@@ -86,13 +86,13 @@
                             }
                             <div class="col-lg-2">&nbsp; </div>
                             <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Home</div></a>
-                            @if (controllerName == "Home" && (actionName == "BulkProducts"||actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Catalogue" || actionName == "Category"))
+                            @if (controllerName == "Home" && (actionName == "BulkProducts" || actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Group" || actionName == "Products" || actionName == "Product"))
                             {
                                 <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Products</div></a>
                             }
                             else
                             {
-                                <a href="@Url.Action(" MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
+                                <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
                             }
                             @* @if (controllerName=="Home" && actionName == "BulkProducts")
                 {
@@ -110,14 +110,14 @@
                             {
                                 <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Download</div></a>
                             }
-                            @if (controllerName == "Home" && actionName == "Warehouses")
-                            {
-                                <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Warehouse</div></a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Warehouse</div></a>
-                            }
+                           @* @if (controllerName == "Home" && actionName == "Warehouses")
+    {
+        <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Warehouse</div></a>
+    }
+    else
+    {
+        <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Warehouse</div></a>
+    }*@
                             @if (controllerName == "Home" && actionName == "Stores")
                             {
                                 <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Store</div></a>
@@ -181,16 +181,19 @@
             </div>
         </footer>
         </div>
-    </div>
-    <div style="background-color: #171717">
+
+    <div class="footer_bottom">
         <div class="container">
             <footer>
-                <div class="row" style="padding: 10px 0px; text-align: center;">
-                    <img src="~/Content/foot/line2.JPG" width="100%" />
-                </div>
+                <ul style="font-size:20px;">
+                    <li>© OÜ Janere</li>
+                    <li>Reg. no. 10001584</li>
+                    <li>Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</li>
+                </ul>
             </footer>
         </div>
     </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/myscript")

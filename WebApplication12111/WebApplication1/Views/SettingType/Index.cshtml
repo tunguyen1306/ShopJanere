@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication1.settingtype>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>settingtype</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","SettingType")">Add New</a>
+   
+</div>
+
+
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "settingtype-result",
+    OnBegin = "settingtypesearchOnBegin",
+    OnSuccess = "settingtypesearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="settingtype-btsubmit">Tìm</button>
+}
+<div id="settingtype-result">
+    @{
+        Html.RenderAction("IndexAjax", "SettingType");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function settingtype_seacrch() {
+        $('#settingtype-btsubmit').click();
+    }
+    settingtype_seacrch();
+    function settingtypesearchOnBegin() {
+
+    }
+
+    function settingtypesearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

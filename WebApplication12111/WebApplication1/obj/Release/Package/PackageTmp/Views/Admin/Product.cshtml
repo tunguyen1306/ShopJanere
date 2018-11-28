@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Catalogue";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+    <h1>Product</h1>
+    <div class="page_action">
+        <a href="http://kakas.vn/backend/product.html#">Add New</a>
+        <a href="http://kakas.vn/backend/product.html#">Import</a>
+        <a href="http://kakas.vn/backend/product.html#">Export</a>
+    </div>
+    <form method="post" name="form_product" id="form_product" action="http://kakas.vn/backend/">
+        <ul class="sub_action">
+            <li class="active"><a href="http://kakas.vn/backend/product.html#">All</a></li>
+            <li><a href="http://kakas.vn/backend/product.html#">Published</a></li>
+            <li><a href="http://kakas.vn/backend/product.html#">Trashed</a></li>
+        </ul>
+        <div class="row wrap_filter">
+            <div class="col-sm-4">
+                <label>Action</label>
+                <select class="bulk_action filter" name="bulk_action">
+                    <option value="trash">Move to trash</option>
+                    <option value="edit">Edit</option>
+                </select>
+                <input type="submit" id="do_bulk_action" class="button btn-sm" value="Go">
+            </div>
+            <div class="col-sm-8 right">
+                <label>Filter</label>
+                <select class="filter" name="filter_cat">
+                    <option value="">Category</option>
+                    <option value="">--000--</option>
+                </select>
+                <select class="filter" name="filter_warhouse">
+                    <option value="">Warhouse</option>
+                    <option value="">--000--</option>
+                </select>
+                <select class="filter" name="filter_stock">
+                    <option value="">Stock</option>
+                    <option value="">--000--</option>
+                </select>
+                <select class="filter" name="filter_store">
+                    <option value="">Store</option>
+                    <option value="">--000--</option>
+                </select>
+                <input type="submit" id="do_filter_action" class="button btn-sm" value="Go">
+            </div>
+        </div><!-- wrap_filter -->
+        <table class="table list_product">
+            <thead>
+                <tr>
+                    <th id="cb" class="manage_column column_check"><input id="cb_select_all" type="checkbox"></th>
+                    <th scope="col" id="thumb" class="manage_column column_thumb"><i class="far fa-image"></i></th>
+                    <th scope="col" id="barcode" class="manage_column column_barcode">Barcode</th>
+                    <th scope="col" class="manage_column column_number"></th>
+                    <th scope="col" id="product_name" class="manage_column column_product_name">Product Name</th>
+                    <th scope="col" id="description" class="manage_column column_description">Description</th>
+                    <th scope="col" id="category" class="manage_column column_category">Category</th>
+                    <th scope="col" id="price" class="manage_column column_price">Price</th>
+                    <th scope="col" class="manage_column column_action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="" class="manage_column column_check"><input id="" type="checkbox"></td>
+                    <td scope="col" id="thumb" class="manage_column column_thumb"><img src="./Product_files/1.jpg" alt=""></td>
+                    <td scope="col" id="barcode" class="manage_column column_barcode">5A20416TXTC</td>
+                    <td scope="col" class="manage_column column_number">4741444192161</td>
+                    <td scope="col" id="product_name" class="manage_column column_product_name">Puiduk pp A2 AISI304,0x16 TX20</td>
+                    <td scope="col" id="description" class="manage_column column_description">100 tk</td>
+                    <td scope="col" id="category" class="manage_column column_category">Category</td>
+                    <td scope="col" id="price" class="manage_column column_price">10,38$</td>
+                    <td scope="col" class="manage_column column_action"><a class="delete_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-times"></i></a> <a class="edit_action" href="http://kakas.vn/backend/product.html#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="wrap_product_nav">
+            <span>10 of 30 items</span>
+            <select class="filter" name="filter_nav">
+                <option value="10">10 items per page</option>
+                <option value="20">20 items per page</option>
+                <option value="30">30 items per page</option>
+            </select>
+            <ul class="product_nav">
+                <li class="prev disabled"><a href="http://kakas.vn/backend/product.html#"><i class="fas fa-angle-left"></i></a></li>
+                <li class="current"><a href="http://kakas.vn/backend/product.html#">1</a></li>
+                <li><a href="http://kakas.vn/backend/product.html#">2</a></li>
+                <li><a href="http://kakas.vn/backend/product.html#">3</a></li>
+                <li><a href="http://kakas.vn/backend/product.html#">4</a></li>
+                <li class="next"><a href="http://kakas.vn/backend/product.html#"><i class="fas fa-angle-right"></i></a></li>
+            </ul>
+        </div><!-- wrap_product_nav -->
+    </form>

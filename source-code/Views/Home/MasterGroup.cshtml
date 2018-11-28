@@ -93,12 +93,24 @@
 <div class="row" style="margin-top: 10px;padding: 0px 15px;">
     @foreach (var item in Model)
     {
+        var image = item.METAGROUPCODE + ".jpg";
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6" style="padding:1px;height:310px;">
             <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = item.METAGROUPNO })">
                 <div class="row">
                     <div class="col-lg-12">
-                        <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
-                    </div>
+                        @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + item.METAGROUPCODE + ".jpg")))
+                        {
+
+                            <img src="~/Content/ProductImage/@image" style="width:100%">
+
+                        }
+                        else
+                        {
+
+                            <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+
+                        }
+                                            </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 products-name">
                         <span style="font-weight: bold; color: #2ea3f2;text-align:center"></span>@item.METAGROUPNAME
                     </div>

@@ -23,37 +23,48 @@ namespace WebApplication1.Controllers
     public class OrderController : Controller
     {
         private veebdbEntities db = new veebdbEntities();
-        public ActionResult Index(String tab = "all")
+        public ActionResult Index()
         {
-           
-            ViewBag.Tab = tab;
+            var listOrderStatus = db.orderstatus.ToList();
+            listOrderStatus.Insert(0,new orderstatu{id = 0,name = "Select Action"});
+            ViewBag.OrderStatus = listOrderStatus;
+
+
             return View();
         }
-        public ActionResult IndexAjax(string tab = "all", int start = 0, int view = 10)
+        public ActionResult IndexAjax(string datepicker = null, string search_order = null, int start = 0, int view = 10)
         {
 
             var listOrder = db.orders;
-            
-          
+
+
             var listAll = (from pro in listOrder
                            select new { tblOrder = pro });
 
-
+            if (!string.IsNullOrEmpty(datepicker))
+            {
+                var date = DateTime.ParseExact(datepicker, "dd/MM/yyyy", null);
+                listAll = listAll.Where(x => x.tblOrder.submitDate <= date);
+            }
+            if (search_order != null)
+            {
+                listAll = listAll.Where(x => x.tblOrder.ocid.ToString().Contains(search_order) || x.tblOrder.d_addr1.ToString().Contains(search_order) || x.tblOrder.b_fname.ToString().Contains(search_order) || x.tblOrder.b_lname.ToString().Contains(search_order));
+            }
             var _count = listAll.Count();
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = _count;
             ViewBag.ViewOf = _count;
-            var db_data = listAll.OrderBy(t => t.tblOrder.ocid).Skip(start).Take(view).ToList();
-           
-           
-            var datas = db_data.Select(t => new AllModel {  tblOrder = t.tblOrder }).ToList();
+            var db_data = listAll.OrderBy(t => t.tblOrder.ocid).Skip(start).Take(view).OrderByDescending(x => x.tblOrder.status).ToList();
+
+
+            var datas = db_data.Select(t => new AllModel { tblOrder = t.tblOrder }).ToList();
             return PartialView(datas);
 
 
         }
 
-     
+
 
         // GET: /Order/Details/5
         public ActionResult Details(int? id)
@@ -71,46 +82,89 @@ namespace WebApplication1.Controllers
         }
         public ActionResult _AjaxAutoComplete(string query)
         {
-            var list = db.items.Join(db.artgrps,it=>it.GROUPNO,grp=>grp.GROUPNO,(it,grp)=>new AllModel {tblitem =it,tblGroup = grp}).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x=>new  { value = x.tblitem.ARTNO,label= x.tblitem.ARTNAME,des=x.tblitem.INFO,grp=x.tblGroup.GROUPNAME}).ToList();
-            return Json(new { status = true,data = list},JsonRequestBehavior.AllowGet);
+            var list = db.items.Join(db.artgrps, it => it.GROUPNO, grp => grp.GROUPNO, (it, grp) => new AllModel { tblitem = it, tblGroup = grp }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME, des = x.tblitem.INFO, grp = x.tblGroup.GROUPNAME }).ToList();
+            return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: /Order/Create
         public ActionResult Create()
         {
+            var listOrderStatus = db.orderstatus.ToList();
+            listOrderStatus.Insert(0, new orderstatu { id = 0, name = "Select Action" });
+            ViewBag.OrderStatus = listOrderStatus;
             var proId = db.orders.OrderByDescending(x => x.ocid).FirstOrDefault();
             var idoder = 0;
-            if (proId!=null)
+            if (proId != null)
             {
-                idoder = (int)proId.ocid + 1; 
+                idoder = (int)proId.ocid + 1;
             }
             else
             {
                 idoder = 1;
             }
             ViewBag.IdOrder = idoder;
+            ViewBag.DateOrder = DateTime.Now.Date.ToShortDateString();
+            ViewBag.HourOrder = DateTime.Now.Hour;
+            ViewBag.MuniteOrder = DateTime.Now.Minute;
+
             return View(new order());
         }
-        
+
         // POST: /Order/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Create(order order, HttpPostedFileBase[] inputfile)
+        public ActionResult Create(order order, string[] totalProduct)
         {
-           
-      
+
+
             try
             {
 
-                var proId = db.orders.OrderByDescending(x => x.ocid).FirstOrDefault();
-              
-                order.ocid = proId.ocid + 1;
+                //var proId = db.orders.OrderByDescending(x => x.ocid).FirstOrDefault();
+                //if (proId==null)
+                //{
+                //    order.ocid = 1;
+                //}
+                //else
+                //{
+                //    order.ocid = proId.ocid + 1;
+                //}
+                order.submitDate = DateTime.Now;
                 db.orders.Add(order);
                 db.SaveChanges();
-      
-               
+                if (totalProduct != null)
+                {
+                    var listItem = totalProduct.ToList().Distinct().ToList();
+                    foreach (var item in listItem)
+                    {
+                        var itemId = int.Parse(item.Split('_')[0]);
+                        var tblItem = db.items.FirstOrDefault(x => x.ARTNO == itemId);
+                        var tblOrderDetail = db.orderdetails.FirstOrDefault(x => x.itemId == itemId && x.ocid == order.ocid);
+                        if (tblOrderDetail == null)
+                        {
+                            var tblOrder = new orderdetail
+                            {
+                                ocid = order.ocid,
+                                itemId = itemId,
+                                ocdetailqty = int.Parse(item.Split('_')[1]),
+                                ocdetailname = tblItem != null ? tblItem.ARTNAME : ""
+
+                            };
+                            db.orderdetails.Add(tblOrder);
+                        }
+                        else
+                        {
+                            tblOrderDetail.ocdetailqty = int.Parse(item.Split('_')[1]);
+                            db.Entry(tblOrderDetail).State = EntityState.Modified;
+                        }
+
+                    }
+                    db.SaveChanges();
+                }
+
+
             }
             catch (DbEntityValidationException e)
             {
@@ -131,7 +185,9 @@ namespace WebApplication1.Controllers
         // GET: /Order/Edit/5
         public ActionResult Edit(int? id)
         {
-           
+            var listOrderStatus = db.orderstatus.ToList();
+            listOrderStatus.Insert(0, new orderstatu { id = 0, name = "Select Action" });
+            ViewBag.OrderStatus = listOrderStatus;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -141,6 +197,9 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
+            var listDetail =
+                db.orderdetails.Join(db.orders, x => x.ocid, x1 => x1.ocid, (x, x1) => new AllModel { tblOrder = x1, tblOrderDetail = x }).Where(x => x.tblOrderDetail.ocid == id).ToList();
+            ViewBag.ListOderDetail = listDetail;
             return View(order);
         }
 
@@ -149,29 +208,53 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Edit(order order, HttpPostedFileBase[] inputfile)
+        public ActionResult Edit(order order, string[] totalProduct)
         {
 
-            var tem = db.orders.Find(order.ocid);
-         
-            db.Entry(tem).State = EntityState.Modified;
+            //var tem = db.orders.Find(order.ocid);
+
+            db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
-          
+            if (totalProduct != null)
+            {
+                var listItem = totalProduct.ToList().Distinct().ToList();
+                foreach (var item in listItem)
+                {
+                    var itemId = int.Parse(item.Split('_')[0]);
+                    var tblItem = db.items.FirstOrDefault(x => x.ARTNO == itemId);
+                    var tblOrderDetail = db.orderdetails.FirstOrDefault(x => x.itemId == itemId && x.ocid == order.ocid);
+                    if (tblOrderDetail == null)
+                    {
+                        var tblOrder = new orderdetail
+                        {
+                            ocid = order.ocid,
+                            itemId = itemId,
+                            ocdetailqty = int.Parse(item.Split('_')[1]),
+                            ocdetailname = tblItem != null ? tblItem.ARTNAME : ""
+
+                        };
+                        db.orderdetails.Add(tblOrder);
+                    }
+                    else
+                    {
+                        tblOrderDetail.ocdetailqty = int.Parse(item.Split('_')[1]);
+                        db.Entry(tblOrderDetail).State = EntityState.Modified;
+                    }
+
+                }
+            }
+
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
         // GET: /Order/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             order order = db.orders.Find(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
+            db.orders.Remove(order);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: /Order/Delete/5
@@ -184,7 +267,20 @@ namespace WebApplication1.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult DeleteOrderDetail(int? id)
+        {
+            orderdetail order = db.orderdetails.Find(id);
+            if (order != null)
+            {
 
+                db.orderdetails.Remove(order);
+                db.SaveChanges();
+                return RedirectToAction("Edit", "Order", new { id = order.ocid });
+            }
+            return RedirectToAction("Edit", "Order", new { id = order.ocid });
+
+
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -193,23 +289,34 @@ namespace WebApplication1.Controllers
             }
             base.Dispose(disposing);
         }
-
-     
-   
-     
-        public ActionResult DeleteImg(int? id)
+        public JsonResult UpdateStatus(string status, string[] ids)
         {
-            
-            var order = db.artlinks.Find(id);
-            if (order!=null)
+            var _ids = ids.Select(t => int.Parse(t)).ToList();
+            bool _status = false;
+            var msg = "Cập nhật thành công";
+            try
             {
-                db.artlinks.Remove(order);
-                db.SaveChanges();
+
+                var _items = db.orders.ToList().Where(x => _ids.Contains((int)x.ocid));
+                foreach (var item in _items.ToList())
+                {
+                    var tbl = db.orders.Find(item.ocid);
+                    tbl.status = status;
+                    db.Entry(tbl).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                _status = true;
             }
-            
-            return Json("");
+            catch (Exception ex)
+            {
+
+                msg = "Cập nhật thất bại";
+            }
+            return Json(new { status = _status, mgs = msg });
         }
-      
+
+
+
     }
 }
 

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication1.Models.AllModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>Menu</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","Menu")">Add New</a>
+   
+</div>
+
+
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "menu-result",
+    OnBegin = "menusearchOnBegin",
+    OnSuccess = "menusearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="menu-btsubmit">Tìm</button>
+}
+<div id="menu-result">
+    @{
+        Html.RenderAction("IndexAjax", "Menu");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function menu_seacrch() {
+        $('#menu-btsubmit').click();
+    }
+    menu_seacrch();
+    function menusearchOnBegin() {
+
+    }
+
+    function menusearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

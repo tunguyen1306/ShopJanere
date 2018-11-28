@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm("Login", "Home"))
+{
+    <input type="hidden" id="returnUrl" name="returnUrl" value="@ViewBag.ReturnURL">
+<div class="col-lg-6" style="text-align:right"><span>Username: </span></div><div class="col-lg-6" style="text-align:left;"><input type="text" id="username" name="username" value="" /></div>
+    <div class="col-lg-6" style="text-align: right;"><span>Password: </span></div><div class="col-lg-6" style="text-align:left"><input type="text" id="password" name="password" value="" /></div>
+    <div class="col-lg-6" style="text-align:center">&nbsp; </div><div class="col-lg-6" style="text-align:left;color:red;">@ViewBag.Message &nbsp; </div>
+    <div class="col-lg-6" style="text-align:center">&nbsp; </div><div class="col-lg-6" style="text-align:right;width:200px;"><input type="submit" value="Login" /></div>
+}
+

@@ -10,7 +10,30 @@ $(document).one('ready', function () {
     GetInterFace();
     */
     // InitSearchValue();
+    $('.translation-links a').click(function () {
+        
+        var lang = $(this).data('lang');
+        //alert(lang);
+        var $frame = $('.goog-te-menu-frame:first');
+        
+        if (!$frame.size()>0) {
+            
+            alert("Error: Could not find Google translate frame.");
+            return false;
+        }
+        $frame.contents().find('.goog-te-menu2-item div span.text').get(lang).click();
+        //$frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(1).click();
+        return false;
+    });
 });
+function showpopup(code,name,picture,price)
+{
+    var html = "";
+    html = "<table><tr><td> <img src='/Content/ProductImage/"+ picture+"' style='width:100%'>" + "</td></tr><tr><td>" + name + "</td></tr><tr><td>$ " + price + "</td></tr></table>";
+
+    jQuery.facebox(html);
+}
+
 function linkto(e)
 {
     // var id = $(e).attr('id');
@@ -75,6 +98,26 @@ $("#qtydown").click(function () {
     }
     $("#qty").val(iNum);
 });
+function bulkitemup(i)
+{
+    $("#" + i).val();
+    var iNum = parseInt($("#" + i).val());
+    
+    iNum++;
+    $("#" + i).val(iNum);
+}
+function bulkitemdown(i)
+{
+    $("#" + i).val();
+    var iNum = parseInt($("#" + i).val());
+    if (iNum == 1) {
+
+    }
+    else {
+        iNum--;
+    }
+    $("#" + i).val(iNum);
+}
 $("#qtyup").click(function () {
     var iNum = parseInt($("#qty").val());
     iNum++;
@@ -129,8 +172,8 @@ function GetGroup() {
 function GetDataForMenu() {
     var procemessage = "<div value='0'> Loading Menu...</div>";
     $("#menu").html(procemessage).show();
-    var url = "/Home/GetMetaGroup/";
-
+    //var url = "/Home/GetMetaGroup/";
+    var url = "/Home/GetMasterGroup/";
     $.ajax({
         url: url,
         data: {/* NganhId: $('#ddlNganh').val()*/ },
@@ -423,3 +466,11 @@ jQuery(document).ready(function () {
             $('.dropdown-menu', this).fadeOut("fast");
         });
 });*/
+// mobile menu
+$('.mobile_menu').click(function(){
+    $('.wrap-head-main-menu').slideToggle();
+});
+// table in mobile
+if($(window).width()<480){
+    $('table').wrap('<div class="wrap_table"></div>')
+}

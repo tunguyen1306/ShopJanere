@@ -27,7 +27,7 @@
 </div><!-- wrap_filter -->
 
 
-@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+@using (Ajax.BeginForm("IndexAjax", new {type = ViewBag.Type }, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "setting-result",

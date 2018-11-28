@@ -25,6 +25,57 @@ namespace WebApplication1.Controllers
             Session["BestSellerProducts"] = BestSellerProducts;
             return View();
         }
+        public ActionResult BestSeller(int index)
+        {
+            var check = data.items.Where(m => m.IsBestSeller == true);
+            if (check.Count() > 0)
+            {
+                List<item> BestSellerProducts = check.ToList();
+                List<item> showItems = new List<item>();
+                int max = BestSellerProducts.Count();
+                
+                if (max >= index * 4)
+                {
+                    int startPostionInList = (index-1)*4;
+                    int endPostionInList = ((index-1)*4+4);
+                    for (int i = startPostionInList; i < endPostionInList; i++)
+                    {
+                        item addToList = new item();
+                        addToList.PICTURENAME = BestSellerProducts[i].PICTURENAME;
+                        addToList.ARTCODE = string.IsNullOrEmpty(BestSellerProducts[i].ARTCODE) ? "" : BestSellerProducts[i].ARTCODE;
+                        addToList.ARTNAME = string.IsNullOrEmpty(BestSellerProducts[i].ARTNAME) ? "" : BestSellerProducts[i].ARTNAME;
+                        addToList.WEBPRICE = BestSellerProducts[i] == null ? 0 : BestSellerProducts[i].WEBPRICE;
+                        addToList.WIDTH = BestSellerProducts[i].WIDTH;
+                        addToList.HEIGHT = BestSellerProducts[i].HEIGHT;
+
+                        showItems.Add(addToList);
+                    }
+                }
+                else
+                {
+                    int startPostionInList = (index - 1) * 4;
+                    int endPostionInList = max;
+                    for (int i = startPostionInList; i < endPostionInList; i++)
+                    {
+                        item addToList = new item();
+                        addToList.PICTURENAME = BestSellerProducts[i].PICTURENAME;
+                        addToList.ARTCODE = string.IsNullOrEmpty(BestSellerProducts[i].ARTCODE) ? "" : BestSellerProducts[i].ARTCODE;
+                        addToList.ARTNAME = string.IsNullOrEmpty(BestSellerProducts[i].ARTNAME) ? "" : BestSellerProducts[i].ARTNAME;
+                        addToList.WEBPRICE = BestSellerProducts[i] == null ? 0 : BestSellerProducts[i].WEBPRICE;
+                        addToList.WIDTH = BestSellerProducts[i].WIDTH;
+                        addToList.HEIGHT = BestSellerProducts[i].HEIGHT;
+
+                        showItems.Add(addToList);
+                    }
+                }
+                Session["BestSellerProducts"] = showItems;// BestSellerProducts;
+            }
+            else
+            {
+                Session["BestSellerProducts"] = null;
+            }
+            return View();
+        }
         public void IntForGuest()
         {
             var tem = data.users.Where(m => m.Id == 7).FirstOrDefault();
@@ -38,25 +89,27 @@ namespace WebApplication1.Controllers
         public ActionResult Product(string Code="")
         {
             var result = data.items.Where(m => m.ARTCODE == Code).FirstOrDefault();
-            if (string.IsNullOrEmpty(result.WEBPRICE.ToString()))
+            if (result != null)
             {
-                result.WEBPRICE = 10;
+                if (string.IsNullOrEmpty(result.WEBPRICE.ToString()))
+                {
+                    result.WEBPRICE = 0;
+                }
+                List<item> relatedProducts = data.items.Where(m => m.CATEGORYNO == result.CATEGORYNO).Take(100).ToList();
+                Random r = new Random();
+                Session["relatedProducts"] = relatedProducts;
+                int cat = result.CATEGORYNO ?? 0;
+                ViewBag.categoryId = cat;
+                var temCat = data.categories.Where(m => m.CATEGORYNO == cat).FirstOrDefault();
+                if (temCat != null)
+                {
+                    ViewBag.categoryName = data.categories.Where(m => m.CATEGORYNO == cat).FirstOrDefault().CATEGORYNAME;
+                }
+                else
+                {
+                    ViewBag.categoryName = "unlocated catagory";
+                }
             }
-            List<item> relatedProducts = data.items.Where(m => m.CATEGORYNO == result.CATEGORYNO).Take(100).ToList();
-            Random r =new Random();
-            Session["relatedProducts"] = relatedProducts;
-            int cat=result.CATEGORYNO??0;
-            ViewBag.categoryId = cat;
-            var temCat = data.categories.Where(m => m.CATEGORYNO == cat).FirstOrDefault();
-            if (temCat != null)
-            {
-                ViewBag.categoryName = data.categories.Where(m => m.CATEGORYNO == cat).FirstOrDefault().CATEGORYNAME;
-            }
-            else
-            {
-                ViewBag.categoryName = "unlocated catagory";
-            }
-            
             return View(result);
         }
         public ActionResult BulkProducts(FormCollection FormCollection, int? Page_No, int? Page_Size,int categoryid=0)
@@ -231,6 +284,7 @@ namespace WebApplication1.Controllers
             //result[0].
             var testdata = FormCollection["ddlPosition"];
             int defaSize = 20;
+            ViewBag.groupno = groupno;
             if (FormCollection["Size_Of_Page"] != null)
             {
                 defaSize = int.Parse(FormCollection["Size_Of_Page"]);

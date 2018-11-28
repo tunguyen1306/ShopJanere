@@ -13,6 +13,7 @@ namespace WebApplication1.Models
         public item tblitem { get; set;}
         public artgrp tblGroup { get; set;}
         public order tblOrder { get; set;}
+        public orderstatu tblOrderStatus { get; set;}
         public orderdetail tblOrderDetail { get; set;}
         public setting tblSetting { get; set;}
         public settingtype tblSettingType { get; set;}

@@ -1,0 +1,301 @@
+ul{margin: 0;padding: 0;list-style: none;}
+img{max-width: 100%;}
+.left{text-align: left;}
+.center{text-align: center;}
+.right{text-align: right;}
+.button {padding: 6px 12px;background-color: transparent;border: 1px solid #ddd;border-radius: 4px;}
+#header{
+	background-color: #171717;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.adminlogo{
+	display: inline-block;
+}
+.header_link{
+	padding: 0;
+	margin: 7px 0 0;
+	list-style: none;
+	float: right;
+}
+.header_link li{
+	display: inline-block;
+}
+.header_link li a {
+	padding: 5px;
+	color: #fff;
+}
+.header_link li a i {
+	margin-right: 5px;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	line-height: 22px;
+	background-color: #666;
+	text-align: center;
+}
+.page_content{
+	margin-bottom: 15px;
+}
+#left_sidebar h2 {
+	border-top: 5px solid #245d92;
+	color: #2d74c5;
+	padding: 15px 10px;
+	font-size: 36px;
+}
+#left_sidebar h2 a:hover{
+	text-decoration: none;
+}
+#adminmenu{}
+#adminmenu > li{
+	display: block;
+	margin-bottom: 10px;
+	background-color: #ddd;
+}
+#adminmenu  li  a{
+	padding: 6px 14px;
+	display: block;
+}
+#adminmenu > li > a, .page_action a, .column_action a, .button_a{
+	background-color: #245d92;
+	color: #fff;	
+}
+#adminmenu > li > a:hover, .page_action a:hover, .column_action a:hover, .button_a:hover{
+	background-color: #195186;
+	text-decoration: none;
+}
+#adminmenu > li > a i{
+	float: right;
+	font-size: 22px;
+	line-height: 28px;
+}
+#adminmenu > li > a i.fa-sort-down{
+	line-height: 13px;
+}
+#adminmenu > li > ul {
+	padding: 0;
+	width: 100%;
+}
+#adminmenu > li > ul li{
+	display: block;
+}
+#adminmenu > li > ul a {	
+	background-color: #ddd;
+	color: #245d92;
+	border-bottom: 1px solid #fff;	
+}
+#adminmenu > li > ul a:hover, #adminmenu > li > ul li.active a{
+	background-color: #999;
+	text-decoration: none;
+}
+#main_content h1{
+	font-size: 24px;
+   padding: 24px 0px;	
+   color: #2d74c5;
+}
+#main_content h1 span{
+	display: block;
+	font-size: 15px;
+	color: #666;
+	font-weight: normal;
+	margin-top: 5px;
+	margin-bottom: -21px;
+}
+#form_logo label {
+	margin-top: 5px;
+}
+#form_logo input[type="submit"],#form_logo .help{
+	padding: 6px 12px;
+	background-color: #225e92;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+}
+#form_logo .help {
+	font-size: 17px;
+	line-height: 32px;
+}
+.choose_library{
+	margin-top: 15px;
+}
+.footer_top{
+	background-color: #245d92;
+}
+.footer_top ul {
+	padding: 0;
+	margin: 25px 0;
+	list-style: none;
+	text-align: center;
+}
+.footer_top ul li {
+	display: inline-block;
+	margin: 0 30px;
+}
+.footer_top ul li a{
+	font-size: 24px;
+	color: #fff;
+}
+.footer_top ul li a i {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #666;
+	text-align: center;
+	line-height: 30px;
+	margin-right: 5px;
+	font-size: 18px;
+	box-shadow: 1px 1px 3px #000;
+}
+.footer_top ul li a:hover i.fa-facebook-f{background-color: #3a559f;}
+.footer_top ul li a:hover i.fa-skype{background-color: #00aff0;}
+.footer_bottom {
+	background-color: #171717;
+}
+.footer_bottom ul {	
+	margin: 12px 8px;
+	padding: 0;
+	text-align: center;
+}
+.footer_bottom ul li {
+	display: inline-block; 
+	font-size: 20px;
+	color: #fff;
+	padding: 10px;
+	vertical-align: top;
+	font-weight: 500;
+}
+.footer_bottom ul li:after{
+	content: '|';
+	color: #fff;
+	font-size: 18px;
+	float: right;
+	margin: -1px 0 0 15px;
+}
+.footer_bottom ul li:last-child:after{display: none;}
+.page_action a, .button_a{
+	display: inline-block;
+	padding: 5px 9px;
+	margin-right: 6px;
+}
+.sub_action {margin: 15px 0;}
+.sub_action li {
+	display: inline-block;
+	margin-right: 8px;
+}
+.sub_action li:after{
+	content: '|';
+	margin-left: 8px;
+	color: #666;
+}
+.sub_action li:last-child:after{display: none;}
+.sub_action li a{
+	color: #666;
+}
+.sub_action li.active a, .sub_action li a:hover{color: #245d92;text-decoration: none;}
+.filter{
+	padding: 6px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+.wrap_filter label{margin-right: 5px;}
+.button{
+	background-color: #245d92;
+	color: #fff;
+	border-color: #245d92;
+}
+.button:hover{background-color: #195186;}
+.list_product {
+	margin-top: 20px;
+}
+.list_product thead{
+	background-color: #245d92;	
+}
+.list_product thead tr th {
+	border: 1px solid #fff;
+	padding: 8px 3px;
+	color: #fff;
+	vertical-align: middle;
+	text-align: center;
+}
+.list_product tbody tr {
+	border: none;
+}
+.list_product tbody tr:nth-child(even){
+	background-color: #e4e4e4;
+}
+.list_product tbody td {
+	border: 1px solid #f4f4f4;
+	font-size: 13px;
+}
+.list_product tbody td.column_check {vertical-align: middle;}
+.list_product tbody td.column_thumb {max-width: 60px;}
+.column_action a{
+	display: inline-block;
+	margin-right: 5px;
+	padding: 5px;
+}
+.column_action a:last-child{margin-right: 0;}
+.product_nav{
+	float: right;
+}
+.product_nav li {
+	display: inline-block;
+	margin: 0 2px;
+}
+.product_nav li a {
+	padding: 5px;
+	font-size: 16px;
+	color: #666;
+}
+.product_nav li.current a, .product_nav li a:hover{color: #245d92;text-decoration: underline;}
+.product_nav li.current a{cursor: default;pointer-events:none;}
+.product_nav li.prev a, .product_nav li.next a{
+	background-color: #245d92;
+	color: #fff;
+	padding: 5px;
+}
+.product_nav li.disabled a {
+	background-color: #666;
+	cursor: default;
+	pointer-events:none;
+}
+.product_content, .product_description, .product_group, .product_image, .product_detail {margin: 15px 0;}
+.product_description, .product_group {
+	border: 1px solid #ddd;
+	padding:10px;
+}
+.product_group .sub_action{margin: 5px 0;}
+.product_group_list {
+	columns: 3;
+	-webkit-columns: 3;
+	-moz-columns: 3;
+}
+.product_group_list li {
+	margin-bottom: 7px;
+}
+.product_group_list li input {margin-right: 5px;}
+.product_detail .form-control {
+	margin-bottom: 10px;
+}
+.label_text{
+	display: block;
+	margin-bottom: 5px;
+}
+.btn_right {
+	float: right;
+	margin-top: 5px;
+}
+.m-b-md {margin-bottom: 10px;}
+.admin_list_menu li {
+	margin-bottom: 7px;
+}
+.menu_text {
+	padding: 5px;
+	border: none;
+	background-color: #eaeaea;
+	width: 75%;
+}
+.admin_list_menu .button_a {
+	padding: 8px 9px;
+	width: 6%;
+}

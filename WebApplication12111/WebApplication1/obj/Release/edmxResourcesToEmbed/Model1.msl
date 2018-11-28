@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="veebdbModelStoreContainer" CdmEntityContainer="veebdbEntities">
+    <EntitySetMapping Name="artdimensions">
+      <EntityTypeMapping TypeName="veebdbModel.artdimension">
+        <MappingFragment StoreEntitySet="artdimensions">
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+          <ScalarProperty Name="LEN" ColumnName="LEN" />
+          <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
+          <ScalarProperty Name="WIDTH" ColumnName="WIDTH" />
+          <ScalarProperty Name="FRAGILE" ColumnName="FRAGILE" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="artgrps">
+      <EntityTypeMapping TypeName="veebdbModel.artgrp">
+        <MappingFragment StoreEntitySet="artgrp">
+          <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+          <ScalarProperty Name="GROUPCODE" ColumnName="GROUPCODE" />
+          <ScalarProperty Name="GROUPNAME" ColumnName="GROUPNAME" />
+          <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
+          <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="artlinks">
+      <EntityTypeMapping TypeName="veebdbModel.artlink">
+        <MappingFragment StoreEntitySet="artlinks">
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="LINK" ColumnName="LINK" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="artnames">
+      <EntityTypeMapping TypeName="veebdbModel.artname">
+        <MappingFragment StoreEntitySet="artnames">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="INFO" ColumnName="INFO" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="LANGNO" ColumnName="LANGNO" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="artsizes">
+      <EntityTypeMapping TypeName="veebdbModel.artsize">
+        <MappingFragment StoreEntitySet="artsize">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="SIZECODE" ColumnName="SIZECODE" />
+          <ScalarProperty Name="SIZENAME" ColumnName="SIZENAME" />
+          <ScalarProperty Name="SIZETBLNO" ColumnName="SIZETBLNO" />
+          <ScalarProperty Name="SIZENO" ColumnName="SIZENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="barcodes">
+      <EntityTypeMapping TypeName="veebdbModel.barcode">
+        <MappingFragment StoreEntitySet="barcode">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="ISDEFAULT" ColumnName="ISDEFAULT" />
+          <ScalarProperty Name="BARCODE1" ColumnName="BARCODE" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="boundarts">
+      <EntityTypeMapping TypeName="veebdbModel.boundart">
+        <MappingFragment StoreEntitySet="boundart">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="MASTERARTNO" ColumnName="MASTERARTNO" />
+          <ScalarProperty Name="BOUNDARTNO" ColumnName="BOUNDARTNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cards">
+      <EntityTypeMapping TypeName="veebdbModel.card">
+        <MappingFragment StoreEntitySet="cards">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="CUSTNO" ColumnName="CUSTNO" />
+          <ScalarProperty Name="CARDNO" ColumnName="CARDNO" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="colors">
+      <EntityTypeMapping TypeName="veebdbModel.color">
+        <MappingFragment StoreEntitySet="color">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="COLORNAME" ColumnName="COLORNAME" />
+          <ScalarProperty Name="COLORCODE" ColumnName="COLORCODE" />
+          <ScalarProperty Name="COLORNO" ColumnName="COLORNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cumains">
+      <EntityTypeMapping TypeName="veebdbModel.cumain">
+        <MappingFragment StoreEntitySet="cumain">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="PRICEGROUPNO" ColumnName="PRICEGROUPNO" />
+          <ScalarProperty Name="DISCCLASS" ColumnName="DISCCLASS" />
+          <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+          <ScalarProperty Name="PASSIVE" ColumnName="PASSIVE" />
+          <ScalarProperty Name="BIRTHDAY" ColumnName="BIRTHDAY" />
+          <ScalarProperty Name="SEX" ColumnName="SEX" />
+          <ScalarProperty Name="SPAMBYEMAIL" ColumnName="SPAMBYEMAIL" />
+          <ScalarProperty Name="CUSTGROUPNO" ColumnName="CUSTGROUPNO" />
+          <ScalarProperty Name="FIRM" ColumnName="FIRM" />
+          <ScalarProperty Name="INFO" ColumnName="INFO" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="ADDRESS5" ColumnName="ADDRESS5" />
+          <ScalarProperty Name="ADDRESS4" ColumnName="ADDRESS4" />
+          <ScalarProperty Name="ADDRESS3" ColumnName="ADDRESS3" />
+          <ScalarProperty Name="ADDRESS2" ColumnName="ADDRESS2" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="TYPENO" ColumnName="TYPENO" />
+          <ScalarProperty Name="CUSTNAME" ColumnName="CUSTNAME" />
+          <ScalarProperty Name="CUSTCODE" ColumnName="CUSTCODE" />
+          <ScalarProperty Name="CUSTNO" ColumnName="CUSTNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cupersons">
+      <EntityTypeMapping TypeName="veebdbModel.cuperson">
+        <MappingFragment StoreEntitySet="cuperson">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="CUSTPERSONCODE" ColumnName="CUSTPERSONCODE" />
+          <ScalarProperty Name="POSONLY" ColumnName="POSONLY" />
+          <ScalarProperty Name="INFO" ColumnName="INFO" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="VALIDDATE" ColumnName="VALIDDATE" />
+          <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
+          <ScalarProperty Name="STATUSNO" ColumnName="STATUSNO" />
+          <ScalarProperty Name="CUSTNO" ColumnName="CUSTNO" />
+          <ScalarProperty Name="PERSONCODE" ColumnName="PERSONCODE" />
+          <ScalarProperty Name="CUSTPERSONNAME" ColumnName="CUSTPERSONNAME" />
+          <ScalarProperty Name="CUSTPERSONNO" ColumnName="CUSTPERSONNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="custgroups">
+      <EntityTypeMapping TypeName="veebdbModel.custgroup">
+        <MappingFragment StoreEntitySet="custgroup">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="custgroupcode" ColumnName="custgroupcode" />
+          <ScalarProperty Name="custgroupname" ColumnName="custgroupname" />
+          <ScalarProperty Name="custgroupno" ColumnName="custgroupno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="eligibilities">
+      <EntityTypeMapping TypeName="veebdbModel.eligibility">
+        <MappingFragment StoreEntitySet="eligibility">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="STOCKNO" ColumnName="STOCKNO" />
+          <ScalarProperty Name="MASTERELIGIBILITYNO" ColumnName="MASTERELIGIBILITYNO" />
+          <ScalarProperty Name="LIMITQUANTITY" ColumnName="LIMITQUANTITY" />
+          <ScalarProperty Name="LIMITAMOUNT" ColumnName="LIMITAMOUNT" />
+          <ScalarProperty Name="THRESHOLDQUANTITY" ColumnName="THRESHOLDQUANTITY" />
+          <ScalarProperty Name="THRESHOLDAMOUNT" ColumnName="THRESHOLDAMOUNT" />
+          <ScalarProperty Name="IDNO" ColumnName="IDNO" />
+          <ScalarProperty Name="TYPENO" ColumnName="TYPENO" />
+          <ScalarProperty Name="ELIGIBILITYNO" ColumnName="ELIGIBILITYNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoices">
+      <EntityTypeMapping TypeName="veebdbModel.invoice">
+        <MappingFragment StoreEntitySet="invoice">
+          <ScalarProperty Name="TABLENO" ColumnName="TABLENO" />
+          <ScalarProperty Name="CUSTPERSONNO" ColumnName="CUSTPERSONNO" />
+          <ScalarProperty Name="CAUSENO" ColumnName="CAUSENO" />
+          <ScalarProperty Name="STOCKNO" ColumnName="STOCKNO" />
+          <ScalarProperty Name="VATAMOUNT" ColumnName="VATAMOUNT" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="REFNUM" ColumnName="REFNUM" />
+          <ScalarProperty Name="OINFO" ColumnName="OINFO" />
+          <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+          <ScalarProperty Name="ADDRESS5" ColumnName="ADDRESS5" />
+          <ScalarProperty Name="ADDRESS4" ColumnName="ADDRESS4" />
+          <ScalarProperty Name="ADDRESS3" ColumnName="ADDRESS3" />
+          <ScalarProperty Name="ADDRESS2" ColumnName="ADDRESS2" />
+          <ScalarProperty Name="ADDRESS1" ColumnName="ADDRESS1" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="CUSTNAME" ColumnName="CUSTNAME" />
+          <ScalarProperty Name="INVOICEDATE" ColumnName="INVOICEDATE" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="CUSTCODE" ColumnName="CUSTCODE" />
+          <ScalarProperty Name="INVOICE1" ColumnName="INVOICE" />
+          <ScalarProperty Name="INVNO" ColumnName="INVNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoice_log">
+      <EntityTypeMapping TypeName="veebdbModel.invoice_log">
+        <MappingFragment StoreEntitySet="invoice_log">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="CLASS" ColumnName="CLASS" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="INVOICE_DATE" ColumnName="INVOICE_DATE" />
+          <ScalarProperty Name="INVOICE" ColumnName="INVOICE" />
+          <ScalarProperty Name="WEB_INVOICE_DATE" ColumnName="WEB_INVOICE_DATE" />
+          <ScalarProperty Name="WEB_INVOICE" ColumnName="WEB_INVOICE" />
+          <ScalarProperty Name="EVENT_TIME" ColumnName="EVENT_TIME" />
+          <ScalarProperty Name="INVOICE_LOG_ID" ColumnName="INVOICE_LOG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="langnames">
+      <EntityTypeMapping TypeName="veebdbModel.langname">
+        <MappingFragment StoreEntitySet="langnames">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="INFO" ColumnName="INFO" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="LANGNO" ColumnName="LANGNO" />
+          <ScalarProperty Name="LINEID" ColumnName="LINEID" />
+          <ScalarProperty Name="TABLEID" ColumnName="TABLEID" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="languages">
+      <EntityTypeMapping TypeName="veebdbModel.language">
+        <MappingFragment StoreEntitySet="language">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="LANGNAME" ColumnName="LANGNAME" />
+          <ScalarProperty Name="LANGNO" ColumnName="LANGNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ordritms">
+      <EntityTypeMapping TypeName="veebdbModel.ordritm">
+        <MappingFragment StoreEntitySet="ordritms">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="ARRIVEDATE" ColumnName="ARRIVEDATE" />
+          <ScalarProperty Name="QTY" ColumnName="QTY" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+          <ScalarProperty Name="ORDERNO" ColumnName="ORDERNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="outitems">
+      <EntityTypeMapping TypeName="veebdbModel.outitem">
+        <MappingFragment StoreEntitySet="outitems">
+          <ScalarProperty Name="SIZENO" ColumnName="SIZENO" />
+          <ScalarProperty Name="RCOMMENT" ColumnName="RCOMMENT" />
+          <ScalarProperty Name="VATAMOUNT" ColumnName="VATAMOUNT" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="QTY" ColumnName="QTY" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+          <ScalarProperty Name="INVNO" ColumnName="INVNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="payments">
+      <EntityTypeMapping TypeName="veebdbModel.payment">
+        <MappingFragment StoreEntitySet="payments">
+          <ScalarProperty Name="PAYDOC" ColumnName="PAYDOC" />
+          <ScalarProperty Name="PAYDATE" ColumnName="PAYDATE" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+          <ScalarProperty Name="INVNO" ColumnName="INVNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pricelists">
+      <EntityTypeMapping TypeName="veebdbModel.pricelist">
+        <MappingFragment StoreEntitySet="pricelist">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="PRICEGROUPNO" ColumnName="PRICEGROUPNO" />
+          <ScalarProperty Name="CURRENCY_CODE" ColumnName="CURRENCY_CODE" />
+          <ScalarProperty Name="PRICEBLOCKED" ColumnName="PRICEBLOCKED" />
+          <ScalarProperty Name="CUSTNO" ColumnName="CUSTNO" />
+          <ScalarProperty Name="LASTDATE" ColumnName="LASTDATE" />
+          <ScalarProperty Name="FIRSTDATE" ColumnName="FIRSTDATE" />
+          <ScalarProperty Name="PRICELISTNAME" ColumnName="PRICELISTNAME" />
+          <ScalarProperty Name="PRICELISTCODE" ColumnName="PRICELISTCODE" />
+          <ScalarProperty Name="PRICELISTNO" ColumnName="PRICELISTNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="prices">
+      <EntityTypeMapping TypeName="veebdbModel.price">
+        <MappingFragment StoreEntitySet="prices">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="PASSIVE" ColumnName="PASSIVE" />
+          <ScalarProperty Name="PRICE1" ColumnName="PRICE" />
+          <ScalarProperty Name="PRICELISTNO" ColumnName="PRICELISTNO" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="PRICENO" ColumnName="PRICENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="producers">
+      <EntityTypeMapping TypeName="veebdbModel.producer">
+        <MappingFragment StoreEntitySet="producer">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="PRODUCERNAME" ColumnName="PRODUCERNAME" />
+          <ScalarProperty Name="PRODUCERCODE" ColumnName="PRODUCERCODE" />
+          <ScalarProperty Name="PRODUCERNO" ColumnName="PRODUCERNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="promotions">
+      <EntityTypeMapping TypeName="veebdbModel.promotion">
+        <MappingFragment StoreEntitySet="promotion">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="LASTDATE" ColumnName="LASTDATE" />
+          <ScalarProperty Name="FIRSTDATE" ColumnName="FIRSTDATE" />
+          <ScalarProperty Name="TYPENO" ColumnName="TYPENO" />
+          <ScalarProperty Name="PROMOTIONNAME" ColumnName="PROMOTIONNAME" />
+          <ScalarProperty Name="PROMOTIONCODE" ColumnName="PROMOTIONCODE" />
+          <ScalarProperty Name="PROMOTIONNO" ColumnName="PROMOTIONNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="promotionrules">
+      <EntityTypeMapping TypeName="veebdbModel.promotionrule">
+        <MappingFragment StoreEntitySet="promotionrule">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="PRICEGROUPNO" ColumnName="PRICEGROUPNO" />
+          <ScalarProperty Name="ADJUSTMENTVALUE" ColumnName="ADJUSTMENTVALUE" />
+          <ScalarProperty Name="ADJUSTMENTTYPENO" ColumnName="ADJUSTMENTTYPENO" />
+          <ScalarProperty Name="TYPENO" ColumnName="TYPENO" />
+          <ScalarProperty Name="ELIGIBILITYNO" ColumnName="ELIGIBILITYNO" />
+          <ScalarProperty Name="PROMOTIONNO" ColumnName="PROMOTIONNO" />
+          <ScalarProperty Name="PROMOTIONRULENO" ColumnName="PROMOTIONRULENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stgrps">
+      <EntityTypeMapping TypeName="veebdbModel.stgrp">
+        <MappingFragment StoreEntitySet="stgrp">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
+          <ScalarProperty Name="STOCKGROUPCODE" ColumnName="STOCKGROUPCODE" />
+          <ScalarProperty Name="STOCKGROUPNAME" ColumnName="STOCKGROUPNAME" />
+          <ScalarProperty Name="STOCKGROUPNO" ColumnName="STOCKGROUPNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stgrp2">
+      <EntityTypeMapping TypeName="veebdbModel.stgrp2">
+        <MappingFragment StoreEntitySet="stgrp2">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
+          <ScalarProperty Name="PARENTNO" ColumnName="PARENTNO" />
+          <ScalarProperty Name="STOCKGROUP2CODE" ColumnName="STOCKGROUP2CODE" />
+          <ScalarProperty Name="STOCKGROUP2NAME" ColumnName="STOCKGROUP2NAME" />
+          <ScalarProperty Name="STOCKGROUP2NO" ColumnName="STOCKGROUP2NO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stgrpmaps">
+      <EntityTypeMapping TypeName="veebdbModel.stgrpmap">
+        <MappingFragment StoreEntitySet="stgrpmap">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+          <ScalarProperty Name="STOCKGROUPNO" ColumnName="STOCKGROUPNO" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stgrpmap2">
+      <EntityTypeMapping TypeName="veebdbModel.stgrpmap2">
+        <MappingFragment StoreEntitySet="stgrpmap2">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+          <ScalarProperty Name="STOCKGROUP2NO" ColumnName="STOCKGROUP2NO" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stocks">
+      <EntityTypeMapping TypeName="veebdbModel.stock">
+        <MappingFragment StoreEntitySet="stock">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="SIZENO" ColumnName="SIZENO" />
+          <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+          <ScalarProperty Name="STOCKNO" ColumnName="STOCKNO" />
+          <ScalarProperty Name="LINENO" ColumnName="LINENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stockcods">
+      <EntityTypeMapping TypeName="veebdbModel.stockcod">
+        <MappingFragment StoreEntitySet="stockcod">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="STOCKNAME" ColumnName="STOCKNAME" />
+          <ScalarProperty Name="STOCKCODE" ColumnName="STOCKCODE" />
+          <ScalarProperty Name="STOCKNO" ColumnName="STOCKNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="supplycycles">
+      <EntityTypeMapping TypeName="veebdbModel.supplycycle">
+        <MappingFragment StoreEntitySet="supplycycle">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="SUPPLYCYCLENAME" ColumnName="SUPPLYCYCLENAME" />
+          <ScalarProperty Name="SUPPLYCYCLECODE" ColumnName="SUPPLYCYCLECODE" />
+          <ScalarProperty Name="SUPPLYCYCLENO" ColumnName="SUPPLYCYCLENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trans_log">
+      <EntityTypeMapping TypeName="veebdbModel.trans_log">
+        <MappingFragment StoreEntitySet="trans_log">
+          <ScalarProperty Name="RETRY_COUNT" ColumnName="RETRY_COUNT" />
+          <ScalarProperty Name="EVENT_TIME" ColumnName="EVENT_TIME" />
+          <ScalarProperty Name="EVENT_CODE" ColumnName="EVENT_CODE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TABLE_NAME" ColumnName="TABLE_NAME" />
+          <ScalarProperty Name="TRANS_LOG_ID" ColumnName="TRANS_LOG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_disc_rule">
+      <EntityTypeMapping TypeName="veebdbModel.vw_disc_rule">
+        <MappingFragment StoreEntitySet="vw_disc_rule">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="STOCKNO" ColumnName="STOCKNO" />
+          <ScalarProperty Name="PRICEGROUPNO" ColumnName="PRICEGROUPNO" />
+          <ScalarProperty Name="ADJUSTMENTVALUE" ColumnName="ADJUSTMENTVALUE" />
+          <ScalarProperty Name="ADJUSTMENTTYPENO" ColumnName="ADJUSTMENTTYPENO" />
+          <ScalarProperty Name="LIMITAMOUNT" ColumnName="LIMITAMOUNT" />
+          <ScalarProperty Name="THRESHOLDAMOUNT" ColumnName="THRESHOLDAMOUNT" />
+          <ScalarProperty Name="LIMITQUANTITY" ColumnName="LIMITQUANTITY" />
+          <ScalarProperty Name="THRESHOLDQUANTITY" ColumnName="THRESHOLDQUANTITY" />
+          <ScalarProperty Name="DISCCLASS" ColumnName="DISCCLASS" />
+          <ScalarProperty Name="DISCGROUP" ColumnName="DISCGROUP" />
+          <ScalarProperty Name="LASTDATE" ColumnName="LASTDATE" />
+          <ScalarProperty Name="FIRSTDATE" ColumnName="FIRSTDATE" />
+          <ScalarProperty Name="PROMOTIONNAME" ColumnName="PROMOTIONNAME" />
+          <ScalarProperty Name="PROMOTIONCODE" ColumnName="PROMOTIONCODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="accountlogins">
+      <EntityTypeMapping TypeName="veebdbModel.accountlogin">
+        <MappingFragment StoreEntitySet="accountlogin">
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="permission" ColumnName="permission" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="warehouses">
+      <EntityTypeMapping TypeName="veebdbModel.warehouse">
+        <MappingFragment StoreEntitySet="warehouse">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="catalogues">
+      <EntityTypeMapping TypeName="veebdbModel.catalogue">
+        <MappingFragment StoreEntitySet="catalogue">
+          <ScalarProperty Name="MetaGroupId" ColumnName="MetaGroupId" />
+          <ScalarProperty Name="CatalogueName" ColumnName="CatalogueName" />
+          <ScalarProperty Name="CatalogueCode" ColumnName="CatalogueCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="veebdbModel.category">
+        <MappingFragment StoreEntitySet="category">
+          <ScalarProperty Name="CatalogueCode" ColumnName="CatalogueCode" />
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="CATEGORYNAME" ColumnName="CATEGORYNAME" />
+          <ScalarProperty Name="CATEGORYCODE" ColumnName="CATEGORYCODE" />
+          <ScalarProperty Name="CATEGORYNO" ColumnName="CATEGORYNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stores">
+      <EntityTypeMapping TypeName="veebdbModel.store">
+        <MappingFragment StoreEntitySet="stores">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="files">
+      <EntityTypeMapping TypeName="veebdbModel.file">
+        <MappingFragment StoreEntitySet="file">
+          <ScalarProperty Name="FileAddress" ColumnName="FileAddress" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UploadBy" ColumnName="UploadBy" />
+          <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Kind" ColumnName="Kind" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="veebdbModel.role">
+        <MappingFragment StoreEntitySet="role">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="veebdbModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="createdate" ColumnName="createdate" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="display" ColumnName="display" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_role">
+      <EntityTypeMapping TypeName="veebdbModel.user_role">
+        <MappingFragment StoreEntitySet="user_role">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="roleid" ColumnName="roleid" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userdatas">
+      <EntityTypeMapping TypeName="veebdbModel.userdata">
+        <MappingFragment StoreEntitySet="userdata">
+          <ScalarProperty Name="billing_country" ColumnName="billing_country" />
+          <ScalarProperty Name="billing_state" ColumnName="billing_state" />
+          <ScalarProperty Name="billing_poscode" ColumnName="billing_poscode" />
+          <ScalarProperty Name="billing_suburb" ColumnName="billing_suburb" />
+          <ScalarProperty Name="billing_address2" ColumnName="billing_address2" />
+          <ScalarProperty Name="billing_address1" ColumnName="billing_address1" />
+          <ScalarProperty Name="billing_phone" ColumnName="billing_phone" />
+          <ScalarProperty Name="billing_email" ColumnName="billing_email" />
+          <ScalarProperty Name="billing_name" ColumnName="billing_name" />
+          <ScalarProperty Name="delivery_contry" ColumnName="delivery_contry" />
+          <ScalarProperty Name="delivery_state" ColumnName="delivery_state" />
+          <ScalarProperty Name="delivery_postcode" ColumnName="delivery_postcode" />
+          <ScalarProperty Name="delivery_suburb" ColumnName="delivery_suburb" />
+          <ScalarProperty Name="delivery_address2" ColumnName="delivery_address2" />
+          <ScalarProperty Name="delivery_address1" ColumnName="delivery_address1" />
+          <ScalarProperty Name="delivery_phone" ColumnName="delivery_phone" />
+          <ScalarProperty Name="delivery_email" ColumnName="delivery_email" />
+          <ScalarProperty Name="delivery_name" ColumnName="delivery_name" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="contact_phone" ColumnName="contact_phone" />
+          <ScalarProperty Name="contact_email" ColumnName="contact_email" />
+          <ScalarProperty Name="lasname" ColumnName="lasname" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="metagrups">
+      <EntityTypeMapping TypeName="veebdbModel.metagrup">
+        <MappingFragment StoreEntitySet="metagrup">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="PARENTNO" ColumnName="PARENTNO" />
+          <ScalarProperty Name="METAGROUPNAME" ColumnName="METAGROUPNAME" />
+          <ScalarProperty Name="METAGROUPCODE" ColumnName="METAGROUPCODE" />
+          <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="items">
+      <EntityTypeMapping TypeName="veebdbModel.item">
+        <MappingFragment StoreEntitySet="item">
+          <ScalarProperty Name="IsBestSeller" ColumnName="IsBestSeller" />
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="PAYMENTTERM" ColumnName="PAYMENTTERM" />
+          <ScalarProperty Name="WEBID" ColumnName="WEBID" />
+          <ScalarProperty Name="DISCGROUP" ColumnName="DISCGROUP" />
+          <ScalarProperty Name="SUPPLYCYCLENO" ColumnName="SUPPLYCYCLENO" />
+          <ScalarProperty Name="SIZETBLNO" ColumnName="SIZETBLNO" />
+          <ScalarProperty Name="SIZENO" ColumnName="SIZENO" />
+          <ScalarProperty Name="PACKAGEVOLUME2" ColumnName="PACKAGEVOLUME2" />
+          <ScalarProperty Name="PACKAGEVOLUME" ColumnName="PACKAGEVOLUME" />
+          <ScalarProperty Name="VAT" ColumnName="VAT" />
+          <ScalarProperty Name="CHECKBOX6" ColumnName="CHECKBOX6" />
+          <ScalarProperty Name="CHECKBOX5" ColumnName="CHECKBOX5" />
+          <ScalarProperty Name="CHECKBOX4" ColumnName="CHECKBOX4" />
+          <ScalarProperty Name="CHECKBOX3" ColumnName="CHECKBOX3" />
+          <ScalarProperty Name="CHECKBOX2" ColumnName="CHECKBOX2" />
+          <ScalarProperty Name="CHECKBOX1" ColumnName="CHECKBOX1" />
+          <ScalarProperty Name="UNITDESCR" ColumnName="UNITDESCR" />
+          <ScalarProperty Name="UNITNAME" ColumnName="UNITNAME" />
+          <ScalarProperty Name="WIDTH" ColumnName="WIDTH" />
+          <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
+          <ScalarProperty Name="LEN" ColumnName="LEN" />
+          <ScalarProperty Name="INFO6" ColumnName="INFO6" />
+          <ScalarProperty Name="INFO5" ColumnName="INFO5" />
+          <ScalarProperty Name="INFO4" ColumnName="INFO4" />
+          <ScalarProperty Name="INFO3" ColumnName="INFO3" />
+          <ScalarProperty Name="INFO2" ColumnName="INFO2" />
+          <ScalarProperty Name="INFO1" ColumnName="INFO1" />
+          <ScalarProperty Name="COLLATIONUNIT" ColumnName="COLLATIONUNIT" />
+          <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+          <ScalarProperty Name="NOTADDPOSTAGEFEE" ColumnName="NOTADDPOSTAGEFEE" />
+          <ScalarProperty Name="NOTPOST" ColumnName="NOTPOST" />
+          <ScalarProperty Name="RESTRICTED" ColumnName="RESTRICTED" />
+          <ScalarProperty Name="AUTHORIZABLE" ColumnName="AUTHORIZABLE" />
+          <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+          <ScalarProperty Name="NEWUNTIL" ColumnName="NEWUNTIL" />
+          <ScalarProperty Name="PICTURENAME" ColumnName="PICTURENAME" />
+          <ScalarProperty Name="SPECIALOFFER" ColumnName="SPECIALOFFER" />
+          <ScalarProperty Name="WEBPRICE" ColumnName="WEBPRICE" />
+          <ScalarProperty Name="INFO" ColumnName="INFO" />
+          <ScalarProperty Name="COLORNO" ColumnName="COLORNO" />
+          <ScalarProperty Name="CATEGORYNO" ColumnName="CATEGORYNO" />
+          <ScalarProperty Name="PRODUCERNO" ColumnName="PRODUCERNO" />
+          <ScalarProperty Name="STOCKITEM" ColumnName="STOCKITEM" />
+          <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
+          <ScalarProperty Name="ARTTYPE" ColumnName="ARTTYPE" />
+          <ScalarProperty Name="LONGNAME" ColumnName="LONGNAME" />
+          <ScalarProperty Name="ARTNAME" ColumnName="ARTNAME" />
+          <ScalarProperty Name="ARTCODE" ColumnName="ARTCODE" />
+          <ScalarProperty Name="ARTNO" ColumnName="ARTNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="orderdetails">
+      <EntityTypeMapping TypeName="veebdbModel.orderdetail">
+        <MappingFragment StoreEntitySet="orderdetails">
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="PriceExTax" ColumnName="PriceExTax" />
+          <ScalarProperty Name="PriceInTax" ColumnName="PriceInTax" />
+          <ScalarProperty Name="taxRate" ColumnName="taxRate" />
+          <ScalarProperty Name="qtysent" ColumnName="qtysent" />
+          <ScalarProperty Name="totalrequest" ColumnName="totalrequest" />
+          <ScalarProperty Name="itemtype" ColumnName="itemtype" />
+          <ScalarProperty Name="imagepath" ColumnName="imagepath" />
+          <ScalarProperty Name="ocdetailgst" ColumnName="ocdetailgst" />
+          <ScalarProperty Name="ocdetailprice" ColumnName="ocdetailprice" />
+          <ScalarProperty Name="ocdetailqty" ColumnName="ocdetailqty" />
+          <ScalarProperty Name="ocdetailname" ColumnName="ocdetailname" />
+          <ScalarProperty Name="ocdetailcode" ColumnName="ocdetailcode" />
+          <ScalarProperty Name="ocid" ColumnName="ocid" />
+          <ScalarProperty Name="prodetailid" ColumnName="prodetailid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="orders">
+      <EntityTypeMapping TypeName="veebdbModel.order">
+        <MappingFragment StoreEntitySet="order">
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="oclastupdated" ColumnName="oclastupdated" />
+          <ScalarProperty Name="ocupdatedby" ColumnName="ocupdatedby" />
+          <ScalarProperty Name="onhold" ColumnName="onhold" />
+          <ScalarProperty Name="b_addrid" ColumnName="b_addrid" />
+          <ScalarProperty Name="b_email" ColumnName="b_email" />
+          <ScalarProperty Name="b_fax" ColumnName="b_fax" />
+          <ScalarProperty Name="b_phone" ColumnName="b_phone" />
+          <ScalarProperty Name="b_mobile" ColumnName="b_mobile" />
+          <ScalarProperty Name="b_country" ColumnName="b_country" />
+          <ScalarProperty Name="b_postcode" ColumnName="b_postcode" />
+          <ScalarProperty Name="b_addr3" ColumnName="b_addr3" />
+          <ScalarProperty Name="b_addr2" ColumnName="b_addr2" />
+          <ScalarProperty Name="b_addr1" ColumnName="b_addr1" />
+          <ScalarProperty Name="b_abn" ColumnName="b_abn" />
+          <ScalarProperty Name="b_companyname" ColumnName="b_companyname" />
+          <ScalarProperty Name="b_lname" ColumnName="b_lname" />
+          <ScalarProperty Name="b_fname" ColumnName="b_fname" />
+          <ScalarProperty Name="b_attention" ColumnName="b_attention" />
+          <ScalarProperty Name="d_status" ColumnName="d_status" />
+          <ScalarProperty Name="order_group" ColumnName="order_group" />
+          <ScalarProperty Name="tobeinvoiced" ColumnName="tobeinvoiced" />
+          <ScalarProperty Name="payoption" ColumnName="payoption" />
+          <ScalarProperty Name="d_notes" ColumnName="d_notes" />
+          <ScalarProperty Name="d_fax" ColumnName="d_fax" />
+          <ScalarProperty Name="d_phone" ColumnName="d_phone" />
+          <ScalarProperty Name="d_mobile" ColumnName="d_mobile" />
+          <ScalarProperty Name="d_email" ColumnName="d_email" />
+          <ScalarProperty Name="d_country" ColumnName="d_country" />
+          <ScalarProperty Name="d_companyname" ColumnName="d_companyname" />
+          <ScalarProperty Name="d_postcode" ColumnName="d_postcode" />
+          <ScalarProperty Name="d_addr3" ColumnName="d_addr3" />
+          <ScalarProperty Name="d_addr2" ColumnName="d_addr2" />
+          <ScalarProperty Name="d_addr1" ColumnName="d_addr1" />
+          <ScalarProperty Name="d_lname" ColumnName="d_lname" />
+          <ScalarProperty Name="d_fname" ColumnName="d_fname" />
+          <ScalarProperty Name="d_attention" ColumnName="d_attention" />
+          <ScalarProperty Name="closedDate" ColumnName="closedDate" />
+          <ScalarProperty Name="profileID" ColumnName="profileID" />
+          <ScalarProperty Name="exchangerate" ColumnName="exchangerate" />
+          <ScalarProperty Name="currency" ColumnName="currency" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="ordertotalexc" ColumnName="ordertotalexc" />
+          <ScalarProperty Name="ordertotal" ColumnName="ordertotal" />
+          <ScalarProperty Name="tradeterms" ColumnName="tradeterms" />
+          <ScalarProperty Name="visible" ColumnName="visible" />
+          <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+          <ScalarProperty Name="submitDate" ColumnName="submitDate" />
+          <ScalarProperty Name="clientID" ColumnName="clientID" />
+          <ScalarProperty Name="showsubtotal" ColumnName="showsubtotal" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="postcode" ColumnName="postcode" />
+          <ScalarProperty Name="addr3" ColumnName="addr3" />
+          <ScalarProperty Name="addr2" ColumnName="addr2" />
+          <ScalarProperty Name="addr1" ColumnName="addr1" />
+          <ScalarProperty Name="abn" ColumnName="abn" />
+          <ScalarProperty Name="promotionName" ColumnName="promotionName" />
+          <ScalarProperty Name="tradingname" ColumnName="tradingname" />
+          <ScalarProperty Name="companyname" ColumnName="companyname" />
+          <ScalarProperty Name="lname" ColumnName="lname" />
+          <ScalarProperty Name="fname" ColumnName="fname" />
+          <ScalarProperty Name="ocid" ColumnName="ocid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sliders">
+      <EntityTypeMapping TypeName="veebdbModel.slider">
+        <MappingFragment StoreEntitySet="sliders">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Images" ColumnName="Images" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="menus">
+      <EntityTypeMapping TypeName="veebdbModel.menu">
+        <MappingFragment StoreEntitySet="menu">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="isparent" ColumnName="isparent" />
+          <ScalarProperty Name="parentId" ColumnName="parentId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="settings">
+      <EntityTypeMapping TypeName="veebdbModel.setting">
+        <MappingFragment StoreEntitySet="setting">
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="urlimage" ColumnName="urlimage" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+          <ScalarProperty Name="createdate" ColumnName="createdate" />
+          <ScalarProperty Name="typeId" ColumnName="typeId" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="settingtypes">
+      <EntityTypeMapping TypeName="veebdbModel.settingtype">
+        <MappingFragment StoreEntitySet="settingtype">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

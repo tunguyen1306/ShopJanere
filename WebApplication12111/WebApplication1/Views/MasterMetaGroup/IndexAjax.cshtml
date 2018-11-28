@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebApplication1.Models.AllModel>
+<table class="table list_product">
+    <thead>
+        <tr>
+
+
+            <th scope="col" id="CATEGORYCODE" class="manage_column column_name">Metagrup Code</th>
+            <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Metagrup Name</th>
+            <th scope="col" id="LASTCHANGE" class="manage_column column_description">Meta Group</th>
+            <th scope="col" id="LASTCHANGE" class="manage_column column_description">Status</th>
+      
+            <th scope="col" class="manage_column column_number"></th>
+
+        </tr>
+    </thead>
+    <tbody >
+      @foreach (var item in Model)
+      {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPCODE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
+            </td>
+            <td>
+                @if (item.tblMetaGroup.IsActive == true)
+                {
+                    @("Active")
+                }
+                else
+                {
+                    @("Not Active")
+                }
+            </td>
+            <td scope="col" class="manage_column column_action">
+                <a class="edit_action" href="@Url.Action("Edit", "MasterMetaGroup", new {id = item.tblMetaGroup.METAGROUPNO})"><i class="fas fa-edit"></i></a>
+                <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "MasterMetaGroup", new {id = item.tblMetaGroup.METAGROUPNO})"><i class="fas fa-times"></i></a>
+
+
+            </td>
+        </tr>
+      }
+    </tbody>
+</table>
+
+
+
+<div class="wrap_product_nav">
+    <span>@ViewBag.ViewOf of @ViewBag.Total items</span>
+    <select class="filter" id="dropPage" name="filter_nav">
+        <option value="10"  >10 items per page</option>
+        <option value="20" >20 items per page</option>
+        <option value="30">30 items per page</option>
+    </select>
+   
+    @if (ViewBag.Total > 10)
+    {
+        @Html.Partial("_PaginationAjax")
+    }
+
+
+</div><!-- wrap_product_nav -->
+<script>
+    $('#dropPage').val(@ViewBag.View);
+    $('#dropPage').on('change', function () {
+        onPageChange($('#metagrup-result').find('a[data-page="1"]'));
+    });
+
+    function onPageChange(el) {
+        if (!$(el).hasClass('disable')) {
+            var page = $(el).attr('data-page');
+            var view = $('#dropPage').val();
+            var start = (page - 1) * view;
+
+            $.get('@Url.Action("IndexAjax", "MasterMetaGroup")?start=' + start + '&view=' + view, function (data) {
+                $('#metagrup-result').html(data);
+
+            });
+        }
+
+
+    }
+</script>

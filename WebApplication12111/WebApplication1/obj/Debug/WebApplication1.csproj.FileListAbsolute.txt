@@ -1,0 +1,112 @@
+D:\shop.jan\WebApplication1\bin\WebApplication1.dll.config
+D:\shop.jan\WebApplication1\bin\WebApplication1.dll
+D:\shop.jan\WebApplication1\bin\WebApplication1.pdb
+D:\shop.jan\WebApplication1\bin\Antlr3.Runtime.dll
+D:\shop.jan\WebApplication1\bin\EntityFramework.dll
+D:\shop.jan\WebApplication1\bin\EntityFramework.SqlServer.dll
+D:\shop.jan\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
+D:\shop.jan\WebApplication1\bin\Newtonsoft.Json.dll
+D:\shop.jan\WebApplication1\bin\System.Web.Helpers.dll
+D:\shop.jan\WebApplication1\bin\System.Web.Mvc.dll
+D:\shop.jan\WebApplication1\bin\System.Web.Optimization.dll
+D:\shop.jan\WebApplication1\bin\System.Web.Razor.dll
+D:\shop.jan\WebApplication1\bin\System.Web.WebPages.Deployment.dll
+D:\shop.jan\WebApplication1\bin\System.Web.WebPages.dll
+D:\shop.jan\WebApplication1\bin\System.Web.WebPages.Razor.dll
+D:\shop.jan\WebApplication1\bin\WebGrease.dll
+D:\shop.jan\WebApplication1\bin\EntityFramework.xml
+D:\shop.jan\WebApplication1\bin\EntityFramework.SqlServer.xml
+D:\shop.jan\WebApplication1\bin\System.Web.Helpers.xml
+D:\shop.jan\WebApplication1\bin\System.Web.Mvc.xml
+D:\shop.jan\WebApplication1\bin\System.Web.Optimization.xml
+D:\shop.jan\WebApplication1\bin\System.Web.Razor.xml
+D:\shop.jan\WebApplication1\bin\System.Web.WebPages.xml
+D:\shop.jan\WebApplication1\bin\System.Web.WebPages.Deployment.xml
+D:\shop.jan\WebApplication1\bin\System.Web.WebPages.Razor.xml
+D:\shop.jan\WebApplication1\bin\Antlr3.Runtime.pdb
+D:\shop.jan\WebApplication1\bin\Newtonsoft.Json.xml
+D:\shop.jan\WebApplication1\obj\Debug\WebApplication1.dll
+D:\shop.jan\WebApplication1\obj\Debug\WebApplication1.pdb
+D:\Freelancer\shop.jan\WebApplication1\bin\WebApplication1.dll.config
+D:\Freelancer\shop.jan\WebApplication1\bin\WebApplication1.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\WebApplication1.pdb
+D:\Freelancer\shop.jan\WebApplication1\bin\Antlr3.Runtime.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\EntityFramework.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\EntityFramework.SqlServer.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\Ionic.Zip.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\Newtonsoft.Json.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\PagedList.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\PagedList.Mvc.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Helpers.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Mvc.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Optimization.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Razor.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.WebPages.Deployment.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.WebPages.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.WebPages.Razor.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\WebGrease.dll
+D:\Freelancer\shop.jan\WebApplication1\bin\EntityFramework.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\EntityFramework.SqlServer.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\PagedList.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\PagedList.Mvc.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Helpers.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Mvc.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Optimization.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.Razor.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.WebPages.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.WebPages.Deployment.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\System.Web.WebPages.Razor.xml
+D:\Freelancer\shop.jan\WebApplication1\bin\Antlr3.Runtime.pdb
+D:\Freelancer\shop.jan\WebApplication1\bin\Newtonsoft.Json.xml
+D:\Freelancer\shop.jan\WebApplication1\obj\Debug\WebApplication1.dll
+D:\Freelancer\shop.jan\WebApplication1\obj\Debug\WebApplication1.pdb
+D:\Freelancer\shop.jan\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
+D:\Freelancer\New folder\New folder\WebApplication1\obj\Debug\WebApplication1.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\WebApplication1.dll.config
+D:\Freelancer\New folder\New folder\WebApplication1\bin\WebApplication1.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\WebApplication1.pdb
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Antlr3.Runtime.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\EntityFramework.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\EntityFramework.SqlServer.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Ionic.Zip.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\LinqToExcel.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Newtonsoft.Json.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\PagedList.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\PagedList.Mvc.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Remotion.Data.Linq.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Remotion.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Remotion.Interfaces.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Helpers.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Mvc.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Optimization.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Razor.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.WebPages.Deployment.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.WebPages.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.WebPages.Razor.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\WebGrease.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\EntityFramework.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\EntityFramework.SqlServer.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\LinqToExcel.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\PagedList.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\PagedList.Mvc.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Helpers.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Mvc.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Optimization.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.Razor.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.WebPages.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.WebPages.Deployment.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\System.Web.WebPages.Razor.xml
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Antlr3.Runtime.pdb
+D:\Freelancer\New folder\New folder\WebApplication1\bin\Newtonsoft.Json.xml
+D:\Freelancer\New folder\New folder\WebApplication1\obj\Debug\WebApplication1.pdb
+D:\Freelancer\New folder\New folder\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder_FileEditor.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder_ImageResize.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder_Watermark.dll
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder.pdb
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder_FileEditor.pdb
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder_ImageResize.pdb
+D:\Freelancer\New folder\New folder\WebApplication1\bin\CKFinder_Watermark.pdb

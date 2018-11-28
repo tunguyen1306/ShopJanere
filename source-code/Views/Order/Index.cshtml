@@ -6,36 +6,35 @@
     <h1>All Order</h1>
     <div class="page_action">
         <a href="@Url.Action("Create","Order")">Add New</a>
-        <a href="@Url.Action("ImportExcel","Order")">Import</a>
-        <a href="">Export</a>
+
     </div>
 
     <ul class="sub_action">
         <li class="active"><a href="@Url.Action("Index","Order",new {tab="all"})">All</a></li>
-      
+
     </ul>
     <div class="row wrap_filter">
         <div class="col-sm-4">
             <label>Action</label>
-            <select class="bulk_action filter" name="bulk_action">
+            @*<select class="bulk_action filter" name="bulk_action">
                 <option value="trash">Move to trash</option>
-                <option value="edit">Edit</option>
-            </select>
+
+            </select>*@
+            @Html.DropDownList("bulk_action", new SelectList(((List<orderstatu>)ViewBag.OrderStatus), "id", "name"), new { @class = "bulk_action filter",@style= "width: 145px;" })
             <input type="submit" id="do_bulk_action" class="button btn-sm" value="Go">
         </div>
         <div class="col-sm-3 right">
-            <input type="text" id="datepicker" name="datepicker" class="form-control right" placeholder="Date: M/D/Y">
+            <input type="text" id="datepicker" value="" name="datepicker" class="form-control right date-picker" placeholder="Date: D/M/Y">
         </div>
-        <div class="col-sm-5 right">
-            <input type="text" name="search_order" class="form-control">
+        <div class="col-sm-4 right">
+            <input type="text" name="search_order" id="txtsearch_orders" class="form-control">
+
+        </div>
+        <div class="col-sm-1 left">
+
             <button type="submit" id="search_orders" class="button btn-sm search_orders" value="Search"><i class="fas fa-search"></i></button>
         </div>
     </div><!-- wrap_filter -->
-
-
-
-
-
     @using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
     {
         HttpMethod = "GET",
@@ -57,48 +56,52 @@
     <script>
 
 
-    //#region tdg form
+        //#region tdg form
 
-    function Order_seacrch() {
-        $('#Order-btsubmit').click();
-    }
-    Order_seacrch();
-    function OrdersearchOnBegin() {
-        //fbLoading("#formLoadOrder");
-    }
-
-    function OrdersearchOnSuccess() {
-
-        //fbRemoveLoading("#formLoadOrder");
-    }
-    //#endregion
-
-    $('#do_bulk_action').on('click', function () {
-        updateStatus();
-    });
-
-    function updateStatus() {
-        var _value = $('.bulk_action filter').val();
-        var _count = $(".item_check input:checked").length;
-        var _items = new Array();
-        $(".item_check input:checked").each(function () {
-            _items.push(this.value);
-        });
-        if (_count > 0) {
-            $.post('@Url.Action("UpdateStatus", "Order")', { status: _value, ids: _items }, function (data) {
-
-                if (data.status == 'true' || data.status == true) {
-                    onPageChange($('#Order-result').find('a[data-page="1"]'));
-                } else {
-                    alert(data.msg);
-                }
-
-            });
-        } else {
-            alert("Vui lòng chọn ít nhất 1 item");
+        function Order_seacrch() {
+            $('#Order-btsubmit').click();
         }
-    }
+        Order_seacrch();
+        function OrdersearchOnBegin() {
+            //fbLoading("#formLoadOrder");
+        }
+
+        function OrdersearchOnSuccess() {
+
+            //fbRemoveLoading("#formLoadOrder");
+        }
+        //#endregion
+
+        $('#do_bulk_action').on('click', function () {
+            updateStatus();
+        });
+
+        function updateStatus() {
+            var value = $('#bulk_action').val();
+            var count = $(".item_check input:checked").length;
+            var items = new Array();
+            $(".item_check input:checked").each(function () {
+                items.push(this.value);
+            });
+            if (count > 0) {
+                if (value != "0") {
+                    $.post('@Url.Action("UpdateStatus", "Order")', { status: value, ids: items }, function (data) {
+
+                        if (data.status == 'true' || data.status == true) {
+                            onPageChange($('#Order-result').find('a[data-page="1"]'));
+                        } else {
+                            alert(data.msg);
+                        }
+
+                    });
+                } else {
+                    alert("Select type action");
+                }
+              
+            } else {
+                alert("Select item in list");
+            }
+        }
 
     </script>
 </div><!-- main_content -->
-

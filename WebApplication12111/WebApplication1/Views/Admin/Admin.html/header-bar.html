@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Janere Backend</title>
+<link rel="stylesheet" href="fontawesome/css/all.css">
+<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="all" href="css/admin-style.css">
+
+</head>
+<body>
+<div class="page_wrapper">
+	<header id="header">
+		<div class="header_wrapper">
+			<div class="container">
+				<a class="adminlogo" href="./"><img src="images/logo.png"></a>
+				<ul class="header_link">
+					<li><a href="#"><i class="fas fa-user"></i> Admin</a></li>					
+				</ul>
+			</div>
+		</div>
+	</header>
+	<div class="page_content">
+		<div class="container">
+			<div class="row">
+				<div id="left_sidebar" class="col-sm-3">
+					<h2><a href="./">Dashboard</a></h2>
+					<ul id="adminmenu">
+						<li><a href="#">Layout <i class="fas fa-sort-up"></i></a>
+							<ul>
+								<li><a href="#">Logo</a></li>
+								<li><a href="#">Menu</a></li>
+								<li><a href="#">Header Bar</a></li>
+								<li><a href="#">Language</a></li>
+								<li><a href="#">Slider</a></li>
+								<li><a href="#">Banners</a></li>
+								<li><a href="#">Footer</a></li>								
+							</ul>
+						</li>
+						<li><a href="#">Products <i class="fas fa-sort-up"></i></a>
+							<ul>
+								<li><a href="#">Product Groups</a></li>
+								<li><a href="#">Products</a></li>
+								<li><a href="#">Atribute</a></li>
+								<li><a href="#">Cart</a></li>
+								<li><a href="#">Setting</a></li>								
+							</ul>
+						</li>
+						<li><a href="#">Orders <i class="fas fa-sort-up"></i></a>
+							<ul>
+								<li><a href="#">All Orders</a></li>
+								<li><a href="#">Create Order</a></li>
+								<li><a href="#">Promotion</a></li>
+								<li><a href="#">Report</a></li>
+								<li><a href="#">Setting</a></li>
+							</ul>
+						</li>
+						<li><a href="#">User <i class="fas fa-sort-up"></i></a>
+							<ul>
+								<li><a href="#">Add New</a></li>
+								<li><a href="#">All User</a></li>
+								<li><a href="#">Your Profile</a></li>								
+							</ul>
+						</li>
+						<li><a href="#">Warehouses <i class="fas fa-sort-up"></i></a>
+							<ul>
+								<li><a href="#">Add Mew</a></li>
+								<li><a href="#">All Warehoueses</a></li>
+								<li><a href="#">Setting</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Stores <i class="fas fa-sort-up"></i></a>
+							<ul>
+								<li><a href="#">Add New</a></li>
+								<li><a href="#">All Stores</a></li>
+								<li><a href="#">Setting</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- left_sidebar -->
+				<div id="main_content" class="col-sm-9">
+					<h1>Header Bar</h1>					
+					<form method="post" name="form_phone_number" id="form_phone_number" action="./" class="form-group clearfix">
+						<span class="label_text">Phone Number: </span>
+						<div class="row m-b-md">
+							<div class="col-sm-4"><input type="text" name="phone_number" id="phone_number" class="form-control" value="+372 658 0300"></div>
+							<div class="col-sm-2"><input type="submit" name="submit_phone_number" class="button button-primary button-sm" value="Save"></div>							
+						</div>											
+					</form>
+
+					<form method="post" name="form_phone_number" id="form_email" action="./" class="form-group clearfix">
+						<span class="label_text">Email: </span>
+						<div class="row m-b-md">
+							<div class="col-sm-4"><input type="text" name="email" id="email" class="form-control" value="janere@janere.ee"></div>
+							<div class="col-sm-2"><input type="submit" name="submit_email" class="button button-primary button-sm" value="Save"></div>							
+						</div>											
+					</form>
+				</div><!-- main_content -->
+			</div>
+		</div>
+	</div><!-- page_content -->
+	<footer>
+		<div class="footer_top">
+			<div class="container">
+				<ul>
+					<li><a href="tel:03726580300"><i class="fas fa-phone-volume"></i> +372 658 0300</a></li>
+					<li><a href="mailto:janere@janere.ee"><i class="fas fa-envelope"></i> janere@janere.ee</a></li>
+					<li><a href="https://www.facebook.com/janere.ee" target="_blank"><i class="fab fa-facebook-f"></i></a> <a href="skype:oujanere?chat" target="_blank"><i class="fab fa-skype"></i></a></li>					
+				</ul>
+			</div>
+		</div>	
+		<div class="footer_bottom">
+			<div class="container">           
+             <ul>
+                 <li>© OÜ Janere</li>
+                 <li>Reg. no. 10001584</li>
+                 <li>Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</li>
+             </ul>            
+        </div>
+		</div><!-- footer_bottom -->
+	</footer>
+</div><!-- page_wrapper -->	
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/admin.js"></script>
+</body>
+</html>

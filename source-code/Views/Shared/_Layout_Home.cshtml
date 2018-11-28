@@ -6,7 +6,11 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @{WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];}
+    @{
+        WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+        veebdbEntities data = new veebdbEntities();
+        var slider = data.sliders.Where(m => m.Status == 1);
+        }
 
 </head>
 <body>
@@ -74,7 +78,7 @@
                                     <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
                                     <li><a href="@Url.Action("MasterGroup", "Home")">Products</a></li>
                                     <li><a href="@Url.Action("Download", "Home")">Download</a></li>
-                                    <li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>
+                                    <!--<li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>-->
                                     <li><a href="@Url.Action("Stores", "Home")">Stores</a></li>
                                 </ul>
                             </div>
@@ -89,15 +93,19 @@
         <section class="blink-slider">
             <div class="blink-slider">
                 <div class="blink-view" id="blink" onclick="linkto(this)">
+                    @foreach (var slide in slider)
+                    { 
                     <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner1.jpg" id="2M1Ü0390"></a>
+                        <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.Images" id="@slide.Code"></a>
+                    </div>
+                    }
+                    <!--
+                    <div class="viewSlide">
+                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner2.jpg" id="2M1Ü0240"></a>
                     </div>
                     <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner1.jpg" id="2M1Ü0240"></a>
-                    </div>
-                    <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner1.jpg" id="-3"></a>
-                    </div>
+                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner3.jpg" id="-3"></a>
+                    </div>-->
                 </div>
                 <div class="blink-control" id="blink-control">
                 </div>
@@ -109,19 +117,24 @@
 @{
             List<item> relatedProducts = (List<item>)Session["relatedProducts"];
 }
-            <a href="@Url.Action("Products", "Home", new { categoryid = 1 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat1.jpg" width="100%" class="img__img" /><p class="img__description">Category 1</p></div></a>
-            <a href="@Url.Action("Products", "Home", new { categoryid = 2 })"> <div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat2.jpg" width="100%" class="img__img" /><p class="img__description">Category 2</p></div></a>
-            <a href="@Url.Action("Products", "Home", new { categoryid = 3 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat3.jpg" width="100%" class="img__img" /><p class="img__description">Category 3</p></div></a>
-            <a href="@Url.Action("Products", "Home", new { categoryid = 4 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat4.jpg" width="100%" class="img__img" /><p class="img__description">Category 4</p></div></a>
-            <a href="@Url.Action("Products", "Home", new { categoryid = 5 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat5.jpg" width="100%" class="img__img" /><p class="img__description">Category 5</p></div></a>
+            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 2 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/2.jpg" width="100%" class="img__img" /><p class="img__description">Kruvi</p></div></a>
+            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 4 })"> <div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/4.jpg" width="100%" class="img__img" /><p class="img__description">Polt</p></div></a>
+            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 6 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/6.jpg" width="100%" class="img__img" /><p class="img__description">Ankur</p></div></a>
+            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 7 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/7.jpg" width="100%" class="img__img" /><p class="img__description">Mutter</p></div></a>
+            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 1 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/11.jpg" width="100%" class="img__img" /><p class="img__description">Tüübel</p></div></a>
         </div><!-- product_category -->
 
     <h2 class="heading_title navi_slider"><span>Best Sellers</span>
-            <img src="~/Content/body/others/back.png" />
-            <img src="~/Content/body/others/next.png"/></h2>
+            <img src="~/Content/body/others/back.png" id="bs_back"/>
+    <input type="hidden" value="1" id="bs_cur" />
+        <img src="~/Content/body/others/next.png" id="bs_next"/></h2>
 
-    <div class="container body-content" style="clear:both;margin-top:20px;">
-        @RenderBody()
+
+    <div class="container body-content" style="clear:both;margin-top:20px;" id="bestseller">
+        @*@{
+        Html.RenderAction("BestSeller", "Home",);
+    }*@
+    @RenderBody()
         <hr />
 
     </div>
@@ -147,7 +160,7 @@
     <div class="footer_bottom">
         <div class="container">
             <footer>
-                <ul>
+                <ul style="font-size:20px;">
                     <li>© OÜ Janere</li>
                     <li>Reg. no. 10001584</li>
                     <li>Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</li>
@@ -171,3 +184,90 @@
     </script>
 </body>
 </html>
+<script type="text/javascript">
+    $(document).one('ready', function () {
+
+        var procemessage = "<div value='0'> Loading Items...</div>";
+        $("#bestseller").html(procemessage).show();
+        //var url = "/Home/GetMetaGroup/";
+        var url = "/Home/BestSeller/";
+        $.ajax({
+            url: url,
+            data: { index: 1 },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                $("#bestseller").html(data).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+
+        $("#bs_back").click(function () {
+            
+            var getBsCurr = $("#bs_cur").val();            
+            if (getBsCurr > 1)
+            {
+                getBsCurr--;
+                $("#bs_cur").val(getBsCurr);
+                var procemessage = "<div value='0'> Loading Items...</div>";
+                $("#bestseller").html(procemessage).show();
+                //var url = "/Home/GetMetaGroup/";
+                var url = "/Home/BestSeller/";
+                $.ajax({
+                    url: url,
+                    data: { index: getBsCurr },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        $("#bestseller").html(data).show();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        });
+        $("#bs_next").click(function () {
+            var getBsCurr = $("#bs_cur").val();
+            getBsCurr++;
+            $("#bs_cur").val(getBsCurr);
+            var procemessage = "<div value='0'> Loading Items...</div>";
+            $("#bestseller").html(procemessage).show();
+            var url = "/Home/BestSeller/";
+            $.ajax({
+                url: url,
+                data: { index : getBsCurr },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    if (!data.trim()) {
+                        getBsCurr--;
+                        $("#bs_cur").val(getBsCurr);
+                        $.ajax({
+                            url: url,
+                            data: { index: getBsCurr },
+                            cache: false,
+                            type: "POST",
+                            success: function (data) {
+                                $("#bestseller").html(data).show();
+                            },
+                            error: function (reponse) {
+                                alert("error : " + reponse);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $("#bestseller").html(data).show();
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        });
+    });
+</script>

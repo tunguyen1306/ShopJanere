@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
+
+</head>
+<body>
+    <div class="navbar navbar-inverse" style="background-color: #171717">
+        <div class="container" style="height:100px;">
+            <div class="navbar-header" style="width:100%">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
+                        <a href="@Url.Action("Index", "Home")"><img src="~/Content/head/logo.png" width="100%" style=" padding: 33px 0px;" /></a>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-11">
+                        <div class="row" style="text-align: center; padding: 8px 0px;">
+                            <div class="col-lg-7 col-md-7  col-sm-6 col-xs-12">
+                                <a href="tel:+372 658 0300"> <img src="~/Content/head/contact-phone.png" /><span style="color: #8a8a8a; ">+372 658 0300</span></a>
+                                <a href="mailto:janere@janere.ee"> <img src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">janere@janere.ee</span></a>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
+                                <div id="google_translate_element" style="    width: 50%;float: left;"></div>
+                                <script type="text/javascript">
+                                    function googleTranslateElementInit() {
+                                        new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+                                    }
+                                </script>
+                                <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                                <!--<img src="~/Content/head/language.png" />-->
+                                <a href="@Url.Action("Login", "Home")">
+                                    <img src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
+                                </a>
+                                <a href="@Url.Action("UpdateCart", "Home")"><img src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
+                            </div>
+                        </div>
+                        <div class="row" style="color:white;">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12"> &nbsp;</div>
+                            <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Home</div></a>
+                            <a href="@Url.Action("Products", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
+                            <!--<a href="@Url.Action("BulkProducts", "Home")"><div class="col-lg-2 top-menu-normal">Bulk Item</div></a>-->
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Download </div></a>
+                            <a href="@Url.Action("Warehouses", "Home")">    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Warehouse </div></a>
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Stores </div></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--   <section class="blink-slider">
+           <div class="blink-view" id="blink">
+               <div class="viewSlide">
+                   <img class="fullImg" src="https://picsum.photos/1000/700/?random" id="foto1" />
+               </div>
+
+               <div class="viewSlide">
+                   <img class="fullImg" src="https://placeimg.com/1000/700/any" id="foto2" />
+               </div>
+
+               <div class="viewSlide">
+                   <img class="fullImg" src="https://placeimg.com/1000/700/people" id="foto3" />
+               </div>
+           </div>
+           <div class="blink-control" id="blink-control">
+
+           </div>
+
+       </section>-->
+    <div class="row">
+        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="clear:both;">
+            <div class="navbar navbar-inverse">
+                <section class="blink-slider">
+                    <div class="blink-slider">
+                        <div class="blink-view" id="blink" onclick="linkto(this)">
+                            <div class="viewSlide">
+                                <a href="#"><img class="fullImg" src="~/Content/body/banner/banner1.jpg" id="2M1Ü0390"></a>
+                            </div>
+                            <div class="viewSlide">
+                                <a href="#"><img class="fullImg" src="~/Content/body/banner/banner1.jpg" id="2M1Ü0240"></a>
+                            </div>
+                            <div class="viewSlide">
+                                <a href="#"><img class="fullImg" src="~/Content/body/banner/banner1.jpg" id="-3"></a>
+                            </div>
+                        </div>
+                        <div class="blink-control" id="blink-control">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="clear: both;margin:30px 0px 0px 0px;">
+        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin:0px;padding:0px;">
+            <a href="@Url.Action("Products", "Home", new { categoryid = 1 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat1.jpg" width="100%" class="img__img" /><p class="img__description">Category 1</p></div></a>
+            <a href="@Url.Action("Products", "Home", new { categoryid = 2 })"> <div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat2.jpg" width="100%" class="img__img" /><p class="img__description">Category 2</p></div></a>
+            <a href="@Url.Action("Products", "Home", new { categoryid = 3 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat3.jpg" width="100%" class="img__img" /><p class="img__description">Category 3</p></div></a>
+            <a href="@Url.Action("Products", "Home", new { categoryid = 4 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat4.jpg" width="100%" class="img__img" /><p class="img__description">Category 4</p></div></a>
+            <a href="@Url.Action("Products", "Home", new { categoryid = 5 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat5.jpg" width="100%" class="img__img" /><p class="img__description">Category 5</p></div></a>
+            <a href="@Url.Action("Products", "Home", new { categoryid = 5 })"><div class="img__wrap" style="float:left;width:0%">&nbsp;</div></a>
+            </div>
+        </div>
+
+    <div class="row" style="clear:both;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:center;margin-top:80px;">
+            <span style="font-size: 49px; color: #2ea3f2; font-weight: bold;">Best Sellers</span>
+            <img src="~/Content/body/others/back.png" style="padding-bottom:32px;margin-left:50px;" />
+            <img src="~/Content/body/others/next.png" style="padding-bottom:32px;" />
+
+        </div>
+    </div>
+    <!-- <div class="row" style="margin:10px 0px;">
+            <div class="col-lg-12">
+                <div class="col-lg-1">
+                    &nbsp;
+                </div>
+
+                <div class="col-lg-2">
+                    <a href="#"><img src="~/Content/ProductImage/bestsellers/sampleItem.jpg" /></a>
+    </div>
+                <div class="col-lg-2">
+                    <a href="#"><img src="~/Content/body/bestsellers/sampleItem.jpg" /></a>
+    </div>
+                <div class="col-lg-2">
+                    <a href="#"><img src="~/Content/body/bestsellers/sampleItem.jpg" /></a>
+    </div>
+                <div class="col-lg-2">
+                    <a href="#"><img src="~/Content/body/bestsellers/sampleItem.jpg" /></a>
+    </div>
+                <div class="col-lg-2">
+                    <a href="#"> <img src="~/Content/body/bestsellers/sampleItem.jpg" /></a>
+    </div>
+
+                <div class="col-lg-1">
+                    &nbsp;
+                </div>
+            </div>
+            </div>
+           -->
+    <div class="container body-content" style="clear:both;margin-top:20px;">
+        @RenderBody()
+        <hr />
+
+    </div>
+    <div style="background-color: #235d91;margin-top:90px;">
+        <div class="container">
+            <footer>
+                <div class="row" style="padding: 10px 0px; text-align: center;">
+                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding:10px 0px;">
+                        <a href="tel:+372 658 0300"> <img src="~/Content/head/contact-phone.png" /><span style="color: white; ">+372 658 0300</span></a>
+
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding: 10px 0px;">
+                        <a href="mailto:janere@janere.ee"> <img src="~/Content/head/contact-email.png" /><span style="color: white; ">janere@janere.ee</span></a>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="https://www.facebook.com/janere.ee"><img src="~/Content/foot/facebook.png" /></a></div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="skype:oujanere?chat"><img src="~/Content/foot/skype.png" /></a></div>
+                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div style="background-color: #171717">
+        <div class="container">
+            <footer>
+                <div class="row" style="padding: 10px 0px; text-align: center;">
+                    <img src="~/Content/foot/line2.JPG" width="100%"/>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/myscript")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <link rel="stylesheet" href="~/Content/blink.css">
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script src="~/Content/jquery.blink.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#blink").blink();
+        });
+    </script>
+</body>
+</html>

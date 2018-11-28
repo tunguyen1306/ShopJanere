@@ -1,0 +1,545 @@
+﻿@model WebApplication1.order
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout _NoMenu.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.companyname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.companyname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tradingname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tradingname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.promotionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.promotionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.abn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.abn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.addr1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.addr1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.addr2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.addr2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.addr3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.addr3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.showsubtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.showsubtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.clientID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clientID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.submitDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.submitDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastupdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastupdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.visible)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.visible)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tradeterms)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tradeterms)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ordertotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ordertotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ordertotalexc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ordertotalexc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.currency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.currency)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.exchangerate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.exchangerate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.profileID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.profileID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_attention)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_attention)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_addr1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_addr1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_addr2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_addr2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_addr3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_addr3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_postcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_postcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_companyname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_companyname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_fax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.payoption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payoption)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tobeinvoiced)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tobeinvoiced)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.order_group)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.order_group)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_attention)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_attention)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_companyname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_companyname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_abn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_abn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_addr1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_addr1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_addr2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_addr2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_addr3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_addr3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_postcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_postcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_fax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.b_addrid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.b_addrid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.onhold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.onhold)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ocupdatedby)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ocupdatedby)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.oclastupdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.oclastupdated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -24,13 +24,10 @@
     <link href="~/Content/admin/css/all.css" rel="stylesheet" />
 
     <link href="~/Content/admin/css/select2.min.css" rel="stylesheet"/>
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
     <script src="~/Content/admin/js/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="~/Content/admin/js/admin.js"></script>
-
-    @*<script src="~/Content/admin/js/jquery.js"></script>*@
     <script src="~/Content/admin/js/bootbox.min.js"></script>
     <script src="~/Content/admin/js/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Content/admin/js/select2.min.js"></script>
@@ -40,6 +37,8 @@
     <script src="~/Content/ckeditor/ckeditor.js"></script>
     <script src="~/Content/admin/js/jquery.autocomplete.js"></script>
     <script src="~/Content/admin/js/bootstrap3-typeahead.min.js"></script>
+    <script src="~/Content/admin/js/moment.min.js"></script>
+    <script src="~/Content/admin/js/bootstrap-datepicker.min.js"></script>
 </head>
 <body>
 
@@ -67,13 +66,11 @@
                         <li>
                             <a href="#">Layout <i class="fas fa-sort-up"></i></a>
                             <ul style="display: block;">
-                                <li><a href="#">Logo</a></li>
-                                <li><a href="#">Menu</a></li>
-                                <li><a href="#">Header Bar</a></li>
-                                <li><a href="#">Language</a></li>
-                                <li><a href="#">Slider</a></li>
-                                <li><a href="#">Banners</a></li>
-                                <li><a href="#">Footer</a></li>
+                                <li><a href="@Url.Action("Index", "Setting",new {type=0})">Setting</a></li>
+                                <li><a href="@Url.Action("Index", "SettingType")">Setting Type</a></li>
+                                <li><a href="@Url.Action("Index", "Menu")">Menu</a></li>
+                                <li><a href="@Url.Action("Index", "Setting",new {type=2})">All Banner</a></li>
+                              
                             </ul>
                         </li>
                         <li>
@@ -89,8 +86,8 @@
                         <li>
                             <a href="#">Orders <i class="fas fa-sort-up"></i></a>
                             <ul>
-                                <li><a href="#">All Orders</a></li>
-                                <li><a href="#">Create Order</a></li>
+                                <li><a href="@Url.Action("Index", "Order")">All Orders</a></li>
+                                <li><a href="@Url.Action("Create", "Index")">Create Order</a></li>
                                 <li><a href="#">Promotion</a></li>
                                 <li><a href="#">Report</a></li>
                                 <li><a href="#">Setting</a></li>
@@ -104,14 +101,14 @@
                                 <li><a href="#">Your Profile</a></li>
                             </ul>
                         </li>
-                        <li>
+                        @*<li>
                             <a href="#">Warehouses <i class="fas fa-sort-up"></i></a>
                             <ul style="display: block;">
                                 <li><a href="@Url.Action("Create","Warehouse")">Add New</a></li>
                                 <li><a href="@Url.Action("Index","Warehouse")">All Warehoueses</a></li>
 
                             </ul>
-                        </li>
+                        </li>*@
                         <li>
                             <a href="#">Stores <i class="fas fa-sort-up"></i></a>
                             <ul>
@@ -146,8 +143,11 @@
         </div>
 
         <script>
-
-
+            $('.date-picker').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd/mm/yyyy'
+            });
         </script>
         <style>
             form.loading {
