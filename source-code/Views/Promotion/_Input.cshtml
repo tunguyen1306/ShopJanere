@@ -1,95 +1,66 @@
 ﻿@using System.Configuration
-@model WebApplication1.setting
+@model WebApplication1.promotion
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
             <label>Code</label>
 
-            @Html.TextBoxFor(x => x.code, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.PROMOTIONCODE, new { @class = "form-control" })
 
         </div>
         <div class="form-group">
-            <label>setting Name</label>
+            <label>Promotion Name</label>
 
-            @Html.TextBoxFor(x => x.name, new {@class = "form-control"})
+            @Html.TextBoxFor(x => x.PROMOTIONNAME, new {@class = "form-control"})
 
         </div>
-
-
-
         <div class="form-group">
-            <label>Status</label>
+            <label>Promotion Quantity</label>
 
-
-            @Html.DropDownListFor(c => c.status, new List<SelectListItem> {new SelectListItem {Text = "True", Value = "1"}, new SelectListItem {Text = "False", Value = "0", Selected = true}}, new {@class = "form-control select2"})
-
+            @Html.TextBoxFor(x=>x.QUANTITY, new { @class = "form-control" })
 
         </div>
 
-    </div>
-    <div class="col-sm-6">
+
+       
         <div class="form-group">
             <label>Type</label>
 
+            @Html.DropDownListFor(c => c.TYPENO, new List<SelectListItem> { new SelectListItem { Text = "Price", Value = "1" }, new SelectListItem { Text = "Percent", Value = "0", Selected = true } }, new { @class = "form-control select2" })
 
-            @Html.DropDownListFor(x => x.typeId, new SelectList(((List<WebApplication1.settingtype>) ViewBag.ListTypeSetting), "id", "name"), "Type", new {@class = "form-control select2"})
-
-
-        </div>
-
-        <div class="divSelectGroup hidden">
-            <div class="form-group">
-                <label>Group</label>
+        </div><div class="form-group">
+    <label>Status</label>
 
 
-                @Html.DropDownListFor(x=>x.IdGroup, new SelectList(((List<WebApplication1.metagrup>)ViewBag.ListGroup), "METAGROUPNO", "METAGROUPNAME"), "Meta Group", new { @class = "form-control select2" })
+    @Html.DropDownListFor(c => c.STATUS, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
 
 
-            </div>
+</div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>From Date</label>
+
+            @Html.TextBoxFor(x => x.FIRSTDATE, new { @class = "form-control date-picker" })
+
         </div>
         <div class="form-group">
-            <label>Link</label>
+            <label>To Date</label>
 
+            @Html.TextBoxFor(x => x.LASTDATE, new { @class = "form-control date-picker" })
 
-            @Html.TextBoxFor(x => x.link, new {@class = "form-control"})
         </div>
 
+       
+       
 
     </div>
 </div>
 <div class="row">
 
     <div class="col-sm-6">
-        <div class="form-group">
-            <label>Order</label>
-
-            @Html.DropDownListFor(c => c.order, new List<SelectListItem>
-            {
-                new SelectListItem {Text = "Order", Value = "9999999", Selected = true},
-                new SelectListItem {Text = "1", Value = "1"},
-                new SelectListItem {Text = "2", Value = "2"},
-                new SelectListItem {Text = "3", Value = "3"},
-                new SelectListItem {Text = "4", Value = "4"},
-                new SelectListItem {Text = "5", Value = "5"},
-                new SelectListItem {Text = "6", Value = "6"},
-                new SelectListItem {Text = "7", Value = "7"},
-                new SelectListItem {Text = "8", Value = "8"},
-                new SelectListItem {Text = "9", Value = "9"},
-                new SelectListItem {Text = "10", Value = "10"},
-            }, new {@class = "form-control select2"})
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-        <div class="form-group">
+     
+        @*<div class="form-group">
             <label class="control-label">Images <span class="required">*</span></label>
 
             <div>
@@ -159,17 +130,12 @@
                 </output>
             </div>
 
-        </div>
+        </div>*@
 
     </div>
 
     <div class="col-sm-6">
-        <div class="form-group">
-            <label>Description</label>
-
-            @Html.TextAreaFor(x => x.description, new { @class = "form-control" })
-
-        </div>
+      
 
 
     </div>
@@ -179,26 +145,11 @@
 </div>
 
 
-@Html.HiddenFor(x=>x.id)
+@Html.HiddenFor(x=>x.PROMOTIONNO)
 
 <script>
-    var id = '@Model.typeId';
-    if (id === "2") {
-        $('.divSelectGroup').removeClass('hidden');
-    } else {
-        $('.divSelectGroup').addClass('hidden');
-    }
+  
 
-
-    $('#typeId').on('change', function() {
-        var id=   $(this).val();
-        if (id==="2") {
-            $('.divSelectGroup').removeClass('hidden');
-        } else {
-            $('.divSelectGroup').addClass('hidden');
-        }
-
-    });
 
 
     $(".delete_action").on('click', function (e) {
@@ -226,7 +177,7 @@
         },
 
         messages: {
-            name: "setting Name do not empty",
+            name: "Promotion Name do not empty",
             typeId: "Select type"
 
 

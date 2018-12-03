@@ -21,8 +21,8 @@
     <Property Name="GROUPNO" Type="int" Nullable="false" />
     <Property Name="GROUPCODE" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="GROUPNAME" Type="varchar" MaxLength="40" Nullable="false" />
-    <Property Name="METAGROUPNO" Type="int" />
-    <Property Name="EXPORTABLE" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="METAGROUPNO" Type="int" Nullable="false" />
+    <Property Name="EXPORTABLE" Type="varchar" MaxLength="1" />
     <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
@@ -442,6 +442,15 @@
     <Property Name="PriceExTax" Type="float" />
     <Property Name="itemId" Type="int" />
   </EntityType>
+  <EntityType Name="ordersetting">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" />
+    <Property Name="status" Type="int" />
+    <Property Name="code" Type="varchar" MaxLength="255" />
+  </EntityType>
   <EntityType Name="orderstatus">
     <Key>
       <PropertyRef Name="id" />
@@ -529,20 +538,22 @@
     <Key>
       <PropertyRef Name="PROMOTIONNO" />
     </Key>
-    <Property Name="PROMOTIONNO" Type="smallint" Nullable="false" />
+    <Property Name="PROMOTIONNO" Type="int" Nullable="false" />
     <Property Name="PROMOTIONCODE" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="PROMOTIONNAME" Type="varchar" MaxLength="40" Nullable="false" />
     <Property Name="TYPENO" Type="smallint" Nullable="false" />
-    <Property Name="FIRSTDATE" Type="date" Nullable="false" />
-    <Property Name="LASTDATE" Type="date" />
+    <Property Name="FIRSTDATE" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="LASTDATE" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="LASTCHANGE" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CREATED" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QUANTITY" Type="int" />
+    <Property Name="STATUS" Type="int" />
   </EntityType>
   <EntityType Name="promotionrule">
     <Key>
       <PropertyRef Name="PROMOTIONRULENO" />
     </Key>
-    <Property Name="PROMOTIONRULENO" Type="int" Nullable="false" />
+    <Property Name="PROMOTIONRULENO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PROMOTIONNO" Type="smallint" Nullable="false" />
     <Property Name="ELIGIBILITYNO" Type="int" Nullable="false" />
     <Property Name="TYPENO" Type="smallint" Nullable="false" />
@@ -775,6 +786,7 @@
     <EntitySet Name="metagrup" EntityType="Self.metagrup" Schema="shopjanere" store:Type="Tables" />
     <EntitySet Name="order" EntityType="Self.order" Schema="shopjanere" store:Type="Tables" />
     <EntitySet Name="orderdetails" EntityType="Self.orderdetails" Schema="shopjanere" store:Type="Tables" />
+    <EntitySet Name="ordersetting" EntityType="Self.ordersetting" Schema="shopjanere" store:Type="Tables" />
     <EntitySet Name="orderstatus" EntityType="Self.orderstatus" Schema="shopjanere" store:Type="Tables" />
     <EntitySet Name="ordritms" EntityType="Self.ordritms" Schema="shopjanere" store:Type="Tables" />
     <EntitySet Name="outitems" EntityType="Self.outitems" Schema="shopjanere" store:Type="Tables" />

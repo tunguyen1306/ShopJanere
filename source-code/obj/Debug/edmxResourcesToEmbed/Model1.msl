@@ -16,19 +16,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="artgrps">
-      <EntityTypeMapping TypeName="veebdbModel.artgrp">
-        <MappingFragment StoreEntitySet="artgrp">
-          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
-          <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
-          <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
-          <ScalarProperty Name="GROUPNAME" ColumnName="GROUPNAME" />
-          <ScalarProperty Name="GROUPCODE" ColumnName="GROUPCODE" />
-          <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="artlinks">
       <EntityTypeMapping TypeName="veebdbModel.artlink">
         <MappingFragment StoreEntitySet="artlinks">
@@ -461,20 +448,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="promotions">
-      <EntityTypeMapping TypeName="veebdbModel.promotion">
-        <MappingFragment StoreEntitySet="promotion">
-          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
-          <ScalarProperty Name="LASTDATE" ColumnName="LASTDATE" />
-          <ScalarProperty Name="FIRSTDATE" ColumnName="FIRSTDATE" />
-          <ScalarProperty Name="TYPENO" ColumnName="TYPENO" />
-          <ScalarProperty Name="PROMOTIONNAME" ColumnName="PROMOTIONNAME" />
-          <ScalarProperty Name="PROMOTIONCODE" ColumnName="PROMOTIONCODE" />
-          <ScalarProperty Name="PROMOTIONNO" ColumnName="PROMOTIONNO" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="promotionrules">
       <EntityTypeMapping TypeName="veebdbModel.promotionrule">
         <MappingFragment StoreEntitySet="promotionrule">
@@ -792,6 +765,45 @@
     <EntitySetMapping Name="orderstatus">
       <EntityTypeMapping TypeName="veebdbModel.orderstatu">
         <MappingFragment StoreEntitySet="orderstatus">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="promotions">
+      <EntityTypeMapping TypeName="veebdbModel.promotion">
+        <MappingFragment StoreEntitySet="promotion">
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="LASTDATE" ColumnName="LASTDATE" />
+          <ScalarProperty Name="FIRSTDATE" ColumnName="FIRSTDATE" />
+          <ScalarProperty Name="TYPENO" ColumnName="TYPENO" />
+          <ScalarProperty Name="PROMOTIONNAME" ColumnName="PROMOTIONNAME" />
+          <ScalarProperty Name="PROMOTIONCODE" ColumnName="PROMOTIONCODE" />
+          <ScalarProperty Name="PROMOTIONNO" ColumnName="PROMOTIONNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="artgrps">
+      <EntityTypeMapping TypeName="veebdbModel.artgrp">
+        <MappingFragment StoreEntitySet="artgrp">
+          <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+          <ScalarProperty Name="LASTCHANGE" ColumnName="LASTCHANGE" />
+          <ScalarProperty Name="EXPORTABLE" ColumnName="EXPORTABLE" />
+          <ScalarProperty Name="METAGROUPNO" ColumnName="METAGROUPNO" />
+          <ScalarProperty Name="GROUPNAME" ColumnName="GROUPNAME" />
+          <ScalarProperty Name="GROUPCODE" ColumnName="GROUPCODE" />
+          <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ordersettings">
+      <EntityTypeMapping TypeName="veebdbModel.ordersetting">
+        <MappingFragment StoreEntitySet="ordersetting">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>

@@ -2,7 +2,6 @@
 <Schema Namespace="veebdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="veebdbEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="artdimensions" EntityType="veebdbModel.artdimension" />
-    <EntitySet Name="artgrps" EntityType="veebdbModel.artgrp" />
     <EntitySet Name="artlinks" EntityType="veebdbModel.artlink" />
     <EntitySet Name="artnames" EntityType="veebdbModel.artname" />
     <EntitySet Name="artsizes" EntityType="veebdbModel.artsize" />
@@ -30,7 +29,6 @@
     <EntitySet Name="pricelists" EntityType="veebdbModel.pricelist" />
     <EntitySet Name="prices" EntityType="veebdbModel.price" />
     <EntitySet Name="producers" EntityType="veebdbModel.producer" />
-    <EntitySet Name="promotions" EntityType="veebdbModel.promotion" />
     <EntitySet Name="promotionrules" EntityType="veebdbModel.promotionrule" />
     <EntitySet Name="roles" EntityType="veebdbModel.role" />
     <EntitySet Name="stgrps" EntityType="veebdbModel.stgrp" />
@@ -52,6 +50,9 @@
     <EntitySet Name="orders" EntityType="veebdbModel.order" />
     <EntitySet Name="sliders" EntityType="veebdbModel.slider" />
     <EntitySet Name="orderstatus" EntityType="veebdbModel.orderstatu" />
+    <EntitySet Name="promotions" EntityType="veebdbModel.promotion" />
+    <EntitySet Name="artgrps" EntityType="veebdbModel.artgrp" />
+    <EntitySet Name="ordersettings" EntityType="veebdbModel.ordersetting" />
   </EntityContainer>
   <EntityType Name="artdimension">
     <Key>
@@ -64,18 +65,6 @@
     <Property Name="HEIGHT" Type="Decimal" />
     <Property Name="WIDTH" Type="Decimal" />
     <Property Name="FRAGILE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-  </EntityType>
-  <EntityType Name="artgrp">
-    <Key>
-      <PropertyRef Name="GROUPNO" />
-    </Key>
-    <Property Name="GROUPNO" Type="Int32" Nullable="false" />
-    <Property Name="GROUPCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="GROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="METAGROUPNO" Type="Int32" />
-    <Property Name="EXPORTABLE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
@@ -488,19 +477,6 @@
     <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
-  <EntityType Name="promotion">
-    <Key>
-      <PropertyRef Name="PROMOTIONNO" />
-    </Key>
-    <Property Name="PROMOTIONNO" Type="Int16" Nullable="false" />
-    <Property Name="PROMOTIONCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="PROMOTIONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="TYPENO" Type="Int16" Nullable="false" />
-    <Property Name="FIRSTDATE" Type="DateTime" Nullable="false" />
-    <Property Name="LASTDATE" Type="DateTime" />
-    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-  </EntityType>
   <EntityType Name="promotionrule">
     <Key>
       <PropertyRef Name="PROMOTIONRULENO" />
@@ -801,5 +777,41 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="promotion">
+    <Key>
+      <PropertyRef Name="PROMOTIONNO" />
+    </Key>
+    <Property Name="PROMOTIONNO" Type="Int32" Nullable="false" />
+    <Property Name="PROMOTIONCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PROMOTIONNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TYPENO" Type="Int16" Nullable="false" />
+    <Property Name="FIRSTDATE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LASTDATE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QUANTITY" Type="Int32" />
+    <Property Name="STATUS" Type="Int32" />
+  </EntityType>
+  <EntityType Name="artgrp">
+    <Key>
+      <PropertyRef Name="GROUPNO" />
+    </Key>
+    <Property Name="GROUPNO" Type="Int32" Nullable="false" />
+    <Property Name="GROUPCODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="GROUPNAME" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="METAGROUPNO" Type="Int32" Nullable="false" />
+    <Property Name="EXPORTABLE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LASTCHANGE" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CREATED" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="ordersetting">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

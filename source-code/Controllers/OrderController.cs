@@ -315,7 +315,95 @@ namespace WebApplication1.Controllers
             return Json(new { status = _status, mgs = msg });
         }
 
+        public ActionResult SettingIndex()
+        {
+       
+            return View();
+        }
+        public ActionResult SettingIndexAjax( int start = 0, int view = 10)
+        {
 
+            var listOrder = db.ordersettings.ToList();
+
+
+          
+          
+            var _count = listOrder.Count();
+            ViewBag.Start = start;
+            ViewBag.View = view;
+            ViewBag.Total = _count;
+            ViewBag.ViewOf = _count;
+            var db_data = listOrder.OrderBy(t => t.id).Skip(start).Take(view).ToList();
+
+
+            var datas = db_data.Select(t => new AllModel { tblOrderSetting = t }).ToList();
+            return PartialView(datas);
+
+
+        }
+
+        // GET: /setting/Create
+        public ActionResult CreateOrderSetting()
+        {
+            
+            return View(new ordersetting());
+        }
+
+      
+        [HttpPost]
+
+        public ActionResult CreateOrderSetting(ordersetting ordersetting)
+        {
+            if (ModelState.IsValid)
+            {
+               
+                db.ordersettings.Add(ordersetting);
+                db.SaveChanges();
+                return RedirectToAction("SettingIndex");
+            }
+
+            return View(ordersetting);
+        }
+
+        // GET: /setting/Edit/5
+        public ActionResult EditOrderSetting(int? id)
+        {
+        
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ordersetting setting = db.ordersettings.Find(id);
+            if (setting == null)
+            {
+                return HttpNotFound();
+            }
+            return View(setting);
+        }
+
+       
+        [HttpPost]
+
+        public ActionResult EditOrderSetting(ordersetting setting)
+        {
+            if (ModelState.IsValid)
+            {
+               
+                db.Entry(setting).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("SettingIndex");
+            }
+            return View(setting);
+        }
+
+
+        public ActionResult DeleteOrderSetting(int? id)
+        {
+            setting setting = db.settings.Find(id);
+            db.settings.Remove(setting);
+            db.SaveChanges();
+            return RedirectToAction("SettingIndex");
+        }
 
     }
 }

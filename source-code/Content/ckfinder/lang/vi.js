@@ -227,7 +227,7 @@ CKFinder.lang['vi'] =
 	207 : 'Tập tin được đổi tên thành "%1".',
 	300 : 'Di chuyển tập tin thất bại.',
 	301 : 'Chép tập tin thất bại.',
-	500 : 'Trình duyệt tập tin bị vô hiệu vì lí do bảo mật. Xin liên hệ quản trị hệ thống và kiểm tra tập tin cấu hình CKFinder.',
+	500 : 'Trình duyệt tập tin bị vô hiệu vì lí do bảo mật. Xin liên hệ quản trị hệ thống và kiểm tra tập tin cấu Images CKFinder.',
 	501 : 'Chức năng hỗ trợ ảnh mẫu bị vô hiệu.'
 	},
 
@@ -291,7 +291,7 @@ CKFinder.lang['vi'] =
 
 	Gallery :
 	{
-		current : 'Hình thứ {current} trên {total}'
+		current : 'Images thứ {current} trên {total}'
 	},
 
 	Zip :

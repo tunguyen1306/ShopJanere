@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebApplication1.promotion>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>Promotion</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","Promotion")">Add New</a>
+   
+</div>
+
+@*<div class="row wrap_filter">
+    <div class="col-sm-4">
+        
+    </div>
+    <div class="col-sm-8 right">
+        <label>Filter</label>
+
+        @Html.DropDownList("filter_Promotion", new SelectList(((List<WebApplication1.Promotiontype>)ViewBag.ListTypePromotion), "id", "name"), new { @class = "filter" })
+       
+       
+    </div>
+</div>*@
+
+
+@using (Ajax.BeginForm("IndexAjax", new {type = ViewBag.Type }, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "Promotion-result",
+    OnBegin = "promotionsearchOnBegin",
+    OnSuccess = "promotionsearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="Promotion-btsubmit">Tìm</button>
+}
+<div id="Promotion-result">
+    @{
+        Html.RenderAction("IndexAjax", "Promotion");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function Promotion_seacrch() {
+        $('#Promotion-btsubmit').click();
+    }
+    Promotion_seacrch();
+    function promotionsearchOnBegin() {
+
+    }
+
+    function promotionsearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

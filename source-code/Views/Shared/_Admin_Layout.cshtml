@@ -76,7 +76,9 @@
                         <li>
                             <a href="#">Products <i class="fas fa-sort-up"></i></a>
                             <ul>
-                                <li><a href="@Url.Action("Index", "MasterMetaGroup")">Product Groups</a></li>
+                                <li><a href="@Url.Action("Index", "MasterMetaGroup")">Master Meta Groups</a></li>
+                                <li><a href="@Url.Action("IndexMetaGroup", "MasterMetaGroup")">Meta Groups</a></li>
+                                <li><a href="@Url.Action("IndexGroup", "MasterMetaGroup")">Product Groups</a></li>
                                 <li><a href="@Url.Action("Index", "Admin")">Products</a></li>
                                 <li><a href="#">Atribute</a></li>
                                 <li><a href="#">Cart</a></li>
@@ -87,10 +89,10 @@
                             <a href="#">Orders <i class="fas fa-sort-up"></i></a>
                             <ul>
                                 <li><a href="@Url.Action("Index", "Order")">All Orders</a></li>
-                                <li><a href="@Url.Action("Create", "Index")">Create Order</a></li>
-                                <li><a href="#">Promotion</a></li>
+                                <li><a href="@Url.Action("Create", "Order")">Create Order</a></li>
+                                <li><a href="@Url.Action("Index", "Promotion")">Promotion</a></li>
                                 <li><a href="#">Report</a></li>
-                                <li><a href="#">Setting</a></li>
+                                <li><a href="@Url.Action("SettingIndex", "Order")">Setting</a></li>
                             </ul>
                         </li>
                         <li>
@@ -117,14 +119,22 @@
 
                             </ul>
                         </li>
-                        <li>
+                        @*<li>
+                            <a href="#">Promotion <i class="fas fa-sort-up"></i></a>
+                            <ul>
+                                <li><a href="@Url.Action("Create", "Promotion")">Add New</a></li>
+                                <li><a href="@Url.Action("Index", "Promotion")">All Promotions</a></li>
+
+                            </ul>
+                        </li>*@
+                        @*<li>
                             <a href="#">Catalogue <i class="fas fa-sort-up"></i></a>
                             <ul style="display: block;">
                                 <li><a href="@Url.Action("Create","Catalogue")">Add New</a></li>
                                 <li><a href="@Url.Action("Index","Catalogue")">All Catalogue</a></li>
 
                             </ul>
-                        </li>
+                        </li>*@
                         <li>
                             <a href="#">Download <i class="fas fa-sort-up"></i></a>
                             <ul style="display: block;">
@@ -146,7 +156,7 @@
             $('.date-picker').datepicker({
                 autoclose: true,
                 todayHighlight: true,
-                format: 'dd/mm/yyyy'
+                format: 'mm/dd/yyyy'
             });
         </script>
         <style>

@@ -1,7 +1,7 @@
 ﻿
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IndexMetaGroup";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
@@ -9,24 +9,25 @@
 
 <h1>META GROUP</h1>
 <div class="page_action">
-    <a href="@Url.Action("Create","MasterMetaGroup")">Add New</a>
+    <a href="@Url.Action("CreateMetaGroup","MasterMetaGroup")">Add New</a>
    
 </div>
 
 
+
 <div class="row wrap_filter">
     <div class="col-sm-4">
-       
+
     </div>
     <div class="col-sm-4 right">
-       
+
     </div>
     <div class="col-sm-4 right">
         <input type="text" name="search_order" id="txtsearch_orders" class="form-control">
 
     </div>
 </div><!-- wrap_filter -->
-@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+@using (Ajax.BeginForm("IndexAjaxMetaGroup", null, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "metagrup-result",
@@ -39,7 +40,7 @@
 }
 <div id="metagrup-result">
     @{
-        Html.RenderAction("IndexAjax", "MasterMetaGroup");
+        Html.RenderAction("IndexAjaxMetaGroup", "MasterMetaGroup");
     }
 
 

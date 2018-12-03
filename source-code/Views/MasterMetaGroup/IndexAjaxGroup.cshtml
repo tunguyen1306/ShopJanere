@@ -4,10 +4,10 @@
         <tr>
 
 
-            <th scope="col" id="CATEGORYCODE" class="manage_column column_name">Metagrup Code</th>
-            <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Metagrup Name</th>
+            <th scope="col" id="CATEGORYCODE" class="manage_column column_name">Group Code</th>
+            <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Group Name</th>
+            <th scope="col" id="LASTCHANGE" class="manage_column column_description">Meta Group</th>
        
-            <th scope="col" id="LASTCHANGE" class="manage_column column_description">Status</th>
       
             <th scope="col" class="manage_column column_number"></th>
 
@@ -18,26 +18,18 @@
       {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPCODE)
+                @Html.DisplayFor(modelItem => item.tblGroup.GROUPCODE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblGroup.GROUPNAME)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
             </td>
-        
-            <td>
-                @if (item.tblMetaGroup.IsActive == true)
-                {
-                    @("Active")
-                }
-                else
-                {
-                    @("Not Active")
-                }
-            </td>
+          
             <td scope="col" class="manage_column column_action">
-                <a class="edit_action" href="@Url.Action("Edit", "MasterMetaGroup", new {id = item.tblMetaGroup.METAGROUPNO})"><i class="fas fa-edit"></i></a>
-                <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "MasterMetaGroup", new {id = item.tblMetaGroup.METAGROUPNO})"><i class="fas fa-times"></i></a>
-
+                <a class="edit_action" href="@Url.Action("EditGroup", "MasterMetaGroup", new {id = item.tblGroup.GROUPNO})"><i class="fas fa-edit"></i></a>
+                <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("DeleteGroup", "MasterMetaGroup", new {id = item.tblGroup.GROUPNO})"><i class="fas fa-times"></i></a>
 
             </td>
         </tr>
@@ -65,19 +57,20 @@
 <script>
     $('#dropPage').val(@ViewBag.View);
     $('#dropPage').on('change', function () {
-        onPageChange($('#metagrup-result').find('a[data-page="1"]'));
+        onPageChange($('#Group-result').find('a[data-page="1"]'));
     });
     $('#txtsearch_orders').on('change', function () {
-        onPageChange($('#metagrup-result').find('a[data-page="1"]'));
+        onPageChange($('#Group-result').find('a[data-page="1"]'));
     });
     function onPageChange(el) {
         if (!$(el).hasClass('disable')) {
             var page = $(el).attr('data-page');
             var view = $('#dropPage').val();
             var start = (page - 1) * view;
+
             var search = $('#txtsearch_orders').val();
-            $.get('@Url.Action("IndexAjax", "MasterMetaGroup")?start=' + start + '&view=' + view + '&search=' + search, function (data) {
-                $('#metagrup-result').html(data);
+            $.get('@Url.Action("IndexAjaxGroup", "MasterMetaGroup")?start=' + start + '&view=' + view + '&search=' + search, function (data) {
+                $('#Group-result').html(data);
 
             });
         }

@@ -15,28 +15,16 @@ namespace WebApplication1
 using System;
     using System.Collections.Generic;
     
-public partial class promotion
+public partial class ordersetting
 {
 
-    public int PROMOTIONNO { get; set; }
+    public int id { get; set; }
 
-    public string PROMOTIONCODE { get; set; }
+    public string name { get; set; }
 
-    public string PROMOTIONNAME { get; set; }
+    public Nullable<int> status { get; set; }
 
-    public short TYPENO { get; set; }
-
-    public string FIRSTDATE { get; set; }
-
-    public string LASTDATE { get; set; }
-
-    public System.DateTime LASTCHANGE { get; set; }
-
-    public System.DateTime CREATED { get; set; }
-
-    public Nullable<int> QUANTITY { get; set; }
-
-    public Nullable<int> STATUS { get; set; }
+    public string code { get; set; }
 
 }
 

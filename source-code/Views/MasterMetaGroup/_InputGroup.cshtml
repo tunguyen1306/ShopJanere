@@ -1,27 +1,27 @@
-﻿@model WebApplication1.metagrup
+﻿@model WebApplication1.artgrp
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label>metagrup Code</label>
+            <label>Group Code</label>
 
-            @Html.TextBoxFor(x => x.METAGROUPCODE, new {@class = "form-control"})
+            @Html.TextBoxFor(x => x.GROUPCODE, new {@class = "form-control"})
 
         </div>
         <div class="form-group">
-            <label>metagrup Name</label>
+            <label>Group Name</label>
 
-            @Html.TextBoxFor(x => x.METAGROUPNAME, new {@class = "form-control"})
+            @Html.TextBoxFor(x => x.GROUPNAME, new {@class = "form-control"})
 
         </div>
 
 
     </div>
     <div class="col-sm-6">
+   
         <div class="form-group">
-            <label>Status</label>
+            <label>Meta Group</label>
 
-
-            @Html.DropDownListFor(c => c.IsActive, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "True" }, new SelectListItem { Text = "False", Value = "False", Selected = true } }, new { @class = "form-control select2" })
+            @Html.DropDownListFor(m => m.METAGROUPNO, new SelectList(((List<metagrup>)ViewBag.ListMasterGroup), "METAGROUPNO", "METAGROUPNAME", "Select  Meta Group"), new { @class = "form-control select2" })
 
 
         </div>
@@ -80,16 +80,16 @@
             <div>
                 <output>
                     @{
-                        if (!string.IsNullOrEmpty(Model.METAGROUPCODE))
+                        if (!string.IsNullOrEmpty(Model.GROUPCODE))
                         {
-                            var image = Model.METAGROUPCODE + ".jpg";
+                            var image = Model.GROUPCODE + ".jpg";
                             <span style="position: relative">
-                                <input type="hidden" name="urlimage" id="hdImage" value="@Model.METAGROUPCODE" />
-                               
+                                <input type="hidden" name="urlimage" id="hdImage" value="@Model.GROUPCODE" />
+
 
                                 @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + image)))
-                                { 
-                                    <i class="delete_action fa fa-times" rel="@Model.METAGROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
+                                {
+                                    <i class="delete_action fa fa-times" rel="@Model.GROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
 
                                     <img class="thumb" src="~/Content/MetagroupImage/@image">
 
@@ -97,7 +97,7 @@
                                 else
                                 {
 
-                                    <img class="thumb" src="~/Content/ProductImage/notavailable.jpg"  />
+                                    <img class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
 
                                 }
                             </span>
@@ -109,42 +109,30 @@
             </div>
 
         </div>
+
     </div>
 
 </div>
-@Html.HiddenFor(x=>x.METAGROUPNO)
+@Html.HiddenFor(x=>x.GROUPNO)
 @Html.HiddenFor(x=>x.CREATED)
 
 
 <script>
-    $(".delete_action").on('click', function (e) {
-        var rs = confirm('Do you want delete image ?');
-        if (rs == true) {
-            $(this).parents('div').eq(0).remove();
-        }
-        var idPic = $(this).attr('rel');
-        if (idPic != "") {
-            $.get('@Url.Action("DeleteImg", "MasterMetaGroup")?code=' + idPic, function (data) {
 
-
-            });
-        }
-
-    });
         $('#validation-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
             focusInvalid: false,
             ignore: "",
             rules: {
-                METAGROUPCODE: {
+                GROUPCODE: {
                     required: true
                 },
-                METAGROUPNAME: {
+                GROUPNAME: {
                     required: true
 
                 },
-                METAGROUPCODE: {
+                PARENTNO: {
                     required: true
 
                 }
@@ -153,9 +141,9 @@
             },
 
             messages: {
-                METAGROUPCODE: "metagrup Code do not empty",
-                METAGROUPNAME: "metagrup Name do not empty",
-                MetaGroupId: "Select Meta Group",
+                GROUPCODE: "Group Code do not empty",
+                GROUPNAME: "Group Name do not empty",
+                PARENTNO: "Select Master Meta Group",
 
 
             },

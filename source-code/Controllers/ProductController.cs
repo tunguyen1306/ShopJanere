@@ -206,6 +206,8 @@ namespace WebApplication1.Controllers
                 item.CREATED = DateTime.Now;
                 item.LASTCHANGE = DateTime.Now;
                 item.ARTNO = proId.ARTNO + 1;
+               
+
                 db.items.Add(item);
                 db.SaveChanges();
                 for (int i = 0; i < inputfile.Length; i++)
@@ -286,6 +288,7 @@ namespace WebApplication1.Controllers
             tem.ARTNO = item.ARTNO;
             tem.ARTNAME = item.ARTNAME;
             tem.IsBestSeller = item.IsBestSeller;
+       
 
             for (int i = 0; i < inputfile.Length; i++)
             {

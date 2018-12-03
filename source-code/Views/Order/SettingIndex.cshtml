@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.setting>
+﻿@model IEnumerable<WebApplication1.ordersetting>
 
 @{
     ViewBag.Title = "Index";
@@ -9,25 +9,14 @@
 
 <h1>SETTING</h1>
 <div class="page_action">
-    <a href="@Url.Action("Create","Setting")">Add New</a>
-   
+    <a href="@Url.Action("CreateOrderSetting","Order")">Add New</a>
+
 </div>
 
-<div class="row wrap_filter">
-    <div class="col-sm-4">
-        
-    </div>
-    <div class="col-sm-8 right">
-        <label>Filter</label>
-
-        @Html.DropDownList("filter_setting", new SelectList(((List<WebApplication1.settingtype>)ViewBag.ListTypeSetting), "id", "name"), new { @class = "filter" })
-       
-        @*<input type="button" id="do_filter_action" onclick="" class="button btn-sm" value="Go">*@
-    </div>
-</div><!-- wrap_filter -->
 
 
-@using (Ajax.BeginForm("IndexAjax", new {type = ViewBag.Type }, new AjaxOptions
+
+@using (Ajax.BeginForm("SettingIndexAjax", new { type = ViewBag.Type }, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "setting-result",
@@ -40,14 +29,14 @@
 }
 <div id="setting-result">
     @{
-        Html.RenderAction("IndexAjax", "Setting");
+        Html.RenderAction("SettingIndexAjax", "Order");
     }
 
 
 </div>
 <script>
 
-    
+
     //#region tdg form
 
     function setting_seacrch() {

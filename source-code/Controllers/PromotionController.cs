@@ -12,65 +12,59 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class SettingController : Controller
+    public class PromotionController : Controller
     {
         private veebdbEntities db = new veebdbEntities();
 
-        // GET: /setting/
+        // GET: /Promotion/
         public ActionResult Index()
         {
-            var list = db.settingtypes.Where(x => x.status == 1).ToList();
-            list.Insert(0, new settingtype { id = 0, name = "Type" });
-            ViewBag.ListTypeSetting = list;
+            //var list= db.Promotiontypes.Where(x => x.status == 1).ToList();
+            //list.Insert(0, new Promotiontype {id = 0, name = "Type"});
+            //ViewBag.ListTypePromotion = list;
             return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10, int type = 0)
+        public ActionResult IndexAjax(int start = 0, int view = 10,int type=0)
         {
-            var listsetting = db.settings.Join(db.settingtypes, st => st.typeId, stt => stt.id, (st, stt) => new AllModel { tblSetting = st, tblSettingType = stt }).ToList();
-            if (type != 0)
-            {
-                listsetting = listsetting.Where(x => x.tblSetting.typeId == type).ToList();
-            }
+            var listPromotion = db.promotions.Select(x=>new AllModel {tblPromotion = x}).ToList(); 
+           
             ViewBag.Start = start;
             ViewBag.View = view;
-            ViewBag.Total = listsetting.Count;
-            listsetting = listsetting.Skip(start).Take(view).ToList();
-            ViewBag.ViewOf = listsetting.Count;
-
-            return PartialView(listsetting);
+            ViewBag.Total = listPromotion.Count;
+            listPromotion= listPromotion.Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = listPromotion.Count;
+          
+            return PartialView(listPromotion);
         }
-        // GET: /setting/Details/5
+        // GET: /Promotion/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            setting setting = db.settings.Find(id);
-            if (setting == null)
+           promotion Promotion = db.promotions.Find(id);
+            if (Promotion == null)
             {
                 return HttpNotFound();
             }
-            return View(setting);
+            return View(Promotion);
         }
 
-        // GET: /setting/Create
+        // GET: /Promotion/Create
         public ActionResult Create()
         {
-            var list = db.settingtypes.Where(x => x.status == 1).ToList();
-            ViewBag.ListTypeSetting = list;
-            var listMetagrup = db.metagrups.ToList();
-            // listMetagrup.Insert(0,new metagrup {METAGROUPNO = 0,METAGROUPNAME = "Select"});
-            ViewBag.ListGroup = listMetagrup;
-            return View(new setting());
+           
+            
+            return View(new promotion {LASTDATE = DateTime.Now.ToString("MM/dd/yyyy"), FIRSTDATE = DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
-        // POST: /setting/Create
+        // POST: /Promotion/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-
-        public ActionResult Create(setting setting, HttpPostedFileBase[] files)
+       
+        public ActionResult Create(promotion promotion, HttpPostedFileBase[] files)
         {
             if (ModelState.IsValid)
             {
@@ -85,47 +79,57 @@ namespace WebApplication1.Controllers
                             path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(files[i].FileName));
                             var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
                             files[i].SaveAs(path);
-                            setting.urlimage = "/Content/ProductImage/" + files[i].FileName;
+
 
 
                         }
                     }
                 }
-                db.settings.Add(setting);
+                var proId = db.promotions.OrderByDescending(x => x.PROMOTIONNO).FirstOrDefault();
+                if (proId!=null)
+                {
+                    promotion.PROMOTIONNO = proId.PROMOTIONNO + 1;
+                }
+                else
+                {
+                    promotion.PROMOTIONNO = 1;
+                }
+
+                //var fDate = promotion.FIRSTDATE.ToString("yyyy-MM-dd");
+                //var tDate = promotion.LASTDATE.ToString("yyyy-MM-dd");
+                //promotion.LASTDATE =DateTime.Parse(fDate) ;
+                //promotion.LASTDATE =DateTime.Parse(tDate) ;
+                promotion.CREATED = DateTime.Now;
+                db.promotions.Add(promotion);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(setting);
+            return View(promotion);
         }
 
-        // GET: /setting/Edit/5
+        // GET: /Promotion/Edit/5
         public ActionResult Edit(int? id)
         {
-            var list = db.settingtypes.Where(x => x.status == 1).ToList();
-            list.Insert(0, new settingtype { id = 0, name = "Type" });
-            ViewBag.ListTypeSetting = list;
-            var listMetagrup = db.metagrups.ToList();
-            //listMetagrup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select" });
-            ViewBag.ListGroup = listMetagrup;
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            setting setting = db.settings.Find(id);
-            if (setting == null)
+            promotion Promotion = db.promotions.Find(id);
+            if (Promotion == null)
             {
                 return HttpNotFound();
             }
-            return View(setting);
+            return View(Promotion);
         }
 
-        // POST: /setting/Edit/5
+        // POST: /Promotion/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Edit(setting setting, HttpPostedFileBase[] files)
+        public ActionResult Edit( promotion promotion, HttpPostedFileBase[] files)
         {
             if (ModelState.IsValid)
             {
@@ -137,38 +141,40 @@ namespace WebApplication1.Controllers
                         {
 
                             string path = "";
-                            path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(files[i].FileName));
+                            path = Path.Combine(Server.MapPath("/Content/ProductImage"),
+                                Path.GetFileName(files[i].FileName));
                             var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
                             files[i].SaveAs(path);
-                            setting.urlimage = "/Content/ProductImage/" + files[i].FileName;
+
 
 
                         }
                     }
                 }
-                db.Entry(setting).State = EntityState.Modified;
+                promotion.LASTCHANGE = DateTime.Now;
+                db.Entry(promotion).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(setting);
+            return View(promotion);
         }
 
-        // GET: /setting/Delete/5
+        // GET: /Promotion/Delete/5
         public ActionResult Delete(int? id)
         {
-            setting setting = db.settings.Find(id);
-            db.settings.Remove(setting);
+            promotion Promotion = db.promotions.Find(id);
+            db.promotions.Remove(Promotion);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        //// POST: /setting/Delete/5
+        //// POST: /Promotion/Delete/5
         //[HttpPost, ActionName("Delete")]
 
         //public ActionResult DeleteConfirmed(int id)
         //{
-        //    setting setting = db.settings.Find(id);
-        //    db.settings.Remove(setting);
+        //    Promotion Promotion = db.promotions.Find(id);
+        //    db.promotions.Remove(Promotion);
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WebApplication1.Models.AllModel>
+<table class="table list_product">
+    <thead>
+        <tr>
+
+
+            <th scope="col" id="barcode" class="manage_column column_name">Code</th>
+            <th scope="col" id="barcode" class="manage_column column_name">Name</th>
+            <th scope="col" id="barcode" class="manage_column column_name">Status</th>
+
+            <th scope="col" class="manage_column column_number"></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tblOrderSetting.code)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.tblOrderSetting.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tblOrderSetting.status)
+                </td>
+                <td scope="col" class="manage_column column_action">
+                    <a class="edit_action" href="@Url.Action("Edit", "Promotion", new {id = item.tblPromotion.PROMOTIONNO})"><i class="fas fa-edit"></i></a>
+                    <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "Promotion", new {id = item.tblPromotion.PROMOTIONNO})"><i class="fas fa-times"></i></a>
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div class="wrap_product_nav">
+    <span>@ViewBag.ViewOf of @ViewBag.Total items</span>
+    <select class="filter" id="dropPage" name="filter_nav">
+        <option value="10">10 items per page</option>
+        <option value="20">20 items per page</option>
+        <option value="30">30 items per page</option>
+    </select>
+
+
+    @Html.Partial("_PaginationAjax")
+
+
+
+</div><!-- wrap_product_nav -->
+<script>
+    $('#dropPage').val(@ViewBag.View);
+    $('#dropPage').unbind('change');
+    $('#dropPage').on('change', function () {
+        onPageChange($('#Promotion-result').find('a[data-page="1"]'));
+    });
+    $('#filter_Promotion').unbind('change');
+    $('#filter_Promotion').on('change', function () {
+        onPageChange($('#Promotion-result'));
+    });
+    function onPageChange(el) {
+        if (!$(el).hasClass('disable')) {
+            var page = $(el).attr('data-page');
+            var view = $('#dropPage').val();
+            var start = (page - 1) * view;
+            var type = $('#filter_Promotion').val();
+            $.get('@Url.Action("IndexAjax", "Promotion")?start=' + start + '&view=' + view + '&type=' + type, function (data) {
+                $('#Promotion-result').html(data);
+
+            });
+        }
+
+
+    }
+</script>

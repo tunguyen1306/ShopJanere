@@ -31,7 +31,7 @@ For licensing, see LICENSE.html or http://ckfinder.com/license
 		<error number="207">Tập tin được đổi tên thành "%1".</error>
 		<error number="300">Di chuyển tập tin thất bại.</error>
 		<error number="301">Chép tập tin thất bại.</error>
-		<error number="500">Trình duyệt tập tin bị vô hiệu vì lí do bảo mật. Xin liên hệ quản trị hệ thống và kiểm tra tập tin cấu hình CKFinder.</error>
+		<error number="500">Trình duyệt tập tin bị vô hiệu vì lí do bảo mật. Xin liên hệ quản trị hệ thống và kiểm tra tập tin cấu Images CKFinder.</error>
 		<error number="501">Chức năng hỗ trợ ảnh mẫu bị vô hiệu.</error>
 	</errors>
 </messages>

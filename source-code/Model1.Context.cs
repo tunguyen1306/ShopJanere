@@ -34,8 +34,6 @@ public partial class veebdbEntities : DbContext
 
     public virtual DbSet<artdimension> artdimensions { get; set; }
 
-    public virtual DbSet<artgrp> artgrps { get; set; }
-
     public virtual DbSet<artlink> artlinks { get; set; }
 
     public virtual DbSet<artname> artnames { get; set; }
@@ -90,8 +88,6 @@ public partial class veebdbEntities : DbContext
 
     public virtual DbSet<producer> producers { get; set; }
 
-    public virtual DbSet<promotion> promotions { get; set; }
-
     public virtual DbSet<promotionrule> promotionrules { get; set; }
 
     public virtual DbSet<role> roles { get; set; }
@@ -133,6 +129,12 @@ public partial class veebdbEntities : DbContext
     public virtual DbSet<slider> sliders { get; set; }
 
     public virtual DbSet<orderstatu> orderstatus { get; set; }
+
+    public virtual DbSet<promotion> promotions { get; set; }
+
+    public virtual DbSet<artgrp> artgrps { get; set; }
+
+    public virtual DbSet<ordersetting> ordersettings { get; set; }
 
 }
 

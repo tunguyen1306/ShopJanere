@@ -225,6 +225,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PromotionController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Controllers\SettingTypeController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
@@ -294,6 +295,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="orderdetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ordersetting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="orderstatu.cs">
@@ -1638,6 +1642,28 @@
     <Content Include="Views\Shared\_Layout_bk2.cshtml" />
     <Content Include="Views\Shared\_Layout_bk3.cshtml" />
     <Content Include="Views\Shared\_Layout_Home_bk3.cshtml" />
+    <Content Include="Views\Promotion\_Input.cshtml" />
+    <Content Include="Views\Promotion\Create.cshtml" />
+    <Content Include="Views\Promotion\Details.cshtml" />
+    <Content Include="Views\Promotion\Edit.cshtml" />
+    <Content Include="Views\Promotion\Index.cshtml" />
+    <Content Include="Views\Promotion\IndexAjax.cshtml" />
+    <Content Include="Views\Order\SettingIndexAjax.cshtml" />
+    <Content Include="Views\Order\SettingIndex.cshtml" />
+    <Content Include="Views\MasterMetaGroup\CreateGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\EditGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\IndexAjaxGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\IndexGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\_InputGroup.cshtml" />
+    <None Include="Views\MasterMetaGroup\_InputMetaGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\CreateMetaGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\DetailsMetaGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\EditMetaGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\IndexMetaGroup.cshtml" />
+    <Content Include="Views\MasterMetaGroup\IndexAjaxMetaGroup.cshtml" />
+    <Content Include="Views\Order\CreateOrderSetting.cshtml" />
+    <Content Include="Views\Order\EditOrderSetting.cshtml" />
+    <Content Include="Views\Order\_InputOrderSetting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -108,7 +108,7 @@
                             
                             document.getElementById('list').insertBefore(span, null);
                             $(".delete_action").on('click', function (e) {
-                                var rs = confirm('Bạn muốn xóa hình này?');
+                                var rs = confirm('Do you want delete image ?');
                                 if (rs == true) {
                                     $(this).parents('div').eq(0).remove();
                                 }
@@ -239,6 +239,7 @@
     </div>
 </div><!-- product_detail -->
 @Html.HiddenFor(x=>x.ARTNO)
+@Html.HiddenFor(x=>x.IsBestSeller)
 <script>
     $(document).ready(function() {
         $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.ARTNO>0 ? Model.ARTNO : 0), function (data) {
@@ -257,7 +258,7 @@
 
     }, 200);
     $(".delete_action").on('click', function (e) {
-        var rs = confirm('Bạn muốn xóa hình này?');
+        var rs = confirm('Do you want delete image ?');
         if (rs == true) {
             $(this).parents('div').eq(0).remove();
         }

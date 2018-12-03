@@ -1,0 +1,67 @@
+﻿
+
+@{
+    ViewBag.Title = "IndexGroup";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1> GROUP</h1>
+<div class="page_action">
+    <a href="@Url.Action("CreateGroup","MasterMetaGroup")">Add New</a>
+   
+</div>
+
+
+
+<div class="row wrap_filter">
+    <div class="col-sm-4">
+
+    </div>
+    <div class="col-sm-4 right">
+
+    </div>
+    <div class="col-sm-4 right">
+        <input type="text" name="search_order" id="txtsearch_orders" class="form-control">
+
+    </div>
+</div><!-- wrap_filter -->
+@using (Ajax.BeginForm("IndexAjaxGroup", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "Group-result",
+    OnBegin = "GroupsearchOnBegin",
+    OnSuccess = "GroupsearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="Group-btsubmit">Tìm</button>
+}
+<div id="Group-result">
+    @{
+        Html.RenderAction("IndexAjaxGroup", "MasterMetaGroup");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function Group_seacrch() {
+        $('#Group-btsubmit').click();
+    }
+    Group_seacrch();
+    function GroupsearchOnBegin() {
+
+    }
+
+    function GroupsearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

@@ -26,6 +26,12 @@
 
         </div>
         <div class="form-group">
+            <label>Master Meta Group</label>
+
+            @Html.DropDownListFor(m => m.PARENTNO, new SelectList(((List<metagrup>) ViewBag.ListMasterMetaGroup), "METAGROUPNO", "METAGROUPNAME", "Select Master Meta Group"), new {@class = "form-control select2"})
+
+        </div>
+        <div class="form-group">
             <label class="control-label">Images <span class="required">*</span></label>
 
             <div>
@@ -85,10 +91,10 @@
                             var image = Model.METAGROUPCODE + ".jpg";
                             <span style="position: relative">
                                 <input type="hidden" name="urlimage" id="hdImage" value="@Model.METAGROUPCODE" />
-                               
+
 
                                 @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + image)))
-                                { 
+                                {
                                     <i class="delete_action fa fa-times" rel="@Model.METAGROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
 
                                     <img class="thumb" src="~/Content/MetagroupImage/@image">
@@ -97,7 +103,7 @@
                                 else
                                 {
 
-                                    <img class="thumb" src="~/Content/ProductImage/notavailable.jpg"  />
+                                    <img class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
 
                                 }
                             </span>
@@ -109,6 +115,7 @@
             </div>
 
         </div>
+
     </div>
 
 </div>
@@ -117,20 +124,7 @@
 
 
 <script>
-    $(".delete_action").on('click', function (e) {
-        var rs = confirm('Do you want delete image ?');
-        if (rs == true) {
-            $(this).parents('div').eq(0).remove();
-        }
-        var idPic = $(this).attr('rel');
-        if (idPic != "") {
-            $.get('@Url.Action("DeleteImg", "MasterMetaGroup")?code=' + idPic, function (data) {
 
-
-            });
-        }
-
-    });
         $('#validation-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
@@ -144,7 +138,7 @@
                     required: true
 
                 },
-                METAGROUPCODE: {
+                PARENTNO: {
                     required: true
 
                 }
@@ -155,7 +149,7 @@
             messages: {
                 METAGROUPCODE: "metagrup Code do not empty",
                 METAGROUPNAME: "metagrup Name do not empty",
-                MetaGroupId: "Select Meta Group",
+                PARENTNO: "Select Master Meta Group",
 
 
             },

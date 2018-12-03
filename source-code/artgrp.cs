@@ -24,7 +24,7 @@ public partial class artgrp
 
     public string GROUPNAME { get; set; }
 
-    public Nullable<int> METAGROUPNO { get; set; }
+    public int METAGROUPNO { get; set; }
 
     public string EXPORTABLE { get; set; }
 

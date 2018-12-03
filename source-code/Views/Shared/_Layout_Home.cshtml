@@ -9,8 +9,9 @@
     @{
         WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
         veebdbEntities data = new veebdbEntities();
-        var slider = data.sliders.Where(m => m.Status == 1);
-        }
+
+        var setting = data.settings.Where(x => x.status == 1);
+    }
 
 </head>
 <body>
@@ -19,7 +20,7 @@
             <div class="navbar-header">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
-                        <a href="@Url.Action("Index", "Home")"><img src="~/Content/head/logo.png" width="100%" style=" padding: 33px 0px;" /></a>
+                        <a href="@Url.Action("Index", "Home")"><img src="~/Content/head/logo.png" width="100%" style="padding: 33px 0px;" /></a>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-12">
                         <div class="row" style="text-align: center; padding: 8px 0px;">
@@ -50,20 +51,20 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        
-                                            
-                                        
+
+
+
                                     </ul>
                                 </div>
-                                <div id="google_translate_element" style="    width: 50%;float: left;display:none"></div>
+                                <div id="google_translate_element" style="width: 50%;float: left;display:none"></div>
                                 <script type="text/javascript">
                                     function googleTranslateElementInit() {
                                         new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,et,pl,ru', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
                                     }
                                 </script>
                                 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                                
-                                <span style="color: white;"> Hi , @userFullInfo.user.display</span>  
+
+                                <span style="color: white;"> Hi , @userFullInfo.user.display</span>
 
                                 <a href="@Url.Action("Login", "Home")">
                                     <img src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
@@ -72,13 +73,13 @@
                             </div>
                         </div>
                         <div class="head-menu">
-                            <a class="mobile_menu"><span></span><span></span><span></span></a> 
+                            <a class="mobile_menu"><span></span><span></span><span></span></a>
                             <div class="wrap-head-main-menu">
                                 <ul class="head-main-menu">
                                     <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
                                     <li><a href="@Url.Action("MasterGroup", "Home")">Products</a></li>
                                     <li><a href="@Url.Action("Download", "Home")">Download</a></li>
-                                    <!--<li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>-->
+                                    <li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>
                                     <li><a href="@Url.Action("Stores", "Home")">Stores</a></li>
                                 </ul>
                             </div>
@@ -90,51 +91,53 @@
     </div>
 
 
-        <section class="blink-slider">
-            <div class="blink-slider">
-                <div class="blink-view" id="blink" onclick="linkto(this)">
-                    @foreach (var slide in slider)
-                    { 
+    <section class="blink-slider">
+        <div class="blink-slider">
+            <div class="blink-view" id="blink" onclick="linkto(this)">
+                @foreach (var slide in setting.Where(x => x.typeId == 3).OrderBy(x => x.order).ToList())
+                {
                     <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.Images" id="@slide.Code"></a>
+                        <a href="@(!string.IsNullOrEmpty(slide.link) ? slide.link : "/" )"><img class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
                     </div>
-                    }
-                    <!--
-                    <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner2.jpg" id="2M1Ü0240"></a>
-                    </div>
-                    <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner3.jpg" id="-3"></a>
-                    </div>-->
+                }
+                <!--
+                <div class="viewSlide">
+                    <a href="#"><img class="fullImg" src="~/Content/body/banner/banner2.jpg" id="2M1Ü0240"></a>
                 </div>
-                <div class="blink-control" id="blink-control">
-                </div>
+                <div class="viewSlide">
+                    <a href="#"><img class="fullImg" src="~/Content/body/banner/banner3.jpg" id="-3"></a>
+                </div>-->
             </div>
-        </section>
+            <div class="blink-control" id="blink-control">
+            </div>
+        </div>
+    </section>
 
-    
-    <div class="product_category">        
-@{
+
+    <div class="product_category">
+        @{
             List<item> relatedProducts = (List<item>)Session["relatedProducts"];
-}
-            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 2 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/2.jpg" width="100%" class="img__img" /><p class="img__description">Kruvi</p></div></a>
-            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 4 })"> <div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/4.jpg" width="100%" class="img__img" /><p class="img__description">Polt</p></div></a>
-            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 6 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/6.jpg" width="100%" class="img__img" /><p class="img__description">Ankur</p></div></a>
-            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 7 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/7.jpg" width="100%" class="img__img" /><p class="img__description">Mutter</p></div></a>
-            <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 1 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/11.jpg" width="100%" class="img__img" /><p class="img__description">Tüübel</p></div></a>
-        </div><!-- product_category -->
+        }
+        <a href="@Url.Action("Products", "Home", new { categoryid = 1 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat1.jpg" width="100%" class="img__img" /><p class="img__description">Category 1</p></div></a>
+        <a href="@Url.Action("Products", "Home", new { categoryid = 2 })"> <div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat2.jpg" width="100%" class="img__img" /><p class="img__description">Category 2</p></div></a>
+        <a href="@Url.Action("Products", "Home", new { categoryid = 3 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat3.jpg" width="100%" class="img__img" /><p class="img__description">Category 3</p></div></a>
+        <a href="@Url.Action("Products", "Home", new { categoryid = 4 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat4.jpg" width="100%" class="img__img" /><p class="img__description">Category 4</p></div></a>
+        <a href="@Url.Action("Products", "Home", new { categoryid = 5 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/body/catalogue/cat5.jpg" width="100%" class="img__img" /><p class="img__description">Category 5</p></div></a>
+    </div><!-- product_category -->
 
-    <h2 class="heading_title navi_slider"><span>Best Sellers</span>
-            <img src="~/Content/body/others/back.png" id="bs_back"/>
-    <input type="hidden" value="1" id="bs_cur" />
-        <img src="~/Content/body/others/next.png" id="bs_next"/></h2>
+    <h2 class="heading_title navi_slider">
+        <span>Best Sellers</span>
+        <img src="~/Content/body/others/back.png" id="bs_back" />
+        <input type="hidden" value="1" id="bs_cur" />
+        <img src="~/Content/body/others/next.png" id="bs_next" />
+    </h2>
 
 
     <div class="container body-content" style="clear:both;margin-top:20px;" id="bestseller">
         @*@{
-        Html.RenderAction("BestSeller", "Home",);
-    }*@
-    @RenderBody()
+                Html.RenderAction("BestSeller", "Home",);
+            }*@
+        @RenderBody()
         <hr />
 
     </div>
@@ -160,7 +163,7 @@
     <div class="footer_bottom">
         <div class="container">
             <footer>
-                <ul style="font-size:20px;">
+                <ul>
                     <li>© OÜ Janere</li>
                     <li>Reg. no. 10001584</li>
                     <li>Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</li>
@@ -206,8 +209,8 @@
 
 
         $("#bs_back").click(function () {
-            
-            var getBsCurr = $("#bs_cur").val();            
+
+            var getBsCurr = $("#bs_cur").val();
             if (getBsCurr > 1)
             {
                 getBsCurr--;

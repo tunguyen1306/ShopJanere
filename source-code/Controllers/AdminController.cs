@@ -300,7 +300,21 @@ namespace WebApplication1.Controllers
             tem.CATEGORYNO = item.CATEGORYNO;
             tem.ARTNAME = item.ARTNAME;
             tem.GROUPNO = item.GROUPNO;
+            tem.INFO = item.INFO;
             tem.IsBestSeller = item.IsBestSeller;
+            tem.EXPORTABLE = item.EXPORTABLE;
+            tem.STOCKITEM = item.STOCKITEM;
+            tem.SPECIALOFFER = item.SPECIALOFFER;
+            tem.AUTHORIZABLE = item.AUTHORIZABLE;
+            tem.RESTRICTED = item.RESTRICTED;
+            tem.NOTPOST = item.NOTPOST;
+            tem.NOTADDPOSTAGEFEE = item.NOTADDPOSTAGEFEE;
+            tem.WIDTH = item.WIDTH;
+            tem.WEIGHT = item.WEIGHT;
+            tem.HEIGHT = item.HEIGHT;
+            tem.LEN = item.LEN;
+
+
             db.Entry(tem).State = EntityState.Modified;
             db.SaveChanges();
             for (int i = 0; i < inputfile.Length; i++)
