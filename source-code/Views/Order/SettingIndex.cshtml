@@ -16,7 +16,7 @@
 
 
 
-@using (Ajax.BeginForm("SettingIndexAjax", new { type = ViewBag.Type }, new AjaxOptions
+@using (Ajax.BeginForm("SettingIndexAjax", null, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "setting-result",

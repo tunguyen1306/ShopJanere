@@ -24,16 +24,16 @@ namespace WebApplication1.Controllers
             //ViewBag.ListTypePromotion = list;
             return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10,int type=0)
+        public ActionResult IndexAjax(int start = 0, int view = 10, int type = 0)
         {
-            var listPromotion = db.promotions.Select(x=>new AllModel {tblPromotion = x}).ToList(); 
-           
+            var listPromotion = db.promotions.Select(x => new AllModel { tblPromotion = x }).ToList();
+
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = listPromotion.Count;
-            listPromotion= listPromotion.Skip(start).Take(view).ToList();
+            listPromotion = listPromotion.Skip(start).Take(view).ToList();
             ViewBag.ViewOf = listPromotion.Count;
-          
+
             return PartialView(listPromotion);
         }
         // GET: /Promotion/Details/5
@@ -43,7 +43,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           promotion Promotion = db.promotions.Find(id);
+            promotion Promotion = db.promotions.Find(id);
             if (Promotion == null)
             {
                 return HttpNotFound();
@@ -54,17 +54,17 @@ namespace WebApplication1.Controllers
         // GET: /Promotion/Create
         public ActionResult Create()
         {
-           
-            
-            return View(new promotion {LASTDATE = DateTime.Now.ToString("MM/dd/yyyy"), FIRSTDATE = DateTime.Now.ToString("MM/dd/yyyy") });
+
+
+            return View(new promotion { LASTDATE = DateTime.Now.ToString("MM/dd/yyyy"), FIRSTDATE = DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
         // POST: /Promotion/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-       
-        public ActionResult Create(promotion promotion, HttpPostedFileBase[] files)
+
+        public ActionResult Create(promotion promotion, HttpPostedFileBase[] files, string value)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace WebApplication1.Controllers
                     }
                 }
                 var proId = db.promotions.OrderByDescending(x => x.PROMOTIONNO).FirstOrDefault();
-                if (proId!=null)
+                if (proId != null)
                 {
                     promotion.PROMOTIONNO = proId.PROMOTIONNO + 1;
                 }
@@ -95,13 +95,52 @@ namespace WebApplication1.Controllers
                     promotion.PROMOTIONNO = 1;
                 }
 
-                //var fDate = promotion.FIRSTDATE.ToString("yyyy-MM-dd");
-                //var tDate = promotion.LASTDATE.ToString("yyyy-MM-dd");
-                //promotion.LASTDATE =DateTime.Parse(fDate) ;
-                //promotion.LASTDATE =DateTime.Parse(tDate) ;
+
                 promotion.CREATED = DateTime.Now;
                 db.promotions.Add(promotion);
                 db.SaveChanges();
+                
+                if (promotion.QUANTITY != 0)
+                {
+                    for (int i = 0; i < promotion.QUANTITY; i++)
+                    {
+                        var tblPro = new promotionrule
+                        {
+                           PROMOTIONCODE = "KM" + Guid.NewGuid().ToString().Substring(0, 6).ToUpper(),
+                           PROMOTIONNO = promotion.PROMOTIONNO,
+                            ELIGIBILITYNO = 1,
+                            TYPENO = promotion.TYPENO,
+                            ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
+                            ADJUSTMENTTYPENO = 1,
+                          CREATED = DateTime.Now,
+                          LASTCHANGE = DateTime.Now,
+                        PRICEGROUPNO =1
+                        };
+                        db.promotionrules.Add(tblPro);
+                       
+
+                    }
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var tblPro = new promotionrule
+                    {
+                        PROMOTIONCODE = promotion.PROMOTIONCODE.ToUpper(),
+                        PROMOTIONNO = promotion.PROMOTIONNO,
+                        ELIGIBILITYNO = 1,
+                        TYPENO = promotion.TYPENO,
+                        ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
+                        ADJUSTMENTTYPENO = 1,
+                        CREATED = DateTime.Now,
+                        LASTCHANGE = DateTime.Now,
+                        PRICEGROUPNO = 1
+                    };
+                    db.promotionrules.Add(tblPro);
+
+                    db.SaveChanges();
+
+                }
                 return RedirectToAction("Index");
             }
 
@@ -111,7 +150,7 @@ namespace WebApplication1.Controllers
         // GET: /Promotion/Edit/5
         public ActionResult Edit(int? id)
         {
-            
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -124,12 +163,10 @@ namespace WebApplication1.Controllers
             return View(Promotion);
         }
 
-        // POST: /Promotion/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
 
-        public ActionResult Edit( promotion promotion, HttpPostedFileBase[] files)
+        public ActionResult Edit(promotion promotion, HttpPostedFileBase[] files, string value)
         {
             if (ModelState.IsValid)
             {

@@ -326,18 +326,18 @@ namespace WebApplication1.Controllers
             var listOrder = db.ordersettings.ToList();
 
 
-          
-          
-            var _count = listOrder.Count();
+
+            var datas = listOrder.Select(t => new AllModel { tblOrderSetting = t }).ToList();
+            var count = datas.Count();
             ViewBag.Start = start;
             ViewBag.View = view;
-            ViewBag.Total = _count;
-            ViewBag.ViewOf = _count;
-            var db_data = listOrder.OrderBy(t => t.id).Skip(start).Take(view).ToList();
+            ViewBag.Total = count;
+            ViewBag.ViewOf = count;
+            var dbData = datas.OrderBy(t => t.tblOrderSetting.id).Skip(start).Take(view).ToList();
 
 
-            var datas = db_data.Select(t => new AllModel { tblOrderSetting = t }).ToList();
-            return PartialView(datas);
+           
+            return PartialView(dbData);
 
 
         }
@@ -404,6 +404,26 @@ namespace WebApplication1.Controllers
             db.SaveChanges();
             return RedirectToAction("SettingIndex");
         }
+
+       
+        public ActionResult UpdateStatusSetting(int? id)
+        {
+            var list = db.ordersettings.ToList();
+            foreach (var item in list)
+            {
+                var tbl = db.ordersettings.Find(item.id);
+                tbl.status = 0;
+                db.Entry(tbl).State=EntityState.Modified;
+               
+            }
+            var tbl1 = db.ordersettings.Find(id);
+            tbl1.status = 1;
+            db.Entry(tbl1).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("SettingIndex");
+        }
+
+
 
     }
 }

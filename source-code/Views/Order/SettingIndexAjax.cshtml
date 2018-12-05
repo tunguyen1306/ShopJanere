@@ -17,18 +17,22 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.tblOrderSetting.code)
+                   @item.tblOrderSetting.code
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.tblOrderSetting.name)
+                    @item.tblOrderSetting.name
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.tblOrderSetting.status)
+                    <a class="btnActive btn btn-primary" href="@Url.Action("UpdateStatusSetting", "Order", new {id = item.tblOrderSetting.id})" rel="@item.tblOrderSetting.id">
+                      
+                        @(item.tblOrderSetting.status == 1 ? "DeActive" : "Active")
+                    </a>
+                  
                 </td>
                 <td scope="col" class="manage_column column_action">
-                    <a class="edit_action" href="@Url.Action("Edit", "Promotion", new {id = item.tblPromotion.PROMOTIONNO})"><i class="fas fa-edit"></i></a>
-                    <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "Promotion", new {id = item.tblPromotion.PROMOTIONNO})"><i class="fas fa-times"></i></a>
+                    <a class="edit_action" href="@Url.Action("EditOrderSetting", "Order", new {id = item.tblOrderSetting.id})"><i class="fas fa-edit"></i></a>
+                    <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("DeleteOrderSetting", "Order", new {id = item.tblOrderSetting.id})"><i class="fas fa-times"></i></a>
 
 
                 </td>
@@ -57,21 +61,28 @@
     $('#dropPage').val(@ViewBag.View);
     $('#dropPage').unbind('change');
     $('#dropPage').on('change', function () {
-        onPageChange($('#Promotion-result').find('a[data-page="1"]'));
+        onPageChange($('#setting-result').find('a[data-page="1"]'));
     });
-    $('#filter_Promotion').unbind('change');
-    $('#filter_Promotion').on('change', function () {
-        onPageChange($('#Promotion-result'));
-    });
+  
     function onPageChange(el) {
         if (!$(el).hasClass('disable')) {
             var page = $(el).attr('data-page');
             var view = $('#dropPage').val();
             var start = (page - 1) * view;
-            var type = $('#filter_Promotion').val();
-            $.get('@Url.Action("IndexAjax", "Promotion")?start=' + start + '&view=' + view + '&type=' + type, function (data) {
-                $('#Promotion-result').html(data);
+         
+            $.get('@Url.Action("SettingIndexAjax", "Order")?start=' + start + '&view=' + view , function (data) {
+                $('#setting-result').html(data);
+                @*$('.btnActive').on('click', function () {
+                    alert();
+                   var id= $(this).attr('rel');
 
+                   $.get('@Url.Action("UpdateStatus", "Order")?id=' + id, function (data) {
+                       if (data=="1") {
+                           onPageChange($('#setting-result').find('a[data-page="1"]'));
+                       }
+                       
+                    });
+                });*@
             });
         }
 
