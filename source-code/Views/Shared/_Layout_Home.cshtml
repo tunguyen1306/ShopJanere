@@ -10,6 +10,7 @@
         WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
         veebdbEntities data = new veebdbEntities();
         var slider = data.sliders.Where(m => m.Status == 1);
+        var setting = data.settings.Where(x => x.typeId == 3).ToList();
         }
 
 </head>
@@ -93,12 +94,20 @@
         <section class="blink-slider">
             <div class="blink-slider">
                 <div class="blink-view" id="blink" onclick="linkto(this)">
-                    @foreach (var slide in slider)
+                    @*@foreach (var slide in slider)
                     { 
                     <div class="viewSlide">
                         <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.Images" id="@slide.Code"></a>
                     </div>
-                    }
+                    }*@
+@foreach (var slide in setting)
+{
+    <div class="viewSlide">
+        <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.urlimage" id="@slide.id"></a>
+    </div>
+}
+
+
                     <!--
                     <div class="viewSlide">
                         <a href="#"><img class="fullImg" src="~/Content/body/banner/banner2.jpg" id="2M1Ü0240"></a>
