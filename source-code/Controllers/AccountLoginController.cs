@@ -85,19 +85,81 @@ namespace WebApplication1.Controllers
             return View(user);
         }
         // GET: /AccountLogin/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditLogin(int? id)
         {
-           
             user user = db.users.Find(id);
-            AllLoggedUserInfo userfull = new AllLoggedUserInfo(user);
-            return View(userfull);
+            return View(user);
+        }
+        public ActionResult SaveEditLogin(user model)
+        {
+            var user = db.users.Find(model.Id);
+            db.Entry(user).State = EntityState.Modified;
+            user.display = model.display;
+            user.username = model.username;
+            user.password = model.password;
+            user.status = model.status;
+            user.updatedate = DateTime.Now;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult EditRole(int? id)
+        {
+            user user = db.users.Find(id);
+            var user_role = db.user_role.Where(m => m.userid == user.Id).FirstOrDefault();
+            return View(user_role);
+        }
+        public ActionResult SaveEditRole(user_role model)
+        {
+            var user = db.user_role.Find(model.Id);
+            user.roleid = model.roleid;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult EditInfo(int? id)
+        {
+            user user = db.users.Find(id);
+            var userInfo = db.userdatas.Where(m => m.userid == id).FirstOrDefault();
+            return View(userInfo);
+        }
+        public ActionResult SaveEditInfo(userdata model)
+        {
+            var user = db.userdatas.Find(model.Id);
+            user.billing_address1 = model.billing_address1;
+            user.billing_address2 = model.billing_address2;
+            user.billing_country = model.billing_country;
+            user.billing_email = model.billing_email;
+            user.billing_name = model.billing_name;
+            user.billing_phone = model.billing_phone;
+            user.billing_poscode = model.billing_poscode;
+            user.billing_state = model.billing_state;
+            user.billing_suburb = model.billing_state;
+            user.company_name = model.company_name;
+            user.contact_email = model.contact_email;
+            user.contact_phone = model.contact_phone;
+            user.delivery_address1 = model.delivery_address1;
+            user.delivery_address2 = model.delivery_address2;
+            user.delivery_contry = model.delivery_contry;
+            user.delivery_email = model.delivery_email;
+            user.delivery_name = model.delivery_name;
+            user.delivery_phone = model.delivery_phone;
+            user.delivery_postcode = model.delivery_postcode;
+            user.delivery_state = model.delivery_state;
+            user.delivery_suburb = model.delivery_suburb;
+            user.firstname = model.firstname;
+            user.lasname = model.lasname;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
+        public ActionResult YourProfile()
+        {
+            WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+            return View(userFullInfo);
+        }
         // POST: /AccountLogin/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-      
+        [HttpPost]      
         public ActionResult Edit(user model)
         {
             var user = db.users.Find( model.Id);

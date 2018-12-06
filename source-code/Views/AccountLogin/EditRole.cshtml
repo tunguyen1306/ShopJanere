@@ -1,0 +1,75 @@
+﻿@model WebApplication1.user_role
+
+@{
+    ViewBag.Title = "EditUserRole";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    var check = Model.Id;
+    veebdbEntities db = new veebdbEntities();
+}
+
+<h2>Update User Role</h2>
+
+@using (Html.BeginForm("SaveEditRole", "AccountLogin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Role info</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+       <input type="hidden" id="id" name="id" value="@check" />
+        @Html.HiddenFor(model => model.userid)
+
+
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Role :</label>
+                <div class="col-md-10">
+                    
+                    <select name="roleid" id="roleid">
+                        @foreach (var role in db.roles)
+                        {
+                            if (role.Id == Model.roleid)
+                            {
+                                <option value="@role.Id" selected>@role.RoleName</option>
+                            }
+                            else
+                            {
+                                <option value="@role.Id">@role.RoleName</option>
+                            }
+                        }
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group">         
+                <label class="control-label col-md-2">Status :</label>    
+                <div class="col-md-10">
+                    
+                    <select name="status" id="status">
+                        @if (Model.status.ToLower() == "active")
+                        {
+                            <option value="active" selected>Active</option>
+                            <option value="inactive">InActive</option>
+                        }
+                        else
+                        {
+                            <option value="active">Active</option>
+                            <option value="inactive" selected>InActive</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -14,7 +14,6 @@ namespace WebApplication1.Controllers
         veebdbEntities data = new veebdbEntities();
         public ActionResult Index()
         {
-
             if (Session["LoggedAccount"] == null)
             {
                 IntForGuest();
@@ -73,6 +72,50 @@ namespace WebApplication1.Controllers
             else
             {
                 Session["BestSellerProducts"] = null;
+            }
+            return View();
+        }
+        public ActionResult MasterMetaGroup(int index)
+        {
+            var check = data.metagrups.Where(m => m.PARENTNO == 0 && m.IsActive == true);
+             
+            if (check.Count() > 0)
+            {
+                List<metagrup> MasterMetaList = check.ToList();
+                List<metagrup> showItems = new List<metagrup>();
+                int max = MasterMetaList.Count();
+
+                if (max >= index * 5)
+                {
+                    int startPostionInList = (index - 1) * 5;
+                    int endPostionInList = ((index - 1) * 5 + 5);
+                    for (int i = startPostionInList; i < endPostionInList; i++)
+                    {
+                        metagrup addToList = new metagrup();
+                        addToList.METAGROUPNAME = MasterMetaList[i].METAGROUPNAME;
+                        addToList.METAGROUPCODE = MasterMetaList[i].METAGROUPCODE;
+                        addToList.METAGROUPNO = MasterMetaList[i].METAGROUPNO;
+                        showItems.Add(addToList);
+                    }
+                }
+                else
+                {
+                    int startPostionInList = (index - 1) * 4;
+                    int endPostionInList = max;
+                    for (int i = startPostionInList; i < endPostionInList; i++)
+                    {
+                        metagrup addToList = new metagrup();
+                        addToList.METAGROUPNAME = MasterMetaList[i].METAGROUPNAME;
+                        addToList.METAGROUPCODE = MasterMetaList[i].METAGROUPCODE;
+                        addToList.METAGROUPNO = MasterMetaList[i].METAGROUPNO;
+                        showItems.Add(addToList);
+                    }
+                }
+                Session["MasterMetaList"] = showItems;// BestSellerProducts;
+            }
+            else
+            {
+                Session["MasterMetaList"] = null;
             }
             return View();
         }

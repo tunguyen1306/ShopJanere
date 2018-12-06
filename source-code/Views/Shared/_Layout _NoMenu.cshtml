@@ -102,14 +102,14 @@
                             {
                                 <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Download</div></a>
                             }
-                            @if (controllerName == "Home" && actionName == "Warehouses")
-                            {
-                                <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Warehouse</div></a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Warehouse</div></a>
-                            }
+                            @*@if (controllerName == "Home" && actionName == "Warehouses")
+    {
+        <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Warehouse</div></a>
+    }
+    else
+    {
+        <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Warehouse</div></a>
+    }*@
                             @if (controllerName == "Home" && actionName == "Stores")
                             {
                                 <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Store</div></a>

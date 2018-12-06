@@ -6,7 +6,7 @@
 
             <th scope="col" id="CATEGORYCODE" class="manage_column column_name">Metagrup Code</th>
             <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Metagrup Name</th>
-       
+            <th scope="col" id="LASTCHANGE" class="manage_column column_description">Meta Group</th>
             <th scope="col" id="LASTCHANGE" class="manage_column column_description">Status</th>
       
             <th scope="col" class="manage_column column_number"></th>
@@ -23,7 +23,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
             </td>
-        
+            <td>
+                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
+            </td>
             <td>
                 @if (item.tblMetaGroup.IsActive == true)
                 {
@@ -67,16 +69,14 @@
     $('#dropPage').on('change', function () {
         onPageChange($('#metagrup-result').find('a[data-page="1"]'));
     });
-    $('#txtsearch_orders').on('change', function () {
-        onPageChange($('#metagrup-result').find('a[data-page="1"]'));
-    });
+
     function onPageChange(el) {
         if (!$(el).hasClass('disable')) {
             var page = $(el).attr('data-page');
             var view = $('#dropPage').val();
             var start = (page - 1) * view;
-            var search = $('#txtsearch_orders').val();
-            $.get('@Url.Action("IndexAjax", "MasterMetaGroup")?start=' + start + '&view=' + view + '&search=' + search, function (data) {
+
+            $.get('@Url.Action("IndexAjax", "MasterMetaGroup")?start=' + start + '&view=' + view, function (data) {
                 $('#metagrup-result').html(data);
 
             });

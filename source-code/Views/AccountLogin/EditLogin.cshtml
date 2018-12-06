@@ -1,25 +1,28 @@
 ﻿@model WebApplication1.user
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "EditLogin";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    
 }
 
-<h2>Add Account</h2>
+<h2>Update Login Info</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("SaveEditLogin", "AccountLogin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <h4>Login info</h4>
         <hr />
         @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
             <label class="control-label col-md-2">Display Name :</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.display)
-                @Html.ValidationMessageFor(model => model.display)
+               @Html.EditorFor(model => model.display)
+               @Html.ValidationMessageFor(model => model.display)             
             </div>
         </div>
 
@@ -38,9 +41,27 @@
                 @Html.ValidationMessageFor(model => model.password)
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Status :</label>
+            <div class="col-md-10">
+                <select name="status" id="status">
+                    @if (Model.status.ToLower() == "active")
+                    {
+                        <option value="active" selected>Active</option>
+                        <option value="inactive">InActive</option>
+                    }
+                    else
+                    {
+                        <option value="active">Active</option>
+                        <option value="inactive" selected>InActive</option>
+                    }
+                </select>
+</div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>

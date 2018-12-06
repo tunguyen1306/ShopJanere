@@ -330,7 +330,7 @@
                     {
                         var tblItem = db.items.FirstOrDefault(x => x.ARTNO == item.tblOrderDetail.itemId);
 
-                       
+
 
                         <tr rel="@(item.tblOrderDetail.itemId)" class="tr_@(item.tblOrderDetail.itemId)">
                             <td class="hiddeTd">
@@ -341,7 +341,7 @@
                                 <input type="hidden" class="TotalIdProduct_@(item.tblOrderDetail.itemId)" name="totalProduct" value="@(item.tblOrderDetail.itemId + "_" + item.tblOrderDetail.ocdetailqty)">
                                 @(tblItem != null ? tblItem.ARTNAME : "")
                             </td>
-                            <td class="hiddetxt hidden"><input rel="@(item.tblOrderDetail.itemId)" id="amount_@(item.tblOrderDetail.itemId)" type="number" min="1"  value="@(item.tblOrderDetail.ocdetailqty)" class="form-control amount"></td>
+                            <td class="hiddetxt hidden"><input rel="@(item.tblOrderDetail.itemId)" id="amount_@(item.tblOrderDetail.itemId)" type="number" min="1" value="@(item.tblOrderDetail.ocdetailqty)" class="form-control amount"></td>
                             <td class="hiddeTd tdQuatity_@(item.tblOrderDetail.itemId)" name="quantityProduct">@(item.tblOrderDetail.ocdetailqty)</td>
                             <td class="hiddeTd">@(tblItem != null ? db.artgrps.FirstOrDefault(x => x.GROUPNO == tblItem.GROUPNO) != null ? db.artgrps.FirstOrDefault(x => x.GROUPNO == tblItem.GROUPNO).GROUPNAME : "" : "")</td>
                             <td class="hiddeTd">@(tblItem != null ? tblItem.INFO : "")</td>
@@ -355,9 +355,7 @@
             }
             else
             {
-                <tbody class="addRowParent">
-                   
-                </tbody>
+                <tbody class="addRowParent"></tbody>
             }
 
 
@@ -399,7 +397,7 @@
                                 var tblItem = db.items.FirstOrDefault(x => x.ARTNO == item.tblOrderDetail.itemId);
 
 
-                     
+
                                 <tr rel="@(item.tblOrderDetail.itemId)" class="tr_@(item.tblOrderDetail.itemId)">
                                     <td class="hiddeTd hidden">
                                         <input type="checkbox" id="cb_@(item.tblOrderDetail.prodetailid)" value="@(item.tblOrderDetail.prodetailid)">
@@ -409,7 +407,7 @@
                                         <input type="hidden" class="TotalIdProduct_@(item.tblOrderDetail.itemId)" name="totalProduct" value="@(item.tblOrderDetail.itemId + "_" + item.tblOrderDetail.ocdetailqty)">
                                         @(tblItem != null ? tblItem.ARTNAME : "")
                                     </td>
-                                    <td class="hiddetxt"><input rel="@(item.tblOrderDetail.itemId)" id="amount_@(item.tblOrderDetail.itemId)" type="number" min="1"  value="@(item.tblOrderDetail.ocdetailqty)" class="form-control amount"></td>
+                                    <td class="hiddetxt"><input rel="@(item.tblOrderDetail.itemId)" id="amount_@(item.tblOrderDetail.itemId)" type="number" min="1" value="@(item.tblOrderDetail.ocdetailqty)" class="form-control amount"></td>
                                     <td class="hiddeTd hidden tdQuatity_@(item.tblOrderDetail.itemId)" name="quantityProduct">@(item.tblOrderDetail.ocdetailqty)</td>
                                     <td class="hiddeTd hidden">@(tblItem != null ? db.artgrps.FirstOrDefault(x => x.GROUPNO == tblItem.GROUPNO) != null ? db.artgrps.FirstOrDefault(x => x.GROUPNO == tblItem.GROUPNO).GROUPNAME : "" : "")</td>
                                     <td class="hiddeTd hidden">@(tblItem != null ? tblItem.INFO : "")</td>
@@ -426,7 +424,7 @@
                         <tbody class="addRow"> </tbody>
                     }
 
-<tfoot>
+                    <tfoot>
                         <tr>
                             <td><input type="text" name="country" id="_pBoxSearch_title" class="form-control" /></td>
                             <td><input type="number" id="txtAmountPa" name="country" value="1" min="1" class="form-control" /></td>
@@ -508,7 +506,7 @@
                     $('.amount_' + ($(this).attr('rel'))).attr('value', $(this).val());
                     $('.TotalIdProduct_' + map[b].id).val(map[b].id + "_" + $(this).val());
                 });
-               
+
 
                 $('#_pBoxSearch_title').val('');
 
@@ -706,7 +704,7 @@
         $('#myModal').modal('toggle');
         $('.amount').attr('value', 1);
         $('.btnDelete').on('click', function () {
-          
+
             $('.tr_' + $(this).attr('rel')).remove();
         });
     }
