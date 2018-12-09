@@ -1,0 +1,212 @@
+﻿@model WebApplication1.userdata
+@{
+    ViewBag.Title = "EditInfo";
+    Layout = "~/Views/Shared/_Layout _NoMenu.cshtml";
+    var check = Model.Id;
+}
+
+<h2>Update Profile Info</h2>
+
+@using (Html.BeginForm("SaveEditInfo", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Profile Info</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <input type="hidden" name="Id" id="Id" value="@check" />
+        @Html.HiddenFor(model => model.userid)
+        <h4>CONTACT INFO</h4>
+        <div class="form-group">
+            <label class="control-label col-md-2">Firsname :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.firstname)
+                @Html.ValidationMessageFor(model => model.firstname)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Lastname :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.lasname)
+                @Html.ValidationMessageFor(model => model.lasname)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Email :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contact_email)
+                @Html.ValidationMessageFor(model => model.contact_email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Phone :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contact_phone)
+                @Html.ValidationMessageFor(model => model.contact_phone)
+            </div>
+        </div>
+        <h4>DELIVERY INFO</h4>
+        <div class="form-group">
+            <label class="control-label col-md-2">Company Name :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.company_name)
+                @Html.ValidationMessageFor(model => model.company_name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Name :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_name)
+                @Html.ValidationMessageFor(model => model.delivery_name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Email :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_email)
+                @Html.ValidationMessageFor(model => model.delivery_email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Phone :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_phone)
+                @Html.ValidationMessageFor(model => model.delivery_phone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Address Line 1 :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_address1)
+                @Html.ValidationMessageFor(model => model.delivery_address1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Address Line 2 :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_address2)
+                @Html.ValidationMessageFor(model => model.delivery_address2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Suburd :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_suburb)
+                @Html.ValidationMessageFor(model => model.delivery_suburb)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Postcode :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_postcode)
+                @Html.ValidationMessageFor(model => model.delivery_postcode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">State :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_state)
+                @Html.ValidationMessageFor(model => model.delivery_state)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Country :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.delivery_contry)
+                @Html.ValidationMessageFor(model => model.delivery_contry)
+            </div>
+        </div>
+        <h4>BILLING INFO</h4>
+        <div class="form-group">
+            <label class="control-label col-md-2">Name :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_name)
+                @Html.ValidationMessageFor(model => model.billing_name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Email :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_email)
+                @Html.ValidationMessageFor(model => model.billing_email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Phone :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_phone)
+                @Html.ValidationMessageFor(model => model.billing_phone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Address Line 1 :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_address1)
+                @Html.ValidationMessageFor(model => model.billing_address1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Address Line 2 :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_address2)
+                @Html.ValidationMessageFor(model => model.billing_address2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Suburb :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_suburb)
+                @Html.ValidationMessageFor(model => model.billing_suburb)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Postcode :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_poscode)
+                @Html.ValidationMessageFor(model => model.billing_poscode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">State :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_state)
+                @Html.ValidationMessageFor(model => model.billing_state)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Country :</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.billing_country)
+                @Html.ValidationMessageFor(model => model.billing_country)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+

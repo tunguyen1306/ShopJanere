@@ -295,7 +295,68 @@ namespace WebApplication1.Controllers
 
                 
         }
-        
+        public ActionResult Signup()
+        {
+            return View();
+        }
+        public ActionResult SaveSignup(user user)
+        {
+            if (ModelState.IsValid)
+            {
+                user.status = "active";
+                user.createdate = DateTime.Now;
+                user.updatedate = DateTime.Now;
+                data.users.Add(user);
+                data.SaveChanges();
+                user_role ur = new user_role();
+                ur.userid = user.Id;
+                ur.roleid = 6;
+                ur.status = "active";
+                data.user_role.Add(ur);
+                userdata ud = new userdata();
+                ud.userid = user.Id;
+                data.userdatas.Add(ud);
+                data.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
+        public ActionResult EditInfo(int? id)
+        {
+            user user = data.users.Find(id);
+            var userInfo = data.userdatas.Where(m => m.userid == id).FirstOrDefault();
+            return View(userInfo);
+        }
+        public ActionResult SaveEditInfo(userdata model)
+        {
+            var user = data.userdatas.Find(model.Id);
+            user.billing_address1 = model.billing_address1;
+            user.billing_address2 = model.billing_address2;
+            user.billing_country = model.billing_country;
+            user.billing_email = model.billing_email;
+            user.billing_name = model.billing_name;
+            user.billing_phone = model.billing_phone;
+            user.billing_poscode = model.billing_poscode;
+            user.billing_state = model.billing_state;
+            user.billing_suburb = model.billing_state;
+            user.company_name = model.company_name;
+            user.contact_email = model.contact_email;
+            user.contact_phone = model.contact_phone;
+            user.delivery_address1 = model.delivery_address1;
+            user.delivery_address2 = model.delivery_address2;
+            user.delivery_contry = model.delivery_contry;
+            user.delivery_email = model.delivery_email;
+            user.delivery_name = model.delivery_name;
+            user.delivery_phone = model.delivery_phone;
+            user.delivery_postcode = model.delivery_postcode;
+            user.delivery_state = model.delivery_state;
+            user.delivery_suburb = model.delivery_suburb;
+            user.firstname = model.firstname;
+            user.lasname = model.lasname;
+            data.SaveChanges();
+            return RedirectToAction("Index");
+        }
         public ActionResult Stores()
         {
             var restult = data.stores;
