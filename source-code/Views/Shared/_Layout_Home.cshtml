@@ -11,7 +11,7 @@
         veebdbEntities data = new veebdbEntities();
         var slider = data.sliders.Where(m => m.Status == 1);
         var setting = data.settings.Where(x => x.typeId == 3).ToList();
-        }
+    }
 
 </head>
 <body>
@@ -20,7 +20,7 @@
             <div class="navbar-header">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
-                        <a href="@Url.Action("Index", "Home")"><img src="~/Content/head/logo.png" width="100%" style=" padding: 33px 0px;" /></a>
+                        <a href="@Url.Action("Index", "Home")"><img src="~/Content/head/logo.png" width="100%" style="padding: 33px 0px;" /></a>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-12">
                         <div class="row" style="text-align: center; padding: 8px 0px;">
@@ -51,20 +51,20 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        
-                                            
-                                        
+
+
+
                                     </ul>
                                 </div>
-                                <div id="google_translate_element" style="    width: 50%;float: left;display:none"></div>
+                                <div id="google_translate_element" style="width: 50%;float: left;display:none"></div>
                                 <script type="text/javascript">
                                     function googleTranslateElementInit() {
                                         new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,et,pl,ru', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
                                     }
                                 </script>
                                 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                                
-                                <span style="color: white;"> Hi , @userFullInfo.user.display</span>  
+
+                                <span style="color: white;"> Hi , @userFullInfo.user.display</span>
 
                                 <a href="@Url.Action("Login", "Home")">
                                     <img src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="head-menu">
-                            <a class="mobile_menu"><span></span><span></span><span></span></a> 
+                            <a class="mobile_menu"><span></span><span></span><span></span></a>
                             <div class="wrap-head-main-menu">
                                 <ul class="head-main-menu">
                                     <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
@@ -91,35 +91,35 @@
     </div>
 
 
-        <section class="blink-slider">
-            <div class="blink-slider">
-                <div class="blink-view" id="blink" onclick="linkto(this)">
-                    @*@foreach (var slide in slider)
-                    { 
+    <section class="blink-slider">
+        <div class="blink-slider">
+            <div class="blink-view" id="blink" onclick="linkto(this)">
+                @*@foreach (var slide in slider)
+                    {
                     <div class="viewSlide">
                         <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.Images" id="@slide.Code"></a>
                     </div>
                     }*@
-@foreach (var slide in setting)
-{
-    <div class="viewSlide">
-        <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.urlimage" id="@slide.id"></a>
-    </div>
-}
-
-
-                    <!--
+                @foreach (var slide in setting)
+                {
                     <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner2.jpg" id="2M1Ü0240"></a>
+                        <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.urlimage" id="@slide.id"></a>
                     </div>
-                    <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/body/banner/banner3.jpg" id="-3"></a>
-                    </div>-->
+                }
+
+
+                <!--
+                <div class="viewSlide">
+                    <a href="#"><img class="fullImg" src="~/Content/body/banner/banner2.jpg" id="2M1Ü0240"></a>
                 </div>
-                <div class="blink-control" id="blink-control">
-                </div>
+                <div class="viewSlide">
+                    <a href="#"><img class="fullImg" src="~/Content/body/banner/banner3.jpg" id="-3"></a>
+                </div>-->
             </div>
-        </section>
+            <div class="blink-control" id="blink-control">
+            </div>
+        </div>
+    </section>
 
     <h2 class="heading_title navi_slider">
         <span>Master Meta Groups</span>
@@ -140,17 +140,19 @@
             -->
     </div><!-- product_category -->
 
-    <h2 class="heading_title navi_slider"><span>Best Sellers</span>
-            <img src="~/Content/body/others/back.png" id="bs_back"/>
-    <input type="hidden" value="1" id="bs_cur" />
-        <img src="~/Content/body/others/next.png" id="bs_next"/></h2>
+    <h2 class="heading_title navi_slider">
+        <span>Best Sellers</span>
+        <img src="~/Content/body/others/back.png" id="bs_back" />
+        <input type="hidden" value="1" id="bs_cur" />
+        <img src="~/Content/body/others/next.png" id="bs_next" />
+    </h2>
 
 
     <div class="container body-content" style="clear:both;margin-top:20px;" id="bestseller">
         @*@{
-        Html.RenderAction("BestSeller", "Home",);
-    }*@
-    @RenderBody()
+                Html.RenderAction("BestSeller", "Home",);
+            }*@
+        @RenderBody()
         <hr />
 
     </div>
@@ -234,9 +236,9 @@
         });
 
         /****************************
-       
+
        MASTER META GROUP LIST
-       
+
        ***************************/
         $("#mm_back").click(function () {
 
@@ -302,15 +304,14 @@
         });
 
         /****************************
-        
+
         BEST SELLER
-        
+
         ***************************/
         $("#bs_back").click(function () {
-            
-            var getBsCurr = $("#bs_cur").val();            
-            if (getBsCurr > 1)
-            {
+
+            var getBsCurr = $("#bs_cur").val();
+            if (getBsCurr > 1) {
                 getBsCurr--;
                 $("#bs_cur").val(getBsCurr);
                 var procemessage = "<div value='0'> Loading Items...</div>";
@@ -340,7 +341,7 @@
             var url = "/Home/BestSeller/";
             $.ajax({
                 url: url,
-                data: { index : getBsCurr },
+                data: { index: getBsCurr },
                 cache: false,
                 type: "POST",
                 success: function (data) {
@@ -360,8 +361,7 @@
                             }
                         });
                     }
-                    else
-                    {
+                    else {
                         $("#bestseller").html(data).show();
                     }
                 },

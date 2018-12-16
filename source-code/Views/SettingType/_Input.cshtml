@@ -2,12 +2,18 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Setting Type Name</label>
-     
-            @Html.TextBoxFor(x=>x.name,new {@class= "form-control" })
+            <label>Setting Type Code</label>
+
+            @Html.TextBoxFor(x => x.code, new { @class = "form-control" })
 
         </div>
-       
+        <div class="form-group">
+            <label>Setting Type Name</label>
+
+            @Html.TextBoxFor(x => x.name, new {@class = "form-control"})
+
+        </div>
+
 
     </div>
     <div class="col-sm-6">
