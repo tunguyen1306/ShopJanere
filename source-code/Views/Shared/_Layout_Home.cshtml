@@ -64,7 +64,9 @@
                                 </script>
                                 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-                                <span style="color: white;"> Hi , @userFullInfo.user.display</span>
+                                
+                                <span style="color: white;"> Hi , @Html.ActionLink(userFullInfo.user.display, "EditInfo", new { id = userFullInfo.user.Id })  </span>  
+
 
                                 <a href="@Url.Action("Login", "Home")">
                                     <img src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
@@ -94,27 +96,17 @@
     <section class="blink-slider">
         <div class="blink-slider">
             <div class="blink-view" id="blink" onclick="linkto(this)">
-                @*@foreach (var slide in slider)
-                    {
-                    <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.Images" id="@slide.Code"></a>
-                    </div>
-                    }*@
-                @foreach (var slide in setting)
-                {
-                    <div class="viewSlide">
-                        <a href="#"><img class="fullImg" src="~/Content/ProductImage/@slide.urlimage" id="@slide.id"></a>
-                    </div>
-                }
+              
+
+@foreach (var slide in setting)
+{
+    <div class="viewSlide">
+        <a href="#"><img class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
+    </div>
+}
 
 
-                <!--
-                <div class="viewSlide">
-                    <a href="#"><img class="fullImg" src="~/Content/body/banner/banner2.jpg" id="2M1Ü0240"></a>
-                </div>
-                <div class="viewSlide">
-                    <a href="#"><img class="fullImg" src="~/Content/body/banner/banner3.jpg" id="-3"></a>
-                </div>-->
+
             </div>
             <div class="blink-control" id="blink-control">
             </div>

@@ -64,6 +64,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 user.status = "active";
                 user.createdate = DateTime.Now;
                 user.updatedate = DateTime.Now;
