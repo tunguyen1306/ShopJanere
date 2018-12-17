@@ -152,7 +152,16 @@
 
 </div>
 <div class="product_group">
-    
+    <div class="row">
+        <div class="col-sm-6">
+            <label>EXPOR TABLE</label>
+            @Html.DropDownListFor(c => c.IsBestSeller, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+        </div>
+        <div class="col-sm-6">
+          
+
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-6">
             <label>EXPOR TABLE</label>
