@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "EditLogin";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
-    
+
 }
 
 <h2>Update Login Info</h2>
@@ -11,7 +11,7 @@
 @using (Html.BeginForm("SaveEditLogin", "AccountLogin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Login info</h4>
         <hr />
@@ -21,15 +21,15 @@
         <div class="form-group">
             <label class="control-label col-md-2">Display Name :</label>
             <div class="col-md-10">
-               @Html.EditorFor(model => model.display)
-               @Html.ValidationMessageFor(model => model.display)             
+                @Html.TextBoxFor(model => model.display, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.display)
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-md-2">Username :</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.username)
+                @Html.TextBoxFor(model => model.username, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.username)
             </div>
         </div>
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Password :</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.password)
+                @Html.TextBoxFor(model => model.password, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.password)
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Status :</label>
             <div class="col-md-10">
-                <select name="status" id="status">
+                <select name="status" class="form-control" id="status">
                     @if (Model.status.ToLower() == "active")
                     {
                         <option value="active" selected>Active</option>
@@ -57,8 +57,52 @@
                         <option value="inactive" selected>InActive</option>
                     }
                 </select>
-</div>
+            </div>
         </div>
+        @if ( ViewBag.Role == 5)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">User Type :</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(c => c.type, new List<SelectListItem> {
+                   new SelectListItem { Text = "None", Value = "1" },
+                   new SelectListItem { Text = "Basic", Value = "2" },
+                   new SelectListItem { Text = "Vip", Value = "3" },
+                   new SelectListItem { Text = "Primeum", Value = "4"} }, new { @class = "form-control" })
+                
+                </div>
+            </div>
+            <div class="form-group" style="display:none">
+                <label class="control-label col-md-2">Discount :</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.discount, new { @type = "number",@class = "form-control",@min="0",@max="100" })
+                    @Html.ValidationMessageFor(model => model.discount)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Total Paid Order :</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.paidorder, new { @type = "number", @class = "form-control", @readonly= "readonly" })
+                    @Html.ValidationMessageFor(model => model.paidorder)
+                </div>
+            </div>
+            <script type="text/javascript">
+                if (document.getElementById('type').value == "1") {
+                    document.getElementById('discount').setAttribute("readonly", "readonly")
+                    document.getElementById('discount').value = "0";
+                }                   
+                document.getElementById('type').onchange = function () {
+                    if (document.getElementById('type').value == "1") {
+                        document.getElementById('discount').setAttribute("readonly", "readonly");
+                        document.getElementById('discount').value = "0";
+                    }                       
+                    else
+                        document.getElementById('discount').removeAttribute("readonly")
+                }
+            </script>
+        }
+       
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

@@ -65,7 +65,18 @@ namespace WebApplication1.Controllers
                     db.SaveChanges();
                     ShoppingCart Cart = new ShoppingCart();
                     Cart = (ShoppingCart)Session["ShoppingCart"];
-                    foreach (var item in Cart.cartItem)
+
+                    WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+                    if (userFullInfo!=null)
+                    {
+                            var user = db.users.Find(userFullInfo.user.Id);
+                            user.paidorder = (user.paidorder.HasValue? user.paidorder.Value:0)+(decimal)Cart.CartTotal;
+                            db.Entry(user).State = EntityState.Modified;
+                    }
+
+
+
+                        foreach (var item in Cart.cartItem)
                     {
                         orderdetail od = new orderdetail();
                         od.ocid = order.ocid;

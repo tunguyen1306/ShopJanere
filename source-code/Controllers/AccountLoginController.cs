@@ -89,6 +89,8 @@ namespace WebApplication1.Controllers
         public ActionResult EditLogin(int? id)
         {
             user user = db.users.Find(id);
+            var role= db.user_role.Where(t => t.status == "active" && t.userid == id).FirstOrDefault();
+            ViewBag.Role = role != null ? role.roleid : -1;
             return View(user);
         }
         public ActionResult SaveEditLogin(user model)

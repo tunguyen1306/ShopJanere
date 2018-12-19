@@ -420,6 +420,9 @@ namespace WebApplication1.Controllers
             tbl1.status = 1;
             db.Entry(tbl1).State = EntityState.Modified;
             db.SaveChanges();
+
+            MvcApplication.SyncMoneySymbol();
+
             return RedirectToAction("SettingIndex");
         }
 

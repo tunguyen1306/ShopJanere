@@ -10,10 +10,14 @@ namespace WebApplication1.Models
         public List<CartItem> cartItem = new List<CartItem>();
         public float taxTotal { get; set; }
         public float CartTotal { get; set; }
+
+        public float PromotionTotal { get; set; }
+        public promotion promotion { get; set; }
         public ShoppingCart()
         {
             taxTotal=0;
             CartTotal = 0;
+            PromotionTotal = 0;
         }
 
     }

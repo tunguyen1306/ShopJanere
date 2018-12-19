@@ -56,7 +56,7 @@ namespace WebApplication1.Controllers
         {
 
 
-            return View(new promotion { LASTDATE = DateTime.Now.ToString("MM/dd/yyyy"), FIRSTDATE = DateTime.Now.ToString("MM/dd/yyyy") });
+            return View(new promotion { LASTDATE = DateTime.Now, FIRSTDATE = DateTime.Now });
         }
 
         // POST: /Promotion/Create
@@ -64,7 +64,7 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Create(promotion promotion, HttpPostedFileBase[] files, string value)
+        public ActionResult Create(promotion promotion, HttpPostedFileBase[] files,String[] usertypes, string value)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace WebApplication1.Controllers
                     promotion.PROMOTIONNO = 1;
                 }
 
-
+                promotion.TYPEUSERS = String.Join(",", usertypes);
                 promotion.CREATED = DateTime.Now;
                 db.promotions.Add(promotion);
                 db.SaveChanges();
@@ -124,21 +124,21 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    var tblPro = new promotionrule
-                    {
-                        PROMOTIONCODE = promotion.PROMOTIONCODE.ToUpper(),
-                        PROMOTIONNO = promotion.PROMOTIONNO,
-                        ELIGIBILITYNO = 1,
-                        TYPENO = promotion.TYPENO,
-                        ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
-                        ADJUSTMENTTYPENO = 1,
-                        CREATED = DateTime.Now,
-                        LASTCHANGE = DateTime.Now,
-                        PRICEGROUPNO = 1
-                    };
-                    db.promotionrules.Add(tblPro);
+                    /* var tblPro = new promotionrule
+                     {
+                         PROMOTIONCODE = promotion.PROMOTIONCODE.ToUpper(),
+                         PROMOTIONNO = promotion.PROMOTIONNO,
+                         ELIGIBILITYNO = 1,
+                         TYPENO = promotion.TYPENO,
+                         ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
+                         ADJUSTMENTTYPENO = 1,
+                         CREATED = DateTime.Now,
+                         LASTCHANGE = DateTime.Now,
+                         PRICEGROUPNO = 1
+                     };
+                     db.promotionrules.Add(tblPro);
 
-                    db.SaveChanges();
+                     db.SaveChanges();*/
 
                 }
                 return RedirectToAction("Index");
@@ -166,7 +166,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
 
-        public ActionResult Edit(promotion promotion, HttpPostedFileBase[] files, string value)
+        public ActionResult Edit(promotion promotion, HttpPostedFileBase[] files, String[] usertypes, string value)
         {
             if (ModelState.IsValid)
             {
@@ -188,6 +188,7 @@ namespace WebApplication1.Controllers
                         }
                     }
                 }
+                promotion.TYPEUSERS = String.Join(",", usertypes);
                 promotion.LASTCHANGE = DateTime.Now;
                 db.Entry(promotion).State = EntityState.Modified;
                 db.SaveChanges();

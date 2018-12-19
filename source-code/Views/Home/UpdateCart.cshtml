@@ -80,7 +80,7 @@ else
                 <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
                     <div class="col-lg-1" style="width: 100%; padding: 10px 15px;">
                         @cartItem.Code
-                        <input type="hidden" name="code[]" value="@cartItem.Code" />
+                        <input type="hidden" name="code[@i]" value="@cartItem.Code" />
                     </div>
                 </div>
                 <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
@@ -100,15 +100,15 @@ else
                                 <img src="~/Content/cart_plus.png" style="margin-top:-9px" /></a>
                             <a href="#" onclick="bulkitemdown(@i)"><img src="~/Content/cart_minus.png" style="margin-top:-24px" /></a>
 </div>
-                        <input type="text" name="qty[]" id="@i" value="@cartItem.Qty" style="width: 44px;height:25px;text-align:center;background-color:white;color:black;" />
+                        <input type="text" name="qty[@i]" id="@i" value="@cartItem.Qty" style="width: 44px;height:25px;text-align:center;background-color:white;color:black;" />
                         
 
                     </div>
                 </div>
                 <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
                     <div class="col-lg-1" style="width: 100%; padding: 10px 15px;text-align:center">
-                        $@cartItem.Price
-                        <input type="hidden" name="price[]" value="@cartItem.Price" />
+                        @(MvcApplication.MoneySymbol)@cartItem.Price
+                        <input type="hidden" name="price[@i]" value="@cartItem.Price" />
                     </div>
                 </div>
                 
@@ -156,15 +156,63 @@ else
                 <a href="@Url.Action("ClearCart", "Home")"><input type="button" style="padding: 10px 15px; background-color: #235d91; font-family: 'OpenSansBold'; " value="Clear Shopping Cart" /></a>
 </div>
         </div>
-    <div class="row" style="margin-top:35px;padding:15px;">
-        <div class="col-lg-8">
-            &nbsp;
-        </div>
 
-        <div class="col-lg-4" style="border-top: 10px solid #235d91;padding:15px 15px 0px 0px;text-align:right;">
-    <span style="font-weight: bold; color: #333333; font-size: 25px; "><span style="font-family: 'OpenSansBold';">Subtotal : </span>$@ShoppingCart.CartTotal</span>
-</div>
-    </div>
+
+        if (ShoppingCart.promotion != null)
+        {
+            <div class="row" style="margin-top:35px;padding:15px;padding-bottom:0px">
+                <div class="col-lg-8">
+                    &nbsp;
+                </div>
+
+                <div class="col-lg-4" style="border-top: 10px solid #235d91;padding:15px 15px 0px 0px;text-align:right;">
+                    <span style="font-weight: bold; color: #333333; font-size: 25px; "><span style="font-family: 'OpenSansBold';">Total : </span>@(MvcApplication.MoneySymbol)@(ShoppingCart.PromotionTotal + ShoppingCart.CartTotal)</span>
+                </div>
+            </div>
+            <div class="row" style="padding:15px;padding-bottom:0px">
+                <div class="col-lg-8">
+                    &nbsp;
+                </div>
+
+                <div class="col-lg-4" style="border-top: 10px solid #235d91;padding:15px 15px 0px 0px;text-align:right;">
+                    <span style="font-weight: bold; color: #333333; font-size: 25px; "><span style="font-family: 'OpenSansBold';">Promotion (@(ShoppingCart.promotion.TYPENO==1?MvcApplication.MoneySymbol:"%")) : </span>@ShoppingCart.promotion.VALUEPROMOTION</span>
+                </div>
+            </div>
+            <div class="row" style="padding:15px;padding-bottom:0px">
+                <div class="col-lg-8">
+                    &nbsp;
+                </div>
+
+                <div class="col-lg-4" style="border-top: 10px solid #235d91;padding:15px 15px 0px 0px;text-align:right;">
+                    <span style="font-weight: bold; color: #333333; font-size: 25px; "><span style="font-family: 'OpenSansBold';">PromotionTotal : </span>@(MvcApplication.MoneySymbol)@ShoppingCart.PromotionTotal</span>
+                </div>
+            </div>
+            <div class="row" style="padding:15px;">
+                <div class="col-lg-8">
+                    &nbsp;
+                </div>
+
+                <div class="col-lg-4" style="border-top: 10px solid #235d91;padding:15px 15px 0px 0px;text-align:right;">
+                    <span style="font-weight: bold; color: #333333; font-size: 25px; "><span style="font-family: 'OpenSansBold';">Subtotal : </span>@(MvcApplication.MoneySymbol)@ShoppingCart.CartTotal</span>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="row" style="margin-top:35px;padding:15px;">
+                <div class="col-lg-8">
+                    &nbsp;
+                </div>
+
+                <div class="col-lg-4" style="border-top: 10px solid #235d91;padding:15px 15px 0px 0px;text-align:right;">
+                    <span style="font-weight: bold; color: #333333; font-size: 25px; "><span style="font-family: 'OpenSansBold';">Subtotal : </span>@(MvcApplication.MoneySymbol)@ShoppingCart.CartTotal</span>
+                </div>
+            </div>
+        }
+
+
+
         <div class="row">
             <div class="col-lg-12" style="text-align: right;">
                 <a href="@Url.Action("Create", "Checkout")"><input type="button" style="padding: 10px 15px; background-color: #235d91; " value="Proceed To Checkout" /></a>

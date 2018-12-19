@@ -14,12 +14,7 @@
             @Html.TextBoxFor(x => x.PROMOTIONNAME, new {@class = "form-control"})
 
         </div>
-        <div class="form-group">
-            <label>Promotion Quantity</label>
-
-            @Html.TextBoxFor(x=>x.QUANTITY, new { @class = "form-control" ,@type="number", @min = 0 })
-
-        </div>
+      
         <div class="form-group">
             <label>Value</label>
 
@@ -34,13 +29,13 @@
         <div class="form-group">
             <label>From Date</label>
 
-            @Html.TextBoxFor(x => x.FIRSTDATE, new {@class = "form-control date-picker"})
+            @Html.TextBoxFor(x => x.FIRSTDATE, "{0:MM/dd/yyyy}", new {@class = "form-control date-picker"})
 
         </div>
         <div class="form-group">
             <label>To Date</label>
 
-            @Html.TextBoxFor(x => x.LASTDATE, new {@class = "form-control date-picker"})
+            @Html.TextBoxFor(x => x.LASTDATE, "{0:MM/dd/yyyy}", new {@class = "form-control date-picker"})
 
         </div>
 
@@ -48,18 +43,39 @@
         <div class="form-group">
             <label>Type</label>
 
-            @Html.DropDownListFor(c => c.TYPENO, new List<SelectListItem> { new SelectListItem { Text = "Price", Value = "1" }, new SelectListItem { Text = "Percent", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+            @Html.DropDownListFor(c => c.TYPENO, new List<SelectListItem> { new SelectListItem { Text = "Price", Value = "1" }, new SelectListItem { Text = "Percent", Value = "0", Selected = true } }, new { @class = "form-control" })
 
         </div><div class="form-group">
             <label>Status</label>
 
 
-            @Html.DropDownListFor(c => c.STATUS, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+            @Html.DropDownListFor(c => c.STATUS, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control" })
 
 
         </div>
 
 
+    </div>
+
+           
+    </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>Applies to</label>
+            @Html.DropDownList("usertypes", new List<SelectListItem> {
+                   new SelectListItem { Text = "None", Value = "1" },
+                   new SelectListItem { Text = "Basic", Value = "2" },
+                   new SelectListItem { Text = "Vip", Value = "3" },
+                   new SelectListItem { Text = "Primeum", Value = "4"} }, new { @class = "form-control ", @multiple = "multiple" })
+            <script type="text/javascript">
+            setTimeout(function () {
+
+                $("#usertypes").val("@(Model.TYPEUSERS)".split(',')).select2({ placeholder: "Choose type to apply" });;
+                        }, 200);
+
+            </script>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -157,6 +173,7 @@
   
 
 
+    
 
     $(".delete_action").on('click', function (e) {
         var rs = confirm('Do you want to remove this image ?');

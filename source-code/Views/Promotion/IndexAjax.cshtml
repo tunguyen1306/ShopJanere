@@ -24,7 +24,7 @@
                 @Html.DisplayFor(modelItem => item.tblPromotion.PROMOTIONNAME)
             </td>
             <td>
-           @(DateTime.Parse(item.tblPromotion.LASTDATE)  > DateTime.Now ? "ONLINE": "OFFLINE")
+           @(item.tblPromotion.LASTDATE >= DateTime.Parse( DateTime.Now.ToShortDateString()) ? "ONLINE": "OFFLINE")
             </td>
             <td scope="col" class="manage_column column_action">
                 <a class="edit_action" href="@Url.Action("Edit", "Promotion", new {id = item.tblPromotion.PROMOTIONNO})"><i class="fas fa-edit"></i></a>

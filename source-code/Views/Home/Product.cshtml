@@ -95,10 +95,10 @@
     {
         <div class="col-lg-7">
             <div class="row" style="color: #666666">
-                <input type="hidden" name="code[]" value="@Model.ARTCODE" />
-                <input type="hidden" name="price[]" value="@Model.WEBPRICE" />
+                <input type="hidden" name="code[0]" value="@Model.ARTCODE" />
+                <input type="hidden" name="price[0]" value="@Model.WEBPRICE" />
                 <div class="col-lg-12" style="font-size:30px;color:#2ea3f2;font-weight:bold">@Model.ARTNAME</div>
-                <div class="col-lg-12" style="font-size: 36px; color: #002f6c;font-weight:bold;">$@Model.WEBPRICE</div>
+                <div class="col-lg-12" style="font-size: 36px; color: #002f6c;font-weight:bold;">@(MvcApplication.MoneySymbol)@Model.WEBPRICE</div>
                 <div class="col-lg-4"><span style="font-weight:bold">Width:</span> @Model.WIDTH Mm</div>
                 <div class="col-lg-4"><span style="font-weight:bold">Height:</span> @Model.HEIGHT</div>
                 <div class="col-lg-4"><span style="font-weight:bold">Length:</span>  @Model.LEN Mm</div>
@@ -109,7 +109,7 @@
                 <div class="col-lg-12" style="padding:30px 15px;">
                     <span style="font-weight: bold; color: #000c38;margin-right:10px;">Quantity:</span>
                     <input type="button" value="-" id="qtydown" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d;padding:0px; ">
-                    <input type="text" id=qty name=qty[] value="1" style="width: 55px; height: 30px; color: #000c38;text-align:center;background-color:white; ">
+                    <input type="text" id=qty name=qty[0] value="1" style="width: 55px; height: 30px; color: #000c38;text-align:center;background-color:white; ">
                     <input type="button" value="+" id="qtyup" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d; padding: 0px;" />
                 </div>
 

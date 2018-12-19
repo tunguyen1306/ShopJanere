@@ -18,6 +18,7 @@ namespace WebApplication1.Controllers
             {
                 IntForGuest();
             }
+        
             List<item> relatedProducts = data.items.Take(100).ToList();
             List<item> BestSellerProducts = data.items.Where(m=>m.IsBestSeller==true).Take(4).ToList();
             Session["relatedProducts"] = relatedProducts;
@@ -500,10 +501,27 @@ namespace WebApplication1.Controllers
                     return RedirectToAction("Products", "Home");
                 }
             }*/
+
+
+            WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+
+
+            DateTime now =new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day);
+            var pro = (promotion)null;
+            if (userFullInfo!=null &&  userFullInfo.role.Id==5)
+            {
+                var user = data.users.Find(userFullInfo.user.Id);
+                string type = user.type + "";
+                pro= data.promotions.Where(t => t.STATUS == 1 && t.TYPEUSERS.Contains(type) && t.FIRSTDATE<= now && now<=t.LASTDATE).FirstOrDefault();
+            }
             ShoppingCart Cart = new ShoppingCart();
             if (Session["ShoppingCart"] != null)
             {
                 Cart = (ShoppingCart)Session["ShoppingCart"];
+                if (pro!=null)
+                {
+                    Cart.promotion = pro;
+                }
             }
             if (chkbox == null && qty != null)//for prodetail and update cart
             {
@@ -533,6 +551,30 @@ namespace WebApplication1.Controllers
                 }
                 Cart.taxTotal = Cart.cartItem.Sum(m => m.Tax);
                 Cart.CartTotal = Cart.cartItem.Sum(m => m.LineTotal);
+                if (Cart.promotion!=null)
+                {
+                    if( Cart.promotion.TYPENO==0)
+                    {
+                        Cart.PromotionTotal = Cart.CartTotal * float.Parse(Cart.promotion.VALUEPROMOTION)/100;
+                        Cart.CartTotal =  Cart.CartTotal *(100- float.Parse(Cart.promotion.VALUEPROMOTION))/100;
+                    }
+                    else if(Cart.promotion.TYPENO == 1)
+                    {
+                        try
+                        {
+                            Cart.PromotionTotal = float.Parse(Cart.promotion.VALUEPROMOTION);
+                            Cart.CartTotal -= float.Parse(Cart.promotion.VALUEPROMOTION);
+                        }
+                        catch (Exception)
+                        {
+
+                            
+                        }
+                       
+                    }
+                }
+              
+
             }
             if (chkbox != null && qty != null) // for add or update bundle item
             {
@@ -565,6 +607,28 @@ namespace WebApplication1.Controllers
                 }
                 Cart.taxTotal = Cart.cartItem.Sum(m => m.Tax);
                 Cart.CartTotal = Cart.cartItem.Sum(m => m.LineTotal);
+                if (Cart.promotion != null)
+                {
+                    if (Cart.promotion.TYPENO == 0)
+                    {
+                        Cart.PromotionTotal = Cart.CartTotal * float.Parse(Cart.promotion.VALUEPROMOTION)/100;
+                        Cart.CartTotal = Cart.CartTotal * (100 - float.Parse(Cart.promotion.VALUEPROMOTION))/100;
+                    }
+                    else if (Cart.promotion.TYPENO == 1)
+                    {
+                        try
+                        {
+                            Cart.PromotionTotal = float.Parse(Cart.promotion.VALUEPROMOTION);
+                            Cart.CartTotal -= float.Parse(Cart.promotion.VALUEPROMOTION);
+                        }
+                        catch (Exception)
+                        {
+
+
+                        }
+
+                    }
+                }
             }
             List<CartItem> listItemForPaging = new List<CartItem>();
             int No_Of_Page = (Page_No ?? 1);
