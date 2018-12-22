@@ -20,7 +20,7 @@
 
 
                     @Html.Partial("_Input")
-
+                    @ViewBag.Error
                     <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
                     <a class="button button-sm" href="@Url.Action("Index","Promotion")">Cancel</a>
                 }

@@ -293,7 +293,7 @@ namespace WebApplication1.Controllers
         {
             var _ids = ids.Select(t => int.Parse(t)).ToList();
             bool _status = false;
-            var msg = "Cập nhật thành công";
+            var msg = "Update Success";
             try
             {
 
@@ -310,7 +310,7 @@ namespace WebApplication1.Controllers
             catch (Exception ex)
             {
 
-                msg = "Cập nhật thất bại";
+                msg = "Update Failed";
             }
             return Json(new { status = _status, mgs = msg });
         }

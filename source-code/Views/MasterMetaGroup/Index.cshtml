@@ -16,7 +16,11 @@
 
 <div class="row wrap_filter">
     <div class="col-sm-4">
-       
+        <label>Action</label>
+        <select class="bulk_action filter" name="bulk_action">
+            <option value="trash">Move to trash</option>
+        </select>
+        <input type="submit" id="do_bulk_action" class="button btn-sm" value="Go">
     </div>
     <div class="col-sm-4 right">
        
@@ -46,7 +50,32 @@
 </div>
 <script>
 
-    
+
+    $('#do_bulk_action').on('click', function () {
+        updateStatus();
+    });
+
+    function updateStatus() {
+        var _value = $('.bulk_action filter').val();
+        var _count = $(".item_check input:checked").length;
+        var _items = new Array();
+        $(".item_check input:checked").each(function () {
+            _items.push(this.value);
+        });
+        if (_count > 0) {
+            $.post('@Url.Action("UpdateStatus", "MasterMetaGroup")', { status: _value, ids: _items }, function (data) {
+
+                if (data.status == 'true' || data.status == true) {
+                    onPageChange($('#metagrup-result').find('a[data-page="1"]'));
+                } else {
+                    alert(data.msg);
+                }
+
+            });
+        } else {
+            alert("Select item in list");
+        }
+    }
     //#region tdg form
 
     function metagrup_seacrch() {

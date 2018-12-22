@@ -160,7 +160,56 @@ namespace WebApplication1.Controllers
 
             return Json("");
         }
-      
+        public JsonResult UpdateStatus(string status, string[] ids)
+        {
+            var _ids = ids.Select(t => int.Parse(t)).ToList();
+            bool _status = false;
+            var msg = "Update Success";
+            try
+            {
+                var _items = db.metagrups.Where(x => _ids.Contains(x.METAGROUPNO));
+                foreach (var item in _items)
+                {
+                    var meta = db.metagrups.Find(item.METAGROUPNO);
+                    meta.IsActive = false;
+                    db.Entry(meta).State = EntityState.Modified;
+                   
+                }
+                db.SaveChanges();
+                _status = true;
+            }
+            catch (Exception)
+            {
+
+                msg = "Update Failed";
+            }
+            return Json(new { status = _status, mgs = msg });
+        }
+        public JsonResult UpdateStatusGroup(string status, string[] ids)
+        {
+            var _ids = ids.Select(t => int.Parse(t)).ToList();
+            bool _status = false;
+            var msg = "Update Success";
+            try
+            {
+                var _items = db.artgrps.Where(x => _ids.Contains(x.GROUPNO));
+                foreach (var item in _items)
+                {
+                    var meta = db.artgrps.Find(item.GROUPNO);
+                    meta.IsActive = false;
+                    db.Entry(meta).State = EntityState.Modified;
+                   
+                }
+                db.SaveChanges();
+                _status = true;
+            }
+            catch (Exception)
+            {
+
+                msg = "Update Failed";
+            }
+            return Json(new { status = _status, mgs = msg });
+        }
         #region
         public ActionResult IndexMetaGroup()
         {
@@ -305,6 +354,7 @@ namespace WebApplication1.Controllers
         {
             var listGroup = (from cat in db.artgrps
                              join catl in db.metagrups on cat.METAGROUPNO equals catl.METAGROUPNO
+                             where cat.IsActive==true
                              select new AllModel { tblGroup = cat, tblMetaGroup = catl }).ToList();
             if (search != null)
             {

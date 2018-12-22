@@ -66,83 +66,94 @@ namespace WebApplication1.Controllers
 
         public ActionResult Create(promotion promotion, HttpPostedFileBase[] files,String[] usertypes, string value)
         {
-            if (ModelState.IsValid)
+            ViewBag.Error = "";
+            try
             {
-                if (files != null)
+                if (ModelState.IsValid)
                 {
-                    for (int i = 0; i < files.Length; i++)
+                    if (files != null)
                     {
-                        if (files[i] != null)
+                        for (int i = 0; i < files.Length; i++)
                         {
+                            if (files[i] != null)
+                            {
 
-                            string path = "";
-                            path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(files[i].FileName));
-                            var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
-                            files[i].SaveAs(path);
+                                string path = "";
+                                path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(files[i].FileName));
+                                var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
+                                files[i].SaveAs(path);
 
+
+
+                            }
+                        }
+                    }
+                    var proId = db.promotions.OrderByDescending(x => x.PROMOTIONNO).FirstOrDefault();
+                    if (proId != null)
+                    {
+                        promotion.PROMOTIONNO = proId.PROMOTIONNO + 1;
+                    }
+                    else
+                    {
+                        promotion.PROMOTIONNO = 1;
+                    }
+
+                    promotion.TYPEUSERS = String.Join(",", usertypes);
+                    promotion.CREATED = DateTime.Now;
+                    promotion.LASTCHANGE = DateTime.Now;
+                    db.promotions.Add(promotion);
+                    db.SaveChanges();
+
+                    if (promotion.QUANTITY != 0)
+                    {
+                        for (int i = 0; i < promotion.QUANTITY; i++)
+                        {
+                            var tblPro = new promotionrule
+                            {
+                                PROMOTIONCODE = "KM" + Guid.NewGuid().ToString().Substring(0, 6).ToUpper(),
+                                PROMOTIONNO = promotion.PROMOTIONNO,
+                                ELIGIBILITYNO = 1,
+                                TYPENO = promotion.TYPENO,
+                                ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
+                                ADJUSTMENTTYPENO = 1,
+                                CREATED = DateTime.Now,
+                                LASTCHANGE = DateTime.Now,
+                                PRICEGROUPNO = 1
+                            };
+                            db.promotionrules.Add(tblPro);
 
 
                         }
+                        db.SaveChanges();
                     }
-                }
-                var proId = db.promotions.OrderByDescending(x => x.PROMOTIONNO).FirstOrDefault();
-                if (proId != null)
-                {
-                    promotion.PROMOTIONNO = proId.PROMOTIONNO + 1;
-                }
-                else
-                {
-                    promotion.PROMOTIONNO = 1;
-                }
-
-                promotion.TYPEUSERS = String.Join(",", usertypes);
-                promotion.CREATED = DateTime.Now;
-                db.promotions.Add(promotion);
-                db.SaveChanges();
-                
-                if (promotion.QUANTITY != 0)
-                {
-                    for (int i = 0; i < promotion.QUANTITY; i++)
+                    else
                     {
-                        var tblPro = new promotionrule
-                        {
-                           PROMOTIONCODE = "KM" + Guid.NewGuid().ToString().Substring(0, 6).ToUpper(),
-                           PROMOTIONNO = promotion.PROMOTIONNO,
-                            ELIGIBILITYNO = 1,
-                            TYPENO = promotion.TYPENO,
-                            ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
-                            ADJUSTMENTTYPENO = 1,
-                          CREATED = DateTime.Now,
-                          LASTCHANGE = DateTime.Now,
-                        PRICEGROUPNO =1
-                        };
-                        db.promotionrules.Add(tblPro);
-                       
+                        /* var tblPro = new promotionrule
+                         {
+                             PROMOTIONCODE = promotion.PROMOTIONCODE.ToUpper(),
+                             PROMOTIONNO = promotion.PROMOTIONNO,
+                             ELIGIBILITYNO = 1,
+                             TYPENO = promotion.TYPENO,
+                             ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
+                             ADJUSTMENTTYPENO = 1,
+                             CREATED = DateTime.Now,
+                             LASTCHANGE = DateTime.Now,
+                             PRICEGROUPNO = 1
+                         };
+                         db.promotionrules.Add(tblPro);
+
+                         db.SaveChanges();*/
 
                     }
-                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-                else
-                {
-                    /* var tblPro = new promotionrule
-                     {
-                         PROMOTIONCODE = promotion.PROMOTIONCODE.ToUpper(),
-                         PROMOTIONNO = promotion.PROMOTIONNO,
-                         ELIGIBILITYNO = 1,
-                         TYPENO = promotion.TYPENO,
-                         ADJUSTMENTVALUE = decimal.Parse(promotion.VALUEPROMOTION),
-                         ADJUSTMENTTYPENO = 1,
-                         CREATED = DateTime.Now,
-                         LASTCHANGE = DateTime.Now,
-                         PRICEGROUPNO = 1
-                     };
-                     db.promotionrules.Add(tblPro);
-
-                     db.SaveChanges();*/
-
-                }
-                return RedirectToAction("Index");
             }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+          
 
             return View(promotion);
         }

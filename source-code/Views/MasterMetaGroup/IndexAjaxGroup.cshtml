@@ -3,12 +3,12 @@
     <thead>
         <tr>
 
-
+            <th id="cb" class="manage_column column_check"><input id="cb_select_all" type="checkbox"></th>
             <th scope="col" id="CATEGORYCODE" class="manage_column column_name">Group Code</th>
             <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Group Name</th>
             <th scope="col" id="LASTCHANGE" class="manage_column column_description">Meta Group</th>
        
-      
+            <th scope="col" id="STATUS" class="manage_column column_description">Status</th>
             <th scope="col" class="manage_column column_number"></th>
 
         </tr>
@@ -17,6 +17,7 @@
       @foreach (var item in Model)
       {
         <tr>
+            <td id="" class="manage_column column_check item_check"><input value="@item.tblGroup.GROUPNO" name="ids" type="checkbox"></td>
             <td>
                 @Html.DisplayFor(modelItem => item.tblGroup.GROUPCODE)
             </td>
@@ -26,7 +27,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
             </td>
-          
+            <td>
+                @if (item.tblGroup.IsActive == true)
+                {
+                    @("Active")
+                }
+                else
+                {
+                    @("Not Active")
+                }
+            </td>
             <td scope="col" class="manage_column column_action">
                 <a class="edit_action" href="@Url.Action("EditGroup", "MasterMetaGroup", new {id = item.tblGroup.GROUPNO})"><i class="fas fa-edit"></i></a>
                 <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("DeleteGroup", "MasterMetaGroup", new {id = item.tblGroup.GROUPNO})"><i class="fas fa-times"></i></a>

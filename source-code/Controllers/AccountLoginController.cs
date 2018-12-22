@@ -100,7 +100,10 @@ namespace WebApplication1.Controllers
             user.display = model.display;
             user.username = model.username;
             user.password = model.password;
-            user.status = model.status;
+            user.discount = model.discount;
+            user.type = model.type;
+           
+
             user.updatedate = DateTime.Now;
             db.SaveChanges();
             return RedirectToAction("Index");
