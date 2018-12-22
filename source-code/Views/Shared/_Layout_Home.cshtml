@@ -3,16 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @RenderSection("share_fb", false)
+
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @{
         WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
         veebdbEntities data = new veebdbEntities();
         var slider = data.sliders.Where(m => m.Status == 1);
-        var setting = data.settings.Where(x => x.typeId == 3).ToList();
+        var setting = data.settings.ToList();
+        var seo = data.seos.FirstOrDefault(x=>x.type==1);
     }
-
+    @if (seo!=null)
+    {
+        @Html.Raw(seo.metatag)
+      
+        @Html.Raw(seo.googleanalys)
+    }
 </head>
 <body>
     <div class="navbar navbar-inverse" style="background-color: #171717">
@@ -20,35 +29,34 @@
             <div class="navbar-header">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
-                        <a href="@Url.Action("Index", "Home")"><img src="~/Content/head/logo.png" width="100%" style="padding: 33px 0px;" /></a>
+                        <a href="@Url.Action("Index", "Home")"><img alt="Janere" src="~/Content/head/logo.png" width="100%" style="padding: 33px 0px;" /></a>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-12">
                         <div class="row" style="text-align: center; padding: 8px 0px;">
                             <div class="col-lg-7 col-md-7  col-sm-6 col-xs-12">
-                                <a href="tel:+372 658 0300"> <img src="~/Content/head/contact-phone.png" /><span style="color: #8a8a8a; ">p:+372 658 0300</span></a>
-                                <a href="mailto:janere@janere.ee"> <img src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">&nbsp; e:janere@janere.ee</span></a>
+                                <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: #8a8a8a; ">p:+372 658 0300</span></a>
+                                <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">&nbsp; e:janere@janere.ee</span></a>
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 <div class="translation-links">
                                     <ul class="top_link">
                                         <li>
-                                            <a href="#" class="enlgish" data-lang="0"><img src="~/Content/languages/english.png" /></a>
+                                            <a href="#" class="enlgish" data-lang="0"><img alt="Janere" src="~/Content/languages/english.png" /></a>
                                             <ul class="sub_language">
-                                                <li>
-                                                    <a href="#" class="estonian" data-lang="1">
-                                                        <img src="~/Content/languages/estonia.png" />
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="polish" data-lang="2">
-                                                        <img src="~/Content/languages/polan.png" />
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="russian" data-lang="3">
-                                                        <img src="~/Content/languages/russian.png" />
-                                                    </a>
-                                                </li>
+                                                @foreach (var lang in setting.Where(x => x.typeId == "language").OrderBy(x=>x.order).ToList())
+                                                {
+                                                    <li>
+                                                        <a href="#" class="estonian" data-lang="@lang.id">
+                                                            <div class="row">
+                                                                <div class="col-xs-12"><img alt="Janere" style="float: left" src="@lang.urlimage" /><span style="float: left">@lang.name</span></div>
+                                                              
+                                                            </div>
+                                                           
+                                                        </a>
+                                                    </li>
+                                                }
+                                                
+                                               
                                             </ul>
                                         </li>
 
@@ -69,9 +77,9 @@
 
 
                                 <a href="@Url.Action("Login", "Home")">
-                                    <img src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
+                                    <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
                                 </a>
-                                <a href="@Url.Action("UpdateCart", "Home")"><img src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
+                                <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
                             </div>
                         </div>
                         <div class="head-menu">
@@ -98,10 +106,10 @@
             <div class="blink-view" id="blink" onclick="linkto(this)">
               
 
-@foreach (var slide in setting)
+@foreach (var slide in setting.Where(x=>x.typeId=="slider").OrderBy(x => x.order).ToList())
 {
     <div class="viewSlide">
-        <a href="#"><img class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
+        <a href="#"><img alt="Janere" class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
     </div>
 }
 
@@ -115,53 +123,102 @@
 
     <h2 class="heading_title navi_slider">
         <span>Master Meta Groups</span>
-        <img src="~/Content/body/others/back.png" id="mm_back" />
+        <img alt="Janere" src="~/Content/body/others/back.png" id="mm_back" />
         <input type="hidden" value="1" id="mm_cur" />
-        <img src="~/Content/body/others/next.png" id="mm_next" />
+        <img alt="Janere" src="~/Content/body/others/next.png" id="mm_next" />
     </h2>
     <div class="product_category" id="mastermeta">
 
         @{
             List<item> relatedProducts = (List<item>)Session["relatedProducts"];
         }
-        <!--<a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 2 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/2.jpg" width="100%" class="img__img" /><p class="img__description">Kruvi</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 4 })"> <div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/4.jpg" width="100%" class="img__img" /><p class="img__description">Polt</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 6 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/6.jpg" width="100%" class="img__img" /><p class="img__description">Ankur</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 7 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/7.jpg" width="100%" class="img__img" /><p class="img__description">Mutter</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 1 })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/11.jpg" width="100%" class="img__img" /><p class="img__description">Tüübel</p></div></a>
+        <!--<a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 2 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/2.jpg" width="100%" class="img__img" /><p class="img__description">Kruvi</p></div></a>
+        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 4 })"> <div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/4.jpg" width="100%" class="img__img" /><p class="img__description">Polt</p></div></a>
+        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 6 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/6.jpg" width="100%" class="img__img" /><p class="img__description">Ankur</p></div></a>
+        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 7 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/7.jpg" width="100%" class="img__img" /><p class="img__description">Mutter</p></div></a>
+        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 1 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/11.jpg" width="100%" class="img__img" /><p class="img__description">Tüübel</p></div></a>
             -->
     </div><!-- product_category -->
 
     <h2 class="heading_title navi_slider">
         <span>Best Sellers</span>
-        <img src="~/Content/body/others/back.png" id="bs_back" />
+        @*<img alt="Janere" src="~/Content/body/others/back.png" id="bs_back" />
         <input type="hidden" value="1" id="bs_cur" />
-        <img src="~/Content/body/others/next.png" id="bs_next" />
+        <img alt="Janere" src="~/Content/body/others/next.png" id="bs_next" />*@
     </h2>
+   
+    <div class="container body-content owl-carousel" style="clear:both;margin-top:20px;">
+        @{
+            var product = data.items.Where(m => m.IsBestSeller == true).ToList();
+            Session["BestSellerProducts"] = product;
+
+            foreach (var item in product)
+            {
 
 
-    <div class="container body-content" style="clear:both;margin-top:20px;" id="bestseller">
-        @*@{
-                Html.RenderAction("BestSeller", "Home",);
-            }*@
+
+                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 0px;">
+                    <a href="@Url.Action("Product", "Home", new {Code = item.ARTCODE})">
+                        <div class="row home-bestseller" style="color: #666666; height: 350px;">
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 10px;">
+                                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + item.PICTURENAME)))
+                                    {
+                                    <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width: 100%;">
+                                    }
+                                    else
+                                    {
+                                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;" />
+
+                                    }
+                                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4; font-weight: bold; height: 60px;">
+                                    @item.ARTNAME
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
+                                <!-- $@item.WEBPRICE-->
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold;">Width:</span> @item.WIDTH
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold; color: #666666;">Height:</span> @item.HEIGHT
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+                                <span style="font-weight: bold; color: #666666;">ArtCode:</span>@item.ARTCODE
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            }
+
+        }
+
+
+    </div>
+
+
+   
+    @*<div class="container body-content" style="clear:both;margin-top:20px;" id="bestseller">
+       
         @RenderBody()
         <hr />
 
-    </div>
+    </div>*@
     <div class="footer_top">
         <div class="container">
             <footer>
                 <div class="row" style="padding: 10px 0px; text-align: center;">
                     <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
                     <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding:10px 0px;">
-                        <a href="tel:+372 658 0300"> <img src="~/Content/head/contact-phone.png" /><span style="color: white; ">+372 658 0300</span></a>
+                        <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: white; ">+372 658 0300</span></a>
 
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding: 10px 0px;">
-                        <a href="mailto:janere@janere.ee"> <img src="~/Content/head/contact-email.png" /><span style="color: white; ">janere@janere.ee</span></a>
+                        <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" /><span style="color: white; ">janere@janere.ee</span></a>
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="https://www.facebook.com/janere.ee"><img src="~/Content/foot/facebook.png" /></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="skype:oujanere?chat"><img src="~/Content/foot/skype.png" /></a></div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="https://www.facebook.com/janere.ee"><img alt="Janere" src="~/Content/foot/facebook.png" /></a></div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="skype:oujanere?chat"><img alt="Janere" src="~/Content/foot/skype.png" /></a></div>
                     <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
                 </div>
             </footer>
@@ -171,25 +228,54 @@
         <div class="container">
             <footer>
                 <ul style="font-size:20px;">
-                    <li>© OÜ Janere</li>
-                    <li>Reg. no. 10001584</li>
-                    <li>Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</li>
+                    <li><span class="txtFooter">© OÜ Janere</span> </li>
+                    <li><span class="txtFooter">Reg. no. 10001584</span> </li>
+                    <li><span class="txtFooter">Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</span> </li>
                 </ul>
             </footer>
         </div>
     </div>
-
+<style>
+    .txtFooter {
+        font-size: 14px!important;
+    }
+</style>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/myscript")
-    @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/bootstrap")
+        <link href="~/Content/Carousel/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/Content/Carousel/owl.carousel.min.css" rel="stylesheet" />
     @RenderSection("scripts", required: false)
     <link rel="stylesheet" href="~/Content/blink.css">
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>-->
-    <script src="~/Content/jquery.blink.js"></script>
-    <script type="text/javascript">
+<script src="~/Content/jquery.blink.js"></script>
+    <script src="~/Content/Carousel/owl.carousel.js"></script>
+
+
+<script type="text/javascript">
         $(document).ready(function () {
             $("#blink").blink();
+        });
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                600: {
+                    items: 3,
+                    nav: false
+                },
+                1000: {
+                    items: 4,
+                    nav: true,
+                    loop: false
+                }
+            }
         });
     </script>
 </body>

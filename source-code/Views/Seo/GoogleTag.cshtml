@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "GoogleTag";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+<h2>Google Tag</h2>
+
+@model seo
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <div id="main_content" class="col-sm-12">
+
+            <div class="product_content">
+                @using (Html.BeginForm("GoogleTag", "Seo", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
+                {
+
+                    <input type="hidden" name="id" value="@Model.id"/>
+                    <input type="hidden" name="description" value="@Model.description"/>
+                    <input type="hidden" name="type" value="1"/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Code</label>
+                                @Html.TextAreaFor(x => x.googleanalys, new { @class = "form-control" })
+                              
+
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Tags</label>
+                                @Html.TextAreaFor(x => x.metatag, new { @class = "form-control" })
+
+
+                            </div>
+
+
+                           
+
+                        </div>
+                       
+                    </div>
+
+                    <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
+                   
+                }
+
+            </div><!-- product_content -->
+
+        </div><!-- main_content -->
+
+
+    </div>
+</div>
+<script>
+
+    $("#submitbutton").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        if ($('#validation-form').valid()) {
+            $('#validation-form')[0].submit();
+        }
+
+
+    });
+</script>
+

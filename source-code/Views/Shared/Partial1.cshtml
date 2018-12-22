@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-lg-12" style="margin:30px 0px;">
-        <img src="~/Content/body/samples/aaa.jpg" style="width:100%" />
+        <img alt="Janere" src="~/Content/body/samples/aaa.jpg" style="width:100%" />
 
         <span style="font-size: 36px; color: white; position: absolute; top: 15px; left: 30px;font-weight:bold;">@ViewBag.CategoryName</span>
     </div>
@@ -14,7 +14,7 @@
         <div class="col-lg-6" style="margin:5px 0px;font-weight:bold;">
             <a href="@Url.Action("Download", "File", new { Id = item.Id })">
                 <span>
-                    <img src="~/Content/foot/pdf.png" />
+                    <img alt="Janere" src="~/Content/foot/pdf.png" />
                 </span>@Html.DisplayFor(modelItem => item.Title)
             </a>
         </div>

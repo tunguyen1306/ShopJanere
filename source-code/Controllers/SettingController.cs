@@ -26,10 +26,15 @@ namespace WebApplication1.Controllers
         }
         public ActionResult IndexAjax(int start = 0, int view = 10, int type = 0)
         {
-            var listsetting = db.settings.Join(db.settingtypes, st => st.typeId, stt => stt.id, (st, stt) => new AllModel { tblSetting = st, tblSettingType = stt }).ToList();
+            var listsetting = db.settings.Join(db.settingtypes, st => st.typeId, stt => stt.name, (st, stt) => new AllModel { tblSetting = st, tblSettingType = stt }).ToList();
             if (type != 0)
             {
-                listsetting = listsetting.Where(x => x.tblSetting.typeId == type).ToList();
+                var typeText = db.settingtypes.FirstOrDefault(x => x.id == type);
+                if (typeText!=null)
+                {
+                    listsetting = listsetting.Where(x => x.tblSetting.typeId == typeText.name).ToList();
+                }
+               
             }
             ViewBag.Start = start;
             ViewBag.View = view;
@@ -62,6 +67,7 @@ namespace WebApplication1.Controllers
             var listMetagrup = db.metagrups.ToList();
             // listMetagrup.Insert(0,new metagrup {METAGROUPNO = 0,METAGROUPNAME = "Select"});
             ViewBag.ListGroup = listMetagrup;
+            
             return View(new setting());
         }
 
@@ -115,6 +121,7 @@ namespace WebApplication1.Controllers
             setting setting = db.settings.Find(id);
             if (setting == null)
             {
+                
                 return HttpNotFound();
             }
             return View(setting);

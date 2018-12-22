@@ -19,7 +19,7 @@
     </div>
 
     <div class="col-lg-12">
-        <img src="~/Content/body/catalogue/category.png" style="width:100%" />
+        <img alt="Janere" src="~/Content/body/catalogue/category.png" style="width:100%" />
         <span style="font-size: 36px; color: white; position: absolute; top: 15px; left: 30px;font-weight:bold;">@ViewBag.CategoryName</span>
     </div>
     <div></div>
@@ -206,8 +206,8 @@
             
                         }
                         <div style="width:20px;float:right;">
-                            <a href="#" onclick="bulkitemup(@i)"><img src="~/Content/cart_plus.png" style="margin-top:-9px" /></a>
-                            <a href="#" onclick="bulkitemdown(@i)"><img src="~/Content/cart_minus.png" style="margin-top:-24px" /></a>
+                            <a href="#" onclick="bulkitemup(@i)"><img alt="Janere" src="~/Content/cart_plus.png" style="margin-top:-9px" /></a>
+                            <a href="#" onclick="bulkitemdown(@i)"><img alt="Janere" src="~/Content/cart_minus.png" style="margin-top:-24px" /></a>
 </div>
                         
                         <input type="text" name="qty[]" id="@i" value="100" style="width: 44px;height:25px;text-align:center;background-color:white;color:black;" />
@@ -224,18 +224,18 @@
 
                 <div class="col-lg-1" style="padding: 0px;">
                     <div class="col-lg-1" style="width: 100%; padding: 10px 13px;text-align:right;">
-                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @item.ARTCODE.ToString() })"><img src="~/Content/cart_delete.png" /></a>
-                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @item.ARTCODE.ToString() })"><img src="~/Content/cart_edit.png" /></a>
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @item.ARTCODE.ToString() })"><img alt="Janere" src="~/Content/cart_delete.png" /></a>
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @item.ARTCODE.ToString() })"><img alt="Janere" src="~/Content/cart_edit.png" /></a>
                     </div>
                 </div>
                 <div class="product_hover_info">
                     @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @item.PICTURENAME)))
                     {
-                        <img src="~/Content/ProductImage/@item.PICTURENAME" style="width:100%">
+                        <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width:100%">
                     }
                     else
                     {
-                        <img src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+                        <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
                     }
                     <h3>@item.ARTNAME</h3>
                     <span class="product_hover_info_price">$@item.WEBPRICE</span>

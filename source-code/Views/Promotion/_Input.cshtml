@@ -115,7 +115,7 @@
                                     // Render thumbnail.
                                     var span = document.createElement('span');
                                     span.innerHTML = [
-                                        '<img class="thumb" src="', e.target.result,
+                                        '<img alt="Janere" class="thumb" src="', e.target.result,
                                         '" title="', escape(theFile.name), '"/>'
                                     ].join('');
                                     document.getElementById('list').insertBefore(span, null);
@@ -143,7 +143,7 @@
                             <span style="position: relative">
                                 <input type="hidden" name="urlimage" id="hdImage" value="@Model.urlimage" />
                                 <i class="delete_action fa fa-times" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
-                                <img class="thumb" src="@Model.urlimage" title="">
+                                <img alt="Janere" class="thumb" src="@Model.urlimage" title="">
                             </span>
                         }
 

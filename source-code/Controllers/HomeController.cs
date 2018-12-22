@@ -19,10 +19,10 @@ namespace WebApplication1.Controllers
                 IntForGuest();
             }
         
-            List<item> relatedProducts = data.items.Take(100).ToList();
-            List<item> BestSellerProducts = data.items.Where(m=>m.IsBestSeller==true).Take(4).ToList();
-            Session["relatedProducts"] = relatedProducts;
-            Session["BestSellerProducts"] = BestSellerProducts;
+            //List<item> relatedProducts = data.items.Take(100).ToList();
+            //List<item> BestSellerProducts = data.items.Where(m=>m.IsBestSeller==true).Take(4).ToList();
+            //Session["relatedProducts"] = relatedProducts;
+            //Session["BestSellerProducts"] = BestSellerProducts;
             return View();
         }
         public ActionResult BestSeller(int index)
@@ -74,6 +74,9 @@ namespace WebApplication1.Controllers
             {
                 Session["BestSellerProducts"] = null;
             }
+          
+
+
             return View();
         }
         public ActionResult MasterMetaGroup(int index)

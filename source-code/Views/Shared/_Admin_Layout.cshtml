@@ -47,7 +47,7 @@
             <div class="header_wrapper">
                 <div class="container">
                     <a class="adminlogo" href="./">
-                        <img src="~/Content/admin/logo_icon/logo.png" />
+                        <img alt="Janere" src="~/Content/admin/logo_icon/logo.png" />
                     </a>
                     <ul class="header_link">
                         <li><a href="#"><i class="fas fa-user"></i> Admin</a></li>
@@ -101,6 +101,14 @@
                                 <li><a href="@Url.Action("Create", "AccountLogin")">Add New</a></li>
                                 <li><a href="@Url.Action("Index", "AccountLogin")">All User</a></li>
                                 <li><a href="#">Your Profile</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Seo <i class="fas fa-sort-up"></i></a>
+                            <ul>
+                                <li><a href="@Url.Action("SeoTag", "Seo")">Seo Tags</a></li>
+                                <li><a href="@Url.Action("GoogleTag", "Seo")">Google Tags</a></li>
+
                             </ul>
                         </li>
                         @*<li>

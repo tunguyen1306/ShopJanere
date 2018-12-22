@@ -97,8 +97,8 @@ else
                     <div class="col-lg-1" style="width: 100%; padding: 10px 15px; height: 44px;">
                         <div style="width:20px;float:right;">
                             <a href="#" onclick="bulkitemup(@i)">
-                                <img src="~/Content/cart_plus.png" style="margin-top:-9px" /></a>
-                            <a href="#" onclick="bulkitemdown(@i)"><img src="~/Content/cart_minus.png" style="margin-top:-24px" /></a>
+                                <img alt="Janere" src="~/Content/cart_plus.png" style="margin-top:-9px" /></a>
+                            <a href="#" onclick="bulkitemdown(@i)"><img alt="Janere" src="~/Content/cart_minus.png" style="margin-top:-24px" /></a>
 </div>
                         <input type="text" name="qty[@i]" id="@i" value="@cartItem.Qty" style="width: 44px;height:25px;text-align:center;background-color:white;color:black;" />
                         
@@ -114,8 +114,8 @@ else
                 
                 <div class="col-lg-1" style="padding: 0px;">
                     <div class="col-lg-1" style="width: 100%; padding: 10px 15px;text-align:right;">
-                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img src="~/Content/cart_delete.png" /></a>
-                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img src="~/Content/cart_edit.png" /></a>
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img alt="Janere" src="~/Content/cart_delete.png" /></a>
+                        <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img alt="Janere" src="~/Content/cart_edit.png" /></a>
                     </div>
                 </div>
             </div>

@@ -58,7 +58,7 @@
                                     // Render thumbnail.
                                     var span = document.createElement('span');
                                     span.innerHTML = [
-                                        '<img class="thumb" src="', e.target.result,
+                                        '<img alt="Janere" class="thumb" src="', e.target.result,
                                         '" title="', escape(theFile.name), '"/>'
                                     ].join('');
                                     document.getElementById('list').insertBefore(span, null);
@@ -91,13 +91,13 @@
                                 { 
                                     <i class="delete_action fa fa-times" rel="@Model.METAGROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
 
-                                    <img class="thumb" src="~/Content/MetagroupImage/@image">
+                                    <img alt="Janere" class="thumb" src="~/Content/MetagroupImage/@image">
 
                                 }
                                 else
                                 {
 
-                                    <img class="thumb" src="~/Content/ProductImage/notavailable.jpg"  />
+                                    <img alt="Janere" class="thumb" src="~/Content/ProductImage/notavailable.jpg"  />
 
                                 }
                             </span>

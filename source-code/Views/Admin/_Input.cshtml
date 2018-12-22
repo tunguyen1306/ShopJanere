@@ -103,7 +103,7 @@
                             var span = document.createElement('div');
                             span.setAttribute("class", "col-sm-2 cusDiv");
                             span.innerHTML = [
-                                '  <a class="delete_action btnDeleteImg" rel="0"><i class="fas fa-times"></i></a><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/> '
+                                '  <a class="delete_action btnDeleteImg" rel="0"><i class="fas fa-times"></i></a><img alt="Janere" class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/> '
                             ].join('');
                             
                             document.getElementById('list').insertBefore(span, null);
@@ -137,7 +137,7 @@
 
                         <div class="col-sm-2 cusDiv">
                             <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
-                            <img class="thumb" src="@("/Content/ProductImage/"+item.LINK)" title="@item.LINK">
+                            <img alt="Janere" class="thumb" src="@("/Content/ProductImage/"+item.LINK)" title="@item.LINK">
                         </div>
                     }
                 }

@@ -3,12 +3,18 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label>setting Name</label>
+            <label>Code</label>
 
-            @Html.TextBoxFor(x => x.name, new {@class = "form-control"})
+            @Html.TextBoxFor(x => x.code, new { @class = "form-control" })
 
         </div>
-       
+        <div class="form-group">
+            <label>setting Name</label>
+
+            @Html.TextBoxFor(x => x.name, new { @class = "form-control" })
+
+        </div>
+
 
 
         <div class="form-group">
@@ -26,15 +32,26 @@
             <label>Type</label>
 
 
-            @Html.DropDownListFor(x=>x.typeId, new SelectList(((List<WebApplication1.settingtype>)ViewBag.ListTypeSetting), "id", "name"),"Type", new { @class = "form-control select2" })
+            @Html.DropDownListFor(x => x.typeId, new SelectList(((List<WebApplication1.settingtype>)ViewBag.ListTypeSetting), "code", "name"), "Type", new { @class = "form-control select2" })
 
 
+        </div>
+
+        <div class="divSelectGroup hidden">
+            <div class="form-group">
+                <label>Group</label>
+
+
+                @Html.DropDownListFor(x => x.IdGroup, new SelectList(((List<WebApplication1.metagrup>)ViewBag.ListGroup), "METAGROUPNO", "METAGROUPNAME"), "Meta Group", new { @class = "form-control select2" })
+
+
+            </div>
         </div>
         <div class="form-group">
             <label>Link</label>
 
 
-            @Html.TextBoxFor(x => x.link, new {@class = "form-control"})
+            @Html.TextBoxFor(x => x.link, new { @class = "form-control" })
         </div>
 
 
@@ -59,7 +76,7 @@
                 new SelectListItem {Text = "8", Value = "8"},
                 new SelectListItem {Text = "9", Value = "9"},
                 new SelectListItem {Text = "10", Value = "10"},
-            }, new {@class = "form-control select2"})
+            }, new { @class = "form-control select2" })
 
 
 
@@ -86,38 +103,38 @@
 
                 <input type="file" class="form-control" id="files" name="files" multiple accept="image/*" />
                 <script>
-                            function handleFileSelect(evt) {
-                                var files = evt.target.files; // FileList object
+                    function handleFileSelect(evt) {
+                        var files = evt.target.files; // FileList object
 
-                                // Loop through the FileList and render image files as thumbnails.
-                                for (var i = 0, f; f = files[i]; i++) {
+                        // Loop through the FileList and render image files as thumbnails.
+                        for (var i = 0, f; f = files[i]; i++) {
 
-                                    // Only process image files.
-                                    if (!f.type.match('image.*')) {
-                                        continue;
-                                    }
-
-                                    var reader = new FileReader();
-
-                                    // Closure to capture the file information.
-                                    reader.onload = (function (theFile) {
-                                        return function (e) {
-                                            // Render thumbnail.
-                                            var span = document.createElement('span');
-                                            span.innerHTML = [
-                                                '<img class="thumb" src="', e.target.result,
-                                                '" title="', escape(theFile.name), '"/>'
-                                            ].join('');
-                                            document.getElementById('list').insertBefore(span, null);
-                                        };
-                                    })(f);
-
-                                    // Read in the image file as a data URL.
-                                    reader.readAsDataURL(f);
-                                }
+                            // Only process image files.
+                            if (!f.type.match('image.*')) {
+                                continue;
                             }
 
-                            document.getElementById('files').addEventListener('change', handleFileSelect, false);
+                            var reader = new FileReader();
+
+                            // Closure to capture the file information.
+                            reader.onload = (function (theFile) {
+                                return function (e) {
+                                    // Render thumbnail.
+                                    var span = document.createElement('span');
+                                    span.innerHTML = [
+                                        '<img alt="Janere" class="thumb" src="', e.target.result,
+                                        '" title="', escape(theFile.name), '"/>'
+                                    ].join('');
+                                    document.getElementById('list').insertBefore(span, null);
+                                };
+                            })(f);
+
+                            // Read in the image file as a data URL.
+                            reader.readAsDataURL(f);
+                        }
+                    }
+
+                    document.getElementById('files').addEventListener('change', handleFileSelect, false);
                 </script>
 
             </div>
@@ -133,7 +150,7 @@
                             <span style="position: relative">
                                 <input type="hidden" name="urlimage" id="hdImage" value="@Model.urlimage" />
                                 <i class="delete_action fa fa-times" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
-                                <img class="thumb" src="@Model.urlimage" title="">
+                                <img alt="Janere" class="thumb" src="@Model.urlimage" title="">
                             </span>
                         }
 
@@ -162,94 +179,115 @@
 </div>
 
 
-@Html.HiddenFor(x=>x.id)
+@Html.HiddenFor(x => x.id)
 
 <script>
+    var id = '@Model.typeId';
+   
+    if (id === "banner") {
+        $('.divSelectGroup').removeClass('hidden');
+    } else {
+        $('.divSelectGroup').addClass('hidden');
+    }
+
+
+    $('#typeId').on('change', function() {
+        var id = $(this).val();
+        console.log(id);
+        if (id === "banner") {
+            $('.divSelectGroup').removeClass('hidden');
+        } else {
+            $('.divSelectGroup').addClass('hidden');
+        }
+
+    });
+
+
     $(".delete_action").on('click', function (e) {
-        var rs = confirm('Bạn muốn xóa hình này?');
+        var rs = confirm('Do you want to remove this image ?');
         if (rs == true) {
             $(this).parents('div').eq(0).remove();
         }
-        
+
 
     });
-        $('#validation-form').validate({
-            errorElement: 'div',
-            errorClass: 'help-block',
-            focusInvalid: false,
-            ignore: "",
-            rules: {
-                name: {
-                    required: true
-                },
-                typeId: {
-                    required: true
-                }
-
-
+    $('#validation-form').validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+            name: {
+                required: true
             },
-
-            messages: {
-                name: "setting Name do not empty",
-                typeId: "Select type"
-
-
-            },
-
-
-            highlight: function (e) {
-
-                if ($(e).is('.file-upload')) {
-                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
-                } else {
-                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-                }
-
-
-            },
-
-            success: function (e) {
-                if ($(e).is('.file-upload')) {
-                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
-                    $(e).parents('div').eq(1).find('.form-group .help-block').remove();
-                }
-                else {
-                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-                    $(e).closest('.form-group').find('.help-block').remove();
-                }
-
-            },
-
-            errorPlacement: function (error, element) {
-
-                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-                    var controls = element.closest('div[class*="col-"]');
-                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
-                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-                }
-                else if (element.is('.select2') || element.is('.js-select2-1')) {
-                    if (element.parents('div').eq(0).is('.input-group')) {
-                        error.insertAfter(element.parents('div').eq(0));
-                    } else {
-                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-                    }
-
-
-                }
-                else if (element.is('.file-upload')) {
-                    error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
-                }
-                else if (element.is('.chosen-select')) {
-                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-                }
-                else error.insertAfter(element);
-            },
-
-            submitHandler: function (form) {
-            },
-            invalidHandler: function (form) {
+            typeId: {
+                required: true
             }
-        });
+
+
+        },
+
+        messages: {
+            name: "setting Name do not empty",
+            typeId: "Select type"
+
+
+        },
+
+
+        highlight: function (e) {
+
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+            } else {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            }
+
+
+        },
+
+        success: function (e) {
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+            }
+            else {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).closest('.form-group').find('.help-block').remove();
+            }
+
+        },
+
+        errorPlacement: function (error, element) {
+
+            if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                var controls = element.closest('div[class*="col-"]');
+                if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+            }
+            else if (element.is('.select2') || element.is('.js-select2-1')) {
+                if (element.parents('div').eq(0).is('.input-group')) {
+                    error.insertAfter(element.parents('div').eq(0));
+                } else {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+
+
+            }
+            else if (element.is('.file-upload')) {
+                error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+            }
+            else if (element.is('.chosen-select')) {
+                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+            }
+            else error.insertAfter(element);
+        },
+
+        submitHandler: function (form) {
+        },
+        invalidHandler: function (form) {
+        }
+    });
 
 
 </script>
