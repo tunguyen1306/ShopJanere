@@ -1,11 +1,32 @@
-﻿<!DOCTYPE html>
+﻿@using System.Configuration
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @RenderSection("share_fb", false)
+    @{
+        var metaTitel = ViewBag.MetaTitle;
+        var metaDescription = ViewBag.MetaDescription;
+        var metaLink = ViewBag.Link;
+        var metaKeyword = ViewBag.Keyword;
+    }
 
+    <title>@ViewBag.MetaTitle</title>
+    <meta property="og:title" content="@ViewBag.MetaTitle" />
+
+    <meta property="og:url" content='@ViewBag.Link' />
+    <meta name="description" content="@ViewBag.MetaDescription">
+    <meta property="og:description" content="@ViewBag.MetaDescription" />
+    <meta name="keywords" content="@ViewBag.Keyword" />
+    <meta property="og:image" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg" />
+    <meta property="og:image:url" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg" />
+    <meta property="og:type" content="website" />
+
+    <meta property="og:image:alt" content="@ViewBag.MetaTitle" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="315" />
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")

@@ -14,6 +14,20 @@ namespace WebApplication1.Controllers
         veebdbEntities data = new veebdbEntities();
         public ActionResult Index()
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "home");
+            if (seo!=null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
+
             if (Session["LoggedAccount"] == null)
             {
                 IntForGuest();
@@ -135,6 +149,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Product(string Code="")
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "product");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             var result = data.items.Where(m => m.ARTCODE == Code).FirstOrDefault();
             if (result != null)
             {
@@ -161,6 +188,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult BulkProducts(FormCollection FormCollection, int? Page_No, int? Page_Size,int categoryid=0)
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "bulkproducts");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             var result = data.items.ToList();
             var testdata = FormCollection["ddlPosition"];
             int defaSize = 20;
@@ -251,7 +291,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Login(string message = "", string returnUrl = "")
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
 
+            var seo = data.seos.FirstOrDefault(x => x.page == "login");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             if (string.IsNullOrEmpty(returnUrl) && Request.UrlReferrer != null)
                 returnUrl = Server.UrlEncode(Request.Url.ToString());
                 ViewBag.ReturnURL = returnUrl;
@@ -301,6 +353,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Signup()
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "signup");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             return View();
         }
         public ActionResult SaveSignup(user user)
@@ -328,6 +393,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult EditInfo(int? id)
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "editinfo");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             user user = data.users.Find(id);
             var userInfo = data.userdatas.Where(m => m.userid == id).FirstOrDefault();
             return View(userInfo);
@@ -363,31 +441,70 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Stores()
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "stores");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             var restult = data.stores;
             return View(restult);
         }
         public ActionResult Warehouses()
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "warehouses");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             var restult = data.warehouses;
             return View(restult);
         }
         public ActionResult Products(FormCollection FormCollection, int? Page_No, int? Page_Size, int groupno = 0)
         {
-           /* int i = 0;
-            int name = 1;
-            foreach (var item in data.items)
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "home");
+            if (seo != null)
             {
-                
-                item.PICTURENAME = name + ".jpg";
-                if (name % 14 == 0)
-                    name = 1;
-                name++;
-                i++;
-                if (i == 1000)
-                    break;
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
             }
-            data.SaveChanges();
-            */
+            /* int i = 0;
+             int name = 1;
+             foreach (var item in data.items)
+             {
+
+                 item.PICTURENAME = name + ".jpg";
+                 if (name % 14 == 0)
+                     name = 1;
+                 name++;
+                 i++;
+                 if (i == 1000)
+                     break;
+             }
+             data.SaveChanges();
+             */
             var result = data.items.ToList();
             //result[0].
             var testdata = FormCollection["ddlPosition"];
@@ -484,15 +601,54 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Download()
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "download");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             return View(data.files.Where(m => m.Status == "Active").ToList());
         }
 
         public ActionResult Store()
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "store");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             return View();
         }
         public ActionResult UpdateCart(string[] chkbox, int[] qty, string[] code, float[] price,int? Page_No,int? Page_Size)
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "updatecart");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             /*if (chkbox == null && code == null && price == null && Session["ShoppingCart"]==null)
             {
                 if (chkbox == null)
@@ -678,6 +834,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult About()
         {
+            ViewBag.MetaTitle = "Home";
+            ViewBag.MetaDescription = "Home - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "about");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             ViewBag.Message = "Your application description page.";
 
             return View();
@@ -685,6 +854,19 @@ namespace WebApplication1.Controllers
 
         public ActionResult Contact()
         {
+            ViewBag.MetaTitle = "Contact";
+            ViewBag.MetaDescription = "Contact - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "contact");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             ViewBag.Message = "Your contact page.";
 
             return View();
@@ -712,12 +894,38 @@ namespace WebApplication1.Controllers
         }
         public ActionResult MasterGroup()
         {
+            ViewBag.MetaTitle = "Contact";
+            ViewBag.MetaDescription = "Contact - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "mastergroup");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             List<metagrup> obj = new List<metagrup>();
             obj = data.metagrups.Where(m=>m.PARENTNO==0).ToList();
             return View(obj);
         }
         public ActionResult MetaGroup(int masterGroupID)
         {
+            ViewBag.MetaTitle = "Contact";
+            ViewBag.MetaDescription = "Contact - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "metagroup");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             List<metagrup> obj = new List<metagrup>();
             obj = data.metagrups.Where(m => m.PARENTNO == masterGroupID && m.IsActive==true).ToList();
             Session["MasterGroup"] = data.metagrups.Where(m => m.METAGROUPNO == masterGroupID).FirstOrDefault().METAGROUPNAME;
@@ -746,6 +954,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Catalogue(int metagroupId)
         {
+            ViewBag.MetaTitle = "Contact";
+            ViewBag.MetaDescription = "Contact - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "home");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             List<catalogue> obj = new List<catalogue>();
             obj = data.catalogues.Where(m => m.MetaGroupId == metagroupId).ToList();
             Session["Catalogue"] = data.metagrups.Where(m => m.METAGROUPNO == metagroupId).FirstOrDefault().METAGROUPNAME;
@@ -767,6 +988,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Category(int CatId)
         {
+            ViewBag.MetaTitle = "Contact";
+            ViewBag.MetaDescription = "Contact - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "category");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             List<category> obj = new List<category>();
             obj = data.categories.Where(m => m.CatalogueCode == CatId).ToList();
             return View(obj);
@@ -781,6 +1015,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult CreateCatalogue()
         {
+            ViewBag.MetaTitle = "Contact";
+            ViewBag.MetaDescription = "Contact - janere";
+            ViewBag.Link = "http://shop.janere.ee/";
+            ViewBag.Keyword = "janere";
+
+            var seo = data.seos.FirstOrDefault(x => x.page == "createcatalogue");
+            if (seo != null)
+            {
+                ViewBag.MetaTitle = seo.title;
+                ViewBag.MetaDescription = seo.description;
+                ViewBag.Link = seo.link;
+                ViewBag.Keyword = seo.keyword;
+            }
             return View();
         }
         public ActionResult GetItem()

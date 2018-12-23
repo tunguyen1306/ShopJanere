@@ -24,20 +24,49 @@
                 @using (Html.BeginForm("SeoTag", "Seo", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
                 {
 
-                    <input type="hidden" name="id" value="@Model.id" />
-                    <input type="hidden" name="description" value="@Model.description" />
-                    <input type="hidden" name="type" value="2" />
+                    <input type="hidden" name="id" id="hdId" value="@Model.id" />
+                    <input type="hidden" name="type" value="2"/>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Code</label>
-                                @Html.TextAreaFor(x => x.googleanalys, new { @class = "form-control" })
+                                <label>Order</label>
+
+                                @Html.DropDownListFor(c => c.page, new List<SelectListItem>
+            {
+                
+                new SelectListItem {Text = "Home", Value = "home"},
+                new SelectListItem {Text = "Product", Value = "product"},
+                new SelectListItem {Text = "Download", Value = "dowload"},
+                new SelectListItem {Text = "store", Value = "store"}
+            }, new { @class = "form-control select2" })
 
 
                             </div>
                             <div class="form-group">
-                                <label>Meta Tags</label>
-                                @Html.TextAreaFor(x => x.metatag, new { @class = "form-control" })
+                                <label>Title</label>
+
+                                @Html.TextBoxFor(x => x.title, new {@class = "form-control"})
+
+                            </div>
+                            <div class="form-group">
+                                <label>Link</label>
+
+                                @Html.TextBoxFor(x => x.link, new { @class = "form-control" ,@id= "txtLink" })
+
+                            </div>
+                            <div class="form-group">
+                                <label>Keyword</label>
+
+                                @Html.TextBoxFor(x => x.keyword, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Meta Description</label>
+                                @Html.TextAreaFor(x => x.description, new { @class = "form-control" })
 
 
                             </div>
@@ -61,7 +90,27 @@
     </div>
 </div>
 <script>
+    $('#page').on('change', function () {
+        var page = $(this).val();
 
+        $.get('@Url.Action("GetSeoTag", "Seo")?page=' + page, function (data) {
+            console.log(data);
+            if (data.result != "" || data.result!=null) {
+                $('#title').val(data.result.title);
+                $('#hdId').val(data.result.id);
+                $('#description').val(data.result.description);
+                $('#txtLink').val(data.result.link);
+                $('#keyword').val(data.result.keyword);
+            } else {
+                $('#title').val('');
+                $('#description').val('');
+                $('#txtLink').val('');
+                $('#keyword').val('');
+            }
+          
+
+        });
+    });
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
         debugger;

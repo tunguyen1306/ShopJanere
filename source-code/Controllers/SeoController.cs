@@ -41,6 +41,10 @@ namespace WebApplication1.Controllers
                 se.description = model.description;
                 se.metatag = model.metatag;
                 se.type = model.type;
+                se.page = model.page;
+                se.link = model.link;
+                se.keyword = model.keyword;
+                se.title = model.title;
                 db.Entry(se).State=EntityState.Modified;
                 db.SaveChanges();
             }
@@ -51,9 +55,9 @@ namespace WebApplication1.Controllers
             }
             return View(model);
         }
-        public ActionResult SeoTag(int idPage)
+        public ActionResult SeoTag(string page)
         {
-            var seo = db.seos.FirstOrDefault(x => x.type == 2);
+            var seo = db.seos.FirstOrDefault(x => x.type == 2 && x.page== page);
             if (seo != null)
             {
                 return View(seo);
@@ -65,12 +69,31 @@ namespace WebApplication1.Controllers
 
 
         }
+        public JsonResult GetSeoTag(string page)
+        {
+            var seo = db.seos.FirstOrDefault(x => x.type == 2 && x.page == page);
+            if (seo != null)
+            {
+                return Json(new { result = seo },JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { result= "" }, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult SeoTag(seo model)
         {
             if (model.id != 0)
             {
                 var se = db.seos.Find(model.id);
+                se.googleanalys = model.googleanalys;
+                se.description = model.description;
+                se.metatag = model.metatag;
+                se.type = model.type;
+                se.page = model.page;
+                se.link = model.link;
+                se.keyword = model.keyword;
+                se.title = model.title;
+                se.title = model.title;
                 db.Entry(se).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -80,6 +103,7 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
             }
             return View(model);
+           
         }
 
     }
