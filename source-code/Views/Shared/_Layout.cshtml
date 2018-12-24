@@ -2,12 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-   @* @if (Session["accountlogin"] == null)
-    {
-        string currentUrl = Request.Url.ToString();
-        Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
-    }*@
-    <meta charset="utf-8" />
+
+
+  
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @{
         var metaTitel = ViewBag.MetaTitle;
@@ -17,22 +15,32 @@
     }
 
     <title>@ViewBag.MetaTitle</title>
-    <meta property="og:title" content="@ViewBag.MetaTitle" />
+    <meta property="og:title" content="@ViewBag.MetaTitle"/>
 
-    <meta property="og:url" content='@ViewBag.Link' />
+    <meta property="og:url" content='@ViewBag.Link'/>
     <meta name="description" content="@ViewBag.MetaDescription">
-    <meta property="og:description" content="@ViewBag.MetaDescription" />
-    <meta name="keywords" content="@ViewBag.Keyword" />
-    <meta property="og:image" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg" />
-    <meta property="og:image:url" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg" />
-    <meta property="og:type" content="website" />
+    <meta property="og:description" content="@ViewBag.MetaDescription"/>
+    <meta name="keywords" content="@ViewBag.Keyword"/>
+    <meta property="og:image" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg"/>
+    <meta property="og:image:url" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg"/>
+    <meta property="og:type" content="website"/>
 
-    <meta property="og:image:alt" content="@ViewBag.MetaTitle" />
-    <meta property="og:image:width" content="600" />
-    <meta property="og:image:height" content="315" />
-    @{
-        WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
-    }
+    <meta property="og:image:alt" content="@ViewBag.MetaTitle"/>
+    <meta property="og:image:width" content="600"/>
+    <meta property="og:image:height" content="315"/>
+  @{
+      WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+      veebdbEntities data = new veebdbEntities();
+      var slider = data.sliders.Where(m => m.Status == 1);
+      var setting = data.settings.ToList();
+      var seo = data.seos.FirstOrDefault(x => x.type == 1);
+}
+@if (seo != null)
+{
+    @Html.Raw(seo.metatag)
+
+    @Html.Raw(seo.googleanalys)
+}
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -61,21 +69,18 @@
                                         <li>
                                             <a href="#" class="enlgish" data-lang="0"><img alt="Janere" src="~/Content/languages/english.png" /></a>
                                             <ul class="sub_language">
-                                                <li>
-                                                    <a href="#" class="estonian" data-lang="1">
-                                                        <img alt="Janere" src="~/Content/languages/estonia.png" />
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="polish" data-lang="2">
-                                                        <img alt="Janere" src="~/Content/languages/polan.png" />
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="russian" data-lang="3">
-                                                        <img alt="Janere" src="~/Content/languages/russian.png" />
-                                                    </a>
-                                                </li>
+                                                @foreach (var lang in setting.Where(x => x.typeId == "language").OrderBy(x => x.order).ToList())
+                                                {
+                                                    <li>
+                                                        <a href="#" class="estonian" data-lang="@lang.id">
+                                                            <div class="row">
+                                                                <div class="col-xs-12"><img alt="Janere" style="float: left" src="@lang.urlimage" /><span style="float: left">@lang.name</span></div>
+
+                                                            </div>
+
+                                                        </a>
+                                                    </li>
+                                                }
                                             </ul>
                                         </li>
 
@@ -211,15 +216,19 @@
         <div class="container">
             <footer>
                 <ul style="font-size:20px;">
-                    <li>© OÜ Janere</li>
-                    <li>Reg. no. 10001584</li>
-                    <li>Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</li>
+                    <li><span class="txtFooter">© OÜ Janere</span> </li>
+                    <li><span class="txtFooter">Reg. no. 10001584</span> </li>
+                    <li><span class="txtFooter">Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</span> </li>
                 </ul>
             </footer>
         </div>
     </div>
 
-
+    <style>
+        .txtFooter {
+            font-size: 14px !important;
+        }
+    </style>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/myscript")
     @Scripts.Render("~/bundles/bootstrap")

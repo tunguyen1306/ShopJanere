@@ -1,20 +1,26 @@
 ﻿@model IEnumerable<WebApplication1.file>
-
+@{
+    veebdbEntities db = new veebdbEntities();
+    var setting = db.settings.Where(x => x.status == 1).OrderBy(x => x.order);
+}
 <div class="row">
-    <div class="col-lg-12" style="margin:30px 0px;">
-        <img alt="Janere" src="~/Content/body/samples/aaa.jpg" style="width:100%" />
+    <div class="col-lg-12" style="margin: 30px 0px;">
+        @{
+            var settingBannerBot = setting.FirstOrDefault(x => x.typeId == "bannerbottom");
+        }
+        <img src="@(settingBannerBot!=null ? settingBannerBot.urlimage : "")" style="width: 100%" />
 
-        <span style="font-size: 36px; color: white; position: absolute; top: 15px; left: 30px;font-weight:bold;">@ViewBag.CategoryName</span>
+        <span style="font-size: 36px; color: white; position: absolute; top: 15px; left: 30px; font-weight: bold;">@ViewBag.CategoryName</span>
     </div>
     <div class="col-lg-12" style="text-align: center; font-size: 22px; color: #235d91; font-family: OpenSansExtraBold;margin-bottom:15px;">
         INFORMATIONAL MATERIAL
-    </div> 
+    </div>
     @foreach (var item in Model)
     {
         <div class="col-lg-6" style="margin:5px 0px;font-weight:bold;">
             <a href="@Url.Action("Download", "File", new { Id = item.Id })">
                 <span>
-                    <img alt="Janere" src="~/Content/foot/pdf.png" />
+                    <img src="~/Content/foot/pdf.png" />
                 </span>@Html.DisplayFor(modelItem => item.Title)
             </a>
         </div>

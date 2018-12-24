@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
                 var typeText = db.settingtypes.FirstOrDefault(x => x.id == type);
                 if (typeText!=null)
                 {
-                    listsetting = listsetting.Where(x => x.tblSetting.typeId == typeText.name).ToList();
+                    listsetting = listsetting.Where(x => x.tblSetting.typeId == typeText.code).ToList();
                 }
                
             }
