@@ -64,7 +64,7 @@
         if (!$(el).hasClass('disable')) {
             var page = $(el).attr('data-page');
             var view = $('#dropPage').val();
-            var start = (page - 1) * view;
+            var start = (parseInt(page) - 1) * view;
             var type = $('#filter_setting').val();
             $.get('@Url.Action("IndexAjax", "Setting")?start=' + start + '&view=' + view + '&type=' + type, function (data) {
                 $('#setting-result').html(data);

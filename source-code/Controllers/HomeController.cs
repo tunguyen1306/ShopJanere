@@ -149,22 +149,24 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Product(string Code="")
         {
-            ViewBag.MetaTitle = "Home";
-            ViewBag.MetaDescription = "Home - janere";
-            ViewBag.Link = "http://shop.janere.ee/";
-            ViewBag.Keyword = "janere";
-
-            var seo = data.seos.FirstOrDefault(x => x.page == "product");
-            if (seo != null)
-            {
-                ViewBag.MetaTitle = seo.title;
-                ViewBag.MetaDescription = seo.description;
-                ViewBag.Link = seo.link;
-                ViewBag.Keyword = seo.keyword;
-            }
+           
             var result = data.items.Where(m => m.ARTCODE == Code).FirstOrDefault();
             if (result != null)
             {
+
+                ViewBag.MetaTitle = result.ARTNAME;
+                ViewBag.MetaDescription = result.ARTNAME;
+                ViewBag.Link = "http://shop.janere.ee/Home/Product?Code="+ result.ARTNO;
+                ViewBag.Keyword = result.ARTNAME;
+
+                //var seo = data.seos.FirstOrDefault(x => x.page == "product");
+                //if (seo != null)
+                //{
+                //    ViewBag.MetaTitle = seo.title;
+                //    ViewBag.MetaDescription = seo.description;
+                //    ViewBag.Link = seo.link;
+                //    ViewBag.Keyword = seo.keyword;
+                //}
                 if (string.IsNullOrEmpty(result.WEBPRICE.ToString()))
                 {
                     result.WEBPRICE = 0;
@@ -446,7 +448,7 @@ namespace WebApplication1.Controllers
             ViewBag.Link = "http://shop.janere.ee/";
             ViewBag.Keyword = "janere";
 
-            var seo = data.seos.FirstOrDefault(x => x.page == "stores");
+            var seo = data.seos.FirstOrDefault(x => x.page == "store");
             if (seo != null)
             {
                 ViewBag.MetaTitle = seo.title;
@@ -894,8 +896,8 @@ namespace WebApplication1.Controllers
         }
         public ActionResult MasterGroup()
         {
-            ViewBag.MetaTitle = "Contact";
-            ViewBag.MetaDescription = "Contact - janere";
+            ViewBag.MetaTitle = "MasterGroup";
+            ViewBag.MetaDescription = "MasterGroup - janere";
             ViewBag.Link = "http://shop.janere.ee/";
             ViewBag.Keyword = "janere";
 
