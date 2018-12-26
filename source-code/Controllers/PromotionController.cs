@@ -88,15 +88,15 @@ namespace WebApplication1.Controllers
                             }
                         }
                     }
-                    var proId = db.promotions.OrderByDescending(x => x.PROMOTIONNO).FirstOrDefault();
-                    if (proId != null)
-                    {
-                        promotion.PROMOTIONNO = proId.PROMOTIONNO + 1;
-                    }
-                    else
-                    {
-                        promotion.PROMOTIONNO = 1;
-                    }
+                    //var proId = db.promotions.OrderByDescending(x => x.PROMOTIONNO).FirstOrDefault();
+                    //if (proId != null)
+                    //{
+                    //    promotion.PROMOTIONNO = proId.PROMOTIONNO + 1;
+                    //}
+                    //else
+                    //{
+                    //    promotion.PROMOTIONNO = 1;
+                    //}
 
                     promotion.TYPEUSERS = String.Join(",", usertypes);
                     promotion.CREATED = DateTime.Now;

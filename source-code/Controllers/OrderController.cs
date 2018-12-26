@@ -122,15 +122,7 @@ namespace WebApplication1.Controllers
             try
             {
 
-                //var proId = db.orders.OrderByDescending(x => x.ocid).FirstOrDefault();
-                //if (proId==null)
-                //{
-                //    order.ocid = 1;
-                //}
-                //else
-                //{
-                //    order.ocid = proId.ocid + 1;
-                //}
+              
                 order.submitDate = DateTime.Now;
                 db.orders.Add(order);
                 db.SaveChanges();

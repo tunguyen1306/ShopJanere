@@ -2,18 +2,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-   @* @if (Session["accountlogin"] == null)
-    {
-        string currentUrl = Request.Url.ToString();
-        Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
-    }*@
     @{
-        WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+        var user = new WebApplication1.Models.AllLoggedUserInfo();
+    }
+    @{
+      if (Session["LoggedAccount"] != null)
+      {
+          WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+          user = userFullInfo;
+          if (userFullInfo.role.RoleName != "super_admin")
+          {
+              string currentUrl = Request.Url.ToString();
+              Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
+          }
+
+      }
+      else
+      {
+          string currentUrl = Request.Url.ToString();
+          Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
+      }
         veebdbEntities data = new veebdbEntities();
         var slider = data.sliders.Where(m => m.Status == 1);
         var setting = data.settings.ToList();
         var seo = data.seos.FirstOrDefault(x => x.type == 1);
-         }
+    }
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @RenderSection("share_fb", false)
@@ -94,7 +107,7 @@
                                     }
                                 </script>
                                 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                                <span style="color: white;"> Hi , @Html.ActionLink(userFullInfo.user.display, "EditInfo", new { id = userFullInfo.user.Id })  </span>  
+                                <span style="color: white;"> Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id = user.user.Id })  </span>  
                                 <!--<img alt="Janere" src="~/Content/head/language.png" />-->
                                 <a href="@Url.Action("Login", "Home")">
                                     <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />

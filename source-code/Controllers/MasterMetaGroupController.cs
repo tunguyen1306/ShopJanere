@@ -455,8 +455,10 @@ namespace WebApplication1.Controllers
                         }
                     }
                 }
+                metagrup.CREATED = DateTime.Now;
                 metagrup.LASTCHANGE = DateTime.Now;
-                metagrup.LASTCHANGE = DateTime.Now;
+                metagrup.EXPORTABLE ="T";
+                
                 db.Entry(metagrup).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("IndexGroup");

@@ -23,33 +23,26 @@
 
         <div class="col-lg-3">
             <div class="col-lg-12">
-                <img alt="Janere" src="~/Content/store/store.jpg" width="100%" />
+               
+
+                @if (!string.IsNullOrEmpty(item.UrlImage))
+                {
+                    <img alt="Janere" src="@item.UrlImage" width="100%" />
+
+                }
+                else
+                {
+
+                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" width="100%"  />
+
+                }
             </div>
             <div class="col-lg-12" style="text-align: center; font-size: 16px; color: #235d91;font-weight:bold;padding:15px 0px;">
                 @Html.DisplayFor(modelItem => item.Name)
             </div>
-            <div class="col-lg-12" style="font-size:14px;">
-                <p>Puidu 17a</p>
-                <p>
-                    71020 VILJANDI
-                </p>
-                <p>
-                    Telephone: +372 436 6057
-                </p>
-                <p>
-                    Fax: +372 436 6058
-                </p>
-                <p>
-                    E-mail: viljandi(at)janere.ee
-                </p>
-                <br />
-                <p>
-                    The Store is Open:
-                </p>
-                <p>
-                    Mon-Fri 8:00 – 18:00
-                </p>
-                <p>Sat-Sun Closed</p>
+            <div class="col-lg-12" style="font-size: 14px;">
+                @Html.Raw(item.Description)
+                
             </div>
             </div>
     }

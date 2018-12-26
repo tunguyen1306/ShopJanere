@@ -24,9 +24,9 @@
            
 
             <td scope="col" class="manage_column column_action">
-                <a class="edit_action" href="@Url.Action("Edit Login", "AccountLogin", new {id = item.Id})"><i class="fas fa-edit"></i></a>
-                <a class="edit_action" href="@Url.Action("Edit Role", "AccountLogin", new {id = item.Id})"><i class="fas fa-edit"></i></a>
-                <a class="edit_action" href="@Url.Action("Edit Info", "AccountLogin", new {id = item.Id})"><i class="fas fa-edit"></i></a>                
+                <a class="edit_action" href="@Url.Action("EditUser", "AccountLogin", new {id = item.Id})">Edit User</a>
+                <a class="edit_action" href="@Url.Action("EditRole", "AccountLogin", new {id = item.Id})">Edit Role</a>
+                <a class="edit_action" href="@Url.Action("EditInfo", "AccountLogin", new {id = item.Id})">Edit Info</a>                
                 <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "AccountLogin", new {id = item.Id})"><i class="fas fa-times"></i></a>
 
 

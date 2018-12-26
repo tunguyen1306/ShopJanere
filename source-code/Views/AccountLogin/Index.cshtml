@@ -1,50 +1,95 @@
-﻿@model IEnumerable<WebApplication1.user>
+﻿
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>User List</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.display)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.password)
-        </th>
 
-        <th></th>
-    </tr>
+<h1>USER</h1>
+<div class="page_action">
+    <a href="@Url.Action("CreateUser","AccountLogin")">Add New</a>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.display)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.password)
-        </td>
+</div>
 
-        <td>
-            @Html.ActionLink("Edit Login", "EditLogin", new { id = item.Id }) |
-            @Html.ActionLink("Edit Role", "EditRole", new { id = item.Id }) |
-            @Html.ActionLink("Edit Profile", "EditInfo", new { id = item.Id })
-           
-    @*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
-        </td>
-    </tr>
+
+<div class="row wrap_filter">
+    <div class="col-sm-4">
+        <label>Action</label>
+        <select class="bulk_action filter" name="bulk_action">
+            <option value="trash">Move to trash</option>
+        </select>
+        <input type="submit" id="do_bulk_action" class="button btn-sm" value="Go">
+    </div>
+    <div class="col-sm-4 right">
+
+    </div>
+    <div class="col-sm-4 right">
+        <input type="text" name="search_order" id="txtsearch_orders" class="form-control">
+
+    </div>
+</div><!-- wrap_filter -->
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "user-result",
+    OnBegin = "usersearchOnBegin",
+    OnSuccess = "usersearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="user-btsubmit">Tìm</button>
 }
+<div id="user-result">
+    @{
+        Html.RenderAction("IndexAjax", "AccountLogin");
+    }
 
-</table>
+
+</div>
+<script>
+
+
+    $('#do_bulk_action').on('click', function () {
+        updateStatus();
+    });
+
+    function updateStatus() {
+        var _value = $('.bulk_action filter').val();
+        var _count = $(".item_check input:checked").length;
+        var _items = new Array();
+        $(".item_check input:checked").each(function () {
+            _items.push(this.value);
+        });
+        if (_count > 0) {
+            $.post('@Url.Action("UpdateStatus", "AccountLogin")', { status: _value, ids: _items }, function (data) {
+
+                if (data.status == 'true' || data.status == true) {
+                    onPageChange($('#user-result').find('a[data-page="1"]'));
+                } else {
+                    alert(data.msg);
+                }
+
+            });
+        } else {
+            alert("Select item in list");
+        }
+    }
+    //#region tdg form
+
+    function user_seacrch() {
+        $('#user-btsubmit').click();
+    }
+    user_seacrch();
+    function usersearchOnBegin() {
+
+    }
+
+    function usersearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

@@ -191,13 +191,12 @@ namespace WebApplication1.Controllers
             try
             {
 
-                var proId = db.items.OrderByDescending(x => x.ARTNO).FirstOrDefault();
+               
                 item.ARTTYPE = 1;
                 item.EXPORTABLE = "";
                 item.ARTCODE = string.IsNullOrEmpty(item.ARTCODE) ? Guid.NewGuid().ToString().Substring(0, 6).ToUpper() : item.ARTCODE;
                 item.CREATED = DateTime.Now;
                 item.LASTCHANGE = DateTime.Now;
-                item.ARTNO = proId.ARTNO + 1;
                 db.items.Add(item);
                 db.SaveChanges();
                 for (int i = 0; i < inputfile.Length; i++)

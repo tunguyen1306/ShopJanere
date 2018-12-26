@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -56,10 +57,26 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
        
-        public ActionResult Create( store store)
+        public ActionResult Create( store store, HttpPostedFileBase[] inputfile)
         {
             if (ModelState.IsValid)
             {
+                if (inputfile != null)
+                {
+                    for (int i = 0; i < inputfile.Length; i++)
+                    {
+                        if (inputfile[i] != null)
+                        {
+
+                            string path = "";
+                            path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                            inputfile[i].SaveAs(path);
+                            store.UrlImage = "/Content/ProductImage/" + inputfile[i].FileName;
+
+
+                        }
+                    }
+                }
                 db.stores.Add(store);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -88,11 +105,26 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Edit( store store)
+        public ActionResult Edit( store store, HttpPostedFileBase[] inputfile)
         {
             if (ModelState.IsValid)
             {
-             
+                if (inputfile != null)
+                {
+                    for (int i = 0; i < inputfile.Length; i++)
+                    {
+                        if (inputfile[i] != null)
+                        {
+
+                            string path = "";
+                            path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                            inputfile[i].SaveAs(path);
+                            store.UrlImage = "/Content/ProductImage/" + inputfile[i].FileName;
+
+
+                        }
+                    }
+                }
                 db.Entry(store).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

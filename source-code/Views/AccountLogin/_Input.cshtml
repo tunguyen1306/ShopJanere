@@ -1,18 +1,26 @@
 ﻿@model WebApplication1.user
 <div class="row">
     <div class="col-sm-6">
+       
         <div class="form-group">
             <label>user Name</label>
 
-            @Html.TextBoxFor(x => x.username, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.username, new {@class = "form-control"})
 
         </div>
         <div class="form-group">
             <label>Password</label>
 
-            <input type="password" name="txtPass" class="form-control" id="txtPass" />
+            <input type="password" name="txtPass" class="form-control" id="txtPass"/>
         </div>
+        <div class="form-group">
+            <label>Status</label>
 
+
+            @Html.DropDownListFor(c => c.status, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+
+
+        </div>
 
     </div>
     <div class="col-sm-6">
@@ -27,7 +35,47 @@
 
             @Html.TextBoxFor(x => x.password, new { @class = "form-control" })
         </div>
+        @if (ViewBag.Role == 5)
+        {
+            <div class="form-group">
+                <label>User Type :</label>
+              
+                    @Html.DropDownListFor(c => c.type, new List<SelectListItem> {
+                   new SelectListItem { Text = "None", Value = "1" },
+                   new SelectListItem { Text = "Basic", Value = "2" },
+                   new SelectListItem { Text = "Vip", Value = "3" },
+                   new SelectListItem { Text = "Primeum", Value = "4"} }, new { @class = "form-control" })
 
+               
+            </div>
+            <div class="form-group" style="display:none">
+                <label>Discount :</label>
+               
+                    @Html.TextBoxFor(model => model.discount, new { @type = "number", @class = "form-control", @min = "0", @max = "100" })
+                    @Html.ValidationMessageFor(model => model.discount)
+           
+            </div>
+            <div class="form-group">
+                <label>Total Paid Order :</label>
+               
+                    @Html.TextBoxFor(model => model.paidorder, new { @type = "number", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.paidorder)
+                
+            </div>
+            <script type="text/javascript">
+                if (document.getElementById('type').value == "1") {
+                    document.getElementById('discount').setAttribute("readonly", "readonly");
+                    document.getElementById('discount').value = "0";
+                }
+                document.getElementById('type').onchange = function () {
+                    if (document.getElementById('type').value == "1") {
+                        document.getElementById('discount').setAttribute("readonly", "readonly");
+                        document.getElementById('discount').value = "0";
+                    } else
+                        document.getElementById('discount').removeAttribute("readonly");
+                }
+            </script>
+        }
     </div>
 </div>
 
@@ -64,12 +112,10 @@
             username: "User Name do not empty",
             display: "Display Name do not empty",
             txtPass: "Password do not empty",
-            password: "Password Confirm do not empty",
+            password: "Password Confirm do not empty"
 
 
         },
-
-
         highlight: function (e) {
 
             if ($(e).is('.file-upload')) {
