@@ -12,6 +12,7 @@ namespace WebApplication1
                         "~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/myscript").Include(
                         "~/Scripts/myscript.js",
+                        "~/Scripts/jquery.cookies.js",
                         "~/Scripts/facebox.js"));
            // bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
             //            "~/Scripts/myscript.js"));

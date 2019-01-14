@@ -20,75 +20,7 @@
         <div></div>
     </div>
 
-    <input type="hidden" id="vddlPosition" value="@Session["ddlPosition"]" />
-    <input type="hidden" id="vddlGetGroup" value="@Session["ddlGetGroup"]" />
-    <input type="hidden" id="vddlGetCategory" value="@Session["ddlGetCategory"]" />
-    <div style="padding: 10px; background-color: #ececec;">
-        <div class="row" style="padding: 0px 15px;">
-            <div class="col-lg-3  search">
-                <select id="ddlPosition" name="ddlPosition" style="width:100%">
-                    @if (Session["ddlPosition"] == null || Session["ddlPosition"].ToString() == "0")
-                    {
-                        <option value="0" selected>ESC</option>
-                        <option value="1">DESC</option>
-                    }
-                    else
-                    {
-                        <option value="0">ESC</option>
-                        <option value="1" selected>DESC</option>
-                    }
-                </select>
-            </div>
-            <div class="col-lg-9 search">
-                <input type="text" id="AllKey" name="AllKey" value="@Session["allkey"]" style=" width:100%" />
-                <input type="submit" value="" style=" width: 25px; position: absolute; top: 2px; right: 3px; border: none;background-image:url(../Content/search-icon.png)" />
-
-            </div>
-        </div>
-        <div class="row" style="margin-top: 2px; padding: 0px 15px;">
-            <div class="col-lg-3 search">
-                <select id="ddlGetGroup" name="ddlGetGroup" style="width:100%"></select>
-            </div>
-            <div class="col-lg-3 search">
-                <select id="ddlGetCategory" name="ddlGetCategory" style="width:100%"></select>
-            </div>
-            <div class="col-lg-3 search">
-                <select id="ddlGetItem" name="ddlGetItem" style="width:100%">
-                    <option value="0">Select Item - not yet</option>
-                </select>
-            </div>
-
-            <div class="col-lg-3 search">
-                <select id="ddlLength" name="ddlLength" style="width:100%">
-                    <option value="0">Select Length - not yet</option>
-                </select>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 2px; padding: 0px 15px;">
-
-
-            <div class="col-lg-3 search">
-                <select id="ddlGetDINCode" name="ddlGetDINCode" style="width:100%">
-                    <option value="0">Select Dincode - not yet</option>
-                </select>
-            </div>
-            <div class="col-lg-3 search">
-                <select id="ddlGetDimension" name="ddlGetDimension" style="width:100%">
-                    <option value="0">Select Dimemsion - not yet</option>
-                </select>
-            </div>
-            <div class="col-lg-3 search">
-                <select id="ddlGetInterFace" name="ddlGetInterFace" style="width:100%">
-                    <option value="0">Select Interface - not yet</option>
-                </select>
-            </div>
-            <div class="col-lg-3 search">
-                <select id="ddlGetMaterial" name="ddlGetMaterial" style="width:100%">
-                    <option value="0">Select Material - not yet</option>
-                </select>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("Partial/_pSearch")
 }
 <div class="row" style="margin-top: 10px;padding: 0px 15px;">
     @foreach (var item in Model)
