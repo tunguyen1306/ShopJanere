@@ -1,4 +1,5 @@
 ﻿@using System.Configuration
+@using WebApplication1.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +32,28 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @{
-        WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+
         veebdbEntities data = new veebdbEntities();
+        var user = new AllLoggedUserInfo();
+
+
+
+        if (Session["LoggedAccount"] == null)
+        {
+            var tem = data.users.FirstOrDefault(m => m.Id == 7);
+            if (tem != null)
+            {
+                Session["LoggedAccount"] = null;
+                AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+                Session["LoggedAccount"] = userFullInfo;
+                user = userFullInfo;
+            }
+        }
+        else
+        {
+            user = (AllLoggedUserInfo)Session["LoggedAccount"];
+        }
+
         var slider = data.sliders.Where(m => m.Status == 1);
         var setting = data.settings.ToList();
         var seo = data.seos.FirstOrDefault(x=>x.type==1);
@@ -59,48 +80,16 @@
                                 <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">&nbsp; e:janere@janere.ee</span></a>
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
-                                <div class="translation-links">
-                                    <ul class="top_link">
-                                        <li>
-                                            <a href="#" class="enlgish" data-lang="0"><img alt="Janere" src="~/Content/languages/english.png" /></a>
-                                            <ul class="sub_language">
-                                                @foreach (var lang in setting.Where(x => x.typeId == "language").OrderBy(x=>x.order).ToList())
-                                                {
-                                                    <li>
-                                                        <a href="#" class="estonian" data-lang="@lang.id">
-                                                            <div class="row">
-                                                                <div class="col-xs-12"><img alt="Janere" style="float: left" src="@lang.urlimage" /><span style="float: left">@lang.name</span></div>
-                                                              
-                                                            </div>
-                                                           
-                                                        </a>
-                                                    </li>
-                                                }
-                                                
-                                               
-                                            </ul>
-                                        </li>
-
-
-
-                                    </ul>
-                                </div>
-                                <div id="google_translate_element" style="width: 50%;float: left;display:none"></div>
-                                <script type="text/javascript">
-                                    function googleTranslateElementInit() {
-                                        new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,et,pl,ru', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
-                                    }
-                                </script>
-                                <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                                @Html.Partial("Partial/_pLanguage")
+                             
+                                <span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>  
 
                                 
-                                <span style="color: white;"> Hi , @Html.ActionLink(userFullInfo.user.display, "EditInfo", new { id = userFullInfo.user.Id })  </span>  
-
-
                                 <a href="@Url.Action("Login", "Home")">
                                     <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
                                 </a>
                                 <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
+                                
                             </div>
                         </div>
                         <div class="head-menu">
@@ -153,12 +142,7 @@
         @{
             List<item> relatedProducts = (List<item>)Session["relatedProducts"];
         }
-        <!--<a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 2 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/2.jpg" width="100%" class="img__img" /><p class="img__description">Kruvi</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 4 })"> <div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/4.jpg" width="100%" class="img__img" /><p class="img__description">Polt</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 6 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/6.jpg" width="100%" class="img__img" /><p class="img__description">Ankur</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 7 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/7.jpg" width="100%" class="img__img" /><p class="img__description">Mutter</p></div></a>
-        <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = 1 })"><div class="img__wrap" style="float:left;width:20%"><img alt="Janere" src="~/Content/MetagroupImage/11.jpg" width="100%" class="img__img" /><p class="img__description">Tüübel</p></div></a>
-            -->
+      
     </div><!-- product_category -->
 
     <h2 class="heading_title navi_slider">
@@ -220,47 +204,9 @@
 
 
    
-    @*<div class="container body-content" style="clear:both;margin-top:20px;" id="bestseller">
-       
-        @RenderBody()
-        <hr />
+   @Html.Partial("Partial/_pFooter")
 
-    </div>*@
-    <div class="footer_top">
-        <div class="container">
-            <footer>
-                <div class="row" style="padding: 10px 0px; text-align: center;">
-                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
-                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding:10px 0px;">
-                        <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: white; ">+372 658 0300</span></a>
 
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding: 10px 0px;">
-                        <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" /><span style="color: white; ">janere@janere.ee</span></a>
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="https://www.facebook.com/janere.ee"><img alt="Janere" src="~/Content/foot/facebook.png" /></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="skype:oujanere?chat"><img alt="Janere" src="~/Content/foot/skype.png" /></a></div>
-                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
-                </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer_bottom">
-        <div class="container">
-            <footer>
-                <ul style="font-size:20px;">
-                    <li><span class="txtFooter">© OÜ Janere</span> </li>
-                    <li><span class="txtFooter">Reg. no. 10001584</span> </li>
-                    <li><span class="txtFooter">Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</span> </li>
-                </ul>
-            </footer>
-        </div>
-    </div>
-<style>
-    .txtFooter {
-        font-size: 14px!important;
-    }
-</style>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/myscript")
         @Scripts.Render("~/bundles/bootstrap")

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication1.country>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>country</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","country")">Add New</a>
+   
+</div>
+
+
+
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "country-result",
+    OnBegin = "countriesearchOnBegin",
+    OnSuccess = "countriesearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="country-btsubmit">Search</button>
+}
+<div id="country-result">
+    @{
+        Html.RenderAction("IndexAjax", "country");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function country_seacrch() {
+        $('#country-btsubmit').click();
+    }
+    country_seacrch();
+    function countriesearchOnBegin() {
+
+    }
+
+    function countriesearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

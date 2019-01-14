@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebApplication1.city>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>city</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","city")">Add New</a>
+   
+</div>
+
+ <div class="row wrap_filter" style="margin-top: 10px;">
+    <div class="col-sm-4">
+        
+    </div>
+    <div class="col-sm-8 right">
+        <label>Filter</label>
+
+        @Html.DropDownList("filter_city", new SelectList(((List<WebApplication1.country>)ViewBag.ListTypecity), "id", "name"), new { @class = "filter" })
+       
+        @*<input type="button" id="do_filter_action" onclick="" class="button btn-sm" value="Go">*@
+    </div>
+</div><!-- wrap_filter -->
+
+
+@using (Ajax.BeginForm("IndexAjax", new {type = ViewBag.Type }, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "city-result",
+    OnBegin = "citysearchOnBegin",
+    OnSuccess = "citysearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="city-btsubmit">Search</button>
+}
+<div id="city-result">
+    @{
+        Html.RenderAction("IndexAjax", "City");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function city_seacrch() {
+        $('#city-btsubmit').click();
+    }
+    city_seacrch();
+    function citysearchOnBegin() {
+
+    }
+
+    function citysearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

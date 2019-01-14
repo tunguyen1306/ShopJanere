@@ -40,7 +40,9 @@
                                         }
                                     }
                                 </select>
-                                @Html.HiddenFor(model => model.userid)
+                            
+                                <input type="hidden" name="id" value="@Model.Id"/>
+                                <input type="hidden" name="userid" value="@Model.userid"/>
                             </div>
                            
                         

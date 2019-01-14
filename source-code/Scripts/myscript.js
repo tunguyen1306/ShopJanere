@@ -10,21 +10,21 @@ $(document).one('ready', function () {
     GetInterFace();
     */
     // InitSearchValue();
-    $('.translation-links a').click(function () {
+    //$('.translation-links a').click(function () {
         
-        var lang = $(this).data('lang');
-        //alert(lang);
-        var $frame = $('.goog-te-menu-frame:first');
+    //    var lang = $(this).data('lang');
+    //    //alert(lang);
+    //    var $frame = $('.goog-te-menu-frame:first');
         
-        if (!$frame.size()>0) {
+    //    if (!$frame.size()>0) {
             
-            alert("Error: Could not find Google translate frame.");
-            return false;
-        }
-        $frame.contents().find('.goog-te-menu2-item div span.text').get(lang).click();
-        //$frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(1).click();
-        return false;
-    });
+    //        alert("Error: Could not find Google translate frame.");
+    //        return false;
+    //    }
+    //    $frame.contents().find('.goog-te-menu2-item div span.text').get(lang).click();
+    //    //$frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(1).click();
+    //    return false;
+    //});
 });
 function showpopup(code,name,picture,price)
 {
@@ -474,4 +474,79 @@ $('.mobile_menu').click(function(){
 // table in mobile
 if($(window).width()<480){
     $('table').wrap('<div class="wrap_table"></div>')
+}
+
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+$(document).on('click', '.btn-language', function () {
+    var lang = $(this).attr('data-language');
+    setCookie(lang, lang, 365);
+    GetLanguage(lang);
+});
+$(function () {
+    //load lan
+
+    var vi = getCookie("English");
+  
+
+    if (vi != null) {
+
+        GetLanguage(vi);
+    }
+    else {
+        setCookie("English", "English", 365);
+        GetLanguage("English");
+    }
+   
+
+
+
+
+
+});
+
+function GetLanguage(lang) {
+    var url = "/Home/GetLanguage";
+    $.ajax
+   ({
+       type: "POST",
+       url: url, //LyricsloadMore
+       data: JSON.stringify({ lan: lang }),
+       dataType: "json",
+       contentType: "application/json;charset=utf-8",
+       success: function (data) {
+           console.log(data);
+           $.each(data, function (i, o) {
+               if (o.code.lastIndexOf("ip_") != -1)
+                   $('.' + o.code).val(o.name);
+               else if (o.code.lastIndexOf("pl_") != -1)
+                   $('.' + o.code).attr("placeholder", o.name);
+               else
+                   $('.' + o.code).html(o.name);
+
+           });
+
+
+       }
+   });
 }

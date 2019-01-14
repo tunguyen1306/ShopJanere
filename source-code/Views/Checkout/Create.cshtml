@@ -1,263 +1,438 @@
-﻿@model WebApplication1.order
+﻿@using WebApplication1.Models
+@model WebApplication1.order
 
 @{
+    veebdbEntities db = new veebdbEntities();
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout _NoMenu.cshtml";
-    
+    Layout = "~/Views/Shared/_Layout_NoMenu.cshtml";
+    var cart = (ShoppingCart)ViewBag.Cart;
 }
+@*<h2>Check Out</h2>*@
+<!-- /.row -->
+@*<div class="row">
+        <div class="col-lg-12 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
 
-<h2>CHECKOUT</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true)
+                        <th scope="col" id="price" class="manage_column column_price"></th>
+                        <th scope="col" class="manage_column column_action" style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-bold">Sub Total</td>
+                        <td>$@cart.CartTotal</td>
+                    </tr>
+                    @if (cart.promotion != null)
+                    {
+                        <tr>
+                            <td class="text-bold">Promotion</td>
+                            <td>@cart.promotion.VALUEPROMOTION
+                                @if(cart.promotion.TYPENO == 0)
+                                {
+                                    @('%')
+                                }
+                                else
+                                {
+                                    @('$')
+                                }
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <h3>Contact Info</h3>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Firstname
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.fname)
-                    @Html.ValidationMessageFor(model => model.fname)
-                </div>
-            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-bold">Promotion Total</td>
+                            <td>$@cart.PromotionTotal</td>
+                        </tr>
+                    }
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Lastname
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.lname)
-                    @Html.ValidationMessageFor(model => model.lname)
-                </div>
-            </div>
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Company
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.companyname)
-                    @Html.ValidationMessageFor(model => model.companyname)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Phone
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.phone)
-                    @Html.ValidationMessageFor(model => model.phone)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Fax
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.fax)
-                    @Html.ValidationMessageFor(model => model.fax)
-                </div>
-            </div>
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Email
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.email)
-                    @Html.ValidationMessageFor(model => model.email)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Address</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.addr1)
-                    @Html.ValidationMessageFor(model => model.addr1)
-                </div>
-            </div>
+                    <tr>
+                        <td class="text-bold">Total</td>
+                        <td>$@cart.CartTotal</td>
+                    </tr>
+
+
+                </tbody>
+            </table>
 
         </div>
-        <div class="row">
-        <div class=" col-md-12">
-            <h3>Delivery Info</h3>
-        </div>
-        <div class="form-group col-md-6">
-            <div class="col-md-2">
-                Firstname</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_fname)
-                    @Html.ValidationMessageFor(model => model.d_fname)
-                </div>
-            </div>
+    </div>*@
+<div class="row">
+    <div class="col-lg-12">
 
-        <div class="form-group col-md-6">
-            <div class="col-md-2">
-                Lastname</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_lname)
-                    @Html.ValidationMessageFor(model => model.d_lname)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Company
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_companyname)
-                    @Html.ValidationMessageFor(model => model.d_companyname)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Phone</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_phone)
-                    @Html.ValidationMessageFor(model => model.d_phone)
-                </div>
-            </div>
+        <div id="main_content" class="col-sm-12 checkout_page">
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Fax</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_fax)
-                    @Html.ValidationMessageFor(model => model.d_fax)
-                </div>
-            </div>
+            <div class="product_content">
+                @using (Html.BeginForm("Create", "Checkout", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
+                {
 
-        <div class="form-group col-md-6">
-            <div class="col-md-2">Email</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_email)
-                    @Html.ValidationMessageFor(model => model.d_email)
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h3>Shipping Address</h3>
+                            <hr />
+                            <div class="form-group">
+                                <label>Email Address<span class="required"> * </span></label>
+                                @Html.TextBoxFor(x => x.email, new { @class = "form-control" })
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label>First Name<span class="required"> * </span></label>
+                                @Html.TextBoxFor(x => x.fname, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name<span class="required"> * </span></label>
+                                @Html.TextBoxFor(x => x.lname, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Phone<span class="required"> * </span></label>
+                                @Html.TextBoxFor(x => x.phone, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Company</label>
+                                @Html.TextBoxFor(x => x.companyname, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Street Address<span class="required"> * </span></label>
+                                @Html.TextBoxFor(x => x.addr1, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Address
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_addr1)
-                    @Html.ValidationMessageFor(model => model.d_addr1)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Poscode
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_postcode)
-                    @Html.ValidationMessageFor(model => model.d_postcode)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Country</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.d_country)
-                    @Html.ValidationMessageFor(model => model.d_country)
-                </div>
-            </div>
+                                @Html.TextBoxFor(x => x.addr2, new { @class = "form-control" })
+                            </div>
 
-      
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Billing Info</h3>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Firstname
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_fname)
-                    @Html.ValidationMessageFor(model => model.b_fname)
-                </div>
-            </div>
+                            <div class="form-group">
+                                <label>Contry <span class="required"> * </span></label>
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Lastname
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_lname)
-                    @Html.ValidationMessageFor(model => model.b_lname)
-                </div>
-            </div>
+                                @Html.DropDownListFor(x => x.countryid, new SelectList(((List<WebApplication1.country>)ViewBag.ListCountry), "id", "name"), "Select country", new { @class = "form-control select2" })
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Company
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_companyname)
-                    @Html.ValidationMessageFor(model => model.b_companyname)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Email</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_email)
-                    @Html.ValidationMessageFor(model => model.b_email)
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Phone</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_phone)
-                    @Html.ValidationMessageFor(model => model.b_phone)
-                </div>
-            </div>
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Fax</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_fax)
-                    @Html.ValidationMessageFor(model => model.b_fax)
-                </div>
-            </div>
+                            </div>
+                            <div class="form-group">
+                                <label>City <span class="required"> * </span></label>
+                                <select id="cityId" class="form-control select2">
+                                    <option value=''>Select city</option>
+                                </select>
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">
-                    Address
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_addr1)
-                    @Html.ValidationMessageFor(model => model.b_addr1)
-                </div>
-            </div>
 
-            <<div class="form-group col-md-6">
-                <div class="col-md-2">Postcode</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_postcode)
-                    @Html.ValidationMessageFor(model => model.b_postcode)
-                </div>
-            </div>
 
-            <div class="form-group col-md-6">
-                <div class="col-md-2">Country</div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.b_country)
-                    @Html.ValidationMessageFor(model => model.b_country)
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                &nbsp;
-                </div>
-                <div class="form-group col-md-6">
-                    <div class="col-md-offset-2 col-md-12">
-                        <input type="submit" value="Submit Order" class="btn btn-default" style="padding: 10px 15px;    background-color: #235d91;color:white;" />
+                            </div>
+                            <div class="form-group">
+                                <label>Zip/Potal Code<span class="required"> * </span></label>
+                                @Html.TextBoxFor(x => x.d_postcode, new { @class = "form-control" })
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-4">
+                            <h3>Shipping Methods</h3>
+                            <hr />
+                            <div class="form-group">
+                                <label>Delivery Date</label>
+                                @Html.TextBoxFor(x => x.d_date, new { @class = "form-control datepicker" })
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Delivery Comment </label>
+                                @Html.TextAreaFor(x => x.d_notes, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group table-responsive">
+                                <table class="table table-hover">
+                                    <tbody class="resultfeeShip"></tbody>
+                                </table>
+                            </div>
+                            <h3>Payment Methods</h3>
+                            <hr />
+                            <div class="form-group">
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        My billding and shipping address are there same
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group table-responsive">
+                                <table class="table table-hover">
+                                    <tbody>
+                                        <tr>
+
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                                    <label class="form-check-label" for="exampleRadios1">
+
+                                                        <img class="icon-payment" src="~/Content/Images/paypal-logo.png" /> Paypal (Braintree)
+                                                    </label>
+                                                </div>
+                                            </td>
+
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row" style="background-color: #f2f2f2">
+                                <div class="col-sm-12">
+                                    <h3>Order Sumary</h3>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="form-group table-responsive">
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Cart Subtotal</td>
+                                                        <td>
+                                                            @cart.CartTotal @MvcApplication.MoneySymbol
+                                                            <input type="hidden" id="totalPrice" value="@cart.CartTotal" />
+                                                            <input type="hidden" name="feeshipping" id="hdOrderTotal" />
+                                                        </td>
+
+                                                    </tr>
+                                                    @if (cart.promotion != null)
+                                                    {
+                                                        <tr>
+                                                            <td>Promotion</td>
+                                                            <td>@cart.promotion.VALUEPROMOTION @(cart.promotion.TYPENO == 1 ? MvcApplication.MoneySymbol : "%")</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Promotion Total</td>
+                                                            <td>@cart.PromotionTotal @MvcApplication.MoneySymbol</td>
+                                                        </tr>
+                                                    }
+
+                                                    <tr class="trShipping">
+                                                        <td>Shipping</td>
+                                                        <td><span class="tdShipping">0</span> @MvcApplication.MoneySymbol</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td><label>Order Total</label></td>
+                                                        <td><span class="tdOrderTotal">@cart.CartTotal</span>  @MvcApplication.MoneySymbol</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group table-responsive">
+                                                <span style="margin-left: 10px;">item in cart</span>
+
+                                                <table class="table table-hover">
+                                                    <tbody>
+
+                                                        @foreach (var item in cart.cartItem.ToList())
+                                                        {
+                                                            var tblProduct = db.items.FirstOrDefault(x => x.ARTCODE == item.Code);
+
+                                                            if (tblProduct != null)
+                                                            {
+                                                                var tblPicture = db.artlinks.FirstOrDefault(x => x.ARTNO == tblProduct.ARTNO);
+                                                                <tr>
+                                                                    <td>
+                                                                        @if (tblPicture != null)
+                                                                        {
+                                                                            <img style="width: 50px;" src="@tblPicture.LINK" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img style="width: 50px;" src="~/Content/ProductImage/notavailable.jpg" />
+                                                                        }
+
+                                                                    </td>
+                                                                    <td>
+                                                                        @tblProduct.ARTNAME <br />
+                                                                        <span>QTY:<label>@item.Qty</label></span>
+                                                                    </td>
+                                                                    <td>@item.LineTotal</td>
+                                                                </tr>
+                                                            }
+
+                                                        }
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-group">
+                                    <label>Order Comment</label>
+                                    @Html.TextAreaFor(x => x.notes, new { @class = "form-control" })
+                                </div>
+                                <hr />
+                                <div class="form-group">
+
+                                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Place Order" id="submitbutton" name="save_product">
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
                     </div>
-                </div>
-            </div>
+
+
+
+                }
+
+            </div><!-- product_content -->
+
+        </div><!-- main_content -->
+
+
     </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).on('change', '#cityId', function () {
+            GetFeeShipByCity($(this).val());
+        });
+        $(document).on('click', '.choseShipping', function () {
+
+            var totalPrice = $('#totalPrice').val();
+
+            $('#hdOrderTotal').val($(this).val());
+            $('.tdShipping').html($(this).val());
+            $('.tdOrderTotal').html(parseFloat($(this).val()) + parseFloat(totalPrice));
+           
+        });
+        $('#countryid').on('change', function () {
+            GetCity($(this).val());
+        });
+
+        function GetCity(id) {
+            $.get('@Url.Action("GetCity", "Checkout")?id=' + id, function (data) {
+                console.log(data.result);
+                var re = "<option value='0'>Select city</option>";
+                $.each(data.result, function (i, o) {
+                    re += "<option value='" + o.code + "'>" + o.name + "</option>";
+                });
+                $('#cityId').html(re);
+            });
+        }
+        function GetFeeShipByCity(id) {
+            $.get('@Url.Action("GetFeeShipByCity", "Checkout")?id=' + id, function (data) {
+
+                var re = "";
+                $.each(data.result, function (i, o) {
+                    re += " <tr><td><div class='form-check'><input class='form-check-input choseShipping' type='radio' name='ship' id='ship_" + o.id + "' value='" + o.price + "' checked><label class='form-check-label' for='ship_" + o.id + "'></label> </div></td><td>" + o.price + "</td><td>" + o.name + "</td> </tr>";
+                });
+                $('.resultfeeShip').html(re);
+                var vlShip = $('.choseShipping').val();
+                var totalPrice = $('#totalPrice').val();
+                $('#hdOrderTotal').val(vlShip);
+                $('.tdShipping').html(vlShip);
+                $('.tdOrderTotal').html(parseFloat(vlShip) + parseFloat(totalPrice));
+              
+            });
+        }
+        $("#submitbutton").on('click', function (e) {
+            e.preventDefault();
+            if ($('#validation-form').valid()) {
+                $('#validation-form')[0].submit();
+            }
+        });
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                fname: { required: true },
+                countryid: { required: true },
+                cityid: { required: true },
+                lname: { required: true },
+                phone: { required: true },
+                addr1: { required: true },
+                d_postcode: { required: true },
+                email: { email: true, required: true }
+
+
+            },
+
+            messages: {
+                fname: "First Name do not empty",
+                countryid: "Please select country",
+                cityid: "Please select city",
+                lname: "Last Name do not empty",
+                d_postcode: "Zip code do not empty",
+                phone: "Phone do not empty",
+                email: { required: "Email do not empty", email: "Please enter a valid email address." },
+                addr1: "Address do not empty"
+
+            },
+
+
+            highlight: function (e) {
+
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+                } else {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                }
+
+
+            },
+
+            success: function (e) {
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+                }
+                else {
+                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).closest('.form-group').find('.help-block').remove();
+                }
+
+            },
+
+            errorPlacement: function (error, element) {
+
+                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if (element.is('.select2') || element.is('.js-select2-1')) {
+                    if (element.parents('div').eq(0).is('.input-group')) {
+                        error.insertAfter(element.parents('div').eq(0));
+                    } else {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+
+
+                }
+                else if (element.is('.file-upload')) {
+                    error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+                }
+                else if (element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else error.insertAfter(element);
+            },
+
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+            }
+        });
+    </script>
 }

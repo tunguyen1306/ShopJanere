@@ -1,0 +1,19 @@
+﻿.checkout_page .form-control {
+    background-color: #002f6c!important;
+    color: #ffffff !important;
+    border-radius: 0px!important;
+}
+
+
+.checkout_page .required {
+   
+    color: #b94a48 !important;
+   
+}
+.text-bold {
+    font-size: 20px;
+    font-weight: bold;
+}
+.icon-payment {
+    width: 100PX;
+}

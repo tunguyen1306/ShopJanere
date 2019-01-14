@@ -1,0 +1,40 @@
+﻿@using WebApplication1.Models
+
+
+@{
+
+    veebdbEntities data = new veebdbEntities();
+    var user = new AllLoggedUserInfo();
+    if (Session["LoggedAccount"] == null)
+    {
+        string currentUrl = Request.Url.ToString();
+        Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
+    }
+    else
+    {
+        user = (AllLoggedUserInfo)Session["LoggedAccount"];
+        if (user.role.Id==7)
+        {
+            string currentUrl = Request.Url.ToString();
+            Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
+        }
+    }
+
+
+}
+<div id="left_sidebar" class="col-sm-3">
+    <h2>
+        <a href="./">Dashboard</a>
+    </h2>
+    <ul id="adminmenu">
+        <li>
+            <a href="#">Layout <i class="fas fa-sort-up"></i></a>
+            <ul style="display: block;">
+                <li><a href="@Url.Action("AccountInfo", "Account",new {id=user.user.Id})">Account Info</a></li>
+                <li><a href="@Url.Action("ChangePass", "Account",new {id=user.user.Id})">Change Password</a></li>
+                <li><a href="@Url.Action("OrderHistory", "Account",new {id=user.user.Id})">Order History</a></li>
+
+            </ul>
+        </li>
+    </ul>
+</div><!-- left_sidebar -->

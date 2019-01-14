@@ -22,6 +22,15 @@ namespace WebApplication1.Models
         public menu tblParentMenu { get; set;}
         public promotion tblPromotion { get; set;}
         public ordersetting tblOrderSetting { get; set;}
-       
+        public user tblUser { get; set;}
+        public userdata tblUserData { get; set;}
+        public country tblCountry { get; set;}
+        public city tblCity { get; set;}
+        public vocabulary[] tblVocabularyArray { get; set;}
+        public vocabulary  tblVocabulary { get; set;}
+        public List<vocabulary>   listVocabulary { get; set;}
+
+        public item[] tblProductArray { get; set; }
+
     }
 }

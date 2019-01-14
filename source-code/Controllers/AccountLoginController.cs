@@ -171,6 +171,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.user_role.Find(model.Id);
             user.roleid = model.roleid;
+           db.Entry(user).State=EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

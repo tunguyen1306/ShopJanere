@@ -7,15 +7,17 @@
 <div class="page_action">
     <a href="@Url.Action("Create","Admin")">Add New</a>
     <a href="@Url.Action("ImportExcel","Admin")">Import</a>
-    <a href="">Export</a>
+    <a href="@Url.Action("ExportExcel","Admin")">Export</a>
 </div>
 
     <ul class="sub_action">
         <li class="active"><a href="@Url.Action("Index","Admin",new {tab="all"})">All</a></li>
         <li><a href="@Url.Action("Index","Admin",new {tab="published"})">Published</a></li>
-        <li><a href="@Url.Action("Index","Admin",new {tab="trashed"})">Trashed</a></li>
+        <li>
+            <a href="@Url.Action("Index", "Admin", new {tab = "trashed"})">Trashed</a>
+        </li>
     </ul>
-    <div class="row wrap_filter">
+     <div class="row wrap_filter" style="margin-top: 10px;">
         <div class="col-sm-4">
             <label>Action</label>
             <select class="bulk_action filter" name="bulk_action">
@@ -49,7 +51,7 @@
 }, new { @class = "", @id = "formLoadProduct" }))
 {
 
-    <button style="display: none;" type="submit" id="product-btsubmit">Tìm</button>
+    <button style="display: none;" type="submit" id="product-btsubmit">Search</button>
 }
 <div id="product-result">
     @{

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WebApplication1.Models.AllModel>
+<table class="table list_product">
+    <thead>
+        <tr>
+
+
+            <th scope="col" id="barcode" class="manage_column column_name">Code</th>
+            <th scope="col" id="barcode" class="manage_column column_name">Name</th>
+            <th scope="col" id="barcode" class="manage_column column_name">Type</th>
+           
+            <th scope="col" class="manage_column column_number"></th>
+
+        </tr>
+    </thead>
+    <tbody >
+      @foreach (var item in Model)
+      {
+          <tr>
+              <td>
+                  @Html.DisplayFor(modelItem => item.tblCity.code)
+              </td>
+              <td>
+                  @Html.DisplayFor(modelItem => item.tblCity.name)
+              </td>
+
+              <td>
+                  @Html.DisplayFor(modelItem => item.tblCountry.name)
+              </td>
+
+              <td scope="col" class="manage_column column_action">
+                  <a class="edit_action" href="@Url.Action("Edit", "City", new {id = item.tblCity.id})"><i class="fas fa-edit"></i></a>
+                  <a class="delete_action" onclick=" return confirm('Are you want delete ?') " href="@Url.Action("Delete", "City", new {id = item.tblCity.id})"><i class="fas fa-times"></i></a>
+
+
+              </td>
+          </tr>
+      }
+    </tbody>
+</table>
+
+
+
+<div class="wrap_product_nav">
+    <span>@ViewBag.ViewOf of @ViewBag.Total items</span>
+    <select class="filter" id="dropPage" name="filter_nav">
+        <option value="10"  >10 items per page</option>
+        <option value="20" >20 items per page</option>
+        <option value="30">30 items per page</option>
+    </select>
+   
+   
+        @Html.Partial("_PaginationAjax")
+    
+
+
+</div><!-- wrap_product_nav -->
+<script>
+    $('#dropPage').val(@ViewBag.View);
+    $('#dropPage').unbind('change');
+    $('#dropPage').on('change', function () {
+        onPageChange($('#city-result').find('a[data-page="1"]'));
+    });
+    $('#filter_city').unbind('change');
+    $('#filter_city').on('change', function () {
+        onPageChange($('#city-result'));
+    });
+    function onPageChange(el) {
+        if (!$(el).hasClass('disable')) {
+            var page = $(el).attr('data-page');
+            var view = $('#dropPage').val();
+            var start = (parseInt(page) - 1) * view;
+            var type = $('#filter_city').val();
+            $.get('@Url.Action("IndexAjax", "City")?start=' + start + '&view=' + view + '&type=' + type, function (data) {
+                $('#city-result').html(data);
+
+            });
+        }
+
+
+    }
+</script>

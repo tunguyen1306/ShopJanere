@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "ChangePass";
+    Layout = "~/Views/Shared/_AdminAccount.cshtml";
+}
+
+@model user
+<h2>Change Password</h2>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <div id="main_content" class="col-sm-12">
+
+            <div class="product_content">
+                @using (Html.BeginForm("ChangePass", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
+                {
+
+
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Username</label>
+                                @Html.TextBoxFor(x => x.username, new { @readonly = "readonly", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                @Html.TextBoxFor(x => x.email, new {@readonly = "readonly", @class = "form-control"})
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                @Html.TextBoxFor(x => x.password, new { @name = "no", @type = "password", @class = "form-control", @id = "passwordf"})
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm Password :</label>
+
+                                <input type="password" class="txtPass form-control" name="password" id="passwordr"/>
+                            </div>
+                            <div class="form-group">
+
+                                @if (((int) ViewBag.Notification) == 1)
+                                {
+                                    <div class="alert alert-success " role="alert">
+                                        <strong>
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i>Success:
+                                        </strong>
+                                        <div class="show-alert-success">Update your pass success</div>
+                                    </div>
+                                }
+                                else if (((int) ViewBag.Notification) == 0)
+                                {
+                                    <div class="alert alert-danger " role="alert">
+                                        <strong>
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Error!
+                                        </strong>
+                                        <div class="show-alert">Update your pass failed</div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label></label>
+                                <input type="button" id="submitbutton" value="Create" class="btn btn-default"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                           
+                           
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label></label>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                          
+
+                        </div>
+                     
+                    </div>
+
+                }
+
+            </div><!-- product_content -->
+
+        </div><!-- main_content -->
+
+
+    </div>
+</div>
+
+
+
+    <script>
+        $("#submitbutton").on('click', function (e) {
+            e.preventDefault();
+            if ($('#validation-form').valid()) {
+                $('#validation-form')[0].submit();
+            }
+        });
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                email: {
+                    email: true,
+                    required: true
+
+                },
+                passwordf: {
+                    required: true
+                },
+                password: {
+                    required: true,
+                    equalTo: "#passwordf"
+                }
+
+
+            },
+
+            messages: {
+
+                email: { required: "Email do not empty", email: "Please enter a valid email address." },
+                passwordf: "Password do not empty",
+                password: {
+                    required: "Comfirm Password do not empty",
+                    equalTo: "Password & Comfirm Password do not like"
+                }
+
+
+            },
+
+
+            highlight: function (e) {
+
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+                } else {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                }
+
+
+            },
+
+            success: function (e) {
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+                } else {
+                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).closest('.form-group').find('.help-block').remove();
+                }
+
+            },
+
+            errorPlacement: function (error, element) {
+
+                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                } else if (element.is('.select2') || element.is('.js-select2-1')) {
+                    if (element.parents('div').eq(0).is('.input-group')) {
+                        error.insertAfter(element.parents('div').eq(0));
+                    } else {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+
+
+                } else if (element.is('.file-upload')) {
+                    error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+                } else if (element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                } else error.insertAfter(element);
+            },
+
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+            }
+        });
+
+
+
+    </script>
+
+
+
+
+

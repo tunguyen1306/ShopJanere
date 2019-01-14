@@ -1,0 +1,90 @@
+﻿@model IEnumerable<vocabulary>
+
+    <table class="table list_product">
+        <thead>
+            <tr>
+
+
+                <th scope="col" id="barcode" class="manage_column column_name">Code</th>
+                <th scope="col" id="barcode" class="manage_column column_name">Name</th>
+                <th scope="col" id="barcode" class="manage_column column_name">Language</th>
+
+                <th scope="col" class="manage_column column_number"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.language)
+                    </td>
+
+                    <td scope="col" class="manage_column column_action">
+                        <a class="edit_action" href="@Url.Action("Edit", "Vocabulary", new {code = item.code})"><i class="fas fa-edit"></i></a>
+                        <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "Vocabulary", new {id = item.id})"><i class="fas fa-times"></i></a>
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <div class="wrap_product_nav">
+        <span>@ViewBag.ViewOf of @ViewBag.Total items</span>
+        <select class="filter" id="dropPage" name="filter_nav">
+            <option value="10">10 items per page</option>
+            <option value="20">20 items per page</option>
+            <option value="30">30 items per page</option>
+        </select>
+
+
+        @Html.Partial("_PaginationAjax")
+
+
+
+    </div><!-- wrap_product_nav -->
+    <script>
+
+    $('#dropPage').val(@ViewBag.View);
+    $('#dropPage').unbind('change');
+    $('#dropPage').on('change', function () {
+        onPageChange($('#Vocabulary-result').find('a[data-page="1"]'));
+    });
+    $('#txtsearch_Vocabularys').on('change', function () {
+        onPageChange($('#Vocabulary-result').find('a[data-page="1"]'));
+    });
+    $('#search_Vocabularys').unbind('click');
+    $('#search_Vocabularys').on('click', function () {
+        onPageChange($('#Vocabulary-result').find('a[data-page="1"]'));
+    });
+
+
+    function onPageChange(el) {
+        if (!$(el).hasClass('disable')) {
+            var page = $(el).attr('data-page');
+            var view = $('#dropPage').val();
+            var start = (page - 1) * view;
+            var cat = $('#datepicker').val();
+            var wh = $('#txtsearch_Vocabularys').val();
+
+            $.get('@Url.Action("IndexAjax", "Vocabulary")?searchvocabulary=' + wh + '&datepicker=' + cat + '&start=' + start + '&view=' + view, function (data) {
+
+                $('#Vocabulary-result').html(data);
+
+            });
+        }
+
+
+    }
+    </script>

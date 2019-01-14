@@ -1,0 +1,196 @@
+﻿@using System.Configuration
+@using WebApplication1.Models
+<!DOCTYPE html>
+<html>
+<head>
+    @{
+        veebdbEntities data = new veebdbEntities();
+        var user = new AllLoggedUserInfo();
+
+
+
+        if (Session["LoggedAccount"] == null)
+        {
+            var tem = data.users.FirstOrDefault(m => m.Id == 7);
+            if (tem != null)
+            {
+                Session["LoggedAccount"] = null;
+                AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+                Session["LoggedAccount"] = userFullInfo;
+                user = userFullInfo;
+            }
+        }
+        else
+        {
+            user = (AllLoggedUserInfo)Session["LoggedAccount"];
+        }
+        var slider = data.sliders.Where(m => m.Status == 1);
+        var setting = data.settings.ToList();
+        var seo = data.seos.FirstOrDefault(x => x.type == 1);
+    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @RenderSection("share_fb", false)
+    @{
+        var metaTitel = ViewBag.MetaTitle;
+        var metaDescription = ViewBag.MetaDescription;
+        var metaLink = ViewBag.Link;
+        var metaKeyword = ViewBag.Keyword;
+    }
+    @if (seo != null)
+    {
+        @Html.Raw(seo.metatag)
+
+        @Html.Raw(seo.googleanalys)
+    }
+    <title>@ViewBag.MetaTitle</title>
+    <meta property="og:title" content="@ViewBag.MetaTitle" />
+
+    <meta property="og:url" content='@ViewBag.Link' />
+    <meta name="description" content="@ViewBag.MetaDescription">
+    <meta property="og:description" content="@ViewBag.MetaDescription" />
+    <meta name="keywords" content="@ViewBag.Keyword" />
+    <meta property="og:image" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg" />
+    <meta property="og:image:url" content="@(ConfigurationManager.AppSettings["UrlWeb"])Template/images/image-default-loco.jpg" />
+    <meta property="og:type" content="website" />
+
+    <meta property="og:image:alt" content="@ViewBag.MetaTitle" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="315" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/CusWeb.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="navbar navbar-inverse" style="background-color: #171717">
+        <div class="container">
+            <div class="navbar-header" style="width:100%">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
+                        <a href="@Url.Action("Index", "Home")"> <img alt="Janere" src="~/Content/head/logo.png" style="padding:33px 0px;" /></a>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-11">
+                        <div class="row" style="text-align: center; padding: 8px 0px;">
+                            <div class="col-lg-7 col-md-7  col-sm-6 col-xs-12">
+                                <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: #8a8a8a; ">+372 658 0300</span></a>
+                                <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">janere@janere.ee</span></a>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
+                                @Html.Partial("Partial/_pLanguage")
+                               <span style="color: white;">
+
+                                    Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id = user.user.Id })
+
+                                </span>
+
+                                <a href="@Url.Action("Login", "Home")">
+                                    <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
+                                </a>
+                                <a href="@Url.Action("UpdateCart", "Home")">
+                                    <img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span>
+                                </a>
+                            </div>
+                        </div>
+                        @{
+                            var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                            var actionName = this.ViewContext.RouteData.Values["action"].ToString();
+                        }
+                        <div class="row" style="color:white;">
+                            <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Home</div></a>
+                            @if (controllerName == "Home" && (actionName == "BulkProducts" || actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Catalogue" || actionName == "Category"))
+                            {
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Products</div></a>
+                            }
+                            else
+                            {
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
+                            }
+                            @* @if (controllerName=="Home" && actionName == "BulkProducts")
+                                {
+                                    <a href="@Url.Action("Products", "Home")"><div class="col-lg-2 top-menu-focus">Bulk Items</div></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("BulkProducts", "Home")"><div class="col-lg-2 top-menu-normal">Bulk Items</div></a>
+                                }*@
+                            @if (controllerName == "Home" && actionName == "Download")
+                            {
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Dowload</div></a>
+                            }
+                            else
+                            {
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Download</div></a>
+                            }
+                            @*@if (controllerName == "Home" && actionName == "Warehouses")
+                                {
+                                    <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Warehouse</div></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Warehouse</div></a>
+                                }*@
+                            @if (controllerName == "Home" && actionName == "Stores")
+                            {
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Store</div></a>
+                            }
+                            else
+                            {
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Store</div></a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+
+        @RenderBody()
+        <hr />
+
+    </div>
+    <div style="background-color: #235d91">
+        <div class="container">
+            <footer>
+                <div class="row" style="padding: 10px 0px; text-align: center;">
+                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding:10px 0px;">
+                        <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: white; ">+372 658 0300</span></a>
+
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding: 10px 0px;">
+                        <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" /><span style="color: white; ">janere@janere.ee</span></a>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="https://www.facebook.com/janere.ee"><img alt="Janere" src="~/Content/foot/facebook.png" /></a></div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="skype:oujanere?chat"><img alt="Janere" src="~/Content/foot/skype.png" /></a></div>
+                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div style="background-color: #171717">
+        <div class="container">
+            <footer>
+                <div class="row" style="padding: 10px 0px; text-align: center;">
+                    <img alt="Janere" src="~/Content/foot/line2.JPG" width="100%" />
+                </div>
+            </footer>
+        </div>
+    </div>
+    <style>
+        .txtFooter {
+            font-size: 14px !important;
+        }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/myscript")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/CustomJs.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

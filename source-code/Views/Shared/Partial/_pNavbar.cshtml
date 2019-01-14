@@ -1,0 +1,86 @@
+﻿
+@{
+    var user = new WebApplication1.Models.AllLoggedUserInfo();
+
+    WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+    user = userFullInfo;
+
+}
+<div class="navbar navbar-inverse" style="background-color: #171717">
+    <div class="container">
+        <div class="navbar-header" style="width:100%">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
+                    <a href="@Url.Action("Index", "Home")"> <img alt="Janere" src="~/Content/head/logo.png" style="padding: 33px 0px;" /></a>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-11">
+                    <div class="row" style="text-align: center; padding: 8px 0px;">
+                        <div class="col-lg-7 col-md-7  col-sm-6 col-xs-12">
+                            <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: #8a8a8a; ">+372 658 0300</span></a>
+                            <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">janere@janere.ee</span></a>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
+
+
+                            @Html.Partial("Partial/_pLanguage")
+                            <div id="google_translate_element" style="width: 50%;float: left;display:none"></div>
+                            <script type="text/javascript">
+                                function googleTranslateElementInit() {
+                                    new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+                                }
+                            </script>
+                            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                            <span style="color: white;">
+
+                                Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id = user.user.Id })
+
+                            </span>
+
+                            <a href="@Url.Action("Login", "Home")">
+                                <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
+                            </a>
+                            <a href="@Url.Action("UpdateCart", "Home")">
+                                <img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span>
+                            </a>
+                        </div>
+                    </div>
+                    @{
+                        var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                        var actionName = this.ViewContext.RouteData.Values["action"].ToString();
+                    }
+                    <div class="row" style="color:white;">
+                        <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Home</div></a>
+                        @if (controllerName == "Home" && (actionName == "BulkProducts" || actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Catalogue" || actionName == "Category"))
+                        {
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Products</div></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
+                        }
+
+                        @if (controllerName == "Home" && actionName == "Download")
+                        {
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Dowload</div></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Download</div></a>
+                        }
+
+                        @if (controllerName == "Home" && actionName == "Stores")
+                        {
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Store</div></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Store</div></a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

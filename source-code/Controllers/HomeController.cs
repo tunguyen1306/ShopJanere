@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
             ViewBag.Keyword = "janere";
 
             var seo = data.seos.FirstOrDefault(x => x.page == "home");
-            if (seo!=null)
+            if (seo != null)
             {
                 ViewBag.MetaTitle = seo.title;
                 ViewBag.MetaDescription = seo.description;
@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
             {
                 IntForGuest();
             }
-        
+
             //List<item> relatedProducts = data.items.Take(100).ToList();
             //List<item> BestSellerProducts = data.items.Where(m=>m.IsBestSeller==true).Take(4).ToList();
             //Session["relatedProducts"] = relatedProducts;
@@ -47,11 +47,11 @@ namespace WebApplication1.Controllers
                 List<item> BestSellerProducts = check.ToList();
                 List<item> showItems = new List<item>();
                 int max = BestSellerProducts.Count();
-                
+
                 if (max >= index * 4)
                 {
-                    int startPostionInList = (index-1)*4;
-                    int endPostionInList = ((index-1)*4+4);
+                    int startPostionInList = (index - 1) * 4;
+                    int endPostionInList = ((index - 1) * 4 + 4);
                     for (int i = startPostionInList; i < endPostionInList; i++)
                     {
                         item addToList = new item();
@@ -88,7 +88,7 @@ namespace WebApplication1.Controllers
             {
                 Session["BestSellerProducts"] = null;
             }
-          
+
 
 
             return View();
@@ -96,7 +96,7 @@ namespace WebApplication1.Controllers
         public ActionResult MasterMetaGroup(int index)
         {
             var check = data.metagrups.Where(m => m.PARENTNO == 0 && m.IsActive == true);
-             
+
             if (check.Count() > 0)
             {
                 List<metagrup> MasterMetaList = check.ToList();
@@ -147,16 +147,16 @@ namespace WebApplication1.Controllers
                 Session["LoggedAccount"] = userFullInfo;
             }
         }
-        public ActionResult Product(string Code="")
+        public ActionResult Product(string Code = "")
         {
-           
+
             var result = data.items.Where(m => m.ARTCODE == Code).FirstOrDefault();
             if (result != null)
             {
 
                 ViewBag.MetaTitle = result.ARTNAME;
                 ViewBag.MetaDescription = result.ARTNAME;
-                ViewBag.Link = "http://shop.janere.ee/Home/Product?Code="+ result.ARTNO;
+                ViewBag.Link = "http://shop.janere.ee/Home/Product?Code=" + result.ARTNO;
                 ViewBag.Keyword = result.ARTNAME;
 
                 //var seo = data.seos.FirstOrDefault(x => x.page == "product");
@@ -188,7 +188,7 @@ namespace WebApplication1.Controllers
             }
             return View(result);
         }
-        public ActionResult BulkProducts(FormCollection FormCollection, int? Page_No, int? Page_Size,int categoryid=0)
+        public ActionResult BulkProducts(FormCollection FormCollection, int? Page_No, int? Page_Size, int categoryid = 0)
         {
             ViewBag.MetaTitle = "Home";
             ViewBag.MetaDescription = "Home - janere";
@@ -215,10 +215,12 @@ namespace WebApplication1.Controllers
                 defaSize = Page_Size ?? 20;
             }
             ViewBag.ValueToSet = defaSize;
-            int No_Of_Page = (Page_No ?? 1);
+            int noOfPage = (Page_No ?? 1);
             if (categoryid != 0)
             {
-                ViewBag.CategoryName = data.categories.Where(m => m.CATEGORYNO == categoryid).FirstOrDefault().CATEGORYNAME;
+                var firstOrDefault = data.categories.FirstOrDefault(m => m.CATEGORYNO == categoryid);
+                if (firstOrDefault != null)
+                    ViewBag.CategoryName = firstOrDefault.CATEGORYNAME;
                 ViewBag.CategoryId = categoryid;
                 result = result.Where(m => m.CATEGORYNO == categoryid).ToList();
             }
@@ -234,10 +236,13 @@ namespace WebApplication1.Controllers
                 var temp3 = int.Parse(FormCollection["ddlGetGroup"]);
                 var temp4 = int.Parse(FormCollection["ddlGetCategory"]);
                 var temp5 = FormCollection["ddlGetItem"];
+                var temp6 = FormCollection["ddlGetMetaGroup"];
+
                 Session["ddlPosition"] = temp1;
                 Session["AllKey"] = temp2;
                 Session["ddlGetGroup"] = temp3;
                 Session["ddlGetCategory"] = temp4;
+                Session["ddlGetMetaGroup"] = temp6;
                 //var temp8 = int.Parse(FormCollection["ddlLength"]);
                 /*var temp9 =  int.Parse(FormCollection["ddlGetInterFace"]);
                 var temp10 = int.Parse(FormCollection["ddlGetMaterial"]);
@@ -283,16 +288,18 @@ namespace WebApplication1.Controllers
                 {
                     result = result.Where(m => m.GROUPNO == temp3).ToList();
                 }*/
-                return View(result.ToPagedList(No_Of_Page, defaSize));
+                return View(result.ToPagedList(noOfPage, defaSize));
             }
             else
             {
-                return View(result.ToPagedList(No_Of_Page, defaSize));
+                return View(result.ToPagedList(noOfPage, defaSize));
             }
 
         }
         public ActionResult Login(string message = "", string returnUrl = "")
         {
+            Session.Clear();
+            Session.Abandon();
             ViewBag.MetaTitle = "Home";
             ViewBag.MetaDescription = "Home - janere";
             ViewBag.Link = "http://shop.janere.ee/";
@@ -308,19 +315,19 @@ namespace WebApplication1.Controllers
             }
             if (string.IsNullOrEmpty(returnUrl) && Request.UrlReferrer != null)
                 returnUrl = Server.UrlEncode(Request.Url.ToString());
-                ViewBag.ReturnURL = returnUrl;
-            @ViewBag.Message = message;
+            ViewBag.ReturnURL = returnUrl;
+            ViewBag.Message = message;
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string username = "", string password = "", string returnUrl="")
+        public ActionResult Login(string username = "", string password = "", string returnUrl = "")
         {
             if (username == "" || password == "")
             {
                 var tem = data.users.Where(m => m.username == username && m.password == password).FirstOrDefault();
                 return RedirectToAction("Login", "Home", new { message = "Username and password must not empty." });
             }
-            else 
+            else
             {
                 var tem = data.users.Where(m => m.username == username && m.password == password).FirstOrDefault();
                 if (tem != null)
@@ -328,13 +335,13 @@ namespace WebApplication1.Controllers
                     Session["LoggedAccount"] = null;
                     AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
                     Session["LoggedAccount"] = userFullInfo;
-                       string decodedUrl = "";
-                       if (!string.IsNullOrEmpty(returnUrl))
-                           decodedUrl = Server.UrlDecode(returnUrl);
-                       if (decodedUrl != "" && !decodedUrl.Contains("Login"))
-                       {
-                           return Redirect(decodedUrl);
-                       }
+                    string decodedUrl = "";
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        decodedUrl = Server.UrlDecode(returnUrl);
+                    if (decodedUrl != "" && !decodedUrl.Contains("Login"))
+                    {
+                        return Redirect(decodedUrl);
+                    }
                     if (userFullInfo.role.RoleName == "super_admin")
                     {
                         return RedirectToAction("Index", "Admin");
@@ -351,7 +358,7 @@ namespace WebApplication1.Controllers
                 }
             }
 
-                
+
         }
         public ActionResult Signup()
         {
@@ -370,29 +377,7 @@ namespace WebApplication1.Controllers
             }
             return View();
         }
-        public ActionResult SaveSignup(user user)
-        {
-            if (ModelState.IsValid)
-            {
-                user.status = "active";
-                user.createdate = DateTime.Now;
-                user.updatedate = DateTime.Now;
-                data.users.Add(user);
-                data.SaveChanges();
-                user_role ur = new user_role();
-                ur.userid = user.Id;
-                ur.roleid = 6;
-                ur.status = "active";
-                data.user_role.Add(ur);
-                userdata ud = new userdata();
-                ud.userid = user.Id;
-                data.userdatas.Add(ud);
-                data.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(user);
-        }
         public ActionResult EditInfo(int? id)
         {
             ViewBag.MetaTitle = "Home";
@@ -518,7 +503,7 @@ namespace WebApplication1.Controllers
             }
             if (Page_Size != null)
             {
-                defaSize = Page_Size??20;
+                defaSize = Page_Size ?? 20;
             }
             ViewBag.ValueToSet = defaSize;
             int No_Of_Page = (Page_No ?? 1);
@@ -537,25 +522,48 @@ namespace WebApplication1.Controllers
 
                 var temp1 = int.Parse(FormCollection["ddlPosition"]);
                 var temp2 = FormCollection["AllKey"];
-                var temp3 = int.Parse(FormCollection["ddlGetGroup"]);
-                var temp4 = int.Parse(FormCollection["ddlGetCategory"]);
+                var temp3 = FormCollection["ddlGetGroup"];
+                var temp4 = FormCollection["ddlGetMetaGroup"];
                 var temp5 = FormCollection["ddlGetItem"];
+                var temp6 = FormCollection["ddlGetDINCode"];
                 Session["ddlPosition"] = temp1;
                 Session["AllKey"] = temp2;
                 Session["ddlGetGroup"] = temp3;
-                Session["ddlGetCategory"] = temp4;
+                Session["ddlGetMetaGroup"] = temp4;
                 //var temp8 = int.Parse(FormCollection["ddlLength"]);
                 /*var temp9 =  int.Parse(FormCollection["ddlGetInterFace"]);
                 var temp10 = int.Parse(FormCollection["ddlGetMaterial"]);
-                var temp6 = int.Parse(FormCollection["ddlGetDINCode"]);
+            
                 var temp7 = int.Parse(FormCollection["ddlGetDimension"]);*/
-                if (temp3 != 0)
+
+
+
+                if (temp3 != "")
                 {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
+                    var tblgroup = data.artgrps.ToList().FirstOrDefault(x => x.GROUPNAME.ToLower() == temp3.ToLower());
+                    if (tblgroup != null)
+                    {
+
+                        result = result.Where(m => m.GROUPNO == tblgroup.GROUPNO).ToList();
+                    }
                 }
-                if (temp4 != 0)
+                if (temp6 != "")
                 {
-                    result = result.Where(m => m.CATEGORYNO == temp4).ToList();
+
+
+                    result = result.ToList().Where(m => m.ARTCODE.ToLower() == temp6.ToLower()).ToList();
+
+                }
+
+
+                if (temp4 != "")
+                {
+                    var tblgroup = data.metagrups.ToList().FirstOrDefault(x => x.METAGROUPNAME.ToLower() == temp4.ToLower());
+                    if (tblgroup != null)
+                    {
+
+                        // result = result.Where(m => m.GROUPNO == tblgroup.GROUPNO).ToList();
+                    }
                 }
                 if (temp2 != "")
                 {
@@ -590,13 +598,13 @@ namespace WebApplication1.Controllers
                     result = result.Where(m => m.GROUPNO == temp3).ToList();
                 }*/
 
-                
+
 
                 return View(result.ToPagedList(No_Of_Page, defaSize));
             }
             else
             {
-                return View(result.Where(m=>m.GROUPNO == groupno).ToPagedList(No_Of_Page, defaSize));
+                return View(result.Where(m => m.GROUPNO == groupno).ToPagedList(No_Of_Page, defaSize));
             }
 
 
@@ -636,7 +644,7 @@ namespace WebApplication1.Controllers
             }
             return View();
         }
-        public ActionResult UpdateCart(string[] chkbox, int[] qty, string[] code, float[] price,int? Page_No,int? Page_Size)
+        public ActionResult UpdateCart(string[] chkbox, int[] qty, string[] code, float[] price, int? Page_No, int? Page_Size)
         {
             ViewBag.MetaTitle = "Home";
             ViewBag.MetaDescription = "Home - janere";
@@ -664,25 +672,27 @@ namespace WebApplication1.Controllers
             }*/
 
 
+
             WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
 
 
-            DateTime now =new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day);
+            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             var pro = (promotion)null;
-            if (userFullInfo!=null &&  userFullInfo.role.Id==5)
+            if (userFullInfo != null && userFullInfo.role.Id == 5)
             {
                 var user = data.users.Find(userFullInfo.user.Id);
                 string type = user.type + "";
-                pro= data.promotions.Where(t => t.STATUS == 1 && t.TYPEUSERS.Contains(type) && t.FIRSTDATE<= now && now<=t.LASTDATE).FirstOrDefault();
+                pro = data.promotions.Where(t => t.STATUS == 1 && t.TYPEUSERS.Contains(type) && t.FIRSTDATE <= now && now <= t.LASTDATE).FirstOrDefault();
             }
             ShoppingCart Cart = new ShoppingCart();
             if (Session["ShoppingCart"] != null)
             {
                 Cart = (ShoppingCart)Session["ShoppingCart"];
-                if (pro!=null)
-                {
-                    Cart.promotion = pro;
-                }
+
+            }
+            if (pro != null)
+            {
+                Cart.promotion = pro;
             }
             if (chkbox == null && qty != null)//for prodetail and update cart
             {
@@ -712,14 +722,14 @@ namespace WebApplication1.Controllers
                 }
                 Cart.taxTotal = Cart.cartItem.Sum(m => m.Tax);
                 Cart.CartTotal = Cart.cartItem.Sum(m => m.LineTotal);
-                if (Cart.promotion!=null)
+                if (Cart.promotion != null)
                 {
-                    if( Cart.promotion.TYPENO==0)
+                    if (Cart.promotion.TYPENO == 0)
                     {
-                        Cart.PromotionTotal = Cart.CartTotal * float.Parse(Cart.promotion.VALUEPROMOTION)/100;
-                        Cart.CartTotal =  Cart.CartTotal *(100- float.Parse(Cart.promotion.VALUEPROMOTION))/100;
+                        Cart.PromotionTotal = Cart.CartTotal * float.Parse(Cart.promotion.VALUEPROMOTION) / 100;
+                        Cart.CartTotal = Cart.CartTotal * (100 - float.Parse(Cart.promotion.VALUEPROMOTION)) / 100;
                     }
-                    else if(Cart.promotion.TYPENO == 1)
+                    else if (Cart.promotion.TYPENO == 1)
                     {
                         try
                         {
@@ -729,12 +739,12 @@ namespace WebApplication1.Controllers
                         catch (Exception)
                         {
 
-                            
+
                         }
-                       
+
                     }
                 }
-              
+
 
             }
             if (chkbox != null && qty != null) // for add or update bundle item
@@ -743,7 +753,7 @@ namespace WebApplication1.Controllers
                 for (int i = 0; i < chkbox.Count(); i++)
                 {
                     var getDate = chkbox[i].Split('|');
-                    var codeCheckbox= getDate[0];
+                    var codeCheckbox = getDate[0];
                     var priceCheckbox = getDate[1];
                     var indexCheckbox = int.Parse(getDate[2]);
                     var temItem = cartItems.Where(m => m.Code == codeCheckbox).FirstOrDefault();
@@ -753,7 +763,7 @@ namespace WebApplication1.Controllers
                         newline.Code = codeCheckbox;
                         newline.Qty = qty[indexCheckbox];
                         newline.Name = data.items.Where(m => m.ARTCODE == codeCheckbox).FirstOrDefault().ARTNAME;
-                        newline.Price = string.IsNullOrEmpty(priceCheckbox)?0:float.Parse(priceCheckbox);
+                        newline.Price = string.IsNullOrEmpty(priceCheckbox) ? 0 : float.Parse(priceCheckbox);
                         newline.LineTotal = newline.Qty * newline.Price;
                         newline.Tax = newline.LineTotal * 0.1f;
                         Cart.cartItem.Add(newline);
@@ -772,8 +782,8 @@ namespace WebApplication1.Controllers
                 {
                     if (Cart.promotion.TYPENO == 0)
                     {
-                        Cart.PromotionTotal = Cart.CartTotal * float.Parse(Cart.promotion.VALUEPROMOTION)/100;
-                        Cart.CartTotal = Cart.CartTotal * (100 - float.Parse(Cart.promotion.VALUEPROMOTION))/100;
+                        Cart.PromotionTotal = Cart.CartTotal * float.Parse(Cart.promotion.VALUEPROMOTION) / 100;
+                        Cart.CartTotal = Cart.CartTotal * (100 - float.Parse(Cart.promotion.VALUEPROMOTION)) / 100;
                     }
                     else if (Cart.promotion.TYPENO == 1)
                     {
@@ -797,14 +807,14 @@ namespace WebApplication1.Controllers
             if (Cart.cartItem.Count() > 0)
             {
                 Session["ShoppingCart"] = Cart;
-                
+
                 if (Page_Size != null)
                 {
                     defaSize = Page_Size ?? 10;
                 }
                 ViewBag.ValueToSet = defaSize;
-                
-               listItemForPaging = Cart.cartItem; 
+
+                listItemForPaging = Cart.cartItem;
             }
             else
             {
@@ -890,7 +900,7 @@ namespace WebApplication1.Controllers
         public ActionResult GetMetaGroupMenu(int mastermetagroupid)
         {
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m=>m.PARENTNO == mastermetagroupid).ToList();
+            obj = data.metagrups.Where(m => m.PARENTNO == mastermetagroupid).ToList();
             SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -910,7 +920,7 @@ namespace WebApplication1.Controllers
                 ViewBag.Keyword = seo.keyword;
             }
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m=>m.PARENTNO==0).ToList();
+            obj = data.metagrups.Where(m => m.PARENTNO == 0).ToList();
             return View(obj);
         }
         public ActionResult MetaGroup(int masterGroupID)
@@ -929,7 +939,7 @@ namespace WebApplication1.Controllers
                 ViewBag.Keyword = seo.keyword;
             }
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m => m.PARENTNO == masterGroupID && m.IsActive==true).ToList();
+            obj = data.metagrups.Where(m => m.PARENTNO == masterGroupID && m.IsActive == true).ToList();
             Session["MasterGroup"] = data.metagrups.Where(m => m.METAGROUPNO == masterGroupID).FirstOrDefault().METAGROUPNAME;
             return View(obj);
         }
@@ -1007,11 +1017,11 @@ namespace WebApplication1.Controllers
             obj = data.categories.Where(m => m.CatalogueCode == CatId).ToList();
             return View(obj);
         }
-        
+
         public ActionResult GetCategoryByCatId(int CatId)
         {
             List<category> obj = new List<category>();
-            obj = data.categories.Where(m=>m.CatalogueCode==CatId).ToList();
+            obj = data.categories.Where(m => m.CatalogueCode == CatId).ToList();
             SelectList obg = new SelectList(obj, "CATEGORYNO", "CATEGORYNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -1087,5 +1097,64 @@ namespace WebApplication1.Controllers
             SelectList obg = new SelectList(obj, "ARTCODE", "LEN", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }*/
+
+
+
+        //////////Search//////////
+        public ActionResult _ProductAjaxAutoComplete(string query)
+        {
+            var list = data.items.Join(data.artgrps, it => it.GROUPNO, grp => grp.GROUPNO, (it, grp) => new AllModel { tblitem = it, tblGroup = grp }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME, des = x.tblitem.INFO, grp = x.tblGroup.GROUPNAME }).ToList();
+            return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult _MetagrupAjaxAutoComplete(string query)
+        {
+
+
+            var list = data.metagrups.Select(x => new AllModel { tblMetaGroup = x }).Where(x => x.tblMetaGroup.PARENTNO == 0 && x.tblMetaGroup.METAGROUPNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblMetaGroup.METAGROUPNO, label = x.tblMetaGroup.METAGROUPNAME }).ToList();
+            return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult _GroupAjaxAutoComplete(string query)
+        {
+
+
+            var list = data.artgrps.Select(x => new AllModel { tblGroup = x }).Where(x => x.tblGroup.GROUPNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblGroup.GROUPNO, label = x.tblGroup.GROUPNAME }).ToList();
+            return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult _ItemAjaxAutoComplete(string query)
+        {
+
+
+            var list = data.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME }).ToList();
+            return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _DinAjaxAutoComplete(string query)
+        {
+
+
+            var list = data.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.ARTCODE.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTCODE }).ToList();
+            return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult GetLanguage(string lan = null)
+        {
+            var dataVo = data.vocabularies.ToList();
+            if (lan != null)
+            {
+                dataVo = dataVo.Where(x => x.language.ToLower() == lan.ToLower()).ToList();
+
+
+            }
+            else
+            {
+                dataVo = dataVo.Where(x => x.language.ToLower() == "english").ToList();
+            }
+            return Json(dataVo.ToList());
+
+
+
+        }
     }
 }

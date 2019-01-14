@@ -1,4 +1,5 @@
 ﻿@using System.Configuration
+@using WebApplication1.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +32,28 @@
     <meta property="og:image:width" content="600"/>
     <meta property="og:image:height" content="315"/>
   @{
-      WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+
       veebdbEntities data = new veebdbEntities();
+      var user = new AllLoggedUserInfo();
+
+
+
+      if (Session["LoggedAccount"] == null)
+      {
+          var tem = data.users.FirstOrDefault(m => m.Id == 7);
+          if (tem != null)
+          {
+              Session["LoggedAccount"] = null;
+              AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+              Session["LoggedAccount"] = userFullInfo;
+              user = userFullInfo;
+          }
+      }
+      else
+      {
+          user = (AllLoggedUserInfo)Session["LoggedAccount"];
+      }
+
       var slider = data.sliders.Where(m => m.Status == 1);
       var setting = data.settings.ToList();
       var seo = data.seos.FirstOrDefault(x => x.type == 1);
@@ -65,43 +86,10 @@
                                 <span style="color: #8a8a8a; ">&nbsp;  <img alt="Janere" src="~/Content/head/contact-email.png" style="margin-left: 10px;" />e:janere@janere.ee</span></a>
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
-                                <div class="translation-links">
-                                    
-                                    <ul class="top_link">
-                                        <li>
-                                            <a href="#" class="enlgish" data-lang="0"><img alt="Janere" src="~/Content/languages/english.png" /></a>
-                                            <ul class="sub_language">
-                                                @foreach (var lang in setting.Where(x => x.typeId == "language").OrderBy(x => x.order).ToList())
-                                                {
-                                                    <li>
-                                                        <a href="#" class="estonian" data-lang="@lang.id">
-                                                            <div class="row">
-                                                                <div class="col-xs-12"><img alt="Janere" style="float: left" src="@lang.urlimage" /><span style="float: left">@lang.name</span></div>
-
-                                                            </div>
-
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </li>
-
-                                        
-                                    </ul>
-  
-                                    </div>
-                                <div id="google_translate_element" style="width: 50%;float: left;display:none"></div>
-                                <script type="text/javascript">
-                                    function googleTranslateElementInit() {
-                                        new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,et,pl,ru,pl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
-                                    }
-                                </script>
-                                <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                                <span style="color: white;"> Hi , @Html.ActionLink(userFullInfo.user.display, "EditInfo", new { id= userFullInfo.user.Id })  </span>  
-                                <!-- Flag click handler -->
-                                <script type="text/javascript">
-                                    
-                                </script>
+                                @Html.Partial("Partial/_pLanguage")
+             
+                                <span style="color: white;"> Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id= user.user.Id })  </span>  
+                             
                                 <!--<img alt="Janere" src="~/Content/head/language.png" />-->
                                 <a href="@Url.Action("Login", "Home")">
                                     <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
@@ -234,6 +222,210 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/myscript")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Content/admin/js/jquery.autocomplete.js"></script>
+    <script src="~/Content/admin/js/bootstrap3-typeahead.min.js"></script>
+    <script>
+
+        function typeAH(elid, url) {
+
+
+            var timeout = null;
+            $("#" + elid).typeahead({
+                hint: false,
+                highlight: true,
+                autoSelect: false,
+                selectOnBlur: false,
+                changeInputOnMove: false,
+                changeInputOnSelect: false,
+                select: function() {
+                    console.log("select");
+                    var a = this.$menu.find(".active").data("value");
+                    if (this.$element.data("active", a), this.autoSelect || a) {
+                        var b = this.updater(a);
+                        b || (b = ""), this.$element.val(this.displayText(b) || b).text(this.displayText(b) || b).change(), this.afterSelect(b), this.followLinkOnSelect && this.itemLink(a) ? (document.location = this.itemLink(a), this.afterSelect(b)) : this.followLinkOnSelect && !this.itemLink(a) ? this.afterEmptySelect(b) : this.afterSelect(b)
+                    } else this.afterEmptySelect(b);
+                    return this.hide();
+                },
+                click: function(a) {
+                    console.log("click");
+                    a.preventDefault(), this.skipShowHintOnFocus = !0, this.select(), this.$element.focus(), this.hide();
+                },
+                mouseenter: function(b) {
+                    console.log("mouseenter");
+                    this.mousedover = !0, this.$menu.find(".active").removeClass("active"), a(b.currentTarget).addClass("active");
+                },
+                mouseleave: function(a) {
+                    console.log("mouseleave");
+                    this.mousedover = !1, !this.focused && this.shown && this.hide();
+                },
+                mousedown: function(a) {
+                    console.log("mousedown");
+                    this.mouseddown = !0, this.$menu.one("mouseup", function(a) {
+                        this.mouseddown = !1;
+                    }.bind(this));
+                },
+                touchstart: function(b) {
+                    b.preventDefault(), this.$menu.find(".active").removeClass("active"), a(b.currentTarget).addClass("active");
+                },
+                touchend: function(a) {
+                    a.preventDefault(), this.select(), this.$element.focus();
+                },
+                move: function(a) {
+                    console.log("move");
+                    if (this.shown)
+                        switch (a.keyCode) {
+                        case 9:
+                        case 13:
+                        case 27:
+                            a.preventDefault();
+                            break;
+                        case 38:
+                            if (a.shiftKey) return;
+                            a.preventDefault(), this.prev();
+                            break;
+                        case 40:
+                            if (a.shiftKey) return;
+                            a.preventDefault(), this.next();
+                        }
+                },
+                display: 'value',
+                minLength: 2,
+                mousedover: false,
+                highlighter: function(item, value) {
+                    var q = this.query.toLowerCase();
+                    var hl = item.toLowerCase().replace(new RegExp('(' + q + ')', 'ig'),
+                        function($1, match) {
+                            return '<strong>' + match + '</strong>';
+                        });
+                    var item2 = value;
+                    var bb = 0;
+                    while (hl.indexOf("<strong>", bb) !== -1) {
+                        var begin = hl.indexOf("<strong>", bb);
+                        item2 = item2.substr(0, begin) + '<strong>' + item2.substr(begin, q.length) + '</strong>' + item2.substr(begin + q.length);
+                        bb = hl.indexOf("</strong>", bb) + "</strong>".length;
+                    }
+                    return item2;
+                },
+                matcher: function(item) {
+                    var dd = ~item.toLowerCase().indexOf(this.query.toLowerCase());
+
+                    return dd;
+                },
+                render: function(items) {
+                    var that = this;
+
+                    items = $(items).map(function(i, item) {
+                        i = $(that.options.item).attr('data-value', JSON.stringify(item));
+                        var value = item;
+                        var id = item;
+                        i.find('a').html(that.highlighter(id, value));
+                        return i[0];
+                    });
+
+                    // items.first().addClass('active');
+                    this.$menu.html(items);
+                    return this;
+                },
+
+                source: function(request, response) {
+
+
+                    if (timeout == null) {
+                        timeout = setTimeout(function() {
+                            $.ajax({
+                                url: url,
+                                data: "{ 'query': '" + request + "'}",
+                                dataType: "json",
+                                type: "POST",
+                                global: false,
+                                contentType: "application/json; charset=utf-8",
+                                success: function(data) {
+                                    items = [];
+                                    map = {};
+                                    $.each(data.data, function(i, item) {
+                                        var id = item.value;
+                                        var name = item.label;
+                                        var des = item.des;
+                                        var grp = item.grp;
+
+                                        map[name] = { id: id, name: name, des: des, grp: grp };
+                                        items.push(name);
+                                    });
+                                    response(items);
+                                    $('#' + elid).parents('div').eq(0).find(".dropdown-menu").css("height", "auto");
+                                },
+                                error: function(response) {
+                                    //alert(response.responseText);
+                                },
+                                failure: function(response) {
+                                    //  alert(response.responseText);
+                                }
+                            });
+                        }, 300);
+                    } else {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(function() {
+                            $.ajax({
+                                url: url,
+                                data: "{ 'query': '" + request + "'}",
+                                dataType: "json",
+                                type: "POST",
+                                global: false,
+                                contentType: "application/json; charset=utf-8",
+                                success: function(data) {
+                                    items = [];
+                                    map = {};
+                                    $.each(data.data, function(i, item) {
+                                        var id = item.value;
+                                        var name = item.label;
+                                        var des = item.des;
+                                        var grp = item.grp;
+
+                                        map[name] = { id: id, name: name, des: des, grp: grp };
+                                        items.push(name);
+                                    });
+                                    response(items);
+                                    $('#' + elid).parents('div').eq(0).find(".dropdown-menu").css("height", "auto");
+                                },
+                                error: function(response) {
+                                    //alert(response.responseText);
+                                },
+                                failure: function(response) {
+                                    //  alert(response.responseText);
+                                }
+                            });
+                        }, 300);
+                    }
+
+
+                },
+                afterEmptySelect: function(val) {
+                    this.hide();
+                    console.log("===>");
+                    //$('form#form-search').submit();
+                },
+
+                afterSelect: function(val) {
+                    console.log("===>");
+                    // window.location = "/admin/" + map[val].link + "/Details/" + map[val].id;
+                },
+                updater: function(item) {
+                    /// $('#_pBoxSearch_title').val(item.substr(1, item.length - 2));
+                    console.log("===>");
+                    return item.substr(1, item.length - 2);
+                }
+            });
+        }
+
+        typeAH("_pBoxSearch_title", '@Url.Action("_ProductAjaxAutoComplete", "Home")');
+        typeAH("ddlGetGroup", '@Url.Action("_GroupAjaxAutoComplete", "Home")');
+        typeAH("ddlGetMetaGroup", '@Url.Action("_MetagrupAjaxAutoComplete", "Home")');
+        typeAH("ddlGetItem", '@Url.Action("_ItemAjaxAutoComplete", "Home")');
+        typeAH("ddlGetDINCode", '@Url.Action("_DinAjaxAutoComplete", "Home")');
+
+
+    </script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -60,10 +60,11 @@
             </footer>
         </div>
     </div>
-
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/myscript")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/CustomJs.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

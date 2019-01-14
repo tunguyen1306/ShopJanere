@@ -1,0 +1,112 @@
+﻿@model WebApplication1.Models.AllModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    veebdbEntities data = new veebdbEntities();
+}
+
+<h2>EDIT NEW VOCABULARY</h2>
+
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+
+        <div id="main_content" class="col-sm-12">
+
+            <div class="Order_content">
+                @using (Html.BeginForm("Edit", "Vocabulary", FormMethod.Post, new { @id = "validation-form" }))
+                {
+
+
+
+                    <ul class="nav nav-tabs">
+                        @foreach (var item in Model.listVocabulary)
+                        {
+                            <li><a data-toggle="tab" href="#@item.language">@item.language</a></li>
+                        }
+
+
+                    </ul>
+
+                    <div class="tab-content">
+
+                        @foreach (var item in Model.listVocabulary)
+                        {
+                            var guid = Guid.NewGuid().ToString();
+
+                            <input type="hidden" name="tblVocabularyArray.Index" value="@(guid)" />
+                            <div id="@item.language" class="tab-pane fade in">
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Vocabulary Code @(item.language)</label>
+                                            <input type="text" class="form-control" name="tblVocabularyArray[@(guid)].code" readonly="readonly" value="@item.code" />
+                                            <input type="hidden" value="@item.language" name="tblVocabularyArray[@(guid)].language" />
+                                            <input type="hidden" value="@item.id" name="tblVocabularyArray[@(guid)].id" />
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Vocabulary Name @item.language</label>
+                                            <input type="text" class="form-control" name="tblVocabularyArray[@(guid)].name" value="@item.name" />
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group">
+                                            <label>Vocabulary Description @item.language</label>
+
+
+                                            <textarea id="des_@item.id" name="tblVocabularyArray[@(guid)].description" class="form-control">@item.description</textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        }
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="page_action">
+                                  
+                                    <a id="submitbutton">Save</a>
+                                    <a class="button button-sm" href="@Url.Action("Index","Vocabulary")">Cancel</a>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+            </div><!-- Order_content -->
+
+        </div><!-- main_content -->
+
+
+    </div>
+</div>
+<script>
+    $("#submitbutton").on('click', function (e) {
+        e.preventDefault();
+        if ($('#validation-form').valid()) {
+        $('#validation-form')[0].submit();
+        }
+       
+
+    });
+</script>

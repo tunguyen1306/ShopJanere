@@ -2,48 +2,55 @@
 
 @{
     ViewBag.Title = "Stores";
-    Layout = "~/Views/Shared/_Layout _NoMenu.cshtml";
+    Layout = "~/Views/Shared/_Layout_NoMenu.cshtml";
 }
+
+
 <div class="row">
+    <div class="col-lg-12" style="padding: 0px;">
+        <div class="row">
 
-    <div class="col-lg-12" style="font-weight: bold; padding: 15px 25px;">
-        <span>Home / </span><span style="color: #2ea3f2;">Stores</span>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12" style="font-weight: bold; font-size: 36px; font-family: 'OpenSansExtraBold'; margin: 15px; color: #2ea3f2;">
-        Stores
-    </div>
-</div>
-<div class="row">
-    @foreach (var item in Model)
-    {
+            <div class="col-lg-12" style="font-weight: bold; padding: 15px 25px;">
+                <span>Home / </span><span style="color: #2ea3f2;">Stores</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12" style="font-weight: bold; font-size: 36px; font-family: 'OpenSansExtraBold'; margin: 15px; color: #2ea3f2;">
+                Stores
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
 
 
 
-        <div class="col-lg-3">
-            <div class="col-lg-12">
-               
+                <div class="col-lg-3">
+                    <div class="col-lg-12">
 
-                @if (!string.IsNullOrEmpty(item.UrlImage))
+
+                        @if (!string.IsNullOrEmpty(item.UrlImage))
                 {
-                    <img alt="Janere" src="@item.UrlImage" width="100%" />
+                            <img alt="Janere" src="@item.UrlImage" width="100%" />
 
-                }
-                else
-                {
+                        }
+                        else
+                        {
 
-                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" width="100%"  />
+                            <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" width="100%" />
 
-                }
-            </div>
-            <div class="col-lg-12" style="text-align: center; font-size: 16px; color: #235d91;font-weight:bold;padding:15px 0px;">
-                @Html.DisplayFor(modelItem => item.Name)
-            </div>
-            <div class="col-lg-12" style="font-size: 14px;">
-                @Html.Raw(item.Description)
-                
-            </div>
-            </div>
-    }
+                        }
+                    </div>
+                    <div class="col-lg-12" style="text-align: center; font-size: 16px; color: #235d91;font-weight:bold;padding:15px 0px;">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </div>
+                    <div class="col-lg-12" style="font-size: 14px;white-space: pre-line">
+                        @Html.Raw(item.Description)
+
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
 </div>

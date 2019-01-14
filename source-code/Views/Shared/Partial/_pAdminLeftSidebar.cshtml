@@ -1,0 +1,120 @@
+﻿
+@{
+    var user = new WebApplication1.Models.AllLoggedUserInfo();
+}
+@if (Session["LoggedAccount"] != null)
+{
+    WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
+    user = userFullInfo;
+    if (userFullInfo.role.RoleName != "super_admin")
+    {
+        string currentUrl = Request.Url.ToString();
+        Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
+    }
+
+}
+else
+{
+    string currentUrl = Request.Url.ToString();
+    Response.Redirect(Url.Action("Login", "Home", new { returnUrl = currentUrl }));
+}
+
+<div id="left_sidebar" class="col-sm-3">
+    <h2>
+        <a href="./">Dashboard</a>
+    </h2>
+    <ul id="adminmenu">
+        <li>
+            <a href="#">Layout <i class="fas fa-sort-up"></i></a>
+            <ul style="display: block;">
+                <li><a href="@Url.Action("Index", "Setting",new {type=0})">Setting</a></li>
+                <li><a href="@Url.Action("Index", "SettingType")">Setting Type</a></li>
+                <li><a href="@Url.Action("Index", "Menu")">Menu</a></li>
+                <li><a href="@Url.Action("Index", "Setting",new {type=2})">All Banner</a></li>
+                <li><a href="@Url.Action("Index", "Country")">Country</a></li>
+                <li><a href="@Url.Action("Index", "City")">City</a></li>
+                <li><a href="@Url.Action("Index", "Vocabulary")">Vocabulary</a></li>
+
+            </ul>
+        </li>
+        <li>
+            <a href="#">Products <i class="fas fa-sort-up"></i></a>
+            <ul>
+                <li><a href="@Url.Action("Index", "MasterMetaGroup")">Master Meta Groups</a></li>
+                <li><a href="@Url.Action("IndexMetaGroup", "MasterMetaGroup")">Meta Groups</a></li>
+                <li><a href="@Url.Action("IndexGroup", "MasterMetaGroup")">Product Groups</a></li>
+                <li><a href="@Url.Action("Index", "Admin")">Products</a></li>
+                <li><a href="#">Atribute</a></li>
+                <li><a href="#">Cart</a></li>
+                <li><a href="#">Setting</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Orders <i class="fas fa-sort-up"></i></a>
+            <ul>
+                <li><a href="@Url.Action("Index", "Order")">All Orders</a></li>
+                <li><a href="@Url.Action("Create", "Order")">Create Order</a></li>
+                <li><a href="@Url.Action("Index", "Promotion")">Promotion</a></li>
+                <li><a href="#">Report</a></li>
+                <li><a href="@Url.Action("SettingIndex", "Order")">Setting</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">User <i class="fas fa-sort-up"></i></a>
+            <ul>
+                <li><a href="@Url.Action("Create", "AccountLogin")">Add New</a></li>
+                <li><a href="@Url.Action("Index", "AccountLogin")">All User</a></li>
+                <li><a href="@Url.Action("EditInfo", "AccountLogin",new {id= user.user.Id})">Your Profile</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Seo <i class="fas fa-sort-up"></i></a>
+            <ul>
+                <li><a href="@Url.Action("SeoTag", "Seo",new {page="home"})">Seo Tags</a></li>
+                <li><a href="@Url.Action("GoogleTag", "Seo")">Google Tags</a></li>
+
+            </ul>
+        </li>
+        @*<li>
+                <a href="#">Warehouses <i class="fas fa-sort-up"></i></a>
+                <ul style="display: block;">
+                    <li><a href="@Url.Action("Create","Warehouse")">Add New</a></li>
+                    <li><a href="@Url.Action("Index","Warehouse")">All Warehoueses</a></li>
+
+                </ul>
+            </li>*@
+        <li>
+            <a href="#">Stores <i class="fas fa-sort-up"></i></a>
+            <ul>
+                <li><a href="@Url.Action("Create", "Store")">Add New</a></li>
+                <li><a href="@Url.Action("Index", "Store")">All Stores</a></li>
+
+            </ul>
+        </li>
+       
+        @*<li>
+                <a href="#">Promotion <i class="fas fa-sort-up"></i></a>
+                <ul>
+                    <li><a href="@Url.Action("Create", "Promotion")">Add New</a></li>
+                    <li><a href="@Url.Action("Index", "Promotion")">All Promotions</a></li>
+
+                </ul>
+            </li>*@
+        @*<li>
+                <a href="#">Catalogue <i class="fas fa-sort-up"></i></a>
+                <ul style="display: block;">
+                    <li><a href="@Url.Action("Create","Catalogue")">Add New</a></li>
+                    <li><a href="@Url.Action("Index","Catalogue")">All Catalogue</a></li>
+
+                </ul>
+            </li>*@
+        <li>
+            <a href="#">Download <i class="fas fa-sort-up"></i></a>
+            <ul style="display: block;">
+                <li><a href="@Url.Action("Create","File")">Add New</a></li>
+                <li><a href="@Url.Action("Index","File")">All File</a></li>
+
+            </ul>
+        </li>
+    </ul>
+</div><!-- left_sidebar -->

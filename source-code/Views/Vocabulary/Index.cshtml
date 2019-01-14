@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+<div id="main_content" class="col-sm-12">
+    <h1>All Vocabulary</h1>
+    <div class="page_action">
+        <a href="@Url.Action("Create","Vocabulary")">Add New</a>
+
+    </div>
+
+     <div class="row wrap_filter" style="margin-top: 10px;">
+      
+        <div class="col-sm-11 right">
+            <input type="text" name="search_Vocabulary" id="txtsearch_Vocabularys" class="form-control">
+
+        </div>
+        <div class="col-sm-1 left">
+
+            <button type="submit" id="search_Vocabularys" class="button btn-sm search_Vocabularys" value="Search"><i class="fas fa-search"></i></button>
+        </div>
+    </div><!-- wrap_filter -->
+    @using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "Vocabulary-result",
+        OnBegin = "VocabularysearchOnBegin",
+        OnSuccess = "VocabularysearchOnSuccess"
+    }, new { @class = "", @id = "formLoadVocabulary" }))
+    {
+
+        <button style="display: none;" type="submit" id="Vocabulary-btsubmit">Search</button>
+    }
+    <div id="Vocabulary-result">
+        @{
+            Html.RenderAction("IndexAjax", "Vocabulary");
+        }
+
+
+    </div>
+    <script>
+
+
+        //#region tdg form
+
+        function Vocabulary_seacrch() {
+            $('#Vocabulary-btsubmit').click();
+        }
+        Vocabulary_seacrch();
+        function VocabularysearchOnBegin() {
+            //fbLoading("#formLoadVocabulary");
+        }
+
+        function VocabularysearchOnSuccess() {
+
+            //fbRemoveLoading("#formLoadVocabulary");
+        }
+        //#endregion
+
+     
+
+    </script>
+</div><!-- main_content -->

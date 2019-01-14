@@ -1,38 +1,272 @@
 ﻿@using System.Configuration
 @model WebApplication1.item
-    @{
-         veebdbEntities db = new veebdbEntities();
+@{
+    veebdbEntities db = new veebdbEntities();
+    var listLanguge = db.countries.Where(x => x.status == 1).ToList();
+    var indexT = 1;
+    var indexT1 = 1;
+}
+
+<ul class="nav nav-tabs">
+    @foreach (var item in listLanguge)
+    {
+        <li class="@(indexT==1?"active":"")"><a data-toggle="tab" href="#@item.language">@item.language</a></li>
+        indexT++;
     }
 
-@Html.TextBoxFor(x => x.ARTNAME, new { @class = "form-control", @placeholder = "Product Name" })
-<span>Link: http://shop.janere.ee/product?Code=123456</span>
 
-<div class="product_group">
-    <label>Description</label>
-    <div class="row">
-        <div class="col-sm-12">
-            @Html.TextAreaFor(x => x.INFO, new { @class = "form-control" })
+</ul>
+<div class="tab-content">
+
+    @foreach (var itemLang in listLanguge)
+    {
+        var guid = Guid.NewGuid().ToString();
+
+        <input type="hidden" name="tblVocabularyArray.Index" value="@(guid)" />
+        <input type="hidden" value="@itemLang.language" name="tblVocabularyArray[@(guid)].language" />
+        <div id="@itemLang.language" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Product Name @itemLang.language</label>
+                        <input type="text" class="form-control" name="tblProductArray[@(guid)].ARTNAME" value="@Model.ARTNAME" />
+
+
+                    </div>
+
+
+                    <span>Link: http://shop.janere.ee/product?Code=123456</span>
+
+                    <div class="product_group">
+                        <label>Description</label>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @Html.TextAreaFor(x => x.INFO, new { @class = "form-control" })
+                                <textarea name="tblProductArray[@(guid)].v" class="form-control">@Model.INFO</textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="product_group">
+                        <label>Product Group</label>
+                        <div class="row">
+                            <div class="col-sm-6">@Html.DropDownList("METAGROUPNO", new SelectList(((List<metagrup>)ViewBag.MetaGroupList), "METAGROUPNO", "METAGROUPNAME", "Select Meta Group"), new { @class = "form-control select2" })</div>
+                            <div class="col-sm-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" id="showGroupByIdMeta">
+                                @{
+                                    Html.RenderAction("_pGetGroupByIdMeta", "Admin");
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="product_group">
+                        <label>Product Image</label>
+                        <div class="row">
+
+                            <div class="col-sm-9">
+                                <ul class="sub_action">
+                                    <li class="active"><a href="#">Upload</a></li>
+                                    <li>
+
+                                        <label for="upload-photo" class="uploadPhoto">Choose from libaray</label>
+
+                                        <input type="file" name="inputfile" id="upload-photo" multiple accept="image/*" />
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <script>
+                                function handleFileSelect(evt) {
+                                    var files = evt.target.files; // FileList object
+
+                                    // Loop through the FileList and render image files as thumbnails.
+                                    for (var i = 0, f; f = files[i]; i++) {
+
+                                        // Only process image files.
+                                        if (!f.type.match('image.*')) {
+                                            continue;
+                                        }
+
+                                        var reader = new FileReader();
+
+                                        // Closure to capture the file information.
+                                        reader.onload = (function(theFile) {
+                                            return function(e) {
+                                                // Render thumbnail.
+                                                var span = document.createElement('div');
+                                                span.setAttribute("class", "col-sm-2 cusDiv");
+                                                span.innerHTML = [
+                                                    '  <a class="delete_action btnDeleteImg" rel="0"><i class="fas fa-times"></i></a><img alt="Janere" class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/> '
+                                                ].join('');
+
+                                                document.getElementById('list').insertBefore(span, null);
+                                                $(".delete_action").on('click', function(e) {
+                                                    var rs = confirm('Do you want delete image ?');
+                                                    if (rs == true) {
+                                                        $(this).parents('div').eq(0).remove();
+                                                    }
+
+                                                });
+                                            };
+                                        })(f);
+
+                                        // Read in the image file as a data URL.
+                                        reader.readAsDataURL(f);
+                                    }
+                                }
+
+                                document.getElementById('upload-photo').addEventListener('change', handleFileSelect, false);
+                            </script>
+
+                            <output id="list"></output>
+                            <output>
+
+                                @{
+                                    var listPicture = db.artlinks.Where(x => x.ARTNO == Model.ARTNO).ToList();
+                                    foreach (var item in listPicture)
+                                    {
+                                        if (!string.IsNullOrEmpty(item.LINK))
+                                        {
+
+                                            <div class="col-sm-2 cusDiv">
+                                                <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
+                                                <img alt="Janere" class="thumb" src="@("/Content/ProductImage/" + item.LINK)" title="@item.LINK">
+                                            </div>
+                                        }
+                                    }
+
+
+
+                                }
+                            </output>
+
+                        </div>
+
+
+                    </div>
+                    <div class="product_group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Best Seller</label>
+                                @Html.DropDownListFor(c => c.IsBestSeller, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                            </div>
+                            <div class="col-sm-6">
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>EXPOR TABLE</label>
+                                @Html.DropDownListFor(c => c.EXPORTABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                            </div>
+                            <div class="col-sm-6">
+                                <label>STOCK ITEM</label>
+                                @Html.DropDownListFor(c => c.STOCKITEM, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>SPECIAL OFFER</label>
+                                @Html.DropDownListFor(c => c.SPECIALOFFER, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                            </div>
+                            <div class="col-sm-6">
+                                <label>AUTHORIZABLE</label>
+                                @Html.DropDownListFor(c => c.AUTHORIZABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>RESTRICTED</label>
+                                @Html.DropDownListFor(c => c.RESTRICTED, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                            </div>
+                            <div class="col-sm-6">
+                                <label>NOTPOST</label>
+                                @Html.DropDownListFor(c => c.NOTPOST, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>NOTADDPOSTAGEFEE</label>
+                                @Html.DropDownListFor(c => c.NOTADDPOSTAGEFEE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                            </div>
+                            <div class="col-sm-6">
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product_group">
+                        <label>Product Detail</label>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+
+                                    @Html.TextBoxFor(x => x.WIDTH, new { @class = "form-control", @placeholder = "WIDTH" })
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.TextBoxFor(x => x.WEIGHT, new { @class = "form-control", @placeholder = "WEIGHT" })
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+
+                                    @Html.TextBoxFor(x => x.HEIGHT, new { @class = "form-control", @placeholder = "HEIGHT" })
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.TextBoxFor(x => x.LEN, new { @class = "form-control", @placeholder = "LEN" })
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div><!-- product_detail -->
+                    @Html.HiddenFor(x => x.ARTNO)
+
+
+                </div>
+
+            </div>
+
+
         </div>
-    </div>
 
-
+        indexT1++;
+    }
 </div>
-<div class="product_group">
-    <label>Product Group</label>
-    <div class="row">
-        <div class="col-sm-6">@Html.DropDownList("METAGROUPNO", new SelectList(((List<metagrup>)ViewBag.MetaGroupList), "METAGROUPNO", "METAGROUPNAME","Select Meta Group"), new { @class = "form-control select2" })</div>
-        <div class="col-sm-6"></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12" id="showGroupByIdMeta">
-          @{
-              Html.RenderAction("_pGetGroupByIdMeta", "Admin");
-          }
-        </div>
-      
-    </div>
 
-</div>
+
+
+
 
 <style>
     .thumb {
@@ -64,191 +298,6 @@
         text-align: center;
     }
 </style>
-<div class="product_group">
-    <label>Product Image</label>
-    <div class="row">
-
-        <div class="col-sm-9">
-            <ul class="sub_action">
-                <li class="active"><a href="#">Upload</a></li>
-                <li>
-
-                    <label for="upload-photo" class="uploadPhoto">Choose from libaray</label>
-                   
-                    <input type="file" name="inputfile" id="upload-photo" multiple accept="image/*" />
-                </li>
-            </ul>
-        </div>
-
-    </div>
-    <div class="row">
-        <script>
-            function handleFileSelect(evt) {
-                var files = evt.target.files; // FileList object
-
-                // Loop through the FileList and render image files as thumbnails.
-                for (var i = 0, f; f = files[i]; i++) {
-
-                    // Only process image files.
-                    if (!f.type.match('image.*')) {
-                        continue;
-                    }
-
-                    var reader = new FileReader();
-
-                    // Closure to capture the file information.
-                    reader.onload = (function (theFile) {
-                        return function (e) {
-                            // Render thumbnail.
-                            var span = document.createElement('div');
-                            span.setAttribute("class", "col-sm-2 cusDiv");
-                            span.innerHTML = [
-                                '  <a class="delete_action btnDeleteImg" rel="0"><i class="fas fa-times"></i></a><img alt="Janere" class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/> '
-                            ].join('');
-                            
-                            document.getElementById('list').insertBefore(span, null);
-                            $(".delete_action").on('click', function (e) {
-                                var rs = confirm('Do you want delete image ?');
-                                if (rs == true) {
-                                    $(this).parents('div').eq(0).remove();
-                                }
-
-                            });
-                        };
-                    })(f);
-
-                    // Read in the image file as a data URL.
-                    reader.readAsDataURL(f);
-                }
-            }
-
-            document.getElementById('upload-photo').addEventListener('change', handleFileSelect, false);
-        </script>
-
-        <output id="list"></output>
-        <output>
-
-            @{
-                var listPicture = db.artlinks.Where(x => x.ARTNO == Model.ARTNO).ToList();
-                foreach (var item in listPicture)
-                {
-                    if (!string.IsNullOrEmpty(item.LINK))
-                    {
-
-                        <div class="col-sm-2 cusDiv">
-                            <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
-                            <img alt="Janere" class="thumb" src="@("/Content/ProductImage/"+item.LINK)" title="@item.LINK">
-                        </div>
-                    }
-                }
-
-
-
-            }
-        </output>
-
-    </div>
-
-
-</div>
-<div class="product_group">
-    <div class="row">
-        <div class="col-sm-6">
-            <label>Best Seller</label>
-            @Html.DropDownListFor(c => c.IsBestSeller, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-        </div>
-        <div class="col-sm-6">
-          
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <label>EXPOR TABLE</label>
-            @Html.DropDownListFor(c => c.EXPORTABLE, new List<SelectListItem> {new SelectListItem {Text = "True", Value = "T"}, new SelectListItem {Text = "False", Value = "F" ,Selected = true}}, new {@class = "form-control select2"})
-        </div>
-        <div class="col-sm-6">
-            <label>STOCK ITEM</label>
-            @Html.DropDownListFor(c => c.STOCKITEM, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F" ,Selected = true } }, new { @class = "form-control select2" })
-
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <label>SPECIAL OFFER</label>
-            @Html.DropDownListFor(c => c.SPECIALOFFER, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F" ,Selected = true} }, new { @class = "form-control select2" })
-        </div>
-        <div class="col-sm-6">
-            <label>AUTHORIZABLE</label>
-            @Html.DropDownListFor(c => c.AUTHORIZABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F" ,Selected = true } }, new { @class = "form-control select2" })
-
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <label>RESTRICTED</label>
-            @Html.DropDownListFor(c => c.RESTRICTED, new List<SelectListItem> {new SelectListItem {Text = "True", Value = "T"}, new SelectListItem {Text = "False", Value = "F" ,Selected = true}}, new {@class = "form-control select2"})
-        </div>
-        <div class="col-sm-6">
-            <label>NOTPOST</label>
-            @Html.DropDownListFor(c => c.NOTPOST, new List<SelectListItem> {new SelectListItem {Text = "True", Value = "T"}, new SelectListItem {Text = "False", Value = "F" ,Selected = true}}, new {@class = "form-control select2"})
-
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <label>NOTADDPOSTAGEFEE</label>
-            @Html.DropDownListFor(c => c.NOTADDPOSTAGEFEE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F" ,Selected = true } }, new { @class = "form-control select2" })
-        </div>
-        <div class="col-sm-6">
-           
-
-        </div>
-    </div>
-</div>
-
-<div class="product_group">
-    <label>Product Detail</label>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="form-group">
-
-                @Html.TextBoxFor(x => x.WIDTH, new {@class = "form-control" , @placeholder = "WIDTH" })
-
-            </div>
-
-            <div class="form-group">
-
-                @Html.TextBoxFor(x => x.WEIGHT, new { @class = "form-control", @placeholder = "WEIGHT" })
-
-            </div>
-         
-      
-
-        </div>
-        <div class="col-sm-6">
-          
-            <div class="form-group">
-
-                @Html.TextBoxFor(x => x.HEIGHT, new { @class = "form-control", @placeholder = "HEIGHT" })
-
-            </div>
-
-            <div class="form-group">
-
-                @Html.TextBoxFor(x => x.LEN, new { @class = "form-control", @placeholder = "LEN" })
-
-            </div>
-
-        </div>
-    </div>
-</div><!-- product_detail -->
-@Html.HiddenFor(x=>x.ARTNO)
-@Html.HiddenFor(x=>x.IsBestSeller)
 <script>
     $(document).ready(function() {
         $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.ARTNO>0 ? Model.ARTNO : 0), function (data) {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
@@ -191,7 +192,7 @@ namespace WebApplication1.Controllers
             try
             {
 
-               
+
                 item.ARTTYPE = 1;
                 item.EXPORTABLE = "";
                 item.ARTCODE = string.IsNullOrEmpty(item.ARTCODE) ? Guid.NewGuid().ToString().Substring(0, 6).ToUpper() : item.ARTCODE;
@@ -264,7 +265,7 @@ namespace WebApplication1.Controllers
                     var metagroupNo = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == groupNo.METAGROUPNO);
                 }
             }
-            
+
             if (item == null)
             {
                 return HttpNotFound();
@@ -273,7 +274,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult GetMetaGroup(int? id)
         {
-           
+
             item item = db.items.Find(id);
             if (item != null && item.GROUPNO != null)
             {
@@ -281,7 +282,7 @@ namespace WebApplication1.Controllers
                 if (groupNo != null && groupNo.METAGROUPNO != null)
                 {
                     var metagroupNo = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == groupNo.METAGROUPNO);
-                    return Json(metagroupNo,JsonRequestBehavior.AllowGet);
+                    return Json(metagroupNo, JsonRequestBehavior.AllowGet);
                 }
             }
             return null;
@@ -545,6 +546,77 @@ namespace WebApplication1.Controllers
             }
             return Json(new { status = _status, mgs = msg });
         }
+        public ActionResult ExportExcel(string[] ids=null,int groupId = 0, int storeId = 0, int stockId = 0, int warehouseId = 0)
+        {
+            var listProduct = db.items.Where(x => x.ARTNO > 0);
+            if (groupId != 0)
+            {
+                listProduct = listProduct.Where(x => x.GROUPNO == groupId);
+            }
+            if (storeId != 0)
+            {
+                listProduct = listProduct.Where(x => x.CATEGORYNO == storeId);
+            }
+            if (stockId != 0)
+            {
+                listProduct = listProduct.Where(x => x.CATEGORYNO == stockId);
+            }
+            if (warehouseId != 0)
+            {
+                listProduct = listProduct.Where(x => x.CATEGORYNO == warehouseId);
+            }
+
+
+            var listAll = (from pro in listProduct
+                           join cate in db.artgrps on pro.GROUPNO equals cate.GROUPNO
+                           select new { tblitem = pro, tblGroup = cate });
+
+
+            var _count = listAll.Count();
+           
+            ViewBag.Total = _count;
+            ViewBag.ViewOf = _count;
+            var db_data = listAll.OrderBy(t => t.tblitem.ARTNO).ToList();
+            foreach (var item in db_data)
+            {
+                var tblPic = db.artlinks.FirstOrDefault(x => x.ARTNO == item.tblitem.ARTNO);
+                item.tblitem.PICTURENAME = tblPic != null ? tblPic.LINK : "";
+
+            }
+
+
+            var _ids = ids.Select(t => int.Parse(t)).ToList();
+           
+            var datas = db_data.Where(x => _ids.Contains(x.tblitem.ARTNO)).Select(t => t.tblitem).ToList();
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment;filename=Contact.xls");
+            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
+            WriteTsv(datas, Response.Output);
+            Response.End();
+            return View();
+        }
+        public void WriteTsv<T>(IEnumerable<T> data, TextWriter output)
+        {
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
+            foreach (PropertyDescriptor prop in props)
+            {
+                output.Write(prop.DisplayName); // header
+                output.Write("\t");
+            }
+            output.WriteLine();
+            foreach (T item in data)
+            {
+                foreach (PropertyDescriptor prop in props)
+                {
+                    output.Write(prop.Converter.ConvertToString(
+                         prop.GetValue(item)));
+                    output.Write("\t");
+                }
+                output.WriteLine();
+            }
+        }
+
+
     }
 }
 
