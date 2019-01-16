@@ -68,7 +68,8 @@
             <div class="product_content">
                 @using (Html.BeginForm("Create", "Checkout", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
                 {
-
+                    @Html.HiddenFor(t=>t.ocid)
+                    @Html.HiddenFor(t => t.paid_key)
                     <div class="row">
                         <div class="col-sm-4">
                             <h3>Shipping Address</h3>
@@ -112,7 +113,7 @@
                             </div>
                             <div class="form-group">
                                 <label>City <span class="required"> * </span></label>
-                                <select id="cityId" class="form-control select2">
+                                <select id="cityId" name="cityid" class="form-control select2">
                                     <option value=''>Select city</option>
                                 </select>
 
@@ -149,7 +150,7 @@
                             <div class="form-group">
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="1" name="checkBilldingShipping"  id="defaultCheck1" checked>
                                     <label class="form-check-label" for="defaultCheck1">
                                         My billding and shipping address are there same
                                     </label>
@@ -162,10 +163,14 @@
 
                                             <td>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                                    <label class="form-check-label" for="exampleRadios1">
-
+                                                    <input class="form-check-input" type="radio" name="payoption" id="payPal" value="PayPal" checked>
+                                                    <label class="form-check-label" for="payPal">
                                                         <img class="icon-payment" src="~/Content/Images/paypal-logo.png" /> Paypal (Braintree)
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="payoption" id="payCOB" value="COB">
+                                                    <label class="form-check-label" for="payCOB">COB
                                                     </label>
                                                 </div>
                                             </td>
@@ -303,6 +308,7 @@
 @section scripts{
     <script>
         $(document).on('change', '#cityId', function () {
+
             GetFeeShipByCity($(this).val());
         });
         $(document).on('click', '.choseShipping', function () {
@@ -312,10 +318,10 @@
             $('#hdOrderTotal').val($(this).val());
             $('.tdShipping').html($(this).val());
             $('.tdOrderTotal').html(parseFloat($(this).val()) + parseFloat(totalPrice));
-           
+
         });
         $('#countryid').on('change', function () {
-            GetCity($(this).val());
+            GetCity($('#countryid').val());
         });
 
         function GetCity(id) {
@@ -326,6 +332,11 @@
                     re += "<option value='" + o.code + "'>" + o.name + "</option>";
                 });
                 $('#cityId').html(re);
+                if (cCountry!="")
+                {
+                    $('#cityId').val(cCountry);
+                    GetFeeShipByCity(cCountry);
+                }
             });
         }
         function GetFeeShipByCity(id) {
@@ -333,7 +344,7 @@
 
                 var re = "";
                 $.each(data.result, function (i, o) {
-                    re += " <tr><td><div class='form-check'><input class='form-check-input choseShipping' type='radio' name='ship' id='ship_" + o.id + "' value='" + o.price + "' checked><label class='form-check-label' for='ship_" + o.id + "'></label> </div></td><td>" + o.price + "</td><td>" + o.name + "</td> </tr>";
+                    re += " <tr><td><div class='form-check'><input class='form-check-input choseShipping' type='radio' name='ship' id='ship_" + o.id + "' value='" + o.price + "' checked><label class='form-check-label' for='ship_" + o.id + "'></label> </div></td><td>@MvcApplication.MoneySymbol" + o.price + "</td><td>" + o.name + "</td> </tr>";
                 });
                 $('.resultfeeShip').html(re);
                 var vlShip = $('.choseShipping').val();
@@ -341,7 +352,7 @@
                 $('#hdOrderTotal').val(vlShip);
                 $('.tdShipping').html(vlShip);
                 $('.tdOrderTotal').html(parseFloat(vlShip) + parseFloat(totalPrice));
-              
+
             });
         }
         $("#submitbutton").on('click', function (e) {
@@ -434,5 +445,10 @@
             invalidHandler: function (form) {
             }
         });
+         var cCountry = "@(Model.cityid.HasValue? Model.cityid .ToString(): "")";
+        if ($('#countryid').val() != "") {
+            GetCity($('#countryid').val());
+        }
+
     </script>
 }
