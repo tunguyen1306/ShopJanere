@@ -127,11 +127,11 @@ namespace WebApplication1.Controllers
                     body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_ResetPassTemplateMail.cshtml");
                     body = body.Replace("##name##", username);
                     body = body.Replace("##activatelink##", activelink);
-                    t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, body);
+                    
                 }
             }
 
-
+t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, body);
 
 
             return t;

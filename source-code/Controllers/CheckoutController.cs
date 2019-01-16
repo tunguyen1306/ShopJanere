@@ -1,14 +1,17 @@
-﻿using PayPal;
-using PayPal.Api;
+﻿
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using PayPal;
+using PayPal.Api;
 using WebApplication1;
 using WebApplication1.Helper;
 using WebApplication1.Models;
@@ -239,8 +242,9 @@ namespace WebApplication1.Controllers
                             var Item = new Item();
                             Item.name = item.Code+" - "+ item.Name;
                             Item.currency = currencyName;
-                            Item.price = (item.Price + (item.Tax/ item.Qty))+"";
-                            Item.quantity = item.Qty+"";
+                            
+                            Item.price = (item.Price + (item.Tax / item.Qty)) + "";
+                            Item.quantity = item.Qty + "";
                             items.Add(Item);
 
                         }
@@ -252,6 +256,18 @@ namespace WebApplication1.Controllers
                             Item.price = order.feeshipping + "";
                             Item.quantity =  "1";
                             items.Add(Item);
+                        }
+                        if (Cart.promotion != null)
+                        {
+                            if (Cart.promotion.TYPENO ==0)
+                            {
+                                var Item = new Item();
+                                Item.name = "Discount Promotion";
+                                Item.currency = currencyName;
+                                Item.price ="-"+ Cart.PromotionTotal + "";
+                                Item.quantity = "1";
+                                items.Add(Item);
+                            }
                         }
                         cartAmount = Cart.CartTotal+Cart.taxTotal+ order.feeshipping??0;
                         cartAmount = Math.Round(cartAmount, 2);
@@ -301,6 +317,10 @@ namespace WebApplication1.Controllers
                                 paypalURL = "ERROR: " + ex.Response;
                             }
                         }
+                        else
+                        {
+                            
+                        }
                        
                     }
                     catch (DbEntityValidationException e)
@@ -323,7 +343,33 @@ namespace WebApplication1.Controllers
 
             return View(order);
         }
-       
+        public bool SendTemplateEmail(string recepientEmail, string username, string key, string Subject, int type)
+        {
+            bool t = false;
+            //Type =1 MailOrder
+            //Type =2 ForgetPass
+            string body = string.Empty;
+            var activelink = "";
+        
+            if (type == 1)
+            {
+                var check = db.users.ToList().FirstOrDefault(x => x.email == recepientEmail.ToLower());
+                if (check != null)
+                {
+                   
+
+                    body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_ResetPassTemplateMail.cshtml");
+                    body = body.Replace("##name##", username);
+                  
+                    
+                }
+            }
+
+t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, body);
+
+
+            return t;
+        }
         public ActionResult PayPalSuccess(string paid_key, string paymentId, string token, string PayerID)
         {
             var order=  db.orders.Where(t => t.paid_key == paid_key).FirstOrDefault();
