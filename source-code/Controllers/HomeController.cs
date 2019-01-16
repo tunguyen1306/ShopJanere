@@ -6,7 +6,10 @@ using System.Web.Mvc;
 using WebApplication1.Models;
 using PagedList;
 using PagedList.Mvc;
-
+using WebApplication1.Helper;
+using PayPal;
+using PayPal.Api;
+using UrlHelper = WebApplication1.Helper.UrlHelper;
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
@@ -840,8 +843,81 @@ namespace WebApplication1.Controllers
             return RedirectToAction("UpdateCart", "Home");
         }
         public ActionResult Checkout()
-        {
+        {/*
+            string currencyName = "USD";
+            ordersetting ordersetting=  data.ordersettings.Where(t => t.status == 1).FirstOrDefault();
+            if (ordersetting!=null)
+            {
+                currencyName = ordersetting.name;
+            }
+            string randomKey = "";
+            var paypayconfig = new PayPalConfiguration();
+            var apiContext = paypayconfig.GetAPIContext();
+            string paypalURL = "";
+            double cartAmount = 0;
+            var itemList = new ItemList();
+            var items = new List<Item>();
+            double amt = 0;
+            var Item = new Item();
+            Item.name = "Subscription";
+            Item.currency = currencyName;
+            Item.price = amt.ToString();
+            Item.quantity = "1";
+            items.Add(Item);
+            cartAmount += amt;
 
+            itemList.items = items;
+            cartAmount = Math.Round(cartAmount, 2);
+
+            var payer = new Payer() { payment_method = "paypal" };
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = UrlHelper.Root + "Home/Checkout?" + UrlHelper.ToQueryString(new { type = "" }),
+                return_url = UrlHelper.Root + "Home/CheckoutSuccess?" + UrlHelper.ToQueryString(new { randomkey = randomKey, type = "" })
+            };
+            var paypalAmount = new Amount() { currency = currencyName, total = cartAmount.ToString() };
+
+            var transactionList = new List<PayPal.Api.Transaction>();
+            PayPal.Api.Transaction transaction = new PayPal.Api.Transaction();
+            transaction.amount = paypalAmount;
+            transaction.item_list = itemList;
+            transactionList.Add(transaction);
+
+
+            var payment = new Payment()
+            {
+                intent = "Sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls
+            };
+
+            try
+            {
+                var createdPayment = payment.Create(apiContext);
+                var links = createdPayment.links.GetEnumerator();
+                while (links.MoveNext())
+                {
+                    var link = links.Current;
+                    if (link.rel.ToLower().Trim().Equals("approval_url"))
+                    {
+                        paypalURL = link.href;
+                    }
+                }
+
+            }
+            catch (PaymentsException ex)
+            {
+                paypalURL = "ERROR: " + ex.Response;
+            }
+            */
+
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Checkout(string type)
+        {
             return View();
         }
         public ActionResult About()
