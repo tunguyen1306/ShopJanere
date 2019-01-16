@@ -7,6 +7,7 @@ namespace WebApplication1.Models
 {
     public class ShoppingCart
     {
+        public string paid_key { get; set; }
         public List<CartItem> cartItem = new List<CartItem>();
         public float taxTotal { get; set; }
         public float CartTotal { get; set; }
