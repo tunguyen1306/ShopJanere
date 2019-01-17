@@ -177,6 +177,7 @@ namespace WebApplication1.Controllers
                             order.b_addr1 = string.IsNullOrEmpty(order.d_addr1) ? order.addr1 : order.d_addr1;                           
 
                         }
+                        order.status = "2";
                         if (order.payoption== "PayPal")
                         {
                             order.paid_status = 2;
@@ -184,6 +185,7 @@ namespace WebApplication1.Controllers
                         if (order.payoption == "COB")
                         {
                             order.paid_status = 1;
+                           
                         }
                         ShoppingCart Cart = new ShoppingCart();
                         Cart = (ShoppingCart)Session["ShoppingCart"];
@@ -377,6 +379,7 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
             {
                 return HttpNotFound();
             }
+            order.status = "5";
             order.paid_key = order.paid_key + "_" + token + "_" + paymentId + "_" + PayerID;
             order.paid_status = 3;
             db.Entry(order).State = EntityState.Modified;
