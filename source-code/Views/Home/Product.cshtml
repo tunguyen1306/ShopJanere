@@ -106,27 +106,89 @@
                 <div class="col-lg-4"><span style="font-weight:bold">Unit:</span> @Model.UNITNAME</div>
                 <div class="col-lg-4"><span style="font-weight:bold">Payment:</span> @Model.PAYMENTTERM</div>
                 <div class="col-lg-12"><span style="font-weight:bold">Unit Desc:</span> @Model.UNITDESCR</div>
-                <div class="col-lg-12" style="padding:30px 15px;">
-                    <span style="font-weight: bold; color: #000c38;margin-right:10px;">Quantity:</span>
-                    <input type="button" value="-" id="qtydown" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d;padding:0px; ">
-                    <input type="text" id=qty name=qty[0] value="1" style="width: 55px; height: 30px; color: #000c38;text-align:center;background-color:white; ">
-                    <input type="button" value="+" id="qtyup" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d; padding: 0px;" />
+                <div class="col-lg-12"><span style="font-weight:bold">Stocks:</span></div>
+                <div class="col-lg-12" style="display: inline-block;">
+                    @{ 
+                        List<stockcod> listStock = ViewBag.StockName != null ? (List<stockcod>)ViewBag.StockName : new List<stockcod>();
+                        List<stock> listStockItem = ViewBag.Stock != null ? (List<stock>)ViewBag.Stock : new List<stock>();
+                        var indexStock =0;
+                        var cItem =(stockcod)null;
+                        foreach (var item in listStock)
+                        {
+                            var _value = listStockItem.Where(t => t.STOCKNO == item.STOCKNO).Sum(t => t.VOLUME);
+                            if (_value > 0)
+                            {
+                                cItem = item;
+                                indexStock++;
+                            }
+                            <div style="text-align: center;" class="stock col-lg-4 @(_value>0?"active":"") @(indexStock==1 && _value>0?"choose":"")" ><span class="valStock" onclick="stockChoose(this)" style="    padding: 5px;
+    background: aqua;
+    display: inline-block;
+    margin: 5px 0px  ;  width: 110px;" data-max-value="@(_value.ToString("n0"))"  data-name="@(item.STOCKNAME)"  data-id="@(item.STOCKNO)">@item.STOCKNAME (@(_value.ToString("n0")))</span></div>
+                                
+                        }
+                    }
+                    <input type="hidden" id="sName" name="sName[0]" value="@(cItem!=null?cItem.STOCKNAME:"")"/>
+                    <input type="hidden" id="sNo" name="sNo[0]" value="@(cItem!=null?cItem.STOCKNO.ToString():"")" />
                 </div>
-
-                <div class="col-lg-12"><input type="submit" value="Add to Cart" style="width: 230px; height: 55px; color: white; background-color: #002f6c;font-size:24px;" /></div>
+                    <div class="col-lg-12 hasVolume" style="padding:15px 15px;@(indexStock==0?"display:none":"")">
+                        <span style="font-weight: bold; color: #000c38;margin-right:10px;">Quantity:</span>
+                        <input type="button" value="-" id="qtydown" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d;padding:0px; ">
+                        <input type="text" id=qty name=qty[0] value="1" style="width: 55px; height: 30px; color: #000c38;text-align:center;background-color:white; ">
+                        <input type="button" value="+" id="qtyup" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d; padding: 0px;" />
+                    </div>
+                    <div class="col-lg-12 hasVolume"  style="@(indexStock==0?"display:none":"")">
+                        <input type="submit" value="Add to Cart" style="width: 230px; height: 55px; color: white; background-color: #002f6c;font-size:24px;">
+                    </div>
+                 <div class="col-lg-12 noVolume" style="@(indexStock==0?"display:block;":"display:none;")
+    font-size: 20px;
+    font-weight: bold;
+    color: red;">
+                     No item in stocks
+                 </div>   
+                
                 <div class="col-lg-12">
-                    <a href="#">
-                        <img alt="Janere" src="~/Content/body/others/addtocompare.jpg" />
-                    </a>
-                    <a href="mailto:">
-                        <img alt="Janere" src="~/Content/body/others/emailtofriend.jpg" />
-                    </a>
+                        <a href="#">
+                            <img alt="Janere" src="~/Content/body/others/addtocompare.jpg" />
+                        </a>
+                        <a href="mailto:">
+                            <img alt="Janere" src="~/Content/body/others/emailtofriend.jpg" />
+                        </a>
+                    </div>
                 </div>
-            </div>
             <!-- <img alt="Janere" src="~/Content/menu/down-arrow.png" /><img alt="Janere" src="~/Content/menu/vertical-arrow.png" />-->
         </div>
-    }
+                        }
 </div>
+<style>
+    .stock span {
+        cursor:pointer;
+    }
+    .stock.active span {
+        background-color: blue !important;
+        color: white;
+    }
+    .stock.choose span {
+        background-color: darkred !important;
+        color: white;
+    }
+</style>
+<script>
+    function stockChoose(el)
+    {
+        $('.stock').removeClass('choose');
+        $('.hasVolume').hide();
+        $('.noVolume').hide();
+        if ($(el).parents('div').eq(0).hasClass('active')) {
+            $('.hasVolume').show();
+        } else {
+            $('.noVolume').show();
+        }
+        $(el).parents('div').eq(0).addClass('choose');
+        $('#sName').val($(el).attr('data-name'));
+        $('#sNo').val($(el).attr('data-id'));
+    }
+</script>
 <div class="row">
     <div class="col-lg-12" style="margin: 30px 0px;">
 

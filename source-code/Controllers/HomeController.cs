@@ -156,7 +156,10 @@ namespace WebApplication1.Controllers
             var result = data.items.Where(m => m.ARTCODE == Code).FirstOrDefault();
             if (result != null)
             {
-
+                var _stock = data.stocks.Where(t => t.ARTNO == result.ARTNO).ToList();
+                ViewBag.Stock = _stock;
+                var listStocID = _stock.Select(t => t.STOCKNO).Distinct().ToList();
+                ViewBag.StockName = data.stockcods.Where(t => listStocID.Contains(t.STOCKNO)).ToList();
                 ViewBag.MetaTitle = result.ARTNAME;
                 ViewBag.MetaDescription = result.ARTNAME;
                 ViewBag.Link = "http://shop.janere.ee/Home/Product?Code=" + result.ARTNO;
@@ -647,7 +650,7 @@ namespace WebApplication1.Controllers
             }
             return View();
         }
-        public ActionResult UpdateCart(string[] chkbox, int[] qty, string[] code, float[] price, int? Page_No, int? Page_Size)
+        public ActionResult UpdateCart(string[] chkbox, int[] qty, string[] code, float[] price,string[] sName,int[] sNo, int? Page_No, int? Page_Size)
         {
             ViewBag.MetaTitle = "Home";
             ViewBag.MetaDescription = "Home - janere";
@@ -713,6 +716,19 @@ namespace WebApplication1.Controllers
                         newline.Price = price[i];
                         newline.LineTotal = qty[i] * price[i];
                         newline.Tax = (qty[i] * price[i]) * 0.1f;
+                        try
+                        {
+                            newline.StockName = sName[i];
+                            newline.StockId = sNo[i];
+                          
+
+                        }
+                        catch (Exception)
+                        {
+
+                            
+                        }
+
                         Cart.cartItem.Add(newline);
                     }
                     else // already existed in cart => update item info
@@ -769,6 +785,16 @@ namespace WebApplication1.Controllers
                         newline.Price = string.IsNullOrEmpty(priceCheckbox) ? 0 : float.Parse(priceCheckbox);
                         newline.LineTotal = newline.Qty * newline.Price;
                         newline.Tax = newline.LineTotal * 0.1f;
+                        try
+                        {
+                            newline.StockName = sName[i];
+                            newline.StockId = sNo[i];
+                        }
+                        catch (Exception)
+                        {
+
+
+                        }
                         Cart.cartItem.Add(newline);
                     }
                     else // already existed in cart => update item info
@@ -803,6 +829,30 @@ namespace WebApplication1.Controllers
 
                     }
                 }
+            }
+            var listItemCode = Cart.cartItem.Select(t => t.Code);
+            var listItem = data.items.Where(t=> listItemCode.Contains(t.ARTCODE)).ToList();
+            var listIDStock = Cart.cartItem.Where(t => t.StockId > 0).Select(t => t.StockId).ToList();
+            var listStock = data.stocks.Where(t=> listIDStock.Contains(t.STOCKNO)).ToList();
+            foreach (var item in Cart.cartItem)
+            {
+                if (item.StockId>0 && !string.IsNullOrWhiteSpace( item.Code))
+                {
+                    try
+                    {
+                        var _item = listItem.FirstOrDefault(t => t.ARTCODE == item.Code);
+                        var cStock = listStock.Where(t => t.ARTNO == _item.ARTNO && t.STOCKNO == item.StockId);
+                        item.StockMaxValue = (int)cStock.Sum(t => t.VOLUME);
+                    }
+                    catch (Exception)
+                    {
+
+                       
+                    }
+                }
+               
+
+
             }
             List<CartItem> listItemForPaging = new List<CartItem>();
             int No_Of_Page = (Page_No ?? 1);

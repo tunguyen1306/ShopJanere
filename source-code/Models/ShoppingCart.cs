@@ -30,7 +30,10 @@ namespace WebApplication1.Models
         public int Qty { get; set; }
         public float LineTotal { get; set; }
         public float Tax { get; set; }
-    public CartItem()
+        public string StockName { get; set; }
+        public int StockId{ get; set; }
+        public int StockMaxValue { get; set; }
+        public CartItem()
         {
             Code = "";
             Name = "";

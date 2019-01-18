@@ -105,6 +105,13 @@ function bulkitemup(i)
     
     iNum++;
     $("#" + i).val(iNum);
+
+    var valueStock = $("#" + i).parents('div.row').find('.valStock').val();
+    if (valueStock == 0) {
+        $("#" + i).val(1);
+    } else {
+        $("#" + i).val(iNum > valueStock ? valueStock : iNum);
+    }
 }
 function bulkitemdown(i)
 {
@@ -121,7 +128,8 @@ function bulkitemdown(i)
 $("#qtyup").click(function () {
     var iNum = parseInt($("#qty").val());
     iNum++;
-    $("#qty").val(iNum);
+    var maxValue = parseInt($('.choose .valStock').attr('data-max-value'));
+    $("#qty").val(iNum > maxValue ? maxValue == 0 ? 1 : maxValue : iNum);
 });
 function InitSearchValue()
 {
