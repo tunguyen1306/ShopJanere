@@ -41,14 +41,19 @@
                             BarCode
                         </div>
                     </div>
-                    <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
-                        <div class="col-lg-3" style="width: 100%; padding: 10px 15px;; font-weight: bold;">
+                    <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                        <div class="col-lg-2" style="width: 100%; padding: 10px 15px;; font-weight: bold;">
                             Product Name
                         </div>
                     </div>
                     <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
                         <div class="col-lg-3" style="width: 100%; padding: 10px 15px; font-weight: bold;">
                             Description
+                        </div>
+                    </div>
+                    <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                        <div class="col-lg-1" style="width: 100%; padding: 10px 15px; font-weight: bold;">
+                            Stock
                         </div>
                     </div>
                     <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
@@ -70,9 +75,12 @@
                 </div>
                 for (int i = 0; i < Model.Count(); i++)
                 {
+
                     WebApplication1.Models.CartItem cartItem = Model[i];
                     int index = i + 1;
                     string background = "background-color:#e4e4e4;";
+                    <input type="hidden" name="sName[@i]" value="@cartItem.StockName" />
+                    <input type="hidden" name="sNo[@i]" value="@cartItem.StockId" />
                     <div class="row" style="margin:0px;text-align:left; @if (i % 2 == 0)
                                                                 {@background }">
                         <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
@@ -86,14 +94,20 @@
                                 <input type="hidden" name="code[@i]" value="@cartItem.Code" />
                             </div>
                         </div>
-                        <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
-                            <div class="col-lg-3" style="width: 100%; padding: 10px 15px;">
+                        <div class="col-lg-2" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                            <div class="col-lg-2" style="width: 100%; padding: 10px 15px;">
                                 @cartItem.Name
                             </div>
                         </div>
                         <div class="col-lg-3" style="border-right: 1px solid #f4f4f4; padding: 0px;">
                             <div class="col-lg-3" style="width: 100%; padding: 10px 15px;">
                                 @cartItem.Name
+                            </div>
+                        </div>
+                        <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
+                            <div class="col-lg-1" style="width: 100%; padding: 10px 15px;">
+                                @cartItem.StockName (@cartItem.StockMaxValue)
+                                <input type="hidden" class="valStock" value="@cartItem.StockMaxValue" />
                             </div>
                         </div>
                         <div class="col-lg-1" style="border-right: 1px solid #f4f4f4; padding: 0px;">
@@ -119,7 +133,7 @@
                         <div class="col-lg-1" style="padding: 0px;">
                             <div class="col-lg-1" style="width: 100%; padding: 10px 15px;text-align:right;">
                                 <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img alt="Janere" src="~/Content/cart_delete.png" /></a>
-                                <a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img alt="Janere" src="~/Content/cart_edit.png" /></a>
+                                @*<a href="@Url.Action("RemoveCartItem", "Home", new { code = @cartItem.Code.ToString() })"><img alt="Janere" src="~/Content/cart_edit.png" /></a>*@
                             </div>
                         </div>
                     </div>

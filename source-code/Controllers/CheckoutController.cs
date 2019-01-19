@@ -229,7 +229,27 @@ namespace WebApplication1.Controllers
                         var apiContext = paypayconfig.GetAPIContext();
 
                         var _orderdetails =  db.orderdetails.Where(t => t.ocid == order.ocid).ToList();
+                        var listItems = _orderdetails.Select(t => t.ocdetailcode);
+                        var _items= db.items.Where(t => listItems.Contains(t.ARTCODE)).ToList();
+                        foreach (var item in _orderdetails)
+                        {
+                          
+                            if (item.stockId.HasValue && item.stockId.Value>0)
+                            {
+                               var _item=  _items.FirstOrDefault(t => t.ARTCODE == item.ocdetailcode);
+                                if (_item!=null)
+                                { 
+                                   var _stock= db.stocks.Where(t => t.ARTNO == item.itemId && t.STOCKNO == item.stockId).FirstOrDefault();
+                                    _stock.VOLUME += item.ocdetailqty.Value;
+                                    db.Entry(_stock).State = EntityState.Modified;
+                                }
+                               
+                            }
+                            
+                        }
                         db.orderdetails.RemoveRange(_orderdetails);
+                        var _listItems = Cart.cartItem.Select(t => t.Code);
+                        var __items = db.items.Where(t => _listItems.Contains(t.ARTCODE)).ToList();
                         foreach (var item in Cart.cartItem)
                         {
                             orderdetail od = new orderdetail();
@@ -239,6 +259,19 @@ namespace WebApplication1.Controllers
                             od.ocdetailprice = item.Price;
                             od.ocdetailqty = item.Qty;
                             od.ocdetailgst = item.Tax/ item.Qty;
+                            od.stockId = item.StockId;
+                            if (item.StockId>0)
+                            {
+                                var _item = __items.FirstOrDefault(t => t.ARTCODE == od.ocdetailcode);
+                                if (_item != null)
+                                {
+                                    var _stock = db.stocks.Where(t => t.ARTNO == _item.ARTNO && t.STOCKNO == item.StockId).FirstOrDefault();
+                                    _stock.VOLUME -= item.Qty;
+                                    db.Entry(_stock).State = EntityState.Modified;
+                                    od.itemId = _item.ARTNO;
+                                }
+
+                            }
                             db.orderdetails.Add(od);
 
                             var Item = new Item();
