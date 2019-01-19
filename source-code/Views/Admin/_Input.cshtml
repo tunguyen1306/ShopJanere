@@ -1,5 +1,6 @@
 ﻿@using System.Configuration
-@model WebApplication1.item
+@using System.Linq
+@model WebApplication1.Models.AllModel
 @{
     veebdbEntities db = new veebdbEntities();
     var listLanguge = db.countries.Where(x => x.status == 1).ToList();
@@ -22,15 +23,15 @@
     {
         var guid = Guid.NewGuid().ToString();
 
-        <input type="hidden" name="tblVocabularyArray.Index" value="@(guid)" />
-        <input type="hidden" value="@itemLang.language" name="tblVocabularyArray[@(guid)].language" />
+        <input type="hidden" name="tblProductArray.Index" value="@(guid)" />
+        <input type="hidden" value="@itemLang.language" name="tblProductArray[@(guid)].CodeLanguage" />
         <div id="@itemLang.language" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
 
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label>Product Name @itemLang.language</label>
-                        <input type="text" class="form-control" name="tblProductArray[@(guid)].ARTNAME" value="@Model.ARTNAME" />
+                        <input type="text" class="form-control" name="tblProductArray[@(guid)].ARTNAME" value="@Model.tblitem.ARTNAME" />
 
 
                     </div>
@@ -39,53 +40,72 @@
                     <span>Link: http://shop.janere.ee/product?Code=123456</span>
 
                     <div class="product_group">
-                        <label>Description</label>
+                        <label>Description @itemLang.language</label>
                         <div class="row">
                             <div class="col-sm-12">
-                                @Html.TextAreaFor(x => x.INFO, new { @class = "form-control" })
-                                <textarea name="tblProductArray[@(guid)].v" class="form-control">@Model.INFO</textarea>
+
+                                <textarea name="tblProductArray[@(guid)].INFO" class="form-control">@Model.tblitem.INFO</textarea>
                             </div>
                         </div>
 
 
                     </div>
-                    <div class="product_group">
-                        <label>Product Group</label>
-                        <div class="row">
-                            <div class="col-sm-6">@Html.DropDownList("METAGROUPNO", new SelectList(((List<metagrup>)ViewBag.MetaGroupList), "METAGROUPNO", "METAGROUPNAME", "Select Meta Group"), new { @class = "form-control select2" })</div>
-                            <div class="col-sm-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12" id="showGroupByIdMeta">
-                                @{
-                                    Html.RenderAction("_pGetGroupByIdMeta", "Admin");
-                                }
-                            </div>
-
-                        </div>
-
-                    </div>
 
 
-                    <div class="product_group">
-                        <label>Product Image</label>
-                        <div class="row">
 
-                            <div class="col-sm-9">
-                                <ul class="sub_action">
-                                    <li class="active"><a href="#">Upload</a></li>
-                                    <li>
 
-                                        <label for="upload-photo" class="uploadPhoto">Choose from libaray</label>
 
-                                        <input type="file" name="inputfile" id="upload-photo" multiple accept="image/*" />
-                                    </li>
-                                </ul>
-                            </div>
+                </div>
 
-                        </div>
-                        <div class="row">
-                            <script>
+            </div>
+
+
+        </div>
+
+        indexT1++;
+    }
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="product_group">
+            <label>Product Group</label>
+            <div class="row">
+                <div class="col-sm-6">@Html.DropDownList("METAGROUPNO", new SelectList(((List<metagrup>)ViewBag.MetaGroupList), "METAGROUPNO", "METAGROUPNAME", "Select Meta Group"), new { @class = "form-control select2" })</div>
+                <div class="col-sm-6"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" id="showGroupByIdMeta">
+                    @{
+                    Html.RenderAction("_pGetGroupByIdMeta", "Admin");
+                    }
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product_group">
+            <label>Product Image</label>
+            <div class="row">
+
+                <div class="col-sm-9">
+                    <ul class="sub_action">
+                        <li class="active"><a href="#">Upload</a></li>
+                        <li>
+
+                            <label for="upload-photo" class="uploadPhoto">Choose from libaray</label>
+
+                            <input type="file" name="inputfile" id="upload-photo" multiple accept="image/*" />
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="row">
+                <script>
                                 function handleFileSelect(evt) {
                                     var files = evt.target.files; // FileList object
 
@@ -126,145 +146,133 @@
                                 }
 
                                 document.getElementById('upload-photo').addEventListener('change', handleFileSelect, false);
-                            </script>
+                </script>
 
-                            <output id="list"></output>
-                            <output>
+                <output id="list"></output>
+                <output>
 
-                                @{
-                                    var listPicture = db.artlinks.Where(x => x.ARTNO == Model.ARTNO).ToList();
-                                    foreach (var item in listPicture)
-                                    {
-                                        if (!string.IsNullOrEmpty(item.LINK))
-                                        {
+                    @{
+                    var listPicture = db.artlinks.Where(x => x.ARTNO == Model.tblitem.ARTNO).ToList();
+                    foreach (var item in listPicture)
+                    {
+                        if (!string.IsNullOrEmpty(item.LINK))
+                        {
 
-                                            <div class="col-sm-2 cusDiv">
-                                                <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
-                                                <img alt="Janere" class="thumb" src="@("/Content/ProductImage/" + item.LINK)" title="@item.LINK">
-                                            </div>
-                                        }
-                                    }
-
-
-
-                                }
-                            </output>
-
-                        </div>
-
-
-                    </div>
-                    <div class="product_group">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Best Seller</label>
-                                @Html.DropDownListFor(c => c.IsBestSeller, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-                            </div>
-                            <div class="col-sm-6">
-
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>EXPOR TABLE</label>
-                                @Html.DropDownListFor(c => c.EXPORTABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-                            </div>
-                            <div class="col-sm-6">
-                                <label>STOCK ITEM</label>
-                                @Html.DropDownListFor(c => c.STOCKITEM, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>SPECIAL OFFER</label>
-                                @Html.DropDownListFor(c => c.SPECIALOFFER, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-                            </div>
-                            <div class="col-sm-6">
-                                <label>AUTHORIZABLE</label>
-                                @Html.DropDownListFor(c => c.AUTHORIZABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>RESTRICTED</label>
-                                @Html.DropDownListFor(c => c.RESTRICTED, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-                            </div>
-                            <div class="col-sm-6">
-                                <label>NOTPOST</label>
-                                @Html.DropDownListFor(c => c.NOTPOST, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>NOTADDPOSTAGEFEE</label>
-                                @Html.DropDownListFor(c => c.NOTADDPOSTAGEFEE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
-                            </div>
-                            <div class="col-sm-6">
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product_group">
-                        <label>Product Detail</label>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-
-                                    @Html.TextBoxFor(x => x.WIDTH, new { @class = "form-control", @placeholder = "WIDTH" })
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    @Html.TextBoxFor(x => x.WEIGHT, new { @class = "form-control", @placeholder = "WEIGHT" })
-
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-sm-6">
-
-                                <div class="form-group">
-
-                                    @Html.TextBoxFor(x => x.HEIGHT, new { @class = "form-control", @placeholder = "HEIGHT" })
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    @Html.TextBoxFor(x => x.LEN, new { @class = "form-control", @placeholder = "LEN" })
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div><!-- product_detail -->
-                    @Html.HiddenFor(x => x.ARTNO)
-
-
+                <div class="col-sm-2 cusDiv">
+                    <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
+                    <img alt="Janere" class="thumb" src="@("/Content/ProductImage/" + item.LINK)" title="@item.LINK">
                 </div>
+                        }
+                    }
+
+
+
+                    }
+                </output>
 
             </div>
 
 
         </div>
+        <div class="product_group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Best Seller</label>
+                    @Html.DropDownListFor(c => c.tblitem.IsBestSeller, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                </div>
+                <div class="col-sm-6">
 
-        indexT1++;
-    }
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>EXPOR TABLE</label>
+                    @Html.DropDownListFor(c => c.tblitem.EXPORTABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                </div>
+                <div class="col-sm-6">
+                    <label>STOCK ITEM</label>
+                    @Html.DropDownListFor(c => c.tblitem.STOCKITEM, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>SPECIAL OFFER</label>
+                    @Html.DropDownListFor(c => c.tblitem.SPECIALOFFER, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                </div>
+                <div class="col-sm-6">
+                    <label>AUTHORIZABLE</label>
+                    @Html.DropDownListFor(c => c.tblitem.AUTHORIZABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>RESTRICTED</label>
+                    @Html.DropDownListFor(c => c.tblitem.RESTRICTED, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                </div>
+                <div class="col-sm-6">
+                    <label>NOTPOST</label>
+                    @Html.DropDownListFor(c => c.tblitem.NOTPOST, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>NOTADDPOSTAGEFEE</label>
+                    @Html.DropDownListFor(c => c.tblitem.NOTADDPOSTAGEFEE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                </div>
+                <div class="col-sm-6">
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="product_group">
+            <label>Product Detail</label>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(x => x.tblitem.WIDTH, new { @class = "form-control", @placeholder = "WIDTH" })
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(x => x.tblitem.WEIGHT, new { @class = "form-control", @placeholder = "WEIGHT" })
+
+                    </div>
+
+
+
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(x => x.tblitem.HEIGHT, new { @class = "form-control", @placeholder = "HEIGHT" })
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(x => x.tblitem.LEN, new { @class = "form-control", @placeholder = "LEN" })
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- product_detail -->
+        @Html.HiddenFor(x => x.tblitem.ARTNO)
+    </div>
 </div>
-
-
 
 
 
@@ -299,118 +307,118 @@
     }
 </style>
 <script>
-    $(document).ready(function() {
-        $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.ARTNO>0 ? Model.ARTNO : 0), function (data) {
-            $('#METAGROUPNO').val(data.METAGROUPNO);
-            onPageChange(data.METAGROUPNO);
-            setTimeout(function() {
-                $('#radio_' + @(Model.ARTNO>0 ? Model.GROUPNO : 0)).attr('checked','checked');
-            }, 1000);
-        });
-    });
-    setTimeout(function () {
-
-        CKEDITOR.replace('INFO', { height: '350px' });
-
-
-
-    }, 200);
-    $(".delete_action").on('click', function (e) {
-        var rs = confirm('Do you want delete image ?');
-        if (rs == true) {
-            $(this).parents('div').eq(0).remove();
-        }
-        var idPic = $(this).attr('rel');
-        if (idPic!=0) {
-            $.get('@Url.Action("DeleteImg", "Admin")?id=' + idPic, function (data) {
-
-
+            $(document).ready(function() {
+                $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.ARTNO : 0), function (data) {
+                    $('#METAGROUPNO').val(data.METAGROUPNO);
+                    onPageChange(data.METAGROUPNO);
+                    setTimeout(function() {
+                        $('#radio_' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.GROUPNO : 0)).attr('checked','checked');
+                    }, 1000);
+                });
             });
-        }
+            setTimeout(function () {
 
-    });
-    $('#METAGROUPNO').on('change', function () {
-        var id = $(this).val();
-        onPageChange(id);
-    });
-    function onPageChange(el) {
-
-        $.get('@Url.Action("_pGetGroupByIdMeta", "Admin")?id=' + el, function (data) {
-            $('#showGroupByIdMeta').html(data);
-
-        });
-    }
-    $('#validation-form').validate({
-        errorElement: 'div',
-        errorClass: 'help-block',
-        focusInvalid: false,
-        ignore: "",
-        rules: {
-            ARTNAME: {
-                required: true
-            }
+                CKEDITOR.replace('INFO', { height: '350px' });
 
 
 
-        },
-
-        messages: {
-            ARTNAME: "Product Name do not empty"
-
-        },
-
-
-        highlight: function (e) {
-
-            if ($(e).is('.file-upload')) {
-                $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
-            } else {
-                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-            }
+            }, 200);
+            $(".delete_action").on('click', function (e) {
+                var rs = confirm('Do you want delete image ?');
+                if (rs == true) {
+                    $(this).parents('div').eq(0).remove();
+                }
+                var idPic = $(this).attr('rel');
+                if (idPic!=0) {
+                    $.get('@Url.Action("DeleteImg", "Admin")?id=' + idPic, function (data) {
 
 
-        },
-
-        success: function (e) {
-            if ($(e).is('.file-upload')) {
-                $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
-                $(e).parents('div').eq(1).find('.form-group .help-block').remove();
-            }
-            else {
-                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-                $(e).closest('.form-group').find('.help-block').remove();
-            }
-
-        },
-
-        errorPlacement: function (error, element) {
-
-            if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-                var controls = element.closest('div[class*="col-"]');
-                if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
-                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-            }
-            else if (element.is('.select2') || element.is('.js-select2-1')) {
-                if (element.parents('div').eq(0).is('.input-group')) {
-                    error.insertAfter(element.parents('div').eq(0));
-                } else {
-                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    });
                 }
 
+            });
+            $('#METAGROUPNO').on('change', function () {
+                var id = $(this).val();
+                onPageChange(id);
+            });
+            function onPageChange(el) {
 
-            }
-            else if (element.is('.file-upload')) {
-                error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
-            }
-            else if (element.is('.chosen-select')) {
-                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-            }
-            else error.insertAfter(element);
-        },
+                $.get('@Url.Action("_pGetGroupByIdMeta", "Admin")?id=' + el, function (data) {
+                    $('#showGroupByIdMeta').html(data);
 
-        submitHandler: function (form) {
-        },
-        invalidHandler: function (form) {
-        }
-    });
+                });
+            }
+            $('#validation-form').validate({
+                errorElement: 'div',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    ARTNAME: {
+                        required: true
+                    }
+
+
+
+                },
+
+                messages: {
+                    ARTNAME: "Product Name do not empty"
+
+                },
+
+
+                highlight: function (e) {
+
+                    if ($(e).is('.file-upload')) {
+                        $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+                    } else {
+                        $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                    }
+
+
+                },
+
+                success: function (e) {
+                    if ($(e).is('.file-upload')) {
+                        $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                        $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+                    }
+                    else {
+                        $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                        $(e).closest('.form-group').find('.help-block').remove();
+                    }
+
+                },
+
+                errorPlacement: function (error, element) {
+
+                    if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if (element.is('.select2') || element.is('.js-select2-1')) {
+                        if (element.parents('div').eq(0).is('.input-group')) {
+                            error.insertAfter(element.parents('div').eq(0));
+                        } else {
+                            error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                        }
+
+
+                    }
+                    else if (element.is('.file-upload')) {
+                        error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+                    }
+                    else if (element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element);
+                },
+
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+                }
+            });
 </script>

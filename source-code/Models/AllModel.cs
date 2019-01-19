@@ -31,6 +31,14 @@ namespace WebApplication1.Models
         public List<vocabulary>   listVocabulary { get; set;}
 
         public item[] tblProductArray { get; set; }
+        public List<item> listProduct { get; set; }
+
+        public metagrup[] tblMasterMetaGroupArray { get; set; }
+        public List<metagrup> listMasterMetaGroup { get; set; }
+
+        public metagrup[] tblMetaGroupArray { get; set; }
+        public List<metagrup> listMetaGroup { get; set; }
+
 
     }
 }

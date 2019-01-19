@@ -1,50 +1,132 @@
-﻿@model WebApplication1.metagrup
+﻿@model WebApplication1.Models.AllModel
+@{
+    veebdbEntities db = new veebdbEntities();
+    var listLanguge = db.countries.Where(x => x.status == 1).ToList();
+    var indexT = 1;
+    var indexT1 = 1;
+}
 <div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>metagrup Code</label>
+    @if (Model.tblMetaGroup.METAGROUPNO == 0)
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in listLanguge)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.language">@item.language</a></li>
+                indexT++;
+            }
 
-            @Html.TextBoxFor(x => x.METAGROUPCODE, new {@class = "form-control"})
 
+        </ul>
+
+
+        <div class="tab-content">
+
+            @foreach (var item in listLanguge)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblMetaGroupArray.Index" value="@(guid)" />
+                <div id="@item.language" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Meta Group Code @item.language</label>
+                                <input type="text" class="form-control" name="tblMetaGroupArray[@(guid)].METAGROUPCODE" value="@Model.tblMetaGroup.METAGROUPCODE" />
+                                <input type="hidden" value="@item.language" name="tblMetaGroupArray[@(guid)].CodeLanguage" />
+
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Group Name @item.language</label>
+                                <input type="text" class="form-control" name="tblMetaGroupArray[@(guid)].METAGROUPNAME" value="@Model.tblMetaGroup.METAGROUPNAME" />
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
-        <div class="form-group">
-            <label>metagrup Name</label>
+    }
+    else
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in Model.listMetaGroup)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.CodeLanguage">@item.CodeLanguage.ToUpper()</a></li>
+                indexT++;
+            }
 
-            @Html.TextBoxFor(x => x.METAGROUPNAME, new {@class = "form-control"})
 
+        </ul>
+
+        <div class="tab-content">
+
+            @foreach (var item in Model.listMetaGroup)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblMetaGroupArray.Index" value="@(guid)" />
+                <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Master Meta Group Code @(item.CodeLanguage)</label>
+                                <input type="text" class="form-control" name="tblMetaGroupArray[@(guid)].METAGROUPCODE" readonly="readonly" value="@item.METAGROUPCODE" />
+                                <input type="hidden" value="@item.CodeLanguage" name="tblMetaGroupArray[@(guid)].CodeLanguage" />
+                                <input type="hidden" value="@item.METAGROUPNO" name="tblMetaGroupArray[@(guid)].METAGROUPNO" />
+                                <input type="hidden" value="@item.LASTCHANGE" name="tblMetaGroupArray[@(guid)].LASTCHANGE" />
+                                <input type="hidden" value="@item.CREATED" name="tblMetaGroupArray[@(guid)].CREATED" />
+
+                            </div>
+                            <div class="form-group">
+                                <label>Master Meta Group Name @item.CodeLanguage</label>
+                                <input type="text" class="form-control" name="tblMetaGroupArray[@(guid)].METAGROUPNAME" value="@item.METAGROUPNAME" />
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
 
-
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>Status</label>
+    }
 
 
-            @Html.DropDownListFor(c => c.IsActive, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "True" }, new SelectListItem { Text = "False", Value = "False", Selected = true } }, new { @class = "form-control select2" })
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Status</label>
 
 
-        </div>
-        <div class="form-group">
-            <label>Master Meta Group</label>
+                @Html.DropDownListFor(c => c.tblMetaGroup.IsActive, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "True" }, new SelectListItem { Text = "False", Value = "False", Selected = true } }, new { @class = "form-control select2" })
 
-            @Html.DropDownListFor(m => m.PARENTNO, new SelectList(((List<metagrup>) ViewBag.ListMasterMetaGroup), "METAGROUPNO", "METAGROUPNAME", "Select Master Meta Group"), new {@class = "form-control select2"})
 
-        </div>
-        <div class="form-group">
-            <label class="control-label">Images <span class="required">*</span></label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Images <span class="required">*</span></label>
 
-            <div>
-                <style>
-                    .thumb {
-                        height: 75px;
-                        border: 1px solid #000;
-                        margin: 10px 5px 0 0;
-                    }
-                </style>
+                <div>
+                    <style>
+                        .thumb {
+                            height: 75px;
+                            border: 1px solid #000;
+                            margin: 10px 5px 0 0;
+                        }
+                    </style>
 
-                <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*" />
-                <script>
+                    <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*" />
+                    <script>
                     function handleFileSelect(evt) {
                         var files = evt.target.files; // FileList object
 
@@ -59,8 +141,8 @@
                             var reader = new FileReader();
 
                             // Closure to capture the file information.
-                            reader.onload = (function (theFile) {
-                                return function (e) {
+                            reader.onload = (function(theFile) {
+                                return function(e) {
                                     // Render thumbnail.
                                     var span = document.createElement('span');
                                     span.innerHTML = [
@@ -77,54 +159,66 @@
                     }
 
                     document.getElementById('files').addEventListener('change', handleFileSelect, false);
-                </script>
+                    </script>
 
-            </div>
-            <div>
-                <output id="list"></output>
-            </div>
-            <div>
-                <output>
-                    @{
-                        if (!string.IsNullOrEmpty(Model.METAGROUPCODE))
-                        {
-                            var image = Model.METAGROUPCODE + ".jpg";
-                            <span style="position: relative">
-                                <input type="hidden" name="urlimage" id="hdImage" value="@Model.METAGROUPCODE" />
+                </div>
+                <div>
+                    <output id="list"></output>
+                </div>
+                <div>
+                    <output>
+                        @{
+                            if (!string.IsNullOrEmpty(Model.tblMetaGroup.METAGROUPCODE))
+                            {
+                                var image = Model.tblMetaGroup.METAGROUPCODE + ".jpg";
+                                <span style="position: relative">
+                                    <input type="hidden" name="urlimage" id="hdImage" value="@Model.tblMetaGroup.METAGROUPCODE" />
 
 
-                                @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + image)))
-                                {
-                                    <i class="delete_action fa fa-times" rel="@Model.METAGROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
+                                    @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + image)))
+                                    {
+                                        <i class="delete_action fa fa-times" rel="@Model.tblMetaGroup.METAGROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
 
-                                    <img alt="Janere" class="thumb" src="~/Content/MetagroupImage/@image">
+                                        <img alt="Janere" class="thumb" src="~/Content/MetagroupImage/@image">
 
-                                }
-                                else
-                                {
+                                    }
+                                    else
+                                    {
 
-                                    <img alt="Janere" class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
+                                        <img alt="Janere" class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
 
-                                }
-                            </span>
+                                    }
+                                </span>
+                            }
+
+
                         }
+                    </output>
+                </div>
 
-
-                    }
-                </output>
             </div>
-
         </div>
 
     </div>
-
 </div>
-@Html.HiddenFor(x=>x.METAGROUPNO)
-@Html.HiddenFor(x=>x.CREATED)
+
 
 
 <script>
+    $(".delete_action").on('click', function (e) {
+        var rs = confirm('Do you want delete image ?');
+        if (rs == true) {
+            $(this).parents('div').eq(0).remove();
+        }
+        var idPic = $(this).attr('rel');
+        if (idPic != "") {
+            $.get('@Url.Action("DeleteImg", "MasterMetaGroup")?code=' + idPic, function (data) {
 
+
+            });
+        }
+
+    });
         $('#validation-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
@@ -138,7 +232,7 @@
                     required: true
 
                 },
-                PARENTNO: {
+                METAGROUPCODE: {
                     required: true
 
                 }
@@ -149,7 +243,7 @@
             messages: {
                 METAGROUPCODE: "metagrup Code do not empty",
                 METAGROUPNAME: "metagrup Name do not empty",
-                PARENTNO: "Select Master Meta Group",
+                MetaGroupId: "Select Meta Group",
 
 
             },

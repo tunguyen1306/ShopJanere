@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
                     foreach (var item in model.tblVocabularyArray)
                     {
                         var check = db.vocabularies.FirstOrDefault(x => x.code == item.code);
-                        if (check!=null)
+                        if (check==null)
                         {
                             db.vocabularies.Add(item);
                         }

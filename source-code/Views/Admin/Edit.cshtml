@@ -1,11 +1,13 @@
-﻿@model WebApplication1.item
+﻿@model  WebApplication1.Models.AllModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
-    veebdbEntities data = new veebdbEntities();
+    veebdbEntities db = new veebdbEntities();
+    var indexT = 1;
+    var indexT1 = 1;
 }
 
-<h2>CREATE NEW PRODUCT</h2>
+<h2>EDIT PRODUCT</h2>
 
 <!-- /.row -->
 <div class="row">
@@ -16,13 +18,433 @@
             <div class="product_content">
                 @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
                 {
+                    if (Model.listProduct.Any())
+                    {
+                        <ul class="nav nav-tabs">
+                            @foreach (var item in Model.listProduct)
+                            {
+                                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.CodeLanguage">@item.CodeLanguage.ToUpperInvariant()</a></li>
+                                indexT++;
+                            }
 
 
-                    @Html.Partial("_Input")
+                        </ul>
+                        <div class="tab-content">
+                            @foreach (var item in Model.listProduct)
+                            {
+                                var guid = Guid.NewGuid().ToString();
+
+                                <input type="hidden" name="tblProductArray.Index" value="@(guid)" />
+                                    <input type="hidden" value="@item.CodeLanguage" name="tblProductArray[@(guid)].CodeLanguage" />
+                                    <input type="hidden" value="@item.ARTNO" name="tblProductArray[@(guid)].ARTNO" />
+
+                                    <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Product Name @item.CodeLanguage</label>
+                                                    <input type="text" class="form-control" name="tblProductArray[@(guid)].ARTNAME" value="@item.ARTNAME" />
+
+
+                                                </div>
+
+
+                                                <span>Link: http://shop.janere.ee/product?Code=123456</span>
+
+                                                <div class="product_group">
+                                                    <label>Description @item.CodeLanguage</label>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <textarea name="tblProductArray[@(guid)].INFO" class="form-control">@item.INFO</textarea>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                indexT1++;
+                            }
+                        </div>
+
+                    }
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="product_group">
+                                <label>Product Group</label>
+                                <div class="row">
+                                    <div class="col-sm-6">@Html.DropDownList("METAGROUPNO", new SelectList(((List<metagrup>)ViewBag.MetaGroupList), "METAGROUPNO", "METAGROUPNAME", "Select Meta Group"), new { @class = "form-control select2" })</div>
+                                    <div class="col-sm-6"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" id="showGroupByIdMeta">
+                                        @{
+                                            Html.RenderAction("_pGetGroupByIdMeta", "Admin");
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="product_group">
+                                <label>Product Image</label>
+                                <div class="row">
+
+                                    <div class="col-sm-9">
+                                        <ul class="sub_action">
+                                            <li class="active"><a href="#">Upload</a></li>
+                                            <li>
+
+                                                <label for="upload-photo" class="uploadPhoto">Choose from libaray</label>
+
+                                                <input type="file" name="inputfile" id="upload-photo" multiple accept="image/*" />
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <script>
+                                        function handleFileSelect(evt) {
+                                            var files = evt.target.files; // FileList object
+
+                                            // Loop through the FileList and render image files as thumbnails.
+                                            for (var i = 0, f; f = files[i]; i++) {
+
+                                                // Only process image files.
+                                                if (!f.type.match('image.*')) {
+                                                    continue;
+                                                }
+
+                                                var reader = new FileReader();
+
+                                                // Closure to capture the file information.
+                                                reader.onload = (function(theFile) {
+                                                    return function(e) {
+                                                        // Render thumbnail.
+                                                        var span = document.createElement('div');
+                                                        span.setAttribute("class", "col-sm-2 cusDiv");
+                                                        span.innerHTML = [
+                                                            '  <a class="delete_action btnDeleteImg" rel="0"><i class="fas fa-times"></i></a><img alt="Janere" class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/> '
+                                                        ].join('');
+
+                                                        document.getElementById('list').insertBefore(span, null);
+                                                        $(".delete_action").on('click', function(e) {
+                                                            var rs = confirm('Do you want delete image ?');
+                                                            if (rs == true) {
+                                                                $(this).parents('div').eq(0).remove();
+                                                            }
+
+                                                        });
+                                                    };
+                                                })(f);
+
+                                                // Read in the image file as a data URL.
+                                                reader.readAsDataURL(f);
+                                            }
+                                        }
+
+                                        document.getElementById('upload-photo').addEventListener('change', handleFileSelect, false);
+                                    </script>
+
+                                    <output id="list"></output>
+                                    <output>
+
+                                        @{
+                                            var listPicture = db.artlinks.Where(x => x.ARTNO == Model.tblitem.ARTNO).ToList();
+                                            foreach (var item in listPicture)
+                                            {
+                                                if (!string.IsNullOrEmpty(item.LINK))
+                                                {
+
+                                                    <div class="col-sm-2 cusDiv">
+                                                        <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
+                                                        <img alt="Janere" class="thumb" src="@("/Content/ProductImage/" + item.LINK)" title="@item.LINK">
+                                                    </div>
+                                                }
+                                            }
+
+
+
+                                        }
+                                    </output>
+
+                                </div>
+
+
+                            </div>
+                            <div class="product_group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Best Seller</label>
+                                        @Html.DropDownListFor(c => c.tblitem.IsBestSeller, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                                    </div>
+                                    <div class="col-sm-6">
+
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>EXPOR TABLE</label>
+                                        @Html.DropDownListFor(c => c.tblitem.EXPORTABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>STOCK ITEM</label>
+                                        @Html.DropDownListFor(c => c.tblitem.STOCKITEM, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>SPECIAL OFFER</label>
+                                        @Html.DropDownListFor(c => c.tblitem.SPECIALOFFER, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>AUTHORIZABLE</label>
+                                        @Html.DropDownListFor(c => c.tblitem.AUTHORIZABLE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>RESTRICTED</label>
+                                        @Html.DropDownListFor(c => c.tblitem.RESTRICTED, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>NOTPOST</label>
+                                        @Html.DropDownListFor(c => c.tblitem.NOTPOST, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>NOTADDPOSTAGEFEE</label>
+                                        @Html.DropDownListFor(c => c.tblitem.NOTADDPOSTAGEFEE, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "T" }, new SelectListItem { Text = "False", Value = "F", Selected = true } }, new { @class = "form-control select2" })
+                                    </div>
+                                    <div class="col-sm-6">
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product_group">
+                                <label>Product Detail</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+
+                                            @Html.TextBoxFor(x => x.tblitem.WIDTH, new { @class = "form-control", @placeholder = "WIDTH" })
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            @Html.TextBoxFor(x => x.tblitem.WEIGHT, new { @class = "form-control", @placeholder = "WEIGHT" })
+
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group">
+
+                                            @Html.TextBoxFor(x => x.tblitem.HEIGHT, new { @class = "form-control", @placeholder = "HEIGHT" })
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            @Html.TextBoxFor(x => x.tblitem.LEN, new { @class = "form-control", @placeholder = "LEN" })
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><!-- product_detail -->
+                            @Html.HiddenFor(x => x.tblitem.ARTNO)
+                        </div>
+                    </div>
+
+
+
+                    <style>
+                        .thumb {
+                            height: 150px;
+                            border: 1px solid #000;
+                            margin: 10px 5px 0 0;
+                        }
+
+                        .uploadPhoto {
+                            cursor: pointer;
+                            color: #245d92;
+                            text-decoration: none;
+                            font-weight: normal;
+                        }
+
+                        #upload-photo {
+                            opacity: 0;
+                            position: absolute;
+                            z-index: -1;
+                        }
+
+                        .btnDeleteImg {
+                            position: absolute;
+                            top: -5px;
+                            right: 15px;
+                        }
+
+                        .cusDiv {
+                            text-align: center;
+                        }
+                    </style>
+                    <script>
+                        $(document).ready(function() {
+                            $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.ARTNO : 0), function (data) {
+                                $('#METAGROUPNO').val(data.METAGROUPNO);
+                                onPageChange(data.METAGROUPNO);
+                                setTimeout(function() {
+                                    $('#radio_' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.GROUPNO : 0)).attr('checked','checked');
+                                }, 1000);
+                            });
+                        });
+                        setTimeout(function () {
+
+                            CKEDITOR.replace('INFO', { height: '350px' });
+
+
+
+                        }, 200);
+                        $(".delete_action").on('click', function (e) {
+                            var rs = confirm('Do you want delete image ?');
+                            if (rs == true) {
+                                $(this).parents('div').eq(0).remove();
+                            }
+                            var idPic = $(this).attr('rel');
+                            if (idPic!=0) {
+                                $.get('@Url.Action("DeleteImg", "Admin")?id=' + idPic, function (data) {
+
+
+                                });
+                            }
+
+                        });
+                        $('#METAGROUPNO').on('change', function () {
+                            var id = $(this).val();
+                            onPageChange(id);
+                        });
+                        function onPageChange(el) {
+
+                            $.get('@Url.Action("_pGetGroupByIdMeta", "Admin")?id=' + el, function (data) {
+                                $('#showGroupByIdMeta').html(data);
+
+                            });
+                        }
+                        $('#validation-form').validate({
+                            errorElement: 'div',
+                            errorClass: 'help-block',
+                            focusInvalid: false,
+                            ignore: "",
+                            rules: {
+                                ARTNAME: {
+                                    required: true
+                                }
+
+
+
+                            },
+
+                            messages: {
+                                ARTNAME: "Product Name do not empty"
+
+                            },
+
+
+                            highlight: function (e) {
+
+                                if ($(e).is('.file-upload')) {
+                                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+                                } else {
+                                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                                }
+
+
+                            },
+
+                            success: function (e) {
+                                if ($(e).is('.file-upload')) {
+                                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                                    $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+                                }
+                                else {
+                                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                                    $(e).closest('.form-group').find('.help-block').remove();
+                                }
+
+                            },
+
+                            errorPlacement: function (error, element) {
+
+                                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                                    var controls = element.closest('div[class*="col-"]');
+                                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                                }
+                                else if (element.is('.select2') || element.is('.js-select2-1')) {
+                                    if (element.parents('div').eq(0).is('.input-group')) {
+                                        error.insertAfter(element.parents('div').eq(0));
+                                    } else {
+                                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                                    }
+
+
+                                }
+                                else if (element.is('.file-upload')) {
+                                    error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+                                }
+                                else if (element.is('.chosen-select')) {
+                                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                                }
+                                else error.insertAfter(element);
+                            },
+
+                            submitHandler: function (form) {
+                            },
+                            invalidHandler: function (form) {
+                            }
+                        });
+                    </script>
+
 
                     <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
-                    <a href="@Url.Action("Index","Admin")">Cancel</a>
-                }
+                                            <a href="@Url.Action("Index","Admin")">Cancel</a>
+                                            }
 
             </div><!-- product_content -->
 

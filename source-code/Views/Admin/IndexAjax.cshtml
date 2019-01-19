@@ -10,9 +10,10 @@
             <th scope="col" id="barcode" class="manage_column column_barcode">Barcode</th>
             <th scope="col" class="manage_column column_number"></th>
             <th scope="col" id="product_name" class="manage_column column_product_name">Product Name</th>
-            <th scope="col" id="description" class="manage_column column_description">Description</th>
+       
             <th scope="col" id="category" class="manage_column column_category">Group</th>
             <th scope="col" id="price" class="manage_column column_price">Price</th>
+            <th scope="col" id="price" class="manage_column column_price">Language</th>
             <th scope="col" class="manage_column column_action" style="width: 80px;"></th>
         </tr>
     </thead>
@@ -49,11 +50,12 @@
                 <td scope="col" class="manage_column column_barcode">@item.tblitem.ARTCODE</td>
                 <td scope="col" class="manage_column column_number">4741444192161</td>
                 <td scope="col" class="manage_column column_product_name">@item.tblitem.ARTNAME</td>
-                <td scope="col" class="manage_column column_description">100 tk</td>
-                <td scope="col" class="manage_column column_category">@item.tblGroup.GROUPNAME</td>
-                <td scope="col" class="manage_column column_price">10,38$</td>
+               
+                <td scope="col" class="manage_column column_category">@( db.artgrps.FirstOrDefault(x=>x.GROUPNO== item.tblitem.GROUPNO) !=null ? db.artgrps.FirstOrDefault(x => x.GROUPNO == item.tblitem.GROUPNO).GROUPNAME :""   )     </td>
+                <td scope="col" class="manage_column column_price">@item.tblitem.WEBPRICE</td>
+                <td scope="col" class="manage_column column_price">@item.tblitem.CodeLanguage</td>
                 <td scope="col" class="manage_column column_action">
-                    <a class="edit_action" href="@Url.Action("Edit", "Admin", new {id = item.tblitem.ARTNO})"><i class="fas fa-edit"></i></a>
+                    <a class="edit_action" href="@Url.Action("Edit", "Admin", new {code = item.tblitem.ARTCODE})"><i class="fas fa-edit"></i></a>
                     <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "Admin", new {id = item.tblitem.ARTNO})"><i class="fas fa-times"></i></a>
 
 
@@ -88,6 +90,9 @@
     $('#dropPage').on('change', function () {
         onPageChange($('#product-result').find('a[data-page="1"]'));
     });
+    $('#txtkeywork').on('change', function () {
+        onPageChange($('#product-result').find('a[data-page="1"]'));
+    });
     $('#do_filter_action').unbind('click');
     $('#do_filter_action').on('click', function () {
         onPageChange($('#product-result').find('a[data-page="1"]'));
@@ -114,7 +119,8 @@
             var wh = $('#filter_warhouse').val();
             var stock = $('#filter_stock').val();
             var store = $('#filter_store').val();
-            $.get('@Url.Action("IndexAjax", "Admin")?tab=' + tab + '&groupId=' + cat + '&warehouseId=' + wh + '&stockId=' + stock + '&storeId=' + store + '&start=' + start + '&view=' + view, function (data) {
+            var wh = $('#txtkeywork').val();
+            $.get('@Url.Action("IndexAjax", "Admin")?keywork=' + wh + '&tab=' + tab + '&groupId=' + cat + '&warehouseId=' + wh + '&stockId=' + stock + '&storeId=' + store + '&start=' + start + '&view=' + view, function (data) {
 
                 $('#product-result').html(data);
 

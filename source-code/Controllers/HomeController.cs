@@ -495,7 +495,17 @@ namespace WebApplication1.Controllers
              }
              data.SaveChanges();
              */
-            var result = data.items.ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                 lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var result = data.items.Where(x=>x.CodeLanguage== lang.ToLower()).ToList();
             //result[0].
             var testdata = FormCollection["ddlPosition"];
             int defaSize = 20;

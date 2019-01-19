@@ -8,6 +8,7 @@
             <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Metagrup Name</th>
             <th scope="col" id="LASTCHANGE" class="manage_column column_description">Meta Group</th>
             <th scope="col" id="LASTCHANGE" class="manage_column column_description">Status</th>
+            <th scope="col" id="LASTCHANGE" class="manage_column column_description">Language</th>
       
             <th scope="col" class="manage_column column_number"></th>
 
@@ -17,18 +18,18 @@
       @foreach (var item in Model)
       {
         <tr>
-            <td id="" class="manage_column column_check item_check"><input value="@item.tblMetaGroup.METAGROUPNO" name="ids" type="checkbox"></td>
+            <td id="" class="manage_column column_check item_check"><input value="@item.tblMasterMetaGroup.METAGROUPNO" name="ids" type="checkbox"></td>
             <td>
-                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPCODE)
+                @Html.DisplayFor(modelItem => item.tblMasterMetaGroup.METAGROUPCODE)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
+                @Html.DisplayFor(modelItem => item.tblMasterMetaGroup.METAGROUPNAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.tblMetaGroup.METAGROUPNAME)
+                @Html.DisplayFor(modelItem => item.tblMasterMetaGroup.METAGROUPNAME)
             </td>
             <td>
-                @if (item.tblMetaGroup.IsActive == true)
+                @if (item.tblMasterMetaGroup.IsActive == true)
                 {
                     @("Active")
                 }
@@ -37,9 +38,12 @@
                     @("Not Active")
                 }
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblMasterMetaGroup.CodeLanguage)
+            </td>
             <td scope="col" class="manage_column column_action">
-                <a class="edit_action" href="@Url.Action("Edit", "MasterMetaGroup", new {id = item.tblMetaGroup.METAGROUPNO})"><i class="fas fa-edit"></i></a>
-                <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "MasterMetaGroup", new {id = item.tblMetaGroup.METAGROUPNO})"><i class="fas fa-times"></i></a>
+                <a class="edit_action" href="@Url.Action("Edit", "MasterMetaGroup", new {code = item.tblMasterMetaGroup.METAGROUPCODE})"><i class="fas fa-edit"></i></a>
+                <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "MasterMetaGroup", new {id = item.tblMasterMetaGroup.METAGROUPNO})"><i class="fas fa-times"></i></a>
 
 
             </td>

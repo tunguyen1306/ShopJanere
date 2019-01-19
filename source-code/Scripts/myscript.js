@@ -500,13 +500,14 @@ function getCookie(cname) {
 
 $(document).on('click', '.btn-language', function () {
     var lang = $(this).attr('data-language');
-    setCookie(lang, lang, 365);
+    setCookie("Language", lang, 365);
     GetLanguage(lang);
+    location.reload();
 });
 $(function () {
     //load lan
 
-    var vi = getCookie("English");
+    var vi = getCookie("Language");
   
 
     if (vi != null) {
@@ -514,7 +515,7 @@ $(function () {
         GetLanguage(vi);
     }
     else {
-        setCookie("English", "English", 365);
+        setCookie("Language", "English", 365);
         GetLanguage("English");
     }
    
@@ -546,7 +547,7 @@ function GetLanguage(lang) {
 
            });
 
-
+            
        }
    });
 }

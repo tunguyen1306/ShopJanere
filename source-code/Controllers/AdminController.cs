@@ -33,10 +33,14 @@ namespace WebApplication1.Controllers
             ViewBag.Tab = tab;
             return View();
         }
-        public ActionResult IndexAjax(string tab = "all", int start = 0, int view = 10, int groupId = 0, int storeId = 0, int stockId = 0, int warehouseId = 0)
+        public ActionResult IndexAjax(string keywork=null,string tab = "all", int start = 0, int view = 10, int groupId = 0, int storeId = 0, int stockId = 0, int warehouseId = 0)
         {
 
             var listProduct = db.items.Where(x => x.ARTNO > 0);
+            if (keywork!=null)
+            {
+                listProduct = listProduct.Where(x => x.ARTNO.ToString().Contains(keywork) || x.ARTNAME.ToString().Contains(keywork) || x.ARTCODE.ToString().Contains(keywork) || x.INFO.ToString().Contains(keywork) || x.LEN.ToString().Contains(keywork) || x.WEIGHT.ToString().Contains(keywork) || x.HEIGHT.ToString().Contains(keywork));
+            }
             if (groupId != 0)
             {
                 listProduct = listProduct.Where(x => x.GROUPNO == groupId);
@@ -55,27 +59,25 @@ namespace WebApplication1.Controllers
             }
 
 
-            var listAll = (from pro in listProduct
-                           join cate in db.artgrps on pro.GROUPNO equals cate.GROUPNO
-                           select new { tblitem = pro, tblGroup = cate });
+          
 
 
-            var _count = listAll.Count();
+            var _count = listProduct.Count();
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = _count;
             ViewBag.ViewOf = _count;
-            var db_data = listAll.OrderBy(t => t.tblitem.ARTNO).Skip(start).Take(view).ToList();
+            var db_data = listProduct.OrderBy(t => t.ARTNO).Skip(start).Take(view).ToList();
             foreach (var item in db_data)
             {
-                var tblPic = db.artlinks.FirstOrDefault(x => x.ARTNO == item.tblitem.ARTNO);
-                item.tblitem.PICTURENAME = tblPic != null ? tblPic.LINK : "";
+                var tblPic = db.artlinks.FirstOrDefault(x => x.ARTNO == item.ARTNO);
+                item.PICTURENAME = tblPic != null ? tblPic.LINK : "";
 
             }
 
 
 
-            var datas = db_data.Select(t => new AllModel { tblGroup = t.tblGroup, tblitem = t.tblitem }).ToList();
+            var datas = db_data.Select(t => new AllModel {  tblitem = t }).ToList();
             return PartialView(datas);
 
 
@@ -136,7 +138,7 @@ namespace WebApplication1.Controllers
             var metagroup = db.metagrups.ToList();
             metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.MetaGroupList = metagroup;
-            return View(new item());
+            return View(new AllModel { tblitem = new item() });
         }
         //public ActionResult ImnportData(HttpPostedFileBase inputfile)
         //{
@@ -177,51 +179,71 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(item item, HttpPostedFileBase[] inputfile)
+        public ActionResult Create(AllModel model, HttpPostedFileBase[] inputfile)
         {
-            var category = db.categories.ToList();
-            category.Insert(0, new category { CATEGORYNO = 0, CATEGORYNAME = "Select Category" });
-            ViewBag.CategoryList = category;
-
-            ViewBag.WarhouseList = db.warehouses.ToList();
-            ViewBag.stockList = db.stockcods.ToList();
-            ViewBag.StoreList = db.stores.ToList();
-            var metagroup = db.metagrups.ToList();
-            metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
-            ViewBag.MetaGroupList = metagroup;
             try
             {
-
-
-                item.ARTTYPE = 1;
-                item.EXPORTABLE = "";
-                item.ARTCODE = string.IsNullOrEmpty(item.ARTCODE) ? Guid.NewGuid().ToString().Substring(0, 6).ToUpper() : item.ARTCODE;
-                item.CREATED = DateTime.Now;
-                item.LASTCHANGE = DateTime.Now;
-                db.items.Add(item);
-                db.SaveChanges();
-                for (int i = 0; i < inputfile.Length; i++)
+                if (model.tblProductArray!=null)
                 {
-                    if (inputfile[i] != null)
+                    var artCode = Guid.NewGuid().ToString().Substring(0, 8).ToUpper() ;
+                    foreach (var item in model.tblProductArray.ToList())
                     {
-
-                        string path = "";
-                        path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
-                        var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
-                        inputfile[i].SaveAs(path);
-                        var tblPic = new artlink
-                        {
-                            LINENO = picId.LINENO + 1,
-                            ARTNO = item.ARTNO,
-                            LASTCHANGE = DateTime.Now,
-                            CREATED = DateTime.Now,
-                            LINK = inputfile[i].FileName
-
-                        };
-                        db.artlinks.Add(tblPic);
-                        db.SaveChanges();
+                        var tblItem = new item();
+                        tblItem.ARTTYPE = 1;
+                      
+                        tblItem.CREATED = DateTime.Now;
+                        tblItem.LASTCHANGE = DateTime.Now;
+                        tblItem.ARTCODE = artCode;
+                        tblItem.ARTNAME = item.ARTNAME;
+                        tblItem.INFO = item.INFO;
+                        tblItem.CodeLanguage = item.CodeLanguage.ToLower();
+                        tblItem.GROUPNO = model.tblitem.GROUPNO;
+                        tblItem.IsBestSeller = model.tblitem.IsBestSeller;
+                        tblItem.EXPORTABLE = model.tblitem.EXPORTABLE;
+                        tblItem.SPECIALOFFER = model.tblitem.SPECIALOFFER;
+                        tblItem.STOCKITEM = model.tblitem.STOCKITEM;
+                        tblItem.AUTHORIZABLE = model.tblitem.AUTHORIZABLE;
+                        tblItem.RESTRICTED = model.tblitem.RESTRICTED;
+                        tblItem.NOTPOST = model.tblitem.NOTPOST;
+                        tblItem.NOTADDPOSTAGEFEE = model.tblitem.NOTADDPOSTAGEFEE;
+                        tblItem.WIDTH = model.tblitem.WIDTH;
+                        tblItem.WEIGHT = model.tblitem.WEIGHT;
+                        tblItem.LEN = model.tblitem.LEN;
+                        tblItem.HEIGHT = model.tblitem.HEIGHT;
+                        db.items.Add(tblItem);
                     }
+                    db.SaveChanges();
+                    var getArt = db.items.Where(x => x.ARTCODE == artCode).ToList();
+                    foreach (var itemArt in getArt)
+                    {
+                        for (int i = 0; i < inputfile.Length; i++)
+                        {
+                            if (inputfile[i] != null)
+                            {
+
+                                string path = "";
+                                path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+
+                                inputfile[i].SaveAs(path);
+                                var tblPic = new artlink
+                                {
+                                    ARTNO = itemArt.ARTNO,
+                                    LASTCHANGE = DateTime.Now,
+                                    CREATED = DateTime.Now,
+                                    LINK = inputfile[i].FileName
+
+                                };
+                                db.artlinks.Add(tblPic);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+              
+
                 }
+
+               
+                
 
             }
             catch (DbEntityValidationException e)
@@ -241,8 +263,9 @@ namespace WebApplication1.Controllers
         }
 
         // GET: /Product/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string code)
         {
+            var proItem = db.items.FirstOrDefault(x => x.ARTCODE == code);
             var category = db.categories.ToList();
             category.Insert(0, new category { CATEGORYNO = 0, CATEGORYNAME = "Select Category" });
             ViewBag.CategoryList = category;
@@ -252,25 +275,70 @@ namespace WebApplication1.Controllers
             var metagroup = db.metagrups.ToList();
             metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.MetaGroupList = metagroup;
-            if (id == null)
+          
+            var list = db.countries.Where(x => x.status == 1).ToList();
+            ViewBag.ListCountry = list;
+            if (code == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            item item = db.items.Find(id);
-            if (item != null && item.GROUPNO != null)
+            foreach (var itemLang in list)
             {
-                var groupNo = db.artgrps.FirstOrDefault(x => x.GROUPNO == item.GROUPNO);
-                if (groupNo != null && groupNo.METAGROUPNO != null)
+                var pro = db.items.FirstOrDefault(x => x.ARTCODE == code && x.CodeLanguage == itemLang.language.ToLower());
+                if (pro==null)
                 {
-                    var metagroupNo = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == groupNo.METAGROUPNO);
-                }
-            }
+                  
+                    if (proItem!=null)
+                    {
+                       
 
-            if (item == null)
-            {
-                return HttpNotFound();
+                        var tblItem = new item();
+                        tblItem.ARTTYPE = 1;
+
+                        tblItem.CREATED = DateTime.Now;
+                        tblItem.LASTCHANGE = DateTime.Now;
+                        tblItem.ARTCODE = proItem.ARTCODE;
+                        tblItem.ARTNAME = proItem.ARTNAME;
+                        tblItem.INFO = proItem.INFO;
+                        tblItem.CodeLanguage = itemLang.language.ToLower();
+                        tblItem.GROUPNO = proItem.GROUPNO;
+                        tblItem.IsBestSeller = proItem.IsBestSeller;
+                        tblItem.EXPORTABLE = proItem.EXPORTABLE;
+                        tblItem.SPECIALOFFER = proItem.SPECIALOFFER;
+                        tblItem.STOCKITEM = proItem.STOCKITEM;
+                        tblItem.AUTHORIZABLE = proItem.AUTHORIZABLE;
+                        tblItem.RESTRICTED = proItem.RESTRICTED;
+                        tblItem.NOTPOST = proItem.NOTPOST;
+                        tblItem.NOTADDPOSTAGEFEE = proItem.NOTADDPOSTAGEFEE;
+                        tblItem.WIDTH = proItem.WIDTH;
+                        tblItem.WEIGHT = proItem.WEIGHT;
+                        tblItem.LEN = proItem.LEN;
+                        tblItem.HEIGHT = proItem.HEIGHT;
+                        db.items.Add(tblItem);
+                        var tblLink = db.artlinks.FirstOrDefault(x => x.ARTNO == proItem.ARTNO);
+                        if (tblLink!=null)
+                        {
+                            var tblPic = new artlink
+                            {
+
+                                ARTNO = tblItem.ARTNO,
+                                LASTCHANGE = DateTime.Now,
+                                CREATED = DateTime.Now,
+                                LINK = tblLink.LINK
+
+                            };
+                            db.artlinks.Add(tblPic);
+                        }
+                       
+                    }
+                 
+                }
+               
             }
-            return View(item);
+            db.SaveChanges();
+            var item = db.items.ToList().Where(x=>x.ARTCODE.ToLower()==code.ToLower()).ToList();
+            return View(new AllModel { listProduct = item,tblitem = proItem });
+    
         }
         public ActionResult GetMetaGroup(int? id)
         {
@@ -292,53 +360,64 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(item item, HttpPostedFileBase[] inputfile)
+        public ActionResult Edit(AllModel model, HttpPostedFileBase[] inputfile)
         {
-
-            var tem = db.items.Find(item.ARTNO);
-            tem.WEBPRICE = item.WEBPRICE;
-            tem.CATEGORYNO = item.CATEGORYNO;
-            tem.ARTNAME = item.ARTNAME;
-            tem.GROUPNO = item.GROUPNO;
-            tem.INFO = item.INFO;
-            tem.IsBestSeller = item.IsBestSeller;
-            tem.EXPORTABLE = item.EXPORTABLE;
-            tem.STOCKITEM = item.STOCKITEM;
-            tem.SPECIALOFFER = item.SPECIALOFFER;
-            tem.AUTHORIZABLE = item.AUTHORIZABLE;
-            tem.RESTRICTED = item.RESTRICTED;
-            tem.NOTPOST = item.NOTPOST;
-            tem.NOTADDPOSTAGEFEE = item.NOTADDPOSTAGEFEE;
-            tem.WIDTH = item.WIDTH;
-            tem.WEIGHT = item.WEIGHT;
-            tem.HEIGHT = item.HEIGHT;
-            tem.LEN = item.LEN;
-
-
-            db.Entry(tem).State = EntityState.Modified;
-            db.SaveChanges();
-            for (int i = 0; i < inputfile.Length; i++)
+            if (model.tblProductArray!=null)
             {
-                if (inputfile[i] != null)
+                foreach (var item in model.tblProductArray)
                 {
+                    var tem = db.items.Find(item.ARTNO);
+                    tem.WEBPRICE = model.tblitem.WEBPRICE;
+                    tem.CATEGORYNO = model.tblitem.CATEGORYNO;
+                    tem.ARTNAME = item.ARTNAME;
+                    tem.GROUPNO = model.tblitem.GROUPNO;
+                    tem.INFO = item.INFO;
+                    tem.IsBestSeller = model.tblitem.IsBestSeller;
+                    tem.EXPORTABLE = model.tblitem.EXPORTABLE;
+                    tem.STOCKITEM = model.tblitem.STOCKITEM;
+                    tem.SPECIALOFFER = model.tblitem.SPECIALOFFER;
+                    tem.AUTHORIZABLE = model.tblitem.AUTHORIZABLE;
+                    tem.RESTRICTED = model.tblitem.RESTRICTED;
+                    tem.NOTPOST = model.tblitem.NOTPOST;
+                    tem.NOTADDPOSTAGEFEE = model.tblitem.NOTADDPOSTAGEFEE;
+                    tem.WIDTH = model.tblitem.WIDTH;
+                    tem.WEIGHT = model.tblitem.WEIGHT;
+                    tem.HEIGHT = model.tblitem.HEIGHT;
+                    tem.LEN = model.tblitem.LEN;
 
-                    string path = "";
-                    path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
-                    var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
-                    inputfile[i].SaveAs(path);
-                    var tblPic = new artlink
+                    db.Entry(tem).State = EntityState.Modified;
+                    if (inputfile!=null)
                     {
-                        LINENO = picId.LINENO + 1,
-                        ARTNO = item.ARTNO,
-                        LASTCHANGE = DateTime.Now,
-                        CREATED = DateTime.Now,
-                        LINK = inputfile[i].FileName
+                        for (int i = 0; i < inputfile.Length; i++)
+                        {
+                            if (inputfile[i] != null)
+                            {
 
-                    };
-                    db.artlinks.Add(tblPic);
-                    db.SaveChanges();
+                                string path = "";
+                                path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                                var picId = db.artlinks.OrderByDescending(x => x.LINENO).FirstOrDefault();
+                                inputfile[i].SaveAs(path);
+                                var tblPic = new artlink
+                                {
+                                    LINENO = picId.LINENO + 1,
+                                    ARTNO = item.ARTNO,
+                                    LASTCHANGE = DateTime.Now,
+                                    CREATED = DateTime.Now,
+                                    LINK = inputfile[i].FileName
+
+                                };
+                                db.artlinks.Add(tblPic);
+
+                            }
+                        }
+                    }
+                   
                 }
+                
             }
+          
+            db.SaveChanges();
+          
 
             return RedirectToAction("Index");
         }
