@@ -1,11 +1,19 @@
-﻿<input type="hidden" id="vddlPosition" value="@Session["ddlPosition"]" />
-<input type="hidden" id="vddlGetCategory" value="@Session["ddlGetCategory"]"/>
-<input type="hidden" id="vddlGetGroupno" value="@ViewBag.groupno" />
+﻿@using WebApplication1.Models
+@{
+    
+
+   SearchModel  search= Session["SearchModel"]==null?new SearchModel():(SearchModel)Session["SearchModel"];
+}
+
+
+<input type="hidden" id="vddlPosition" value="@search.ddlPosition" />
+<input type="hidden" id="vddlGetCategory" value="@search.ddlGetCategory"/>
+<input type="hidden" id="vddlGetGroupno" value="@search.ddlGetGroupno" />
 <div style="padding: 10px; background-color: #ececec;">
     <div class="row" style="padding: 0px 15px;">
         <div class="col-lg-3  search">
             <select id="ddlPosition" name="ddlPosition" style="width: 100%">
-                @if (Session["ddlPosition"] == null || Session["ddlPosition"].ToString() == "0")
+                @if (!search.ddlPosition.HasValue || search.ddlPosition==0)
                 {
                     <option value="0" selected>ESC</option>
                     <option value="1">DESC</option>
@@ -18,7 +26,7 @@
             </select>
         </div>
         <div class="col-lg-9 search">
-            <input type="text" id="_pBoxSearch_title" name="AllKey" value="@Session["allkey"]" style="width: 100%"/>
+            <input type="text" id="_pBoxSearch_title" name="AllKey" value="@search.AllKey" style="width: 100%"/>
             <input type="submit" value="" style="width: 25px; position: absolute; top: 2px; right: 3px; border: none; background-image: url(../Content/search-icon.png)"/>
 
         </div>
@@ -26,24 +34,24 @@
     <div class="row" style="margin-top: 2px; padding: 0px 15px;">
         <div class="col-lg-3 search">
             @*<select id="ddlGetGroup" name="ddlGetGroup" style="width: 100%"></select>*@
-            <input type="text" id="ddlGetGroup" placeholder="Search Group" name="ddlGetGroup" value="@Session["ddlGetGroup"]" style="width: 100%" />
+            <input type="text" id="ddlGetGroup" placeholder="Search Group" name="ddlGetGroup" value="@search.ddlGetGroup" style="width: 100%" />
         </div>
         <div class="col-lg-3 search">
             @*<select id="ddlGetCategory" name="ddlGetCategory" style="width: 100%"></select>*@
-            <input type="text" id="ddlGetMetaGroup" placeholder="Search Meta group" name="ddlGetMetaGroup" value="@Session["ddlGetMetaGroup"]" style="width: 100%" />
+            <input type="text" id="ddlGetMetaGroup" placeholder="Search Meta group" name="ddlGetMetaGroup" value="@search.ddlGetMetaGroup" style="width: 100%" />
         </div>
         <div class="col-lg-3 search">
             @*<select id="ddlGetItem" name="ddlGetItem" style="width: 100%">
                 <option value="0">Select Item - not yet</option>
             </select>*@
-            <input type="text" id="ddlGetItem" placeholder="Search Item" name="ddlGetItem" value="@Session["ddlGetItem"]" style="width: 100%" />
+            <input type="text" id="ddlGetItem" placeholder="Search Item" name="ddlGetItem" value="@search.ddlGetItem" style="width: 100%" />
         </div>
 
         <div class="col-lg-3 search">
             @*<select id="ddlLength" name="ddlLength" style="width: 100%">
                 <option value="0">Select Length - not yet</option>
             </select>*@
-            <input type="text" id="ddlLength" placeholder="Search Length" name="ddlLength" value="" style="width: 100%" />
+            <input type="number" id="ddlLength" placeholder="Search Length" name="ddlLength" value="@search.ddlLength" style="width: 100%" />
         </div>
     </div>
     <div class="row" style="margin-top: 2px; padding: 0px 15px;">
@@ -53,27 +61,27 @@
             @*<select id="ddlGetDINCode" name="ddlGetDINCode" style="width: 100%">
                 <option value="0">Select Dincode - not yet</option>
             </select>*@
-            <input type="text" id="ddlGetDINCode" placeholder="Search DINCode" name="ddlGetDINCode" value="" style="width: 100%" />
+            <input type="text" id="ddlGetDINCode" placeholder="Search DINCode" name="ddlGetDINCode" value="@search.ddlGetDINCode"  style="width: 100%" />
         </div>
         <div class="col-lg-3 search">
             @*<select id="ddlGetDimension" name="ddlGetDimension" style="width: 100%">
                 <option value="0">Select Dimemsion - not yet</option>
             </select>*@
-            <input type="text" id="ddlGetDimension" placeholder="Search Dimension" name="ddlGetDimension" value="" style="width: 100%" />
+            <input type="number" id="ddlGetDimension" placeholder="Search Dimension" name="ddlGetDimension" value="@search.ddlGetDimension" style="width: 100%" />
         </div>
         <div class="col-lg-3 search">
             @*<select id="ddlGetInterFace" name="ddlGetInterFace" style="width: 100%">
                 <option value="0">Select Interface - not yet</option>
             </select>*@
 
-            <input type="text" id="ddlGetInterFace" placeholder="Search InterFace" name="ddlGetInterFace" value="" style="width: 100%" />
+            <input type="number" id="ddlGetInterFace" placeholder="Search InterFace" name="ddlGetInterFace" value="@search.ddlGetInterFace" style="width: 100%" />
         </div>
         <div class="col-lg-3 search">
             @*<select id="ddlGetMaterial" name="ddlGetMaterial" style="width: 100%">
                 <option value="0">Select Material - not yet</option>
             </select>*@
 
-            <input type="text" id="ddlGetMaterial" placeholder="Search Material" name="ddlGetMaterial" value="" style="width: 100%" />
+            <input type="number" id="ddlGetMaterial" placeholder="Search Material" name="ddlGetMaterial" value="@search.ddlGetMaterial" style="width: 100%" />
         </div>
     </div>
 </div>

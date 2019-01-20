@@ -10,6 +10,10 @@ using WebApplication1.Helper;
 using PayPal;
 using PayPal.Api;
 using UrlHelper = WebApplication1.Helper.UrlHelper;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.UI;
+
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
@@ -213,7 +217,7 @@ namespace WebApplication1.Controllers
             }
             return View(result);
         }
-        public ActionResult BulkProducts(FormCollection FormCollection, int? Page_No, int? Page_Size, int categoryid = 0)
+        public ActionResult BulkProducts(SearchModel search, int? Page_No, int? Page_Size, bool? pagination)
         {
             ViewBag.MetaTitle = "Home";
             ViewBag.MetaDescription = "Home - janere";
@@ -228,97 +232,64 @@ namespace WebApplication1.Controllers
                 ViewBag.Link = seo.link;
                 ViewBag.Keyword = seo.keyword;
             }
-            var result = data.items.ToList();
-            var testdata = FormCollection["ddlPosition"];
-            int defaSize = 20;
-            if (FormCollection["Size_Of_Page"] != null)
+            if (pagination.HasValue && pagination.Value)
             {
-                defaSize = int.Parse(FormCollection["Size_Of_Page"]);
+                search = Session["SearchModel"] == null ? new SearchModel() : (SearchModel)Session["SearchModel"];
             }
-            if (Page_Size != null)
+
+
+            int defaSize = 20;
+
+
+            if (Page_Size.HasValue)
             {
                 defaSize = Page_Size ?? 20;
             }
             ViewBag.ValueToSet = defaSize;
-            int noOfPage = (Page_No ?? 1);
-            if (categoryid != 0)
+
+            int No_Of_Page = (Page_No ?? 1);
+            var _temp0 = search.ddlGetGroupno;
+            var temp0 = search.ddlGetCategory;
+            var temp1 = search.ddlPosition;
+            var temp2 = search.AllKey == null ? "" : search.AllKey;
+            var temp3 = search.ddlGetGroup == null ? "" : search.ddlGetGroup;// FormCollection["ddlGetGroup"];
+            var temp4 = search.ddlGetMetaGroup == null ? "" : search.ddlGetMetaGroup;// FormCollection["ddlGetMetaGroup"];
+            var temp5 = search.ddlGetItem == null ? "" : search.ddlGetItem;//FormCollection["ddlGetItem"];
+            var temp6 = search.ddlGetDINCode == null ? "" : search.ddlGetDINCode;//FormCollection["ddlGetDINCode"];
+
+            Session["SearchModel"] = search;
+            var temp8 = search.ddlLength;//int.Parse(FormCollection["ddlLength"]);
+            var temp9 = search.ddlGetInterFace;// int.Parse(FormCollection["ddlGetInterFace"]);
+            var temp10 = search.ddlGetMaterial;// int.Parse(FormCollection["ddlGetMaterial"]);            
+            var temp7 = search.ddlGetDimension;//int.Parse(FormCollection["ddlGetDimension"]);
+
+
+            var query = from a in data.items
+                        join b in data.artgrps on a.GROUPNO equals b.GROUPNO
+                        join c in data.metagrups on b.METAGROUPNO equals c.METAGROUPNO
+                        where (temp3 == "" || b.GROUPNAME.ToLower().Contains(temp3.ToLower()))
+                        && (temp4 == "" || c.METAGROUPNAME.ToLower().Contains(temp4.ToLower()))
+                        && (temp6 == "" || a.ARTCODE.ToLower().Contains(temp6.ToLower()))
+                        && (temp2 == "" || a.ARTCODE.ToLower().Contains(temp2.ToLower()) || a.ARTNAME.ToLower().Contains(temp2.ToLower()))
+                        && (!temp8.HasValue || a.LEN == temp8)
+                        && (!temp0.HasValue || a.CATEGORYNO == temp0)
+                        && (!_temp0.HasValue || a.GROUPNO == _temp0)
+                        select a;
+
+
+
+            if (temp1 == 1)
             {
-                var firstOrDefault = data.categories.FirstOrDefault(m => m.CATEGORYNO == categoryid);
-                if (firstOrDefault != null)
-                    ViewBag.CategoryName = firstOrDefault.CATEGORYNAME;
-                ViewBag.CategoryId = categoryid;
-                result = result.Where(m => m.CATEGORYNO == categoryid).ToList();
+                query = query.OrderByDescending(m => m.ARTNAME);
             }
             else
             {
-                @ViewBag.CategoryName = "Search";
+                query = query.OrderBy(m => m.ARTNAME);
             }
-            if (testdata != null)
-            {
 
-                var temp1 = int.Parse(FormCollection["ddlPosition"]);
-                var temp2 = FormCollection["AllKey"];
-                var temp3 = int.Parse(FormCollection["ddlGetGroup"]);
-                var temp4 = int.Parse(FormCollection["ddlGetCategory"]);
-                var temp5 = FormCollection["ddlGetItem"];
-                var temp6 = FormCollection["ddlGetMetaGroup"];
 
-                Session["ddlPosition"] = temp1;
-                Session["AllKey"] = temp2;
-                Session["ddlGetGroup"] = temp3;
-                Session["ddlGetCategory"] = temp4;
-                Session["ddlGetMetaGroup"] = temp6;
-                //var temp8 = int.Parse(FormCollection["ddlLength"]);
-                /*var temp9 =  int.Parse(FormCollection["ddlGetInterFace"]);
-                var temp10 = int.Parse(FormCollection["ddlGetMaterial"]);
-                var temp6 = int.Parse(FormCollection["ddlGetDINCode"]);
-                var temp7 = int.Parse(FormCollection["ddlGetDimension"]);*/
-                if (temp3 != 0)
-                {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
-                }
-                if (temp4 != 0)
-                {
-                    result = result.Where(m => m.CATEGORYNO == temp4).ToList();
-                }
-                if (temp2 != "")
-                {
-                    result = result.Where(m => m.ARTCODE.Contains(temp2) || m.ARTNAME.Contains(temp2)).ToList();
-                }
-                if (temp1 == 1)
-                {
-                    result = result.OrderByDescending(m => m.ARTNAME).ToList();
-                }
-                /*if (temp5 != 0)
-                {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
-                }
-                if (temp6 != 0)
-                {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
-                }
-                if (temp7 != 0)
-                {
-                    result = result.Where(m => m. == temp3).ToList();
-                }
-                if (temp8 != 0)
-                {
-                    result = result.Where(m => m.LEN == temp8).ToList();
-                }
-                if (temp9 != 0)
-                {
-                    result = result.Where(m => m. == temp3).ToList();
-                }
-                if (temp10 != 0)
-                {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
-                }*/
-                return View(result.ToPagedList(noOfPage, defaSize));
-            }
-            else
-            {
-                return View(result.ToPagedList(noOfPage, defaSize));
-            }
+
+            return View(query.ToPagedList(No_Of_Page, defaSize));
 
         }
         public ActionResult Login(string message = "", string returnUrl = "")
@@ -487,13 +458,16 @@ namespace WebApplication1.Controllers
             var restult = data.warehouses;
             return View(restult);
         }
-        public ActionResult Products(FormCollection FormCollection, int? Page_No, int? Page_Size, int groupno = 0)
+        public ActionResult Products(SearchModel search, int? Page_No, int? Page_Size,bool? pagination)
         {
             ViewBag.MetaTitle = "Home";
             ViewBag.MetaDescription = "Home - janere";
             ViewBag.Link = "http://shop.janere.ee/";
             ViewBag.Keyword = "janere";
-
+            if (pagination.HasValue && pagination.Value)
+            {
+                search = Session["SearchModel"]==null?new SearchModel():(SearchModel)Session["SearchModel"];
+            }
             var seo = data.seos.FirstOrDefault(x => x.page == "home");
             if (seo != null)
             {
@@ -502,147 +476,124 @@ namespace WebApplication1.Controllers
                 ViewBag.Link = seo.link;
                 ViewBag.Keyword = seo.keyword;
             }
-            /* int i = 0;
-             int name = 1;
-             foreach (var item in data.items)
-             {
-
-                 item.PICTURENAME = name + ".jpg";
-                 if (name % 14 == 0)
-                     name = 1;
-                 name++;
-                 i++;
-                 if (i == 1000)
-                     break;
-             }
-             data.SaveChanges();
-             */
-            var lang = "";
-            var httpCookie = Request.Cookies["Language"];
-            if (httpCookie != null)
-            {
-                 lang = httpCookie.Value;
-            }
-            else
-            {
-                lang = "english";
-            }
-            var result = data.items.Where(x=>x.CodeLanguage== lang.ToLower()).ToList();
-            //result[0].
-            var testdata = FormCollection["ddlPosition"];
+       
+       
             int defaSize = 20;
-            ViewBag.groupno = groupno;
-            if (FormCollection["Size_Of_Page"] != null)
-            {
-                defaSize = int.Parse(FormCollection["Size_Of_Page"]);
-            }
-            if (Page_Size != null)
+        
+      
+            if (Page_Size.HasValue)
             {
                 defaSize = Page_Size ?? 20;
             }
             ViewBag.ValueToSet = defaSize;
-            int No_Of_Page = (Page_No ?? 1);
-            /*if (groupid != 0)
-            {
-                ViewBag.CategoryName = data.categories.Where(m => m.CATEGORYNO == categoryid).FirstOrDefault().CATEGORYNAME;
-                ViewBag.CategoryId = categoryid;
-                result = result.Where(m => m.CATEGORYNO == categoryid).ToList();
-            }
-            else
-            {
-                @ViewBag.CategoryName = "Search";
-            }*/
-            if (testdata != null)
-            {
-
-                var temp1 = int.Parse(FormCollection["ddlPosition"]);
-                var temp2 = FormCollection["AllKey"];
-                var temp3 = FormCollection["ddlGetGroup"];
-                var temp4 = FormCollection["ddlGetMetaGroup"];
-                var temp5 = FormCollection["ddlGetItem"];
-                var temp6 = FormCollection["ddlGetDINCode"];
-                Session["ddlPosition"] = temp1;
-                Session["AllKey"] = temp2;
-                Session["ddlGetGroup"] = temp3;
-                Session["ddlGetMetaGroup"] = temp4;
-                //var temp8 = int.Parse(FormCollection["ddlLength"]);
-                /*var temp9 =  int.Parse(FormCollection["ddlGetInterFace"]);
-                var temp10 = int.Parse(FormCollection["ddlGetMaterial"]);
             
-                var temp7 = int.Parse(FormCollection["ddlGetDimension"]);*/
+            int No_Of_Page = (Page_No ?? 1);
+            var _temp0 = search.ddlGetGroupno;
+            var temp0 = search.ddlGetCategory;
+            var temp1 = search.ddlPosition;
+                var temp2 = search.AllKey==null?"": search.AllKey;
+                var temp3 = search.ddlGetGroup == null ? "" : search.ddlGetGroup;// FormCollection["ddlGetGroup"];
+                var temp4 = search.ddlGetMetaGroup == null ? "" : search.ddlGetMetaGroup;// FormCollection["ddlGetMetaGroup"];
+                var temp5 = search.ddlGetItem == null ? "" : search.ddlGetItem;//FormCollection["ddlGetItem"];
+                var temp6 = search.ddlGetDINCode == null ? "" : search.ddlGetDINCode;//FormCollection["ddlGetDINCode"];
+               
+                Session["SearchModel"] = search;
+                var temp8 = search.ddlLength;//int.Parse(FormCollection["ddlLength"]);
+                var temp9 = search.ddlGetInterFace;// int.Parse(FormCollection["ddlGetInterFace"]);
+                var temp10 = search.ddlGetMaterial;// int.Parse(FormCollection["ddlGetMaterial"]);            
+                var temp7 = search.ddlGetDimension;//int.Parse(FormCollection["ddlGetDimension"]);
+
+               
+                var query = from a in data.items
+                            join b in data.artgrps on a.GROUPNO equals b.GROUPNO
+                            join c in data.metagrups on b.METAGROUPNO equals c.METAGROUPNO
+                            where (temp3 == "" || b.GROUPNAME.ToLower().Contains(temp3.ToLower()))
+                            && (temp4 == "" || c.METAGROUPNAME.ToLower().Contains(temp4.ToLower()))
+                            && (temp6 == "" || a.ARTCODE.ToLower().Contains(temp6.ToLower()))
+                            && (temp2 == "" || a.ARTCODE.ToLower().Contains(temp2.ToLower()) || a.ARTNAME.ToLower().Contains(temp2.ToLower()))
+                            &&(!temp8.HasValue || a.LEN==temp8)
+                            &&(!temp0.HasValue || a.CATEGORYNO== temp0)
+                            && (!_temp0.HasValue || a.GROUPNO == _temp0)
+                            select a;
 
 
-
-                if (temp3 != "")
-                {
-                    var tblgroup = data.artgrps.ToList().FirstOrDefault(x => x.GROUPNAME.ToLower() == temp3.ToLower());
-                    if (tblgroup != null)
-                    {
-
-                        result = result.Where(m => m.GROUPNO == tblgroup.GROUPNO).ToList();
-                    }
-                }
-                if (temp6 != "")
-                {
-
-
-                    result = result.ToList().Where(m => m.ARTCODE.ToLower() == temp6.ToLower()).ToList();
-
-                }
-
-
-                if (temp4 != "")
-                {
-                    var tblgroup = data.metagrups.ToList().FirstOrDefault(x => x.METAGROUPNAME.ToLower() == temp4.ToLower());
-                    if (tblgroup != null)
-                    {
-
-                        // result = result.Where(m => m.GROUPNO == tblgroup.GROUPNO).ToList();
-                    }
-                }
-                if (temp2 != "")
-                {
-                    result = result.Where(m => m.ARTCODE.Contains(temp2) || m.ARTNAME.Contains(temp2)).ToList();
-                }
+                
                 if (temp1 == 1)
                 {
-                    result = result.OrderByDescending(m => m.ARTNAME).ToList();
+                    query = query.OrderByDescending(m => m.ARTNAME);
                 }
-                /*if (temp5 != 0)
+                else
                 {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
+                    query = query.OrderBy(m => m.ARTNAME);
                 }
-                if (temp6 != 0)
-                {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
-                }
-                if (temp7 != 0)
-                {
-                    result = result.Where(m => m. == temp3).ToList();
-                }
-                if (temp8 != 0)
-                {
-                    result = result.Where(m => m.LEN == temp8).ToList();
-                }
-                if (temp9 != 0)
-                {
-                    result = result.Where(m => m. == temp3).ToList();
-                }
-                if (temp10 != 0)
-                {
-                    result = result.Where(m => m.GROUPNO == temp3).ToList();
-                }*/
+              
+
+
+                return View(query.ToPagedList(No_Of_Page, defaSize));
+           
+
+
+        }
+
+        public ActionResult ExportToExcel()
+        {
+           var  search = Session["SearchModel"] == null ? new SearchModel() : (SearchModel)Session["SearchModel"];
+
+            var _temp0 = search.ddlGetGroupno;
+            var temp0 = search.ddlGetCategory;
+            var temp1 = search.ddlPosition;
+            var temp2 = search.AllKey == null ? "" : search.AllKey;
+            var temp3 = search.ddlGetGroup == null ? "" : search.ddlGetGroup;// FormCollection["ddlGetGroup"];
+            var temp4 = search.ddlGetMetaGroup == null ? "" : search.ddlGetMetaGroup;// FormCollection["ddlGetMetaGroup"];
+            var temp5 = search.ddlGetItem == null ? "" : search.ddlGetItem;//FormCollection["ddlGetItem"];
+            var temp6 = search.ddlGetDINCode == null ? "" : search.ddlGetDINCode;//FormCollection["ddlGetDINCode"];
+
+         
+            var temp8 = search.ddlLength;//int.Parse(FormCollection["ddlLength"]);
+            var temp9 = search.ddlGetInterFace;// int.Parse(FormCollection["ddlGetInterFace"]);
+            var temp10 = search.ddlGetMaterial;// int.Parse(FormCollection["ddlGetMaterial"]);            
+            var temp7 = search.ddlGetDimension;//int.Parse(FormCollection["ddlGetDimension"]);
+
+
+            var query = from a in data.items
+                        join b in data.artgrps on a.GROUPNO equals b.GROUPNO
+                        join c in data.metagrups on b.METAGROUPNO equals c.METAGROUPNO
+                        where (temp3 == "" || b.GROUPNAME.ToLower().Contains(temp3.ToLower()))
+                        && (temp4 == "" || c.METAGROUPNAME.ToLower().Contains(temp4.ToLower()))
+                        && (temp6 == "" || a.ARTCODE.ToLower().Contains(temp6.ToLower()))
+                        && (temp2 == "" || a.ARTCODE.ToLower().Contains(temp2.ToLower()) || a.ARTNAME.ToLower().Contains(temp2.ToLower()))
+                        && (!temp8.HasValue || a.LEN == temp8)
+                        && (!temp0.HasValue || a.CATEGORYNO == temp0)
+                        && (!_temp0.HasValue || a.GROUPNO == _temp0)
+                        select new ExportProduct {  MetaGroup=c.METAGROUPNAME,Group=b.GROUPNAME,Name=a.ARTNAME,DinCode=a.ARTCODE,Description=a.INFO,Height=a.HEIGHT,Length=a.LEN,Weight=a.WEIGHT,Width=a.WIDTH,Unit=a.UNITNAME,UnitDescription=a.UNITDESCR};
 
 
 
-                return View(result.ToPagedList(No_Of_Page, defaSize));
+            if (temp1 == 1)
+            {
+                query = query.OrderByDescending(m => m.Name);
             }
             else
             {
-                return View(result.Where(m => m.GROUPNO == groupno).ToPagedList(No_Of_Page, defaSize));
+                query = query.OrderBy(m => m.Name);
             }
 
-
+            var gv = new GridView();
+            gv.DataSource = query.ToList();
+            gv.DataBind();
+            Response.ClearContent();
+            Response.Buffer = true;
+            String dateStr = DateTime.Now.ToString("yyyy-MM-dd_HH:mm");
+            Response.AddHeader("content-disposition", "attachment; filename="+ dateStr + "_Products.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter objStringWriter = new StringWriter();
+            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+            gv.RenderControl(objHtmlTextWriter);
+            Response.Output.Write(objStringWriter.ToString());
+            Response.Flush();
+            Response.End();
+            return View("Index");
         }
         public ActionResult Download()
         {

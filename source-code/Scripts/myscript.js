@@ -281,7 +281,7 @@ function getSubmenu2(cat) {
         success: function (data) {
             var markup = "";
             for (var x = 0; x < data.length; x++) {
-                markup += "<a href='http://shop.janere.ee/Home/Products?categoryid=" + data[x].Value + "'><div id=cate" + data[x].Value + " class='submenu2' style='color:#666666;margin: 2px 0px;padding: 9px;font-size:18px;font-weight: bold;'>" + data[x].Text + "</div></a>";
+                markup += "<a href='http://shop.janere.ee/Home/Products?ddlGetCategory=" + data[x].Value + "'><div id=cate" + data[x].Value + " class='submenu2' style='color:#666666;margin: 2px 0px;padding: 9px;font-size:18px;font-weight: bold;'>" + data[x].Text + "</div></a>";
             }
             $("#submenu2").html(markup).show();
         },
