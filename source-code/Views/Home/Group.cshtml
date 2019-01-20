@@ -28,7 +28,7 @@
     {
        var image = item.GROUPCODE + ".jpg";
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6" style="padding:1px;height:310px;">
-                <a href="@Url.Action("Products", "Home", new { groupno = item.GROUPNO })">
+                <a href="@Url.Action("Products", "Home", new { ddlGetGroupno = item.GROUPNO })">
                     <div class="row">
                         <div class="col-lg-12">
                             @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + item.GROUPCODE + ".jpg")))
