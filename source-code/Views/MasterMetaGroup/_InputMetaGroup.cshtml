@@ -105,11 +105,22 @@
     <div class="row">
 
         <div class="col-sm-6">
+        
+
+            <div class="form-group">
+                <label>Meta Group</label>
+
+                @Html.DropDownListFor(m => m.tblMetaGroup.PARENTNO, new SelectList(((List<metagrup>)ViewBag.ListMasterMetaGroup), "METAGROUPNO", "METAGROUPNAME", "Select Master Meta Group"), new { @class = "form-control select2" })
+
+
+
+
+            </div>
             <div class="form-group">
                 <label>Status</label>
 
 
-                @Html.DropDownListFor(c => c.tblMetaGroup.IsActive, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "True" }, new SelectListItem { Text = "False", Value = "False", Selected = true } }, new { @class = "form-control select2" })
+                @Html.DropDownListFor(c => c.tblMetaGroup.IsActive, new List<SelectListItem> {new SelectListItem {Text = "True", Value = "True"}, new SelectListItem {Text = "False", Value = "False", Selected = true}}, new {@class = "form-control select2"})
 
 
             </div>
@@ -125,40 +136,40 @@
                         }
                     </style>
 
-                    <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*" />
+                    <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*"/>
                     <script>
-                    function handleFileSelect(evt) {
-                        var files = evt.target.files; // FileList object
+                        function handleFileSelect(evt) {
+                            var files = evt.target.files; // FileList object
 
-                        // Loop through the FileList and render image files as thumbnails.
-                        for (var i = 0, f; f = files[i]; i++) {
+                            // Loop through the FileList and render image files as thumbnails.
+                            for (var i = 0, f; f = files[i]; i++) {
 
-                            // Only process image files.
-                            if (!f.type.match('image.*')) {
-                                continue;
+                                // Only process image files.
+                                if (!f.type.match('image.*')) {
+                                    continue;
+                                }
+
+                                var reader = new FileReader();
+
+                                // Closure to capture the file information.
+                                reader.onload = (function(theFile) {
+                                    return function(e) {
+                                        // Render thumbnail.
+                                        var span = document.createElement('span');
+                                        span.innerHTML = [
+                                            '<img alt="Janere" class="thumb" src="', e.target.result,
+                                            '" title="', escape(theFile.name), '"/>'
+                                        ].join('');
+                                        document.getElementById('list').insertBefore(span, null);
+                                    };
+                                })(f);
+
+                                // Read in the image file as a data URL.
+                                reader.readAsDataURL(f);
                             }
-
-                            var reader = new FileReader();
-
-                            // Closure to capture the file information.
-                            reader.onload = (function(theFile) {
-                                return function(e) {
-                                    // Render thumbnail.
-                                    var span = document.createElement('span');
-                                    span.innerHTML = [
-                                        '<img alt="Janere" class="thumb" src="', e.target.result,
-                                        '" title="', escape(theFile.name), '"/>'
-                                    ].join('');
-                                    document.getElementById('list').insertBefore(span, null);
-                                };
-                            })(f);
-
-                            // Read in the image file as a data URL.
-                            reader.readAsDataURL(f);
                         }
-                    }
 
-                    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+                        document.getElementById('files').addEventListener('change', handleFileSelect, false);
                     </script>
 
                 </div>

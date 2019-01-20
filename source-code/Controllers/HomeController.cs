@@ -98,7 +98,17 @@ namespace WebApplication1.Controllers
         }
         public ActionResult MasterMetaGroup(int index)
         {
-            var check = data.metagrups.Where(m => m.PARENTNO == 0 && m.IsActive == true);
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var check = data.metagrups.Where(m => m.PARENTNO == 0 && m.IsActive == true && m.CodeLanguage== lang.ToLower());
 
             if (check.Count() > 0)
             {
@@ -152,8 +162,17 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Product(string Code = "")
         {
-
-            var result = data.items.Where(m => m.ARTCODE == Code).FirstOrDefault();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var result = data.items.Where(m => m.ARTCODE == Code && m.CodeLanguage==lang.ToLower()).FirstOrDefault();
             if (result != null)
             {
                 var _stock = data.stocks.Where(t => t.ARTNO == result.ARTNO).ToList();
@@ -1055,8 +1074,18 @@ namespace WebApplication1.Controllers
                 ViewBag.Link = seo.link;
                 ViewBag.Keyword = seo.keyword;
             }
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m => m.PARENTNO == 0).ToList();
+            obj = data.metagrups.Where(m => m.PARENTNO == 0 && m.CodeLanguage==lang.ToLower()).ToList();
             return View(obj);
         }
         public ActionResult MetaGroup(int masterGroupID)
@@ -1074,8 +1103,18 @@ namespace WebApplication1.Controllers
                 ViewBag.Link = seo.link;
                 ViewBag.Keyword = seo.keyword;
             }
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m => m.PARENTNO == masterGroupID && m.IsActive == true).ToList();
+            obj = data.metagrups.Where(m => m.PARENTNO == masterGroupID && m.IsActive == true && m.CodeLanguage== lang.ToLower()).ToList();
             Session["MasterGroup"] = data.metagrups.Where(m => m.METAGROUPNO == masterGroupID).FirstOrDefault().METAGROUPNAME;
             return View(obj);
         }
@@ -1239,36 +1278,82 @@ namespace WebApplication1.Controllers
         //////////Search//////////
         public ActionResult _ProductAjaxAutoComplete(string query)
         {
-            var list = data.items.Join(data.artgrps, it => it.GROUPNO, grp => grp.GROUPNO, (it, grp) => new AllModel { tblitem = it, tblGroup = grp }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME, des = x.tblitem.INFO, grp = x.tblGroup.GROUPNAME }).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var list = data.items.Where(x=>x.CodeLanguage==lang).Join(data.artgrps, it => it.GROUPNO, grp => grp.GROUPNO, (it, grp) => new AllModel { tblitem = it, tblGroup = grp }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME, des = x.tblitem.INFO, grp = x.tblGroup.GROUPNAME }).ToList();
             return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult _MetagrupAjaxAutoComplete(string query)
         {
 
-
-            var list = data.metagrups.Select(x => new AllModel { tblMetaGroup = x }).Where(x => x.tblMetaGroup.PARENTNO == 0 && x.tblMetaGroup.METAGROUPNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblMetaGroup.METAGROUPNO, label = x.tblMetaGroup.METAGROUPNAME }).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var list = data.metagrups.Select(x => new AllModel { tblMetaGroup = x }).Where(x =>x.tblMetaGroup.CodeLanguage==lang &&  x.tblMetaGroup.PARENTNO == 0 && x.tblMetaGroup.METAGROUPNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblMetaGroup.METAGROUPNO, label = x.tblMetaGroup.METAGROUPNAME }).ToList();
             return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult _GroupAjaxAutoComplete(string query)
         {
 
-
-            var list = data.artgrps.Select(x => new AllModel { tblGroup = x }).Where(x => x.tblGroup.GROUPNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblGroup.GROUPNO, label = x.tblGroup.GROUPNAME }).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var list = data.artgrps.Select(x => new AllModel { tblGroup = x }).Where(x =>x.tblGroup.CodeLanguage==lang && x.tblGroup.GROUPNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblGroup.GROUPNO, label = x.tblGroup.GROUPNAME }).ToList();
             return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult _ItemAjaxAutoComplete(string query)
         {
 
-
-            var list = data.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME }).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var list = data.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.CodeLanguage == lang && x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME }).ToList();
             return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _DinAjaxAutoComplete(string query)
         {
 
-
-            var list = data.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.ARTCODE.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTCODE }).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var list = data.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.CodeLanguage == lang && x.tblitem.ARTCODE.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTCODE }).ToList();
             return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
 

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WebApplication1.stock>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>stock</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","Stock")">Add New</a>
+   
+</div>
+
+ <div class="row wrap_filter" style="margin-top: 10px;">
+   
+    <div class="col-sm-12 right">
+        <div class="row">
+            <div class="col-lg-1">
+                <label>Filter</label>
+               
+              
+
+            </div>
+            <div class="col-lg-7"><input type="text" name="search_order" id="txtsearch_orders" class="form-control"></div>
+            <div class="col-lg-4">
+                @Html.DropDownList("filter_stock", new SelectList(((List<WebApplication1.stockcod>)ViewBag.ListStockCod), "STOCKNO", "STOCKNAME"), new { @class = "filter" })
+
+
+            </div>
+        </div>
+        
+    </div>
+</div><!-- wrap_filter -->
+
+
+@using (Ajax.BeginForm("IndexAjax", new {type = ViewBag.Type }, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "stock-result",
+    OnBegin = "stocksearchOnBegin",
+    OnSuccess = "stocksearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="stock-btsubmit">Search</button>
+}
+<div id="stock-result">
+    @{
+        Html.RenderAction("IndexAjax", "Stock");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function stock_seacrch() {
+        $('#stock-btsubmit').click();
+    }
+    stock_seacrch();
+    function stocksearchOnBegin() {
+
+    }
+
+    function stocksearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

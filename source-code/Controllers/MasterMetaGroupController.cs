@@ -280,19 +280,19 @@ namespace WebApplication1.Controllers
             var listMasterMetaGroup = db.metagrups.Where(x => x.PARENTNO == 0).ToList();
             listMasterMetaGroup.Insert(0,new metagrup {METAGROUPNO = 0,METAGROUPNAME = "Select Master Meta Group" });
             ViewBag.ListMasterMetaGroup = listMasterMetaGroup;
-            return View(new AllModel { tblMasterMetaGroup = new metagrup() });
+            return View(new AllModel { tblMetaGroup = new metagrup() });
         }
 
         [HttpPost]
         public ActionResult CreateMetaGroup(AllModel model, HttpPostedFileBase[] inputfile)
         {
-            if (model.tblMasterMetaGroupArray != null)
+            if (model.tblMetaGroupArray != null)
             {
-                foreach (var item in model.tblMasterMetaGroupArray)
+                foreach (var item in model.tblMetaGroupArray)
                 {
 
                     item.PARENTNO = 0;
-                    item.IsActive = model.tblMasterMetaGroup.IsActive;
+                    item.IsActive = model.tblMetaGroup.IsActive;
                     item.CREATED = DateTime.Now;
                     db.metagrups.Add(item);
                     db.SaveChanges();
@@ -373,7 +373,7 @@ namespace WebApplication1.Controllers
                     tem.IsActive = model.tblMetaGroup.IsActive;
                     tem.METAGROUPCODE = item.METAGROUPCODE;
                     tem.METAGROUPNAME = item.METAGROUPNAME;
-                    tem.PARENTNO = 0;
+                    tem.PARENTNO = model.tblMetaGroup.PARENTNO;
                     tem.CREATED = item.CREATED;
                     tem.LASTCHANGE = item.LASTCHANGE;
                     tem.CodeLanguage = item.CodeLanguage.ToLower();
@@ -456,94 +456,138 @@ namespace WebApplication1.Controllers
             var listMasterGroup = db.metagrups.Where(x => x.PARENTNO != 0).ToList();
             listMasterGroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.ListMasterGroup = listMasterGroup;
-            return View(new artgrp());
+            return View(new AllModel { tblGroup = new artgrp() });
         }
 
         [HttpPost]
-        public ActionResult CreateGroup(artgrp metagrup, HttpPostedFileBase[] inputfile)
+        public ActionResult CreateGroup(AllModel model, HttpPostedFileBase[] inputfile)
         {
-            var mmgroup = db.artgrps.OrderByDescending(x => x.GROUPNO).FirstOrDefault();
-            if (mmgroup != null)
-            {
-                metagrup.GROUPNO = mmgroup.GROUPNO + 1;
-            }
-            else
-            {
-                metagrup.GROUPNO = 1;
-            }
-            if (inputfile != null)
-            {
-                for (int i = 0; i < inputfile.Length; i++)
-                {
-                    if (inputfile[i] != null)
-                    {
-                        var fname = metagrup.GROUPCODE + "." +
-                                  inputfile[i].FileName.Split('.').Last();
-                        string path = Server.MapPath("~/Content/GroupImage");
-                        if (!Directory.Exists(path))
-                            Directory.CreateDirectory(path);
-                        path = Path.Combine(path + "/", fname);
-                        inputfile[i].SaveAs(path);
 
+            if (model.tblGroupArray != null)
+            {
+                foreach (var item in model.tblGroupArray)
+                {
+
+                    item.METAGROUPNO = model.tblGroup.METAGROUPNO;
+                    item.IsActive = model.tblGroup.IsActive;
+                    item.CREATED = DateTime.Now;
+                    item.LASTCHANGE = DateTime.Now;
+                    item.EXPORTABLE = "T";
+                    db.artgrps.Add(item);
+                    db.SaveChanges();
+                    if (inputfile != null)
+                    {
+                        for (int i = 0; i < inputfile.Length; i++)
+                        {
+                            if (inputfile[i] != null)
+                            {
+                                var fname = item.GROUPCODE + "." +
+                                          inputfile[i].FileName.Split('.').Last();
+                                string path = Server.MapPath("~/Content/MetagroupImage");
+                                if (!Directory.Exists(path))
+                                    Directory.CreateDirectory(path);
+                                path = Path.Combine(path + "/", fname);
+                                inputfile[i].SaveAs(path);
+
+                            }
+                        }
                     }
+
+
                 }
             }
-            
-            metagrup.CREATED = DateTime.Now;
-            metagrup.LASTCHANGE = DateTime.Now;
-            db.artgrps.Add(metagrup);
-            db.SaveChanges();
+
+  
+
+           
             return RedirectToAction("IndexGroup");
 
         }
 
-        public ActionResult EditGroup(int? id)
+        public ActionResult EditGroup(string code)
         {
             var listMasterGroup = db.metagrups.Where(x => x.PARENTNO != 0).ToList();
             listMasterGroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.ListMasterGroup = listMasterGroup;
-            if (id == null)
+            var proMaster = db.artgrps.FirstOrDefault(x => x.GROUPCODE == code);
+            if (code == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            artgrp metagrup = db.artgrps.Find(id);
-            if (metagrup == null)
+            var list = db.countries.Where(x => x.status == 1).ToList();
+            ViewBag.ListCountry = list;
+            foreach (var itemLang in list)
             {
-                return HttpNotFound();
+                var pro = db.artgrps.FirstOrDefault(x => x.GROUPCODE == code && x.CodeLanguage == itemLang.language.ToLower());
+                if (pro == null)
+                {
+
+                    if (proMaster != null)
+                    {
+                        var tblItem = new artgrp();
+                        tblItem.CREATED = proMaster.CREATED;
+                        tblItem.LASTCHANGE = proMaster.LASTCHANGE;
+                        tblItem.GROUPCODE = proMaster.GROUPCODE;
+                        tblItem.GROUPNAME = proMaster.GROUPNAME;
+                        tblItem.IsActive = proMaster.IsActive;
+                        tblItem.EXPORTABLE = proMaster.EXPORTABLE;
+                        tblItem.METAGROUPNO = proMaster.METAGROUPNO;
+                        tblItem.CodeLanguage = itemLang.language.ToLower();
+                        db.artgrps.Add(tblItem);
+
+                    }
+
+                }
+
             }
-            return View(metagrup);
+            db.SaveChanges();
+            var item = db.artgrps.ToList().Where(x => x.GROUPCODE.ToLower() == code.ToLower()).ToList();
+            return View(new AllModel { listGroup = item, tblGroup = proMaster });
         }
         [HttpPost]
-        public ActionResult EditGroup(artgrp metagrup, HttpPostedFileBase[] inputfile)
+        public ActionResult EditGroup(AllModel model, HttpPostedFileBase[] inputfile)
         {
-            if (ModelState.IsValid)
+            if (model.tblGroupArray != null)
             {
-                if (inputfile != null)
+                foreach (var item in model.tblGroupArray)
                 {
-                    for (int i = 0; i < inputfile.Length; i++)
-                    {
-                        if (inputfile[i] != null)
-                        {
-                            var fname = metagrup.GROUPCODE + "." +
-                                      inputfile[i].FileName.Split('.').Last();
-                            string path = Server.MapPath("~/Content/GroupImage");
-                            if (!Directory.Exists(path))
-                                Directory.CreateDirectory(path);
-                            path = Path.Combine(path + "/", fname);
-                            inputfile[i].SaveAs(path);
+                    var tem = db.artgrps.Find(item.GROUPNO);
 
+                    tem.IsActive = model.tblGroup.IsActive;
+                    tem.GROUPCODE = item.GROUPCODE;
+                    tem.GROUPNAME = item.GROUPNAME;
+                    tem.METAGROUPNO = model.tblGroup.METAGROUPNO;
+                    tem.CREATED = item.CREATED;
+                    tem.LASTCHANGE = item.LASTCHANGE;
+                    tem.CodeLanguage = item.CodeLanguage.ToLower();
+                    db.Entry(tem).State = EntityState.Modified;
+                    if (inputfile != null)
+                    {
+                        for (int i = 0; i < inputfile.Length; i++)
+                        {
+                            if (inputfile[i] != null)
+                            {
+                                var fname = item.GROUPCODE + "." +
+                                          inputfile[i].FileName.Split('.').Last();
+                                string path = Server.MapPath("~/Content/MetagroupImage");
+                                if (!Directory.Exists(path))
+                                    Directory.CreateDirectory(path);
+                                path = Path.Combine(path + "/", fname);
+                                inputfile[i].SaveAs(path);
+
+                            }
                         }
                     }
+
                 }
-                metagrup.CREATED = DateTime.Now;
-                metagrup.LASTCHANGE = DateTime.Now;
-                metagrup.EXPORTABLE ="T";
-                
-                db.Entry(metagrup).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("IndexGroup");
+
             }
-            return View(metagrup);
+
+            db.SaveChanges();
+
+
+
+            return RedirectToAction("IndexGroup");
         }
 
         public ActionResult DeleteGroup(int? id)

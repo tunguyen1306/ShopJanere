@@ -1,51 +1,141 @@
-﻿@model WebApplication1.artgrp
+﻿@model WebApplication1.Models.AllModel
+@{
+    veebdbEntities db = new veebdbEntities();
+    var listLanguge = db.countries.Where(x => x.status == 1).ToList();
+    var indexT = 1;
+    var indexT1 = 1;
+}
 <div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>Group Code</label>
+    @if (Model.tblGroup.GROUPNO == 0)
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in listLanguge)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.language">@item.language</a></li>
+                indexT++;
+            }
 
-            @Html.TextBoxFor(x => x.GROUPCODE, new {@class = "form-control"})
 
+        </ul>
+
+
+        <div class="tab-content">
+
+            @foreach (var item in listLanguge)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblGroupArray.Index" value="@(guid)" />
+                <div id="@item.language" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label> Group Code @item.language</label>
+                                <input type="text" class="form-control" name="tblGroupArray[@(guid)].GROUPCODE" value="@Model.tblGroup.GROUPCODE" />
+                                <input type="hidden" value="@item.language" name="tblGroupArray[@(guid)].CodeLanguage" />
+
+                            </div>
+                            <div class="form-group">
+                                <label> Group Name @item.language</label>
+                                <input type="text" class="form-control" name="tblGroupArray[@(guid)].GROUPNAME" value="@Model.tblGroup.GROUPNAME" />
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
-        <div class="form-group">
-            <label>Group Name</label>
+    }
+    else
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in Model.listGroup)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.CodeLanguage">@item.CodeLanguage.ToUpper()</a></li>
+                indexT++;
+            }
 
-            @Html.TextBoxFor(x => x.GROUPNAME, new {@class = "form-control"})
 
+        </ul>
+
+        <div class="tab-content">
+
+            @foreach (var item in Model.listGroup)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblGroupArray.Index" value="@(guid)" />
+                <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label> Group Code @(item.CodeLanguage)</label>
+                                <input type="text" class="form-control" name="tblGroupArray[@(guid)].GROUPCODE" readonly="readonly" value="@item.GROUPCODE" />
+                                <input type="hidden" value="@item.CodeLanguage" name="tblGroupArray[@(guid)].CodeLanguage" />
+                                <input type="hidden" value="@item.GROUPNO" name="tblGroupArray[@(guid)].GROUPNO" />
+                                <input type="hidden" value="@item.LASTCHANGE" name="tblGroupArray[@(guid)].LASTCHANGE" />
+                                <input type="hidden" value="@item.CREATED" name="tblGroupArray[@(guid)].CREATED" />
+
+                            </div>
+                            <div class="form-group">
+                                <label>Group Name @item.CodeLanguage</label>
+                                <input type="text" class="form-control" name="tblGroupArray[@(guid)].GROUPNAME" value="@item.GROUPNAME" />
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
 
-
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>Status</label>
+    }
 
 
-            @Html.DropDownListFor(c => c.IsActive, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "True" }, new SelectListItem { Text = "False", Value = "False", Selected = true } }, new { @class = "form-control select2" })
+    <div class="row">
 
 
-        </div>
-        <div class="form-group">
-            <label>Meta Group</label>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Status</label>
 
-            @Html.DropDownListFor(m => m.METAGROUPNO, new SelectList(((List<metagrup>)ViewBag.ListMasterGroup), "METAGROUPNO", "METAGROUPNAME", "Select  Meta Group"), new { @class = "form-control select2" })
+
+                    @Html.DropDownListFor(c => c.tblGroup.IsActive, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "True" }, new SelectListItem { Text = "False", Value = "False", Selected = true } }, new { @class = "form-control select2" })
 
 
-        </div>
-        <div class="form-group">
-            <label class="control-label">Images <span class="required">*</span></label>
+                </div>
+                <div class="form-group">
+                    <label>Meta Group</label>
 
-            <div>
-                <style>
-                    .thumb {
-                        height: 75px;
-                        border: 1px solid #000;
-                        margin: 10px 5px 0 0;
-                    }
-                </style>
+                    @Html.DropDownListFor(m => m.tblGroup.METAGROUPNO, new SelectList(((List<metagrup>)ViewBag.ListMasterGroup), "METAGROUPNO", "METAGROUPNAME", "Select  Meta Group"), new { @class = "form-control select2" })
 
-                <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*" />
-                <script>
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Images <span class="required">*</span></label>
+
+                    <div>
+                        <style>
+                            .thumb {
+                                height: 75px;
+                                border: 1px solid #000;
+                                margin: 10px 5px 0 0;
+                            }
+                        </style>
+
+                        <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*" />
+                        <script>
                     function handleFileSelect(evt) {
                         var files = evt.target.files; // FileList object
 
@@ -78,50 +168,60 @@
                     }
 
                     document.getElementById('files').addEventListener('change', handleFileSelect, false);
-                </script>
+                        </script>
 
-            </div>
-            <div>
-                <output id="list"></output>
-            </div>
-            <div>
-                <output>
-                    @{
-                        if (!string.IsNullOrEmpty(Model.GROUPCODE))
-                        {
-                            var image = Model.GROUPCODE + ".jpg";
-                            <span style="position: relative">
-                                <input type="hidden" name="urlimage" id="hdImage" value="@Model.GROUPCODE" />
-
-
-                                @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + image)))
+                    </div>
+                    <div>
+                        <output id="list"></output>
+                    </div>
+                    <div>
+                        <output>
+                            @{
+                                if (!string.IsNullOrEmpty(Model.tblGroup.GROUPCODE))
                                 {
-                                    <i class="delete_action fa fa-times" rel="@Model.GROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
+                                    var image = Model.tblGroup.GROUPCODE + ".jpg";
+                                    <span style="position: relative">
+                                        <input type="hidden" name="urlimage" id="hdImage" value="@Model.tblGroup.GROUPCODE" />
 
-                                    <img alt="Janere" class="thumb" src="~/Content/MetagroupImage/@image">
 
+                                        @if (System.IO.File.Exists(Server.MapPath("~/Content/MetagroupImage/" + image)))
+                                        {
+                                            <i class="delete_action fa fa-times" rel="@Model.tblGroup.GROUPCODE" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
+
+                                            <img alt="Janere" class="thumb" src="~/Content/MetagroupImage/@image">
+
+                                        }
+                                        else
+                                        {
+
+                                            <img alt="Janere" class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
+
+                                        }
+                                    </span>
                                 }
-                                else
-                                {
-
-                                    <img alt="Janere" class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
-
-                                }
-                            </span>
-                        }
 
 
-                    }
-                </output>
+                            }
+                        </output>
+                    </div>
+
+                </div>
+
             </div>
+
 
         </div>
 
     </div>
-
 </div>
-@Html.HiddenFor(x=>x.GROUPNO)
-@Html.HiddenFor(x=>x.CREATED)
+
+
+
+
+
+
+@Html.HiddenFor(x=>x.tblGroup.CREATED)
+@Html.HiddenFor(x=>x.tblGroup.EXPORTABLE)
 
 
 <script>

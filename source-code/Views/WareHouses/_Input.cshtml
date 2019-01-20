@@ -1,0 +1,198 @@
+﻿@model WebApplication1.Models.AllModel
+@{
+    veebdbEntities db = new veebdbEntities();
+    var listLanguge = db.countries.Where(x => x.status == 1).ToList();
+    var indexT = 1;
+    var indexT1 = 1;
+}
+<div class="row">
+    @if (Model.tblStockCod.STOCKNO == 0)
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in listLanguge)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.language">@item.language</a></li>
+                indexT++;
+            }
+
+
+        </ul>
+
+
+        <div class="tab-content">
+
+            @foreach (var item in listLanguge)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblStockCodArray.Index" value="@(guid)" />
+                <div id="@item.language" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Stock Code @item.language</label>
+                                <input type="text" class="form-control" name="tblStockCodArray[@(guid)].STOCKCODE" value="@Model.tblStockCod.STOCKCODE" />
+                                <input type="hidden" value="@item.language" name="tblStockCodArray[@(guid)].CodeLanguage" />
+
+                            </div>
+                            <div class="form-group">
+                                <label>Stock Name @item.language</label>
+                                <input type="text" class="form-control" name="tblStockCodArray[@(guid)].STOCKNAME" value="@Model.tblStockCod.STOCKNAME" />
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
+        </div>
+    }
+    else
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in Model.listStockCod)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.CodeLanguage">@item.CodeLanguage.ToUpper()</a></li>
+                indexT++;
+            }
+
+
+        </ul>
+
+        <div class="tab-content">
+
+            @foreach (var item in Model.listStockCod)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblStockCodArray.Index" value="@(guid)"/>
+                <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Stock Code @(item.CodeLanguage)</label>
+                                <input type="text" class="form-control" name="tblStockCodArray[@(guid)].STOCKCODE" readonly="readonly" value="@item.STOCKCODE"/>
+                                <input type="hidden" value="@item.CodeLanguage" name="tblStockCodArray[@(guid)].CodeLanguage"/>
+                                <input type="hidden" value="@item.STOCKNO" name="tblStockCodArray[@(guid)].STOCKNO"/>
+                                <input type="hidden" value="@item.LASTCHANGE" name="tblStockCodArray[@(guid)].LASTCHANGE"/>
+                                <input type="hidden" value="@item.CREATED" name="tblStockCodArray[@(guid)].CREATED"/>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Stock Name @item.CodeLanguage</label>
+                                <input type="text" class="form-control" name="tblStockCodArray[@(guid)].STOCKNAME" value="@item.STOCKNAME"/>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
+        </div>
+
+    }
+
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label></label>
+            <span style="color: red">@Model.messError</span>
+        </div>
+    </div>
+</div>
+
+
+<script>
+   
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                STOCKCODE: {
+                    required: true
+                },
+                STOCKNAME: {
+                    required: true
+
+                }
+
+
+            },
+
+            messages: {
+                STOCKCODE: "STOCKCODE  do not empty",
+                STOCKNAME: "STOCKNAME  do not empty",
+              
+
+
+            },
+
+
+            highlight: function (e) {
+
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+                } else {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                }
+
+
+            },
+
+            success: function (e) {
+                if ($(e).is('.file-upload')) {
+                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+                }
+                else {
+                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).closest('.form-group').find('.help-block').remove();
+                }
+
+            },
+
+            errorPlacement: function (error, element) {
+
+                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if (element.is('.select2') || element.is('.js-select2-1')) {
+                    if (element.parents('div').eq(0).is('.input-group')) {
+                        error.insertAfter(element.parents('div').eq(0));
+                    } else {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+
+
+                }
+                else if (element.is('.file-upload')) {
+                    error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+                }
+                else if (element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else error.insertAfter(element);
+            },
+
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+            }
+        });
+
+
+</script>

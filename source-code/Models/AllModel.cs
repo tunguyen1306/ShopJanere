@@ -12,7 +12,7 @@ namespace WebApplication1.Models
         public metagrup tblMetaGroup { get; set;}
         public metagrup tblMasterMetaGroup { get; set;}
         public item tblitem { get; set;}
-        public artgrp tblGroup { get; set;}
+       
         public order tblOrder { get; set;}
         public orderstatu tblOrderStatus { get; set;}
         public orderdetail tblOrderDetail { get; set;}
@@ -40,5 +40,17 @@ namespace WebApplication1.Models
         public List<metagrup> listMetaGroup { get; set; }
 
 
+        public artgrp tblGroup { get; set; }
+        public artgrp[] tblGroupArray { get; set; }
+        public List<artgrp> listGroup { get; set; }
+
+        public stockcod tblStockCod { get; set; }
+        public stockcod[] tblStockCodArray { get; set; }
+        public List<stockcod> listStockCod { get; set; }
+
+        public stock tblStock { get; set; }
+        public stock[] tblStockArray { get; set; }
+        public List<stock> listStock { get; set; }
+        public string messError { get; set; }
     }
 }

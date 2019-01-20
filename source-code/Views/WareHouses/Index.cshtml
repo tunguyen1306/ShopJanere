@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebApplication1.Models.AllModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>Stock</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","WareHouses")">Add New</a>
+
+</div>
+
+
+<div class="row wrap_filter" style="margin-top: 10px;">
+    <div class="col-sm-4">
+       
+    </div>
+    <div class="col-sm-4 right">
+
+    </div>
+    <div class="col-sm-4 right">
+        <input type="text" name="search_order" id="txtsearch_orders" class="form-control">
+
+    </div>
+</div><!-- wrap_filter -->
+@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "stockcod-result",
+    OnBegin = "stockcodsearchOnBegin",
+    OnSuccess = "stockcodsearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="stockcod-btsubmit">Search</button>
+}
+<div id="stockcod-result">
+    @{
+        Html.RenderAction("IndexAjax", "WareHouses");
+    }
+
+
+</div>
+<script>
+
+
+  
+    //#region tdg form
+
+    function stockcod_seacrch() {
+        $('#stockcod-btsubmit').click();
+    }
+    stockcod_seacrch();
+    function stockcodsearchOnBegin() {
+
+    }
+
+    function stockcodsearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>
