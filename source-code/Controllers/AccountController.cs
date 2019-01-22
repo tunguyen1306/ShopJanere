@@ -78,7 +78,34 @@ namespace WebApplication1.Controllers
             db.userdatas.Add(ud);
             db.SaveChanges();
             var t = SendTemplateEmail(user.email, user.email, "", "Email register success", 1);
-            return RedirectToAction("Index", "Home");
+            var tem = db.users.FirstOrDefault(m => m.username == user.username && m.password == user.password);
+            if (tem != null)
+            {
+                Session["LoggedAccount"] = null;
+                AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+                Session["LoggedAccount"] = userFullInfo;
+                string decodedUrl = "";
+                if (!string.IsNullOrEmpty(Url.Action("AccountInfo", "Account", new { id = user.Id })))
+                    decodedUrl = Server.UrlDecode(Url.Action("AccountInfo", "Account", new { id = user.Id }));
+                if (decodedUrl != "" && !decodedUrl.Contains("Login"))
+                {
+                    return Redirect(decodedUrl);
+                }
+                if (userFullInfo.role.RoleName == "super_admin")
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home", new { message = "Acount do not exist." });
+            }
+
 
         }
         [HttpPost]
@@ -127,11 +154,21 @@ namespace WebApplication1.Controllers
                     body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_ResetPassTemplateMail.cshtml");
                     body = body.Replace("##name##", username);
                     body = body.Replace("##activatelink##", activelink);
-                    
+
                 }
             }
+            if (type == 3)
+            {
 
-t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, body);
+
+
+
+                body = key;
+
+
+            }
+
+            t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, body);
 
 
             return t;
@@ -219,9 +256,9 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
                 ViewBag.Keyword = seo.keyword;
             }
             var data = (from us in db.users
-                       join usdt in db.userdatas on us.Id equals usdt.userid
-                       where us.Id == id
-                       select new AllModel { tblUser = us, tblUserData = usdt }).FirstOrDefault();
+                        join usdt in db.userdatas on us.Id equals usdt.userid
+                        where us.Id == id
+                        select new AllModel { tblUser = us, tblUserData = usdt }).FirstOrDefault();
             return View(data);
         }
         public ActionResult ChangePass(int id)
@@ -272,10 +309,10 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
             return View();
 
         }
-        public ActionResult OrderHistoryAjax(int id,string datepicker = null, string searchOrder = null, int start = 0, int view = 10)
+        public ActionResult OrderHistoryAjax(int id, string datepicker = null, string searchOrder = null, int start = 0, int view = 10)
         {
 
-            var listOrder = db.orders.Where(x=>x.clientID==id);
+            var listOrder = db.orders.Where(x => x.clientID == id);
 
 
             var listAll = (from pro in listOrder
@@ -308,7 +345,7 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
         public ActionResult AccountInfo(AllModel model)
         {
             var user = db.users.Find(model.tblUser.Id);
-            if (user!=null)
+            if (user != null)
             {
                 ViewBag.Notification = 0;
                 user.updatedate = DateTime.Now;
@@ -317,7 +354,7 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 var userdata = db.userdatas.Find(model.tblUserData.Id);
-                if (userdata!=null)
+                if (userdata != null)
                 {
                     userdata.firstname = model.tblUserData.firstname;
                     userdata.lasname = model.tblUserData.lasname;
@@ -352,9 +389,128 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
                 }
 
             }
-         
+
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult SendAskForPrice(string email, string name, string phone, string qty, string productId)
+        {
+            var re = 0;
+            var content = "";
+            var namePro = "";
+            if (email != null)
+            {
+                content += "Email: " + email + "<br>";
+                content += "Name: " + name + "<br>";
+                content += "Phone: " + phone + "<br>";
+                content += "Quantity: " + qty + "<br>";
+                if (productId != null)
+                {
+                    var proID = int.Parse(productId);
+                    var tblProduct = db.items.FirstOrDefault(x => x.ARTNO == proID);
+                    if (tblProduct != null)
+                    {
+                        content += "Code:" + tblProduct.ARTCODE + ", Product:" + tblProduct.ARTNAME;
+                        namePro = "Code:" + tblProduct.ARTCODE + ", Product:" + tblProduct.ARTNAME;
+                    }
+                }
+                var t = SendTemplateEmail(email, email, content, "Email Ask For Price", 3);
+                var tblEmail = new email
+                {
+                    email1 = email,
+                    phone = phone,
+                    name = name,
+                    nameproduct = namePro,
+                    status = 1,
+                    type = 1,
+                    responedate = DateTime.Now,
+                    createdate = DateTime.Now,
+                    quantity = qty
+                };
+                db.emails.Add(tblEmail);
+                db.SaveChanges();
+
+
+                re = t ? 1 : 3;
+            }
+
+            return Json(new { result = re });
+
+        }
+
+        public ActionResult CloneLanguage()
+        {
+            var listLanguage = db.countries.Where(x => x.status == 1).ToList();
+            var listPro = db.items.ToList();
+            var index = 0;
+
+            foreach (var proItem in listPro)
+            {
+                foreach (var itemLang in listLanguage)
+                {
+                    var itempro = db.items.FirstOrDefault(x => x.ARTCODE == proItem.ARTCODE && x.CodeLanguage == itemLang.language.ToLower());
+
+                    if (itempro == null)
+                    {
+
+                        var tblItem = new item();
+                        tblItem.ARTTYPE = 1;
+                        tblItem.CREATED = DateTime.Now;
+                        tblItem.LASTCHANGE = DateTime.Now;
+                        tblItem.ARTCODE = proItem.ARTCODE;
+                        tblItem.ARTNAME = proItem.ARTNAME;
+                        tblItem.INFO = proItem.INFO;
+                        tblItem.CodeLanguage = itemLang.language.ToLower();
+                        tblItem.GROUPNO = proItem.GROUPNO;
+                        tblItem.IsBestSeller = proItem.IsBestSeller;
+                        tblItem.EXPORTABLE = proItem.EXPORTABLE;
+                        tblItem.SPECIALOFFER = proItem.SPECIALOFFER;
+                        tblItem.STOCKITEM = proItem.STOCKITEM;
+                        tblItem.AUTHORIZABLE = proItem.AUTHORIZABLE;
+                        tblItem.RESTRICTED = proItem.RESTRICTED;
+                        tblItem.NOTPOST = proItem.NOTPOST;
+                        tblItem.NOTADDPOSTAGEFEE = proItem.NOTADDPOSTAGEFEE;
+                        tblItem.WIDTH = proItem.WIDTH;
+                        tblItem.WEIGHT = proItem.WEIGHT;
+                        tblItem.LEN = proItem.LEN;
+                        tblItem.HEIGHT = proItem.HEIGHT;
+
+                        db.items.Add(tblItem);
+                        var tblLink = db.artlinks.FirstOrDefault(x => x.ARTNO == proItem.ARTNO);
+                        if (tblLink != null)
+                        {
+                            var tblPic = new artlink
+                            {
+
+                                ARTNO = tblItem.ARTNO,
+                                LASTCHANGE = DateTime.Now,
+                                CREATED = DateTime.Now,
+                                LINK = tblLink.LINK
+
+                            };
+                            db.artlinks.Add(tblPic);
+                        }
+                        index++;
+                    }
+                    if (index == 25)
+                    {
+                        index = 0;
+                        db.SaveChanges();
+                    }
+
+                }
+              
+
+            }
+
+          
+
+
+            return null;
+
+        }
+
 
     }
 }

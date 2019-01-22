@@ -56,12 +56,12 @@
 
         var slider = data.sliders.Where(m => m.Status == 1);
         var setting = data.settings.ToList();
-        var seo = data.seos.FirstOrDefault(x=>x.type==1);
+        var seo = data.seos.FirstOrDefault(x => x.type == 1);
     }
-    @if (seo!=null)
+    @if (seo != null)
     {
         @Html.Raw(seo.metatag)
-      
+
         @Html.Raw(seo.googleanalys)
     }
 </head>
@@ -81,15 +81,15 @@
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 @Html.Partial("Partial/_pLanguage")
-                             
-                                <span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>  
 
-                                
+                                <span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>
+
+
                                 <a href="@Url.Action("Login", "Home")">
                                     <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
                                 </a>
                                 <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
-                                
+
                             </div>
                         </div>
                         <div class="head-menu">
@@ -114,13 +114,13 @@
     <section class="blink-slider">
         <div class="blink-slider">
             <div class="blink-view" id="blink" onclick="linkto(this)">
-              
 
-@foreach (var slide in setting.Where(x=>x.typeId=="slider").OrderBy(x => x.order).ToList())
+
+                @foreach (var slide in setting.Where(x=>x.typeId=="slider").OrderBy(x => x.order).ToList())
 {
-    <div class="viewSlide">
-        <a href="#"><img alt="Janere" class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
-    </div>
+                <div class="viewSlide">
+                    <a href="#"><img alt="Janere" class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
+                </div>
 }
 
 
@@ -142,16 +142,16 @@
         @{
             List<item> relatedProducts = (List<item>)Session["relatedProducts"];
         }
-      
+
     </div><!-- product_category -->
 
     <h2 class="heading_title navi_slider">
         <span>Best Sellers</span>
         @*<img alt="Janere" src="~/Content/body/others/back.png" id="bs_back" />
-        <input type="hidden" value="1" id="bs_cur" />
-        <img alt="Janere" src="~/Content/body/others/next.png" id="bs_next" />*@
+            <input type="hidden" value="1" id="bs_cur" />
+            <img alt="Janere" src="~/Content/body/others/next.png" id="bs_next" />*@
     </h2>
-   
+
     <div class="container body-content owl-carousel" style="clear:both;margin-top:20px;">
         @{
             var product = data.items.Where(m => m.IsBestSeller == true).ToList();
@@ -162,38 +162,38 @@
 
 
 
-                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 0px;">
-                    <a href="@Url.Action("Product", "Home", new {Code = item.ARTCODE})">
-                        <div class="row home-bestseller" style="color: #666666; height: 350px;">
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 10px;">
-                                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + item.PICTURENAME)))
+        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 0px;">
+            <a href="@Url.Action("Product", "Home", new {Code = item.ARTCODE})">
+                <div class="row home-bestseller" style="color: #666666; height: 350px;">
+                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 10px;">
+                        @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + item.PICTURENAME)))
                                     {
-                                    <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width: 100%;">
+                                <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width: 100%;">
                                     }
                                     else
                                     {
-                                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;" />
+                                <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;" />
 
                                     }
-                                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4; font-weight: bold; height: 60px;">
-                                    @item.ARTNAME
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
-                                <!-- $@item.WEBPRICE-->
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                                <span style="font-weight: bold;">Width:</span> @item.WIDTH
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                                <span style="font-weight: bold; color: #666666;">Height:</span> @item.HEIGHT
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
-                                <span style="font-weight: bold; color: #666666;">ArtCode:</span>@item.ARTCODE
-                            </div>
+                        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4; font-weight: bold; height: 60px;">
+                            @item.ARTNAME
                         </div>
-                    </a>
+                    </div>
+                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
+                        <!-- $@item.WEBPRICE-->
+                    </div>
+                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                        <span style="font-weight: bold;">Width:</span> @item.WIDTH
+                    </div>
+                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                        <span style="font-weight: bold; color: #666666;">Height:</span> @item.HEIGHT
+                    </div>
+                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+                        <span style="font-weight: bold; color: #666666;">ArtCode:</span>@item.ARTCODE
+                    </div>
                 </div>
+            </a>
+        </div>
 
             }
 
@@ -203,51 +203,49 @@
     </div>
 
 
-   
-   @Html.Partial("Partial/_pFooter")
+
+    @Html.Partial("Partial/_pFooter")
 
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/myscript")
-        @Scripts.Render("~/bundles/bootstrap")
-        <link href="~/Content/Carousel/owl.theme.default.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/bootstrap")
+    <link href="~/Content/Carousel/owl.theme.default.min.css" rel="stylesheet" />
     <link href="~/Content/Carousel/owl.carousel.min.css" rel="stylesheet" />
     @RenderSection("scripts", required: false)
     <link rel="stylesheet" href="~/Content/blink.css">
     <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>-->
-<script src="~/Content/jquery.blink.js"></script>
+    <script src="~/Content/jquery.blink.js"></script>
     <script src="~/Content/Carousel/owl.carousel.js"></script>
 
 
 <script type="text/javascript">
-        $(document).ready(function () {
-            $("#blink").blink();
-        });
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                    nav: true
-                },
-                600: {
-                    items: 3,
-                    nav: false
-                },
-                1000: {
-                    items: 4,
-                    nav: true,
-                    loop: false
-                }
+    $(document).ready(function() {
+        $("#blink").blink();
+    });
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                nav: true
+            },
+            600: {
+                items: 3,
+                nav: false
+            },
+            1000: {
+                items: 4,
+                nav: true,
+                loop: false
             }
-        });
-    </script>
-</body>
-</html>
-<script type="text/javascript">
+        }
+    });
+</script>
+    <script type="text/javascript">
     $(document).one('ready', function () {
 
         var procemessage = "<div value='0'> Loading Items...</div>";
@@ -263,7 +261,7 @@
                 $("#bestseller").html(data).show();
             },
             error: function (reponse) {
-                alert("error : " + reponse);
+                //alert("error : " + reponse);
             }
         });
         var url = "/Home/MasterMetaGroup/";
@@ -276,7 +274,7 @@
                 $("#mastermeta").html(data).show();
             },
             error: function (reponse) {
-                alert("error : " + reponse);
+                //alert("error : " + reponse);
             }
         });
 
@@ -304,7 +302,7 @@
                         $("#mastermeta").html(data).show();
                     },
                     error: function (reponse) {
-                        alert("error : " + reponse);
+                        //alert("error : " + reponse);
                     }
                 });
             }
@@ -334,7 +332,7 @@
                                 $("#mastermeta").html(data).show();
                             },
                             error: function (reponse) {
-                                alert("error : " + reponse);
+                                //alert("error : " + reponse);
                             }
                         });
                     }
@@ -343,7 +341,7 @@
                     }
                 },
                 error: function (reponse) {
-                    alert("error : " + reponse);
+                    //alert("error : " + reponse);
                 }
             });
         });
@@ -372,7 +370,7 @@
                         $("#bestseller").html(data).show();
                     },
                     error: function (reponse) {
-                        alert("error : " + reponse);
+                        //alert("error : " + reponse);
                     }
                 });
             }
@@ -402,7 +400,7 @@
                                 $("#bestseller").html(data).show();
                             },
                             error: function (reponse) {
-                                alert("error : " + reponse);
+                                //alert("error : " + reponse);
                             }
                         });
                     }
@@ -411,9 +409,12 @@
                     }
                 },
                 error: function (reponse) {
-                    alert("error : " + reponse);
+                   // alert("error : " + reponse);
                 }
             });
         });
     });
 </script>
+</body>
+</html>
+

@@ -215,6 +215,10 @@ namespace WebApplication1.Controllers
                     ViewBag.categoryName = "unlocated catagory";
                 }
             }
+            else
+            {
+                result=new item();
+            }
             return View(result);
         }
         public ActionResult BulkProducts(SearchModel search, int? Page_No, int? Page_Size, bool? pagination)

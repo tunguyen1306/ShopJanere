@@ -5,7 +5,25 @@
     @{
 
         veebdbEntities data = new veebdbEntities();
-       
+        var user = new AllLoggedUserInfo();
+
+
+
+        if (Session["LoggedAccount"] == null)
+        {
+            var tem = data.users.FirstOrDefault(m => m.Id == 7);
+            if (tem != null)
+            {
+                Session["LoggedAccount"] = null;
+                AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+                Session["LoggedAccount"] = userFullInfo;
+                user = userFullInfo;
+            }
+        }
+        else
+        {
+            user = (AllLoggedUserInfo)Session["LoggedAccount"];
+        }
         var seo = data.seos.FirstOrDefault(x => x.type == 1);
     }
     @if (seo != null)
@@ -19,9 +37,11 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/admin/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="~/Content/admin/css/admin-style.css" rel="stylesheet"/>
-    <link href="~/Content/admin/css/all.css" rel="stylesheet"/>
+   <link href="~/Content/admin/css/all.css" rel="stylesheet"/>
 
     <link href="~/Content/admin/css/select2.min.css" rel="stylesheet"/>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/CusWeb.css" rel="stylesheet" />
     <script src="~/Content/admin/js/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -40,8 +60,51 @@
 </head>
 <body>
 
-    <div class="page_wrapper">
-        <header id="header">
+<div class="page_wrapper">
+    <div class="navbar navbar-inverse" style="background-color: #171717">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
+                        <a href="@Url.Action("Index", "Home")"><img alt="Janere" src="~/Content/head/logo.png" width="100%" style="padding: 33px 0px;" /></a>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                        <div class="row" style="text-align: center; padding: 8px 0px;">
+                            <div class="col-lg-7 col-md-7  col-sm-6 col-xs-12">
+                                <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: #8a8a8a; ">p:+372 658 0300</span></a>
+                                <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">&nbsp; e:janere@janere.ee</span></a>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
+                                @Html.Partial("Partial/_pLanguage")
+
+                                <span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>
+
+
+                                <a href="@Url.Action("Login", "Home")">
+                                    <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
+                                </a>
+                                <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
+
+                            </div>
+                        </div>
+                        <div class="head-menu">
+                            <a class="mobile_menu"><span></span><span></span><span></span></a>
+                            <div class="wrap-head-main-menu">
+                                <ul class="head-main-menu">
+                                    <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                                    <li><a href="@Url.Action("MasterGroup", "Home")">Products</a></li>
+                                    <li><a href="@Url.Action("Download", "Home")">Download</a></li>
+                                    <!--<li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>-->
+                                    <li><a href="@Url.Action("Stores", "Home")">Stores</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<header id="header">
             <div class="header_wrapper">
                 <div class="container">
                     <a class="adminlogo" href="@Url.Action("Index","Home")">
@@ -52,42 +115,58 @@
                     </ul>
                 </div>
             </div>
-        </header>
+        </header>*@
 
-        <div class="container body-content">
-            <div class="row">
-                @Html.Partial("Partial/_pAccountLeftSidebar")
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12" style="padding: 10px;">
-                    @RenderBody()
-                </div>
-
+    <div class="container body-content">
+        <div class="row">
+            @Html.Partial("Partial/_pAccountLeftSidebar")
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12" style="padding: 10px;">
+                @RenderBody()
             </div>
+
         </div>
-
-        <script>
-            $('.date-picker').datepicker({
-                autoclose: true,
-                todayHighlight: true,
-                format: 'dd/mm/yyyy'
-            });
-        </script>
-        <style>
-            form.loading {
-                position: relative;
-            }
-
-                form.loading div.opacity {
-                    display: block !important;
-                }
-
-                form.loading div.loading_icon {
-                    display: block !important;
-                }
-        </style>
-        
-        @Html.Partial("Partial/_pFooter")
     </div>
- 
-    
+
+    <script>
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+        });
+    </script>
+    <style>
+        form.loading {
+            position: relative;
+        }
+
+        form.loading div.opacity {
+            display: block !important;
+        }
+
+        form.loading div.loading_icon {
+            display: block !important;
+        }
+    </style>
+
+    @Html.Partial("Partial/_pFooter")
+</div>
+
+<script>
+    $(".checkNumber").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            // Allow: Ctrl+A, Command+A
+            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40) || (e.keyCode == 231)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
 </body>
 </html>

@@ -7,23 +7,23 @@
 
 <div class="row">
     <div class="col-lg-12" style="padding:15px 15px;">
-        Home /<a href="@Url.Action("Products", "Home", new { categoryid = @ViewBag.categoryId })">@ViewBag.categoryName</a>
+        Home /<a href="@Url.Action("Products", "Home", new { categoryid = ViewBag.categoryId })">@ViewBag.categoryName</a>
     </div>
 </div>
 <div class="row">
     <div class="col-lg-5">
         <div class="row">
             <div class="col-lg-12" style="padding: 2px 2px 2px 15px;">
-                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + (!string.IsNullOrEmpty(Model.PICTURENAME) ? Model.PICTURENAME : ""))))
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width: 100%">
 
                 }
                 else
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%"/>
 
                 }
 
@@ -31,59 +31,59 @@
         </div>
         <div class="row" style="padding: 0px 0px 0px 15px;">
             <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
-                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + (!string.IsNullOrEmpty(Model.PICTURENAME) ? Model.PICTURENAME : ""))))
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width: 100%">
 
                 }
                 else
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%"/>
 
                 }
             </div>
 
             <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
-                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + (!string.IsNullOrEmpty(Model.PICTURENAME) ? Model.PICTURENAME : ""))))
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width: 100%">
 
                 }
                 else
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%"/>
 
                 }
             </div>
             <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
-                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + (!string.IsNullOrEmpty(Model.PICTURENAME) ? Model.PICTURENAME : ""))))
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width: 100%">
 
                 }
                 else
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%"/>
 
                 }
             </div>
             <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
-                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @Model.PICTURENAME)))
+                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + (!string.IsNullOrEmpty(Model.PICTURENAME) ? Model.PICTURENAME : ""))))
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width:100%">
+                    <img alt="Janere" src="~/Content/ProductImage/@Model.PICTURENAME" style="width: 100%">
 
                 }
                 else
                 {
 
-                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width:100%" />
+                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%"/>
 
                 }
             </div>
@@ -95,24 +95,27 @@
     {
         <div class="col-lg-7">
             <div class="row" style="color: #666666">
-                <input type="hidden" name="code[0]" value="@Model.ARTCODE" />
-                <input type="hidden" name="price[0]" value="@Model.WEBPRICE" />
-                <div class="col-lg-12" style="font-size:30px;color:#2ea3f2;font-weight:bold">@Model.ARTNAME</div>
-                <div class="col-lg-12" style="font-size: 36px; color: #002f6c;font-weight:bold;">@(MvcApplication.MoneySymbol)@Model.WEBPRICE</div>
-                <div class="col-lg-4"><span style="font-weight:bold">Width:</span> @Model.WIDTH Mm</div>
-                <div class="col-lg-4"><span style="font-weight:bold">Height:</span> @Model.HEIGHT</div>
-                <div class="col-lg-4"><span style="font-weight:bold">Length:</span>  @Model.LEN Mm</div>
-                <div class="col-lg-4"><span style="font-weight:bold">Weight:</span> @Model.WEIGHT  Mm</div>
-                <div class="col-lg-4"><span style="font-weight:bold">Unit:</span> @Model.UNITNAME</div>
-                <div class="col-lg-4"><span style="font-weight:bold">Payment:</span> @Model.PAYMENTTERM</div>
-                <div class="col-lg-12"><span style="font-weight:bold">Unit Desc:</span> @Model.UNITDESCR</div>
-                <div class="col-lg-12"><span style="font-weight:bold">Stocks:</span></div>
+                <input type="hidden" name="code[0]" value="@Model.ARTCODE"/>
+                <input type="hidden" name="price[0]" value="@Model.WEBPRICE"/>
+                <div class="col-lg-12" style="font-size: 30px; color: #2ea3f2; font-weight: bold">@Model.ARTNAME</div>
+                <div class="col-lg-12" style="font-size: 36px; color: #002f6c; font-weight: bold;">@(MvcApplication.MoneySymbol)@Model.WEBPRICE</div>
+                <div class="col-lg-4"><span style="font-weight: bold">Width:</span> @Model.WIDTH Mm
+                </div>
+                <div class="col-lg-4"><span style="font-weight: bold">Height:</span> @Model.HEIGHT</div>
+                <div class="col-lg-4"><span style="font-weight: bold">Length:</span>  @Model.LEN Mm
+                </div>
+                <div class="col-lg-4"><span style="font-weight: bold">Weight:</span> @Model.WEIGHT Mm
+                </div>
+                <div class="col-lg-4"><span style="font-weight: bold">Unit:</span> @Model.UNITNAME</div>
+                <div class="col-lg-4"><span style="font-weight: bold">Payment:</span> @Model.PAYMENTTERM</div>
+                <div class="col-lg-12"><span style="font-weight: bold">Unit Desc:</span> @Model.UNITDESCR</div>
+                <div class="col-lg-12"><span style="font-weight: bold">Stocks:</span></div>
                 <div class="col-lg-12" style="display: inline-block;">
-                    @{ 
-                        List<stockcod> listStock = ViewBag.StockName != null ? (List<stockcod>)ViewBag.StockName : new List<stockcod>();
-                        List<stock> listStockItem = ViewBag.Stock != null ? (List<stock>)ViewBag.Stock : new List<stock>();
-                        var indexStock =0;
-                        var cItem =(stockcod)null;
+                    @{
+                        List<stockcod> listStock = ViewBag.StockName != null ? (List<stockcod>) ViewBag.StockName : new List<stockcod>();
+                        List<stock> listStockItem = ViewBag.Stock != null ? (List<stock>) ViewBag.Stock : new List<stock>();
+                        var indexStock = 0;
+                        var cItem = (stockcod) null;
                         foreach (var item in listStock)
                         {
                             var _value = listStockItem.Where(t => t.STOCKNO == item.STOCKNO).Sum(t => t.VOLUME);
@@ -121,61 +124,147 @@
                                 cItem = item;
                                 indexStock++;
                             }
-                            <div style="text-align: center;" class="stock col-lg-4 @(_value>0?"active":"") @(indexStock==1 && _value>0?"choose":"")" ><span class="valStock" onclick="stockChoose(this)" style="    padding: 5px;
-    background: aqua;
-    display: inline-block;
-    margin: 5px 0px  ;  width: 110px;" data-max-value="@(_value.ToString("n0"))"  data-name="@(item.STOCKNAME)"  data-id="@(item.STOCKNO)">@item.STOCKNAME (@(_value.ToString("n0")))</span></div>
-                                
+                            <div style="text-align: center;" class="stock col-lg-4 @(_value > 0 ? "active" : "") @(indexStock == 1 && _value > 0 ? "choose" : "")">
+                                <span class="valStock" onclick="stockChoose(this)" style="padding: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    background: aqua;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display: inline-block;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin: 5px 0px; width: 110px;" data-max-value="@(_value.ToString("n0"))" data-name="@(item.STOCKNAME)" data-id="@(item.STOCKNO)">@item.STOCKNAME (@(_value.ToString("n0")))</span>
+                            </div>
+
                         }
                     }
-                    <input type="hidden" id="sName" name="sName[0]" value="@(cItem!=null?cItem.STOCKNAME:"")"/>
-                    <input type="hidden" id="sNo" name="sNo[0]" value="@(cItem!=null?cItem.STOCKNO.ToString():"")" />
+                    <input type="hidden" id="sName" name="sName[0]" value="@(cItem != null ? cItem.STOCKNAME : "")"/>
+                    <input type="hidden" id="sNo" name="sNo[0]" value="@(cItem != null ? cItem.STOCKNO.ToString() : "")"/>
                 </div>
-                    <div class="col-lg-12 hasVolume" style="padding:15px 15px;@(indexStock==0?"display:none":"")">
-                        <span style="font-weight: bold; color: #000c38;margin-right:10px;">Quantity:</span>
-                        <input type="button" value="-" id="qtydown" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d;padding:0px; ">
-                        <input type="text" id=qty name=qty[0] value="1" style="width: 55px; height: 30px; color: #000c38;text-align:center;background-color:white; ">
-                        <input type="button" value="+" id="qtyup" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d; padding: 0px;" />
-                    </div>
-                    <div class="col-lg-12 hasVolume"  style="@(indexStock==0?"display:none":"")">
-                        <input type="submit" value="Add to Cart" style="width: 230px; height: 55px; color: white; background-color: #002f6c;font-size:24px;">
-                    </div>
-                 <div class="col-lg-12 noVolume" style="@(indexStock==0?"display:block;":"display:none;")
-    font-size: 20px;
-    font-weight: bold;
-    color: red;">
-                     No item in stocks
-                 </div>   
-                
+                <div class="col-lg-12 hasVolume" style="padding: 15px 15px; @(indexStock == 0 ? "display:none" : "")">
+                    <span style="font-weight: bold; color: #000c38; margin-right: 10px;">Quantity:</span>
+                    <input type="button" value="-" id="qtydown" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d; padding: 0px;">
+                    <input type="text" id=qty name=qty[0] value="1" style="width: 55px; height: 30px; color: #000c38; text-align: center; background-color: white;">
+                    <input type="button" value="+" id="qtyup" style="width: 30px; height: 30px; background-color: #0f497d; color: white; border-color: #0f497d; padding: 0px;"/>
+                </div>
+                <div class="col-lg-12 hasVolume" style="@(indexStock == 0 ? "display:none" : "")">
+                    <input type="submit" value="Add to Cart" style="width: 230px; height: 55px; color: white; background-color: #002f6c; font-size: 24px;">
+                </div>
+
+                <div class="col-lg-12 noVolume" style="@(indexStock == 0 ? "display:block;" : "display:none;"); font-size: 20px; font-weight: bold; color: red;">
+                    No item in stocks
+                </div>
+
                 <div class="col-lg-12">
-                        <a href="#">
-                            <img alt="Janere" src="~/Content/body/others/addtocompare.jpg" />
-                        </a>
-                        <a href="mailto:">
-                            <img alt="Janere" src="~/Content/body/others/emailtofriend.jpg" />
-                        </a>
-                    </div>
+                    <a href="#">
+                        <img alt="Janere" src="~/Content/body/others/addtocompare.jpg"/>
+                    </a>
+                    <a href="mailto:">
+                        <img alt="Janere" src="~/Content/body/others/emailtofriend.jpg"/>
+                    </a>
+                    <button type="button" data-toggle="modal" class="btn btn btn-primary" style="border-radius: 0px !important;" data-target="#modalAskPrice">
+                        Ask for price
+                    </button>
                 </div>
-            <!-- <img alt="Janere" src="~/Content/menu/down-arrow.png" /><img alt="Janere" src="~/Content/menu/vertical-arrow.png" />-->
+            </div>
+            <!-- <img alt="Janere" src="~/Content/menu/down-arrow.png"/><img alt="Janere" src="~/Content/menu/vertical-arrow.png"/>-->
         </div>
-                        }
+        <!-- Button trigger modal -->
+
+
+
+    }
+</div>
+   <!-- Modal -->
+<div class="modal fade" id="modalAskPrice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 0px!important;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ask for price</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formAskForPrice">
+                    <div class="form-horizontal">
+
+                        <input type="hidden" name="productId" value="@Model.ARTNO" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Name :</label>
+                            <div class="col-md-10">
+                                <input id="name" name="name" class="form-control" />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Email :</label>
+                            <div class="col-md-10">
+                                <input id="email" name="email" class="form-control" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Phone :</label>
+                            <div class="col-md-10">
+                                <input id="phone" name="phone" class="form-control" />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Quantity:</label>
+                            <div class="col-md-10">
+                                <input id="qty" name="qty" class="form-control" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2"></label>
+                            <div class="col-md-10">
+                                <div id="capchaAskForPrice"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="alert alert-danger hidden" role="alert">
+                                <strong>
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Error!
+                                </strong>
+                                <div class="show-alert"></div>
+                            </div>
+                            <div class="alert alert-success hidden" role="alert">
+                                <strong>
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>Success
+                                </strong>
+                                <div class="show-alert-success"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" style="border-radius: 0px !important;" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btnSenAskPrice" style="border-radius: 0px !important;">Send</button>
+            </div>
+        </div>
+    </div>
 </div>
 <style>
     .stock span {
-        cursor:pointer;
+        cursor: pointer;
     }
+
     .stock.active span {
         background-color: blue !important;
         color: white;
     }
+
     .stock.choose span {
         background-color: darkred !important;
         color: white;
     }
 </style>
 <script>
-    function stockChoose(el)
-    {
+    function stockChoose(el) {
         $('.stock').removeClass('choose');
         $('.hasVolume').hide();
         $('.noVolume').hide();
@@ -209,8 +298,8 @@
             {
                 relatedProducts = (List<item>)Session["relatedProducts"];
             }
-                
-            
+
+
             if (relatedProducts.Count() > 4)
             {
                 for (int i = 0; i < 4; i++)
@@ -276,10 +365,10 @@
 
                                 </div>
                                 <div class="col-lg-12" style="font-size: 13.54px; color: #59b1f4; padding: 10px 15px;">
-                                   <!-- @relatedProducts[i].ARTNAME-->
+                                    <!-- @relatedProducts[i].ARTNAME-->
                                 </div>
                                 <div class="col-lg-12" style="font-size: 13.54px;font-weight:bold; color: #002f6c;">
-                                   <!-- $@relatedProducts[i].WEBPRICE-->
+                                    <!-- $@relatedProducts[i].WEBPRICE-->
                                 </div>
                                 <div class="col-lg-12">
                                     <span style="font-weight: bold;">Width:</span> @relatedProducts[i].WIDTH

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "EditInfo";
     Layout = "~/Views/Shared/_AdminAccount.cshtml";
-   
+
 }
 <h2>Update Profile Info</h2>
 <!-- /.row -->
@@ -22,7 +22,7 @@
                         <div class="col-sm-4">
                             <h3>CONTACT INFO</h3>
                             <div class="form-group">
-                                <label>Firsname</label>
+                                <label>Display Name</label>
                                 @Html.TextBoxFor(x => x.tblUser.display, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                @Html.TextBoxFor(x => x.tblUserData.contact_phone, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.contact_phone, new { @class = "form-control checkNumber" })
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -59,7 +59,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_phone, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_phone, new { @class = "form-control checkNumber" })
                             </div>
                             <div class="form-group">
                                 <label>Address Line 1</label>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_phone, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_phone, new { @class = "form-control checkNumber" })
                             </div>
                             <div class="form-group">
                                 <label>Address Line 1</label>
@@ -156,29 +156,29 @@
 
 
                         </div>
-                            <div class="form-group">
+                        <div class="form-group">
 
-                                @if (((int)ViewBag.Notification) == 1)
-                                {
-                                    <div class="alert alert-success " role="alert">
-                                        <strong>
-                                            <i class="fa fa-check-circle" aria-hidden="true"></i>Success:
-                                        </strong>
-                                        <div class="show-alert-success">Update  success</div>
-                                    </div>
-                                }
-                                else if (((int)ViewBag.Notification) == 0)
-                                {
-                                    <div class="alert alert-danger " role="alert">
-                                        <strong>
-                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Error!
-                                        </strong>
-                                        <div class="show-alert">Update failed</div>
-                                    </div>
-                                }
-                            </div>
-
+                            @if (((int)ViewBag.Notification) == 1)
+                            {
+                                <div class="alert alert-success " role="alert">
+                                    <strong>
+                                        <i class="fa fa-check-circle" aria-hidden="true"></i>Success:
+                                    </strong>
+                                    <div class="show-alert-success">Update  success</div>
+                                </div>
+                            }
+                            else if (((int)ViewBag.Notification) == 0)
+                            {
+                                <div class="alert alert-danger " role="alert">
+                                    <strong>
+                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Error!
+                                    </strong>
+                                    <div class="show-alert">Update failed</div>
+                                </div>
+                            }
                         </div>
+
+                    </div>
                 }
 
             </div><!-- product_content -->
@@ -189,12 +189,96 @@
     </div>
 </div>
 <script>
+
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
         if ($('#validation-form').valid()) {
             $('#validation-form')[0].submit();
         }
     });
+    $('#validation-form').validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+   
+            'tblUser.display': {required: true},
+            'tblUserData.delivery_email': { required: true },
+            'tblUserData.delivery_address1': { email: true, required: true },
+            'tblUserData.delivery_name': { required: true },
+            'tblUserData.delivery_phone': { required: true },
+            'tblUserData.contact_phone': { required: true },
+            'tblUserData.firstname': {required: true},
+            'tblUser.email': {email: true,required: true}
+          
+
+
+
+        },
+
+        messages: {
+            tblUser: {
+                'tblUser.display': "Display name do not empty",
+                'tblUserData.delivery_address1': "Address do not empty",
+                'tblUserData.delivery_email': { required: "Email do not empty", 'tblUserData.delivery_email': "Please enter a valid email address." },
+                'tblUserData.delivery_name': "Delivery name do not empty",
+                'tblUserData.contact_phone': "Phone do not empty",
+                'tblUserData.delivery_phone': "Delivery phone do not empty",
+                'tblUser.email': { required: "Email do not empty", 'tblUser.email': "Please enter a valid email address." },
+                'tblUserData.firstname': "First Name do not empty"
+            }
+
+
+        },
+
+
+        highlight: function (e) {
+
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+            } else {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            }
+
+
+        },
+
+        success: function (e) {
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+            } else {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).closest('.form-group').find('.help-block').remove();
+            }
+
+        },
+
+        errorPlacement: function (error, element) {
+
+            if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                var controls = element.closest('div[class*="col-"]');
+                if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+            } else if (element.is('.select2') || element.is('.js-select2-1')) {
+                if (element.parents('div').eq(0).is('.input-group')) {
+                    error.insertAfter(element.parents('div').eq(0));
+                } else {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+
+
+            } else if (element.is('.file-upload')) {
+                error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+            } else if (element.is('.chosen-select')) {
+                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+            } else error.insertAfter(element);
+        },
+
+        submitHandler: function (form) {
+        },
+        invalidHandler: function (form) {
+        }
+    });
 </script>
-
-

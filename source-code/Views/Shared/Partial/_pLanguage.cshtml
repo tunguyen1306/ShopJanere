@@ -1,16 +1,32 @@
 ﻿
 @{
 
-   
+
     veebdbEntities data = new veebdbEntities();
     var country = data.countries.Where(x => x.status == 1).ToList();
+    var langTex = "";
+    var httpCookie = Request.Cookies["Language"];
+    if (httpCookie != null)
+    {
+        langTex = httpCookie.Value;
+    }
+    else
+    {
+        langTex = "english";
+    }
 
 }
 <div class="translation-links">
 
     <ul class="top_link">
         <li>
-            <a style="cursor: pointer;" class="enlgish btn-language" data-language="English"><img alt="Janere" src="~/Content/languages/english.png"/></a>
+           
+            @foreach (var lang in country.Where(x=>x.language.ToLower() == langTex.ToLower()).Take(1))
+            {
+                <a style="cursor: pointer;">
+                    <img alt="Janere" src="@lang.urlimage" />
+                </a>
+            }
             <ul class="sub_language">
                 @foreach (var lang in country)
                 {

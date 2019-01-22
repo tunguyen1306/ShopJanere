@@ -48,15 +48,15 @@ namespace WebApplication1.Controllers
         {
             var order = new order();
             var user = new AllLoggedUserInfo();
-          
+
             if (Session["ShoppingCart"] == null)
             {
-                 return RedirectToAction("UpdateCart", "Home");
+                return RedirectToAction("UpdateCart", "Home");
             }
             else
             {
                 ShoppingCart cart = (ShoppingCart)Session["ShoppingCart"];
-                if (cart.cartItem.Count==0)
+                if (cart.cartItem.Count == 0)
                 {
                     return RedirectToAction("UpdateCart", "Home");
                 }
@@ -69,7 +69,7 @@ namespace WebApplication1.Controllers
                 else
                 {
 
-                    if (string.IsNullOrWhiteSpace( cart.paid_key))
+                    if (string.IsNullOrWhiteSpace(cart.paid_key))
                     {
                         user = (AllLoggedUserInfo)Session["LoggedAccount"];
                         var tblUser = db.users.Join(db.userdatas, us => us.Id, usdt => usdt.userid,
@@ -98,8 +98,8 @@ namespace WebApplication1.Controllers
                     }
                     else
                     {
-                        order =  db.orders.Where(t => t.paid_key == cart.paid_key).FirstOrDefault();
-                        if (order==null)
+                        order = db.orders.Where(t => t.paid_key == cart.paid_key).FirstOrDefault();
+                        if (order == null)
                         {
                             order = new order();
                             user = (AllLoggedUserInfo)Session["LoggedAccount"];
@@ -129,19 +129,19 @@ namespace WebApplication1.Controllers
                         }
 
                     }
-                    
+
 
                 }
             }
             ViewBag.ListCountry = db.countries.ToList();
-             return View(order);
+            return View(order);
         }
 
         // POST: /Checkout/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(order order,int? checkBilldingShipping)
+        public ActionResult Create(order order, int? checkBilldingShipping)
         {
             if (ModelState.IsValid)
             {
@@ -154,46 +154,46 @@ namespace WebApplication1.Controllers
                     try
                     {
                         var oldPriceOrder = 0.0;
-                        if (order.ocid>0)
+                        if (order.ocid > 0)
                         {
-                            var _order = db.orders.Where(t=>t.ocid==order.ocid).FirstOrDefault();
+                            var _order = db.orders.Where(t => t.ocid == order.ocid).FirstOrDefault();
                             oldPriceOrder = _order.paid_amount.HasValue ? _order.paid_amount.Value : 0;
                             db.Entry(_order).State = EntityState.Detached;
                             db.SaveChanges();
                         }
-                        order.d_companyname = string.IsNullOrEmpty(order.d_companyname)? order.companyname: order.d_companyname;
-                        order.d_fname = string.IsNullOrEmpty(order.d_fname) ? order.fname: order.d_fname;
-                        order.d_lname = string.IsNullOrEmpty(order.d_lname) ? order.lname: order.d_lname;
-                        order.d_email = string.IsNullOrEmpty(order.d_email) ? order.email: order.d_email;
-                        order.d_phone = string.IsNullOrEmpty(order.d_phone) ? order.phone: order.d_phone;
-                        order.d_addr1 = string.IsNullOrEmpty(order.d_addr1) ? order.addr1: order.d_addr1;
-                        if (checkBilldingShipping.HasValue && checkBilldingShipping.Value==1)
+                        order.d_companyname = string.IsNullOrEmpty(order.d_companyname) ? order.companyname : order.d_companyname;
+                        order.d_fname = string.IsNullOrEmpty(order.d_fname) ? order.fname : order.d_fname;
+                        order.d_lname = string.IsNullOrEmpty(order.d_lname) ? order.lname : order.d_lname;
+                        order.d_email = string.IsNullOrEmpty(order.d_email) ? order.email : order.d_email;
+                        order.d_phone = string.IsNullOrEmpty(order.d_phone) ? order.phone : order.d_phone;
+                        order.d_addr1 = string.IsNullOrEmpty(order.d_addr1) ? order.addr1 : order.d_addr1;
+                        if (checkBilldingShipping.HasValue && checkBilldingShipping.Value == 1)
                         {
                             order.b_companyname = string.IsNullOrEmpty(order.d_companyname) ? order.companyname : order.d_companyname;
                             order.b_fname = string.IsNullOrEmpty(order.d_fname) ? order.fname : order.d_fname;
                             order.b_lname = string.IsNullOrEmpty(order.d_lname) ? order.lname : order.d_lname;
                             order.b_email = string.IsNullOrEmpty(order.d_email) ? order.email : order.d_email;
                             order.b_phone = string.IsNullOrEmpty(order.d_phone) ? order.phone : order.d_phone;
-                            order.b_addr1 = string.IsNullOrEmpty(order.d_addr1) ? order.addr1 : order.d_addr1;                           
+                            order.b_addr1 = string.IsNullOrEmpty(order.d_addr1) ? order.addr1 : order.d_addr1;
 
                         }
                         order.status = "2";
-                        if (order.payoption== "PayPal")
+                        if (order.payoption == "PayPal")
                         {
                             order.paid_status = 2;
                         }
                         if (order.payoption == "COB")
                         {
                             order.paid_status = 1;
-                           
+
                         }
                         ShoppingCart Cart = new ShoppingCart();
                         Cart = (ShoppingCart)Session["ShoppingCart"];
                         order.paid_amount = Cart.CartTotal + Cart.taxTotal;
                         String randomKey = Guid.NewGuid().ToString();
-                        if (order.ocid==0)
+                        if (order.ocid == 0)
                         {
-                           
+
                             order.paid_key = randomKey;
                             db.orders.Add(order);
                             db.SaveChanges();
@@ -202,14 +202,14 @@ namespace WebApplication1.Controllers
                         {
                             db.Entry(order).State = EntityState.Modified;
                             db.SaveChanges();
-                        }                     
-                      
+                        }
+
                         Cart.paid_key = order.paid_key;
                         WebApplication1.Models.AllLoggedUserInfo userFullInfo = (WebApplication1.Models.AllLoggedUserInfo)Session["LoggedAccount"];
                         if (userFullInfo != null)
                         {
                             var user = db.users.Find(userFullInfo.user.Id);
-                            user.paidorder= (user.paidorder ?? 0) + (decimal)Cart.CartTotal+ (decimal)(order.feeshipping ?? 0)- (decimal)oldPriceOrder;
+                            user.paidorder = (user.paidorder ?? 0) + (decimal)Cart.CartTotal + (decimal)(order.feeshipping ?? 0) - (decimal)oldPriceOrder;
                             db.Entry(user).State = EntityState.Modified;
                             db.SaveChanges();
                         }
@@ -223,29 +223,29 @@ namespace WebApplication1.Controllers
 
                         var itemList = new ItemList();
                         var items = new List<Item>();
-                      
+
                         String paypalURL = "";
                         var paypayconfig = new PayPalConfiguration();
                         var apiContext = paypayconfig.GetAPIContext();
 
-                        var _orderdetails =  db.orderdetails.Where(t => t.ocid == order.ocid).ToList();
+                        var _orderdetails = db.orderdetails.Where(t => t.ocid == order.ocid).ToList();
                         var listItems = _orderdetails.Select(t => t.ocdetailcode);
-                        var _items= db.items.Where(t => listItems.Contains(t.ARTCODE)).ToList();
+                        var _items = db.items.Where(t => listItems.Contains(t.ARTCODE)).ToList();
                         foreach (var item in _orderdetails)
                         {
-                          
-                            if (item.stockId.HasValue && item.stockId.Value>0)
+
+                            if (item.stockId.HasValue && item.stockId.Value > 0)
                             {
-                               var _item=  _items.FirstOrDefault(t => t.ARTCODE == item.ocdetailcode);
-                                if (_item!=null)
-                                { 
-                                   var _stock= db.stocks.Where(t => t.ARTNO == item.itemId && t.STOCKNO == item.stockId).FirstOrDefault();
+                                var _item = _items.FirstOrDefault(t => t.ARTCODE == item.ocdetailcode);
+                                if (_item != null)
+                                {
+                                    var _stock = db.stocks.Where(t => t.ARTNO == item.itemId && t.STOCKNO == item.stockId).FirstOrDefault();
                                     _stock.VOLUME += item.ocdetailqty.Value;
                                     db.Entry(_stock).State = EntityState.Modified;
                                 }
-                               
+
                             }
-                            
+
                         }
                         db.orderdetails.RemoveRange(_orderdetails);
                         var _listItems = Cart.cartItem.Select(t => t.Code);
@@ -258,9 +258,9 @@ namespace WebApplication1.Controllers
                             od.ocdetailname = item.Name;
                             od.ocdetailprice = item.Price;
                             od.ocdetailqty = item.Qty;
-                            od.ocdetailgst = item.Tax/ item.Qty;
+                            od.ocdetailgst = item.Tax / item.Qty;
                             od.stockId = item.StockId;
-                            if (item.StockId>0)
+                            if (item.StockId > 0)
                             {
                                 var _item = __items.FirstOrDefault(t => t.ARTCODE == od.ocdetailcode);
                                 if (_item != null)
@@ -275,40 +275,40 @@ namespace WebApplication1.Controllers
                             db.orderdetails.Add(od);
 
                             var Item = new Item();
-                            Item.name = item.Code+" - "+ item.Name;
+                            Item.name = item.Code + " - " + item.Name;
                             Item.currency = currencyName;
-                            
+
                             Item.price = (item.Price + (item.Tax / item.Qty)) + "";
                             Item.quantity = item.Qty + "";
                             items.Add(Item);
 
                         }
-                        if (order.feeshipping.HasValue && order.feeshipping.Value>0)
+                        if (order.feeshipping.HasValue && order.feeshipping.Value > 0)
                         {
                             var Item = new Item();
                             Item.name = "Fee Shipping";
                             Item.currency = currencyName;
                             Item.price = order.feeshipping + "";
-                            Item.quantity =  "1";
+                            Item.quantity = "1";
                             items.Add(Item);
                         }
                         if (Cart.promotion != null)
                         {
-                            if (Cart.promotion.TYPENO ==0)
+                            if (Cart.promotion.TYPENO == 0)
                             {
                                 var Item = new Item();
                                 Item.name = "Discount Promotion";
                                 Item.currency = currencyName;
-                                Item.price ="-"+ Cart.PromotionTotal + "";
+                                Item.price = "-" + Cart.PromotionTotal + "";
                                 Item.quantity = "1";
                                 items.Add(Item);
                             }
                         }
-                        cartAmount = Cart.CartTotal+Cart.taxTotal+ order.feeshipping??0;
+                        cartAmount = Cart.CartTotal + Cart.taxTotal + order.feeshipping ?? 0;
                         cartAmount = Math.Round(cartAmount, 2);
                         itemList.items = items;
                         db.SaveChanges();
-                        if (order.payoption=="PayPal")
+                        if (order.payoption == "PayPal")
                         {
                             var payer = new Payer() { payment_method = "paypal" };
                             var redirUrls = new RedirectUrls()
@@ -354,9 +354,9 @@ namespace WebApplication1.Controllers
                         }
                         else
                         {
-                            
+                            SendTemplateEmail(order.d_email, order.d_email, "", "Order Success", 2);
                         }
-                       
+
                     }
                     catch (DbEntityValidationException e)
                     {
@@ -385,30 +385,42 @@ namespace WebApplication1.Controllers
             //Type =2 ForgetPass
             string body = string.Empty;
             var activelink = "";
-        
+
             if (type == 1)
             {
                 var check = db.users.ToList().FirstOrDefault(x => x.email == recepientEmail.ToLower());
                 if (check != null)
                 {
-                   
+
 
                     body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_ResetPassTemplateMail.cshtml");
                     body = body.Replace("##name##", username);
-                  
-                    
+
+
                 }
             }
+            if (type == 2)
+            {
+                var check = db.users.ToList().FirstOrDefault(x => x.email == recepientEmail.ToLower());
+                if (check != null)
+                {
 
-t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, body);
+
+                    body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_ResetPassTemplateMail.cshtml");
+                    body = body.Replace("##name##", username);
+
+
+                }
+            }
+            t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, body);
 
 
             return t;
         }
         public ActionResult PayPalSuccess(string paid_key, string paymentId, string token, string PayerID)
         {
-            var order=  db.orders.Where(t => t.paid_key == paid_key).FirstOrDefault();
-            if (order==null)
+            var order = db.orders.Where(t => t.paid_key == paid_key).FirstOrDefault();
+            if (order == null)
             {
                 return HttpNotFound();
             }
@@ -417,7 +429,7 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
             order.paid_status = 3;
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
-         
+
             return RedirectToAction("Thankyou");
         }
         public ActionResult PayPalCancel(string paid_key, string token)
@@ -432,12 +444,12 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
                 return HttpNotFound();
             }
             ViewBag.OderDetails = db.orderdetails.Where(t => t.ocid == order.ocid).ToList();
-            
+
             return RedirectToAction("Create");
         }
         public ActionResult Thankyou()
         {
-              Session["ShoppingCart"] = new ShoppingCart();
+            Session["ShoppingCart"] = new ShoppingCart();
             return View();
         }
         // GET: /Checkout/Edit/5
@@ -508,9 +520,9 @@ t = Models.Helper.SendEmail("donotreply@example.com", recepientEmail, Subject, b
             base.Dispose(disposing);
         }
 
-        public ActionResult GetCity(int id=0)
+        public ActionResult GetCity(int id = 0)
         {
-            if (id!=0)
+            if (id != 0)
             {
                 var city = db.cities.Where(x => x.countryid == id).ToList();
 

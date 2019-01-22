@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminAccount.cshtml";
 }
 
-<div id="main_content" class="col-sm-12">
+<div id="main_content" class="col-sm-12 checkout_page ">
     <h1>All Order</h1>
     <div class="page_action">
         <a href="@Url.Action("Create","Order")">Add New</a>
@@ -22,8 +22,8 @@
                     <option value="trash">Move to trash</option>
 
                 </select>*@
-            @Html.DropDownList("bulk_action", new SelectList(((List<orderstatu>)ViewBag.OrderStatus), "id", "name"), new { @class = "bulk_action filter", @style = "width: 145px;" })
-            <input type="submit" id="do_bulk_action" class="button btn-sm" value="Go">
+            @Html.DropDownList("bulk_action", new SelectList(((List<orderstatu>)ViewBag.OrderStatus), "id", "name"), new { @class = "bulk_action filter", @style = "width: 145px;height:34px;" })
+            <input type="submit" id="do_bulk_action" style="height: 34px;background-color: #002f6c" class="button btn-sm" value="Go">
         </div>
         <div class="col-sm-3 right">
             <input type="text" id="datepicker" value="" name="datepicker" class="form-control right date-picker" placeholder="Date: D/M/Y">
