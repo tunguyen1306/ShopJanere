@@ -1,7 +1,7 @@
 ﻿@model WebApplication1.Models.AllModel
 @{
     veebdbEntities db = new veebdbEntities();
-    var listLanguge = db.countries.Where(x => x.status == 1).ToList();
+    var listLanguge = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
     var indexT = 1;
     var indexT1 = 1;
 }
@@ -118,7 +118,7 @@
                 <div class="form-group">
                     <label>Meta Group</label>
 
-                    @Html.DropDownListFor(m => m.tblGroup.METAGROUPNO, new SelectList(((List<metagrup>)ViewBag.ListMasterGroup), "METAGROUPNO", "METAGROUPNAME", "Select  Meta Group"), new { @class = "form-control select2" })
+                    @Html.DropDownListFor(m => m.tblGroup.METAGROUPNO, new SelectList(((List<metagrup>)ViewBag.ListMasterGroup), "IdCurrentItem", "METAGROUPNAME", "Select  Meta Group"), new { @class = "form-control select2" })
 
 
                 </div>

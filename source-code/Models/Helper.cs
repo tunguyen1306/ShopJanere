@@ -109,15 +109,19 @@ namespace WebApplication1.Models
                 message.From = new MailAddress("donotreply@example.com", "", Encoding.UTF8);// Settings.GetSetting("Report", "CompanyName", typeof(string))
                 message.ReplyToList.Add(from);
                 var emailBcc = ConfigurationManager.AppSettings["EmailBCC"];
-                string[] toEmail = emailBcc.Contains(";") ? emailBcc.Split(';') : emailBcc.Split(',');
-                foreach (var bcc in toEmail)
+                if (!string.IsNullOrEmpty(emailBcc))
                 {
-                    if (bcc != null)
+                    string[] toEmail = emailBcc.Contains(";") ? emailBcc.Split(';') : emailBcc.Split(',');
+                    foreach (var bcc in toEmail)
                     {
-                        message.Bcc.Add(bcc);
-                    }
+                        if (bcc != null)
+                        {
+                            message.Bcc.Add(bcc);
+                        }
 
+                    }
                 }
+            
 
                 var client = new SmtpClient();
                 client.Port = section.Network.Port;//Settings.GetSetting("EmailConfig", "Port", typeof(int));

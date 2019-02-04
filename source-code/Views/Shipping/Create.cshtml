@@ -1,11 +1,11 @@
-﻿
+﻿@model WebApplication1.shippingfee
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 }
 
-<h2>CREATE NEW STORE</h2>
+<h2>CREATE NEW SHIPPING</h2>
 
 
 <!-- /.row -->
@@ -15,14 +15,14 @@
         <div id="main_content" class="col-sm-12">
 
             <div class="product_content">
-                @using (Html.BeginForm("Edit", "Store", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form" }))
+                @using (Html.BeginForm("Create", "Shipping", FormMethod.Post, new { enctype = "multipart/form-data",@id= "validation-form" }))
                 {
 
 
                     @Html.Partial("_Input")
 
                     <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
-                    <a class="button button-sm" href="@Url.Action("Index","Store")">Cancel</a>
+                    <a class="button button-sm" href="@Url.Action("Index","Shipping")">Cancel</a>
                 }
 
             </div><!-- product_content -->
@@ -36,6 +36,7 @@
 
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
+        debugger;
         if ($('#validation-form').valid()) {
             $('#validation-form')[0].submit();
         }

@@ -12,6 +12,7 @@ namespace WebApplication1.Models
         public metagrup tblMetaGroup { get; set;}
         public metagrup tblMasterMetaGroup { get; set;}
         public item tblitem { get; set;}
+        public barcode tblBarcode { get; set;}
        
         public order tblOrder { get; set;}
         public orderstatu tblOrderStatus { get; set;}
@@ -26,6 +27,7 @@ namespace WebApplication1.Models
         public userdata tblUserData { get; set;}
         public country tblCountry { get; set;}
         public city tblCity { get; set;}
+        public shippingfee tblShipping { get; set;}
         public vocabulary[] tblVocabularyArray { get; set;}
         public vocabulary  tblVocabulary { get; set;}
         public List<vocabulary>   listVocabulary { get; set;}
@@ -52,5 +54,14 @@ namespace WebApplication1.Models
         public stock[] tblStockArray { get; set; }
         public List<stock> listStock { get; set; }
         public string messError { get; set; }
+
+        public store tblStore { get; set; }
+        public store[] tblStoreArray { get; set; }
+        public List<store> listStore { get; set; }
+
+
+        public file tblFile { get; set; }
+        public file[] tblFileArray { get; set; }
+        public List<file> listFile { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebApplication1.Controllers
         private veebdbEntities db = new veebdbEntities();
         public ActionResult Index()
         {
-                return View();
+            return View();
         }
         public ActionResult IndexAjax(int start = 0, int view = 10)
         {
@@ -50,21 +51,20 @@ namespace WebApplication1.Controllers
         public ActionResult Create()
         {
             ViewBag.Filepath = Path.Combine(Server.MapPath("/UploadFile"));
-            return View(new file());
+            return View(new AllModel { tblFile = new file() });
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
-      
-        public ActionResult Create(file file, HttpPostedFileBase inputfile)
+
+        public ActionResult Create(AllModel model, HttpPostedFileBase inputfile)
         {
             //  if (ModelState.IsValid)
             // {
             try
             {
                 //save file
-                if (file != null && inputfile.ContentLength > 0)
+                if (model.tblFileArray != null && inputfile.ContentLength > 0)
                 {
                     string path = "";
                     try
@@ -73,14 +73,42 @@ namespace WebApplication1.Controllers
 
                         inputfile.SaveAs(path);
                         //save other infomation
-                        file.FileName = inputfile.FileName;
-                        file.Status = "Active";
-                        file.FileAddress = path;
-                        file.UploadDate = DateTime.Now;
-                        file.UploadBy = User.Identity.Name;
-                        file.Kind = inputfile.ContentType;
-                        db.files.Add(file);
+
+                        var matagroup = new file();
+                        matagroup.FileName = inputfile.FileName;
+                        matagroup.Status = "Active";
+                        matagroup.FileAddress = path;
+                        matagroup.Title = model.tblFileArray[0].Title;
+                        matagroup.Description = model.tblFileArray[0].Description;
+                        matagroup.CodeLanguage = model.tblFileArray[0].CodeLanguage;
+                        matagroup.UploadDate = DateTime.Now;
+                        matagroup.UploadBy = User.Identity.Name;
+                        matagroup.Kind = inputfile.ContentType;
+                        db.files.Add(matagroup);
                         db.SaveChanges();
+                        var updatematagroup = db.files.Find(matagroup.Id);
+                        updatematagroup.IdCurrentItem = matagroup.Id;
+                        db.Entry(updatematagroup).State = EntityState.Modified;
+                        db.SaveChanges();
+                        foreach (var item in model.tblFileArray.Skip(1).ToList())
+                        {
+
+                            var matagroupL = new file();
+                            matagroupL.FileName = item.FileName;
+                            matagroupL.Status = "Active";
+                            matagroupL.FileAddress = path;
+                            matagroupL.Title = item.Title;
+                            matagroupL.Description = item.Description;
+                            matagroupL.CodeLanguage = item.CodeLanguage;
+                            matagroupL.UploadDate = DateTime.Now;
+                            matagroupL.UploadBy = User.Identity.Name;
+                            matagroupL.Kind = inputfile.ContentType;
+                            db.files.Add(matagroupL);
+
+                        }
+                        db.SaveChanges();
+
+
                         ViewBag.Message = "File uploaded successfully";
                         //save other infomation
                     }
@@ -111,39 +139,68 @@ namespace WebApplication1.Controllers
         }
 
         // GET: /Containt/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? code)
         {
 
-            if (id == null)
+            var proMaster = db.files.FirstOrDefault(x => x.Id == code);
+
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
+            ViewBag.ListCountry = list;
+            foreach (var itemLang in list)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var pro = db.files.FirstOrDefault(x => x.IdCurrentItem == code && x.CodeLanguage == itemLang.language.ToLower());
+                if (pro == null)
+                {
+
+                    if (proMaster != null)
+                    {
+                        var matagroupL = new file();
+                        matagroupL.FileName = proMaster.FileName;
+                        matagroupL.Status = "Active";
+                        matagroupL.FileAddress = proMaster.FileAddress;
+                        matagroupL.Title = proMaster.Title;
+                        matagroupL.Description = proMaster.Description;
+                        matagroupL.CodeLanguage = itemLang.language;
+                        matagroupL.UploadDate = DateTime.Now;
+                        matagroupL.UploadBy = proMaster.UploadBy;
+                        matagroupL.Kind = proMaster.Kind;
+                        matagroupL.IdCurrentItem = code;
+                        db.files.Add(matagroupL);
+
+                    }
+
+                }
+
             }
-            file file = db.files.Find(id);
-            if (file == null)
-            {
-                return HttpNotFound();
-            }
-            return View(file);
+            db.SaveChanges();
+            var item = db.files.ToList().Where(x => x.IdCurrentItem == code).ToList();
+            return View(new AllModel { listFile = item, tblFile = proMaster });
+
         }
 
         // POST: /Containt/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-       
-        public ActionResult Edit( file file, HttpPostedFileBase inputfile)
+
+        public ActionResult Edit(AllModel model, HttpPostedFileBase inputfile)
         {
-            try
+
+            foreach (var item in model.tblFileArray)
             {
-                var ftblile = db.files.Find(file.Id);
-                ftblile.Title = file.Title;
-                ftblile.FileName = file.FileName;
-                ftblile.FileAddress = file.FileAddress;
-                ftblile.Status = file.Status;
-                ftblile.Kind = file.Kind;
-                ftblile.Description = file.Description;
-                //save file
-                if ( inputfile!=null)
+                var tem = db.files.Find(item.Id);
+
+                tem.FileName = item.FileName;
+                tem.Status = "Active";
+                tem.FileAddress = tem.FileAddress;
+                tem.Title = item.Title;
+                tem.Description = item.Description;
+                tem.UploadDate = DateTime.Now;
+                tem.UploadBy = tem.UploadBy;
+                tem.Kind = tem.Kind;
+                tem.CodeLanguage = item.CodeLanguage.ToLower();
+                db.Entry(tem).State = EntityState.Modified;
+                if (inputfile != null)
                 {
                     string path = "";
                     try
@@ -152,12 +209,12 @@ namespace WebApplication1.Controllers
 
                         inputfile.SaveAs(path);
                         //save other infomation
-                        ftblile.FileName = inputfile.FileName;
-                        ftblile.FileAddress = path;
-                        ftblile.UploadDate = DateTime.Now;
-                        ftblile.UploadBy = User.Identity.Name;
-                        ftblile.Kind = inputfile.ContentType;
-                        db.Entry(ftblile).State = EntityState.Modified;
+                        tem.FileName = inputfile.FileName;
+                        tem.FileAddress = path;
+                        tem.UploadDate = DateTime.Now;
+                        tem.UploadBy = User.Identity.Name;
+                        tem.Kind = inputfile.ContentType;
+                        db.Entry(tem).State = EntityState.Modified;
                         db.SaveChanges();
 
                         return RedirectToAction("Index");
@@ -179,21 +236,27 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                   
-                    db.Entry(ftblile).State = EntityState.Modified;
+                
+                    db.Entry(tem).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-               
-            }
-            catch (Exception ex)
-            {
 
-                
             }
-               
-            return View(file);
-          
+
+
+
+            db.SaveChanges();
+
+
+            return RedirectToAction("Index");
+            //save file
+
+
+
+
+
+
         }
 
         public ActionResult FileDeletes(int[] id)
@@ -272,5 +335,5 @@ namespace WebApplication1.Controllers
             }
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-	}
+    }
 }

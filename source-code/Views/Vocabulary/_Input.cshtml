@@ -3,7 +3,7 @@
 @model AllModel
 @{
     veebdbEntities db = new veebdbEntities();
-    var listLanguge = db.countries.Where(x => x.status == 1).ToList();
+    var listLanguge = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
     var indexT = 1;
     var indexT1 = 1;
 }

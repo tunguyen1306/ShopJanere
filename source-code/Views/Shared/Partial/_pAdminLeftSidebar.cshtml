@@ -27,13 +27,15 @@ else
         <li>
             <a href="#">Layout <i class="fas fa-sort-up"></i></a>
             <ul style="display: block;">
-                <li><a href="@Url.Action("Index", "Setting",new {type=0})">Setting</a></li>
+                <li><a href="@Url.Action("Index", "Setting",new {type=""})">Setting</a></li>
                 <li><a href="@Url.Action("Index", "SettingType")">Setting Type</a></li>
                 <li><a href="@Url.Action("Index", "Menu")">Menu</a></li>
-                <li><a href="@Url.Action("Index", "Setting",new {type=2})">All Banner</a></li>
+                <li><a href="@Url.Action("Index", "Setting",new {type="banner"})">All Banner</a></li>
                 <li><a href="@Url.Action("Index", "Country")">Country</a></li>
                 <li><a href="@Url.Action("Index", "City")">City</a></li>
                 <li><a href="@Url.Action("Index", "Vocabulary")">Vocabulary</a></li>
+                <li><a href="@Url.Action("Index", "Shipping")">Shipping</a></li>
+                <li><a href="@Url.Action("Index", "Setting",new {type="paypal"})">Paypal</a></li>
 
             </ul>
         </li>

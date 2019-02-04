@@ -1,73 +1,70 @@
 ﻿@using System.Configuration
-@model WebApplication1.Models.AllModel
+@model WebApplication1.shippingfee
 <div class="row">
     <div class="col-sm-6">
-        
+     
         <div class="form-group">
-            <label>VOLUME</label>
+            <label>shippingfee Name</label>
 
-            @Html.TextBoxFor(x => x.tblStock.VOLUME, new { @class = "form-control" })
-
-        </div>
-        <div class="form-group">
-            <label>Size No</label>
-
-            @Html.TextBoxFor(x => x.tblStock.SIZENO, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.name, new { @class = "form-control" })
 
         </div>
 
+        <div class="form-group">
+            <label>Price</label>
 
+            @Html.TextBoxFor(x => x.price, new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+
+            @Html.DropDownListFor(c => c.status, new List<SelectListItem> { new SelectListItem { Text = "True", Value = "1" }, new SelectListItem { Text = "False", Value = "0", Selected = true } }, new { @class = "form-control select2" })
+
+
+        </div>
 
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Product</label>
-
-            @*@Html.DropDownListFor(m => m.tblStock.ARTNO, new SelectList(((List<item>)ViewBag.ListProduct), "ARTNO", "ARTNAME", "Select  Product"), new { @class = "form-control select2" })*@
+            <label>Country</label>
 
 
-            <input type="text" id="ARTNO" placeholder="Search Product"  value="@Model.tblitem.ARTNAME" class="form-control" />
-    
-
-        </div>
-        <div class="form-group">
-            <label>Ware House</label>
-
-            <input type="text" id="STOCKNO" placeholder="Search Ware House"  value="@Model.tblStockCod.STOCKNAME" class="form-control"/>
-         
-            @*@Html.DropDownListFor(m => m.tblStock.STOCKNO, new SelectList(((List<stockcod>)ViewBag.ListWareHouse), "STOCKNO", "STOCKNAME", "Select  Ware House"), new { @class = "form-control select2" })*@
+            @Html.DropDownListFor(x => x.cityid, new SelectList(((List<WebApplication1.city>)ViewBag.ListCiTy), "code", "name"), "Select city", new { @class = "form-control select2" })
 
 
         </div>
 
-
-
+        
+       
 
 
     </div>
 </div>
 
-@Html.HiddenFor(x => x.tblStock.LINENO)
+
+
+@Html.HiddenFor(x => x.id)
 
 <script>
+   
+   
+   
 
 
- 
 
-  
+
     $('#validation-form').validate({
         errorElement: 'div',
         errorClass: 'help-block',
         focusInvalid: false,
         ignore: "",
         rules: {
-            VOLUME: {
+            name: {
                 required: true
             },
-            ARTNO: {
-                required: true
-            },
-            STOCKNO: {
+            typeId: {
                 required: true
             }
 
@@ -75,9 +72,8 @@
         },
 
         messages: {
-            VOLUME: "VOLUME  do not empty",
-            STOCKNO: "Select Ware House ",
-            ARTNO: "Select Product"
+            name: "shippingfee Name do not empty",
+            typeId: "Select type"
 
 
         },

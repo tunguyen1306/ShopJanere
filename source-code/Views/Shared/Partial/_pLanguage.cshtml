@@ -1,8 +1,28 @@
-﻿
+﻿@using WebApplication1.Models
+
 @{
 
 
     veebdbEntities data = new veebdbEntities();
+    var user = new AllLoggedUserInfo();
+
+
+
+    if (Session["LoggedAccount"] == null)
+    {
+        var tem = data.users.FirstOrDefault(m => m.Id == 7);
+        if (tem != null)
+        {
+            Session["LoggedAccount"] = null;
+            AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+            Session["LoggedAccount"] = userFullInfo;
+            user = userFullInfo;
+        }
+    }
+    else
+    {
+        user = (AllLoggedUserInfo)Session["LoggedAccount"];
+    }
     var country = data.countries.Where(x => x.status == 1).ToList();
     var langTex = "";
     var httpCookie = Request.Cookies["Language"];
@@ -14,14 +34,16 @@
     {
         langTex = "english";
     }
+    ShoppingCart Cart = new ShoppingCart();
+
 
 }
 <div class="translation-links">
 
     <ul class="top_link">
         <li>
-           
-            @foreach (var lang in country.Where(x=>x.language.ToLower() == langTex.ToLower()).Take(1))
+
+            @foreach (var lang in country.Where(x => x.language.ToLower() == langTex.ToLower()).Take(1))
             {
                 <a style="cursor: pointer;">
                     <img alt="Janere" src="@lang.urlimage" />
@@ -31,9 +53,9 @@
                 @foreach (var lang in country)
                 {
                     <li>
-                        <a  style="cursor: pointer;"  class="enlgish btn-language" data-language="@lang.language">
+                        <a style="cursor: pointer;" class="enlgish btn-language" data-language="@lang.language">
                             <div class="row">
-                                <div class="col-xs-12"><img alt="Janere" style="float: left" src="@lang.urlimage"/><span style="float: left">@lang.language</span></div>
+                                <div class="col-xs-12"><img alt="Janere" style="float: left" src="@lang.urlimage" /><span style="float: left">@lang.language</span></div>
 
                             </div>
 
@@ -48,9 +70,51 @@
 
 </div>
 @*<div id="google_translate_element" style="width: 50%;float: left;display:none"></div>
-<script type="text/javascript">
-                                    function googleTranslateElementInit() {
-                                        new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,et,pl,ru,pl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
-                                    }
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>*@
+    <script type="text/javascript">
+                                        function googleTranslateElementInit() {
+                                            new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,et,pl,ru,pl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+                                        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>*@
+<span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>
+
+
+<a href="@Url.Action("Login", "Home")">
+    <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
+</a>
+<a href="@Url.Action("UpdateCart", "Home")">
+    <img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" />
+    <span style="color: white;">Cart</span>
+    <span class="txtCountCart">
+        @if (Session["ShoppingCart"] != null)
+        {
+            Cart = (ShoppingCart)Session["ShoppingCart"];
+            @(Cart.cartItem.Count)
+
+        }
+        else
+        {
+            @("0")
+        }
+
+    </span>
+    <style>
+        .txtCountCart {
+            position: absolute;
+            height: 23px;
+            width: 23px;
+            color: #ffffff;
+            top: 16px;
+            padding: 0px 0px 0px 0px;
+            font-weight: bold;
+            left: 234px;
+            border: 1px solid;
+            border-radius: 50%;
+            background-color: #000000;
+            text-align: center;
+        }
+    </style>
+
+
+
+</a>

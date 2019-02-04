@@ -34,25 +34,25 @@
   @{
 
       veebdbEntities data = new veebdbEntities();
-      var user = new AllLoggedUserInfo();
+      //var user = new AllLoggedUserInfo();
 
 
 
-      if (Session["LoggedAccount"] == null)
-      {
-          var tem = data.users.FirstOrDefault(m => m.Id == 7);
-          if (tem != null)
-          {
-              Session["LoggedAccount"] = null;
-              AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
-              Session["LoggedAccount"] = userFullInfo;
-              user = userFullInfo;
-          }
-      }
-      else
-      {
-          user = (AllLoggedUserInfo)Session["LoggedAccount"];
-      }
+      //if (Session["LoggedAccount"] == null)
+      //{
+      //    var tem = data.users.FirstOrDefault(m => m.Id == 7);
+      //    if (tem != null)
+      //    {
+      //        Session["LoggedAccount"] = null;
+      //        AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+      //        Session["LoggedAccount"] = userFullInfo;
+      //        user = userFullInfo;
+      //    }
+      //}
+      //else
+      //{
+      //    user = (AllLoggedUserInfo)Session["LoggedAccount"];
+      //}
 
       var slider = data.sliders.Where(m => m.Status == 1);
       var setting = data.settings.ToList();
@@ -88,13 +88,14 @@
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 @Html.Partial("Partial/_pLanguage")
              
-                                <span style="color: white;"> Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id= user.user.Id })  </span>  
+                                @*<span style="color: white;"> Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id= user.user.Id })  </span>  
                              
-                                <!--<img alt="Janere" src="~/Content/head/language.png" />-->
+                              
                                 <a href="@Url.Action("Login", "Home")">
                                     <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
                                 </a>
-                                <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
+                                <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>*@
+                            
                             </div>
                         </div>
 
@@ -105,14 +106,14 @@
                                 var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                             }
                             <div class="col-lg-2">&nbsp; </div>
-                            <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Home</div></a>
+                            <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langHome">Home</div></a>
                             @if (controllerName == "Home" && (actionName == "BulkProducts" || actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Group" || actionName == "Products" || actionName == "Product"))
                             {
-                                <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Products</div></a>
+                                <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus langProducts">Products</div></a>
                             }
                             else
                             {
-                                <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
+                                <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langProducts">Products</div></a>
                             }
                             @* @if (controllerName=="Home" && actionName == "BulkProducts")
                 {
@@ -124,11 +125,11 @@
                 }*@
                             @if (controllerName == "Home" && actionName == "Download")
                             {
-                                <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Dowload</div></a>
+                                <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus langDowload">Dowload</div></a>
                             }
                             else
                             {
-                                <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Download</div></a>
+                                <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langDownload">Download</div></a>
                             }
                            @* @if (controllerName == "Home" && actionName == "Warehouses")
     {
@@ -140,11 +141,11 @@
     }*@
                             @if (controllerName == "Home" && actionName == "Stores")
                             {
-                                <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Store</div></a>
+                                <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus langStores">Store</div></a>
                             }
                             else
                             {
-                                <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Store</div></a>
+                                <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langStores">Store</div></a>
                             }
 
                         </div>
@@ -158,7 +159,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div><hr style="width: 100%; border: 2px solid #002f6c;" /></div>
-                <div style="color: #2ea3f2; font-size: 20px; font-weight: bold; padding: 0px 20px 13px 20px; ">
+                <div style="color: #2ea3f2; font-size: 20px; font-weight: bold; padding: 0px 20px 13px 20px; " class="langAllProduct">
                     All Products
                 </div>
 
@@ -206,9 +207,9 @@
         <div class="container">
             <footer>
                 <ul style="font-size:20px;">
-                    <li><span class="txtFooter">© OÜ Janere</span> </li>
-                    <li><span class="txtFooter">Reg. no. 10001584</span> </li>
-                    <li><span class="txtFooter">Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</span> </li>
+                    <li><span class="txtFooter txtFooter1">© OÜ Janere</span> </li>
+                    <li><span class="txtFooter txtFooter2">Reg. no. 10001584</span> </li>
+                    <li><span class="txtFooter txtFooter3">Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</span> </li>
                 </ul>
             </footer>
         </div>

@@ -17,24 +17,26 @@ namespace WebApplication1.Controllers
         private veebdbEntities db = new veebdbEntities();
 
         // GET: /setting/
-        public ActionResult Index()
+        public ActionResult Index(string type=null)
         {
-            var list = db.settingtypes.Where(x => x.status == 1).ToList();
+            var list = db.settingtypes.Where(x => x.status == 1 && x.code!="paypal").ToList();
             list.Insert(0, new settingtype { id = 0, name = "Type" });
             ViewBag.ListTypeSetting = list;
+            ViewBag.Type = type;
             return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10, int type = 0)
+        public ActionResult IndexAjax(int start = 0, int view = 10, string type = null)
         {
-            var listsetting = db.settings.Join(db.settingtypes, st => st.typeId, stt => stt.name, (st, stt) => new AllModel { tblSetting = st, tblSettingType = stt }).ToList();
-            if (type != 0)
+            var listsetting = db.settings.Where(x=>x.typeId!= "paypal").Join(db.settingtypes, st => st.typeId, stt => stt.name, (st, stt) => new AllModel { tblSetting = st, tblSettingType = stt }).ToList();
+            if (type != null && type=="paypal")
             {
-                var typeText = db.settingtypes.FirstOrDefault(x => x.id == type);
-                if (typeText!=null)
-                {
-                    listsetting = listsetting.Where(x => x.tblSetting.typeId == typeText.code).ToList();
-                }
-               
+                listsetting = db.settings.Where(x => x.typeId == "paypal").Join(db.settingtypes, st => st.typeId, stt => stt.name, (st, stt) => new AllModel { tblSetting = st, tblSettingType = stt }).ToList();
+
+            }
+            if (type != null && type != "paypal")
+            {
+                listsetting = listsetting.Where(x => x.tblSetting.typeId == type).ToList();
+
             }
             ViewBag.Start = start;
             ViewBag.View = view;

@@ -439,78 +439,234 @@ namespace WebApplication1.Controllers
 
         }
 
-        public ActionResult CloneLanguage()
+        public ActionResult CloneLanguage(int type)
         {
-            var listLanguage = db.countries.Where(x => x.status == 1).ToList();
-            var listPro = db.items.ToList();
+            var listLanguage = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             var index = 0;
-
-            foreach (var proItem in listPro)
+            if (type == 1)
             {
-                foreach (var itemLang in listLanguage)
+                var listPro = db.items.ToList();
+
+                foreach (var proItem in listPro)
                 {
-                    var itempro = db.items.FirstOrDefault(x => x.ARTCODE == proItem.ARTCODE && x.CodeLanguage == itemLang.language.ToLower());
-
-                    if (itempro == null)
+                    foreach (var itemLang in listLanguage)
                     {
+                        var itempro = db.items.FirstOrDefault(x => x.IdCurrentItem == proItem.IdCurrentItem && x.CodeLanguage == itemLang.language.ToLower());
 
-                        var tblItem = new item();
-                        tblItem.ARTTYPE = 1;
-                        tblItem.CREATED = DateTime.Now;
-                        tblItem.LASTCHANGE = DateTime.Now;
-                        tblItem.ARTCODE = proItem.ARTCODE;
-                        tblItem.ARTNAME = proItem.ARTNAME;
-                        tblItem.INFO = proItem.INFO;
-                        tblItem.CodeLanguage = itemLang.language.ToLower();
-                        tblItem.GROUPNO = proItem.GROUPNO;
-                        tblItem.IsBestSeller = proItem.IsBestSeller;
-                        tblItem.EXPORTABLE = proItem.EXPORTABLE;
-                        tblItem.SPECIALOFFER = proItem.SPECIALOFFER;
-                        tblItem.STOCKITEM = proItem.STOCKITEM;
-                        tblItem.AUTHORIZABLE = proItem.AUTHORIZABLE;
-                        tblItem.RESTRICTED = proItem.RESTRICTED;
-                        tblItem.NOTPOST = proItem.NOTPOST;
-                        tblItem.NOTADDPOSTAGEFEE = proItem.NOTADDPOSTAGEFEE;
-                        tblItem.WIDTH = proItem.WIDTH;
-                        tblItem.WEIGHT = proItem.WEIGHT;
-                        tblItem.LEN = proItem.LEN;
-                        tblItem.HEIGHT = proItem.HEIGHT;
-
-                        db.items.Add(tblItem);
-                        var tblLink = db.artlinks.FirstOrDefault(x => x.ARTNO == proItem.ARTNO);
-                        if (tblLink != null)
+                        if (itempro == null)
                         {
-                            var tblPic = new artlink
+
+                            var tblItem = new item();
+                            tblItem.ARTTYPE = 1;
+                            tblItem.CREATED = DateTime.Now;
+                            tblItem.LASTCHANGE = DateTime.Now;
+                            tblItem.ARTCODE = proItem.ARTCODE;
+                            tblItem.ARTNAME = proItem.ARTNAME;
+                            tblItem.INFO = proItem.INFO;
+                            tblItem.CodeLanguage = itemLang.language.ToLower();
+                            tblItem.GROUPNO = proItem.GROUPNO;
+                            tblItem.IsBestSeller = proItem.IsBestSeller;
+                            tblItem.EXPORTABLE = proItem.EXPORTABLE;
+                            tblItem.SPECIALOFFER = proItem.SPECIALOFFER;
+                            tblItem.STOCKITEM = proItem.STOCKITEM;
+                            tblItem.AUTHORIZABLE = proItem.AUTHORIZABLE;
+                            tblItem.RESTRICTED = proItem.RESTRICTED;
+                            tblItem.NOTPOST = proItem.NOTPOST;
+                            tblItem.NOTADDPOSTAGEFEE = proItem.NOTADDPOSTAGEFEE;
+                            tblItem.WIDTH = proItem.WIDTH;
+                            tblItem.WEIGHT = proItem.WEIGHT;
+                            tblItem.LEN = proItem.LEN;
+                            tblItem.HEIGHT = proItem.HEIGHT;
+                            tblItem.IdCurrentItem = proItem.IdCurrentItem;
+
+                            db.items.Add(tblItem);
+                            var tblLink = db.artlinks.FirstOrDefault(x => x.ARTNO == proItem.ARTNO);
+                            if (tblLink != null)
                             {
+                                var tblPic = new artlink
+                                {
 
-                                ARTNO = tblItem.ARTNO,
-                                LASTCHANGE = DateTime.Now,
-                                CREATED = DateTime.Now,
-                                LINK = tblLink.LINK
+                                    ARTNO = tblItem.ARTNO,
+                                    LASTCHANGE = DateTime.Now,
+                                    CREATED = DateTime.Now,
+                                    LINK = tblLink.LINK
 
-                            };
-                            db.artlinks.Add(tblPic);
+                                };
+                                db.artlinks.Add(tblPic);
+                            }
+                            index++;
                         }
-                        index++;
+                        if (index == 25)
+                        {
+                            index = 0;
+                            db.SaveChanges();
+                        }
+
                     }
-                    if (index == 25)
-                    {
-                        index = 0;
-                        db.SaveChanges();
-                    }
+
 
                 }
-              
+
+
 
             }
+            if (type == 2)
+            {
 
-          
+                var listGroup = db.artgrps.ToList();
+                foreach (var itemGroup in listGroup)
+                {
+                    CloneDQGroup(itemGroup.IdCurrentItem, listLanguage);
+                }
+            }
+            if (type == 3)
+            {
+                var listMasterMetaGroup = db.metagrups.Where(x => x.PARENTNO == 0).ToList();
+                foreach (var itemGroup in listMasterMetaGroup)
+                {
+                    CloneDqMasterMetaGroup(itemGroup.IdCurrentItem, listLanguage);
+                }
 
+            }
+            if (type == 4)
+            {
+                var listMasterMetaGroup = db.metagrups.Where(x => x.PARENTNO != 0).ToList();
+                foreach (var itemGroup in listMasterMetaGroup)
+                {
+                    CloneDqMetaGroup(itemGroup.METAGROUPNO, listLanguage);
+                }
+
+            }
 
             return null;
 
         }
 
+
+
+
+        public void CloneDQGroup(int? currentId, List<country> listLanguage)
+        {
+            var index = 0;
+            var proMaster = db.artgrps.FirstOrDefault(x => x.GROUPNO == currentId);
+            if (proMaster != null)
+            {
+                foreach (var itemlang in listLanguage)
+                {
+                    if (proMaster.CodeLanguage != itemlang.language.ToLower())
+                    {
+                        var check = db.artgrps.FirstOrDefault(x => x.IdCurrentItem == currentId && x.CodeLanguage == itemlang.language.ToLower());
+                        if (check == null)
+                        {
+                            var tblgroup = new artgrp
+                            {
+                                CREATED = proMaster.CREATED,
+                                LASTCHANGE = proMaster.LASTCHANGE,
+                                GROUPCODE = proMaster.GROUPCODE,
+                                GROUPNAME = proMaster.GROUPNAME,
+                                IsActive = proMaster.IsActive,
+                                EXPORTABLE = proMaster.EXPORTABLE,
+                                METAGROUPNO = proMaster.METAGROUPNO,
+                                CodeLanguage = itemlang.language.ToLower(),
+                                IdCurrentItem = proMaster.IdCurrentItem,
+
+                            };
+                            db.artgrps.Add(tblgroup);
+
+                        }
+
+
+                    }
+
+
+
+
+                }
+                db.SaveChanges();
+
+            }
+
+        }
+
+
+
+        public void CloneDqMasterMetaGroup(int? currentId, List<country> listLanguage)
+        {
+            var proMaster = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == currentId);
+            var index = 0;
+            if (proMaster != null)
+            {
+                foreach (var itemlang in listLanguage)
+                {
+                    if (proMaster.CodeLanguage != itemlang.language.ToLower())
+                    {
+
+                        var check = db.metagrups.FirstOrDefault(x => x.IdCurrentItem == currentId && x.CodeLanguage == itemlang.language.ToLower());
+                        if (check == null)
+                        {
+                            var matagroup = new metagrup
+                            {
+                                PARENTNO = proMaster.PARENTNO,
+                                IsActive = proMaster.IsActive,
+                                CREATED = proMaster.CREATED,
+                                METAGROUPNAME = proMaster.METAGROUPNAME,
+                                METAGROUPCODE = proMaster.METAGROUPCODE,
+                                CodeLanguage = itemlang.language.ToLower(),
+                                IdCurrentItem = proMaster.METAGROUPNO
+                            };
+                            db.metagrups.Add(matagroup);
+
+                        }
+                    }
+
+
+
+                }
+
+                db.SaveChanges();
+            }
+
+        }
+
+
+
+        public void CloneDqMetaGroup(int currentId, List<country> listLanguage)
+        {
+            var index = 0;
+            var proMaster = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == currentId);
+            if (proMaster != null)
+            {
+                foreach (var itemlang in listLanguage)
+                {
+                    if (proMaster.CodeLanguage != itemlang.language.ToLower())
+                    {
+                        var check = db.metagrups.FirstOrDefault(x => x.IdCurrentItem == currentId && x.CodeLanguage == itemlang.language.ToLower());
+                        if (check == null)
+                        {
+                            var matagroup = new metagrup
+                            {
+                                PARENTNO = proMaster.PARENTNO,
+                                IsActive = proMaster.IsActive,
+                                CREATED = proMaster.CREATED,
+                                METAGROUPNAME = proMaster.METAGROUPNAME,
+                                METAGROUPCODE = proMaster.METAGROUPCODE,
+                                CodeLanguage = itemlang.language.ToLower(),
+                                IdCurrentItem = proMaster.METAGROUPNO
+                            };
+                            db.metagrups.Add(matagroup);
+
+                        }
+                    }
+
+
+
+
+                }
+                db.SaveChanges();
+
+            }
+
+        }
 
     }
 }

@@ -34,25 +34,7 @@
     @{
 
         veebdbEntities data = new veebdbEntities();
-        var user = new AllLoggedUserInfo();
-
-
-
-        if (Session["LoggedAccount"] == null)
-        {
-            var tem = data.users.FirstOrDefault(m => m.Id == 7);
-            if (tem != null)
-            {
-                Session["LoggedAccount"] = null;
-                AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
-                Session["LoggedAccount"] = userFullInfo;
-                user = userFullInfo;
-            }
-        }
-        else
-        {
-            user = (AllLoggedUserInfo)Session["LoggedAccount"];
-        }
+     
 
         var slider = data.sliders.Where(m => m.Status == 1);
         var setting = data.settings.ToList();
@@ -82,13 +64,7 @@
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 @Html.Partial("Partial/_pLanguage")
 
-                                <span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>
-
-
-                                <a href="@Url.Action("Login", "Home")">
-                                    <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
-                                </a>
-                                <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
+                               
 
                             </div>
                         </div>
@@ -96,11 +72,11 @@
                             <a class="mobile_menu"><span></span><span></span><span></span></a>
                             <div class="wrap-head-main-menu">
                                 <ul class="head-main-menu">
-                                    <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
-                                    <li><a href="@Url.Action("MasterGroup", "Home")">Products</a></li>
-                                    <li><a href="@Url.Action("Download", "Home")">Download</a></li>
+                                    <li class="active"><a href="@Url.Action("Index", "Home")" class="langHome">Home</a></li>
+                                    <li><a href="@Url.Action("MasterGroup", "Home")" class="langProducts">Products</a></li>
+                                    <li><a href="@Url.Action("Download", "Home")" class="langDownload">Download</a></li>
                                     <!--<li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>-->
-                                    <li><a href="@Url.Action("Stores", "Home")">Stores</a></li>
+                                    <li><a href="@Url.Action("Stores", "Home")" class="langStores">Stores</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -132,13 +108,12 @@
     </section>
 
     <h2 class="heading_title navi_slider">
-        <span>Master Meta Groups</span>
+        <span class="langMasterMetaGroups">Master Meta Groups</span>
         <img alt="Janere" src="~/Content/body/others/back.png" id="mm_back" />
         <input type="hidden" value="1" id="mm_cur" />
         <img alt="Janere" src="~/Content/body/others/next.png" id="mm_next" />
     </h2>
     <div class="product_category" id="mastermeta">
-
         @{
             List<item> relatedProducts = (List<item>)Session["relatedProducts"];
         }
@@ -146,7 +121,7 @@
     </div><!-- product_category -->
 
     <h2 class="heading_title navi_slider">
-        <span>Best Sellers</span>
+        <span class="langBestSellers">Best Sellers</span>
         @*<img alt="Janere" src="~/Content/body/others/back.png" id="bs_back" />
             <input type="hidden" value="1" id="bs_cur" />
             <img alt="Janere" src="~/Content/body/others/next.png" id="bs_next" />*@
@@ -271,6 +246,7 @@
             cache: false,
             type: "POST",
             success: function (data) {
+                console.log(data);
                 $("#mastermeta").html(data).show();
             },
             error: function (reponse) {
@@ -414,6 +390,7 @@
             });
         });
     });
+   
 </script>
 </body>
 </html>

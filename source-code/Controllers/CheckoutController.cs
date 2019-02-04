@@ -182,7 +182,7 @@ namespace WebApplication1.Controllers
                         {
                             order.paid_status = 2;
                         }
-                        if (order.payoption == "COB")
+                        if (order.payoption == "COD")
                         {
                             order.paid_status = 1;
 
@@ -355,6 +355,7 @@ namespace WebApplication1.Controllers
                         else
                         {
                             SendTemplateEmail(order.d_email, order.d_email, "", "Order Success", 2);
+                            return RedirectToAction("Thankyou");
                         }
 
                     }
@@ -372,11 +373,10 @@ namespace WebApplication1.Controllers
                         }
                     }
                 }
-                return RedirectToAction("Thankyou");
-                // return RedirectToAction("Index");
+               
+              
             }
-
-            return View(order);
+            return RedirectToAction("Create");
         }
         public bool SendTemplateEmail(string recepientEmail, string username, string key, string Subject, int type)
         {
@@ -393,7 +393,7 @@ namespace WebApplication1.Controllers
                 {
 
 
-                    body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_ResetPassTemplateMail.cshtml");
+                    body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_OrderSuccessTemplateMail.cshtml");
                     body = body.Replace("##name##", username);
 
 
@@ -427,9 +427,10 @@ namespace WebApplication1.Controllers
             order.status = "5";
             order.paid_key = order.paid_key + "_" + token + "_" + paymentId + "_" + PayerID;
             order.paid_status = 3;
+
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
-
+            SendTemplateEmail(order.d_email, order.d_email, "", "Order Success by Paypal", 2);
             return RedirectToAction("Thankyou");
         }
         public ActionResult PayPalCancel(string paid_key, string token)
@@ -532,11 +533,21 @@ namespace WebApplication1.Controllers
             return Json(new { result = "" }, JsonRequestBehavior.AllowGet);
 
         }
+
+        public ActionResult GetFeeShipDefault()
+        {
+            
+                var feeship = db.shippingfees.Where(x => x.status==1 && x.cityid == null || x.cityid == 0).ToList();
+
+                return Json(new { result = feeship }, JsonRequestBehavior.AllowGet);
+          
+
+        }
         public ActionResult GetFeeShipByCity(int id = 0)
         {
             if (id != 0)
             {
-                var feeship = db.shippingfees.Where(x => x.cityid == id).ToList();
+                var feeship = db.shippingfees.Where(x => x.status == 1 && x.cityid == id || x.cityid==null || x.cityid==0).ToList();
 
                 return Json(new { result = feeship }, JsonRequestBehavior.AllowGet);
             }

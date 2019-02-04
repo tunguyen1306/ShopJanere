@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -49,7 +50,8 @@ namespace WebApplication1.Controllers
         // GET: /Store/Create
         public ActionResult Create()
         {
-            return View(new store());
+           
+            return View(new AllModel { tblStore = new store() });
         }
 
         // POST: /Store/Create
@@ -57,10 +59,40 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
        
-        public ActionResult Create( store store, HttpPostedFileBase[] inputfile)
+        public ActionResult Create(AllModel model, HttpPostedFileBase[] inputfile)
         {
-            if (ModelState.IsValid)
+            if (model.tblStoreArray != null)
             {
+
+                var storeF = new store
+                {
+                    CodeLanguage = model.tblStoreArray[0].CodeLanguage.ToLower(),
+                    Name = model.tblStoreArray[0].Name,
+                    Location = model.tblStoreArray[0].Location,
+                    Description = model.tblStoreArray[0].Description
+                };
+                db.stores.Add(storeF);
+                db.SaveChanges();
+                var updateItem = db.stores.Find(storeF.Id);
+                updateItem.IdCurrentItem = storeF.Id;
+                db.Entry(updateItem).State = EntityState.Modified;
+                db.SaveChanges();
+                foreach (var item in model.tblStoreArray.Skip(1).ToList())
+                {
+
+                    var tblStore = new store
+                    {
+                        CodeLanguage = item.CodeLanguage.ToLower(),
+                        IdCurrentItem = storeF.IdCurrentItem,
+                        Name = item.Name,
+                       Location = item.Location,
+                       Description = item.Description,
+                       
+                };
+                  
+                    db.stores.Add(tblStore);
+                }
+              
                 if (inputfile != null)
                 {
                     for (int i = 0; i < inputfile.Length; i++)
@@ -71,33 +103,59 @@ namespace WebApplication1.Controllers
                             string path = "";
                             path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
                             inputfile[i].SaveAs(path);
-                            store.UrlImage = "/Content/ProductImage/" + inputfile[i].FileName;
+                            updateItem.UrlImage = "/Content/ProductImage/" + inputfile[i].FileName;
 
 
                         }
                     }
-                }
-                db.stores.Add(store);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                }  db.SaveChanges();
+         
+               
             }
 
-            return View(store);
+          return RedirectToAction("Index");
+
+           
         }
 
         // GET: /Store/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            var proItem = db.stores.FirstOrDefault(x => x.Id == id);
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
+            ViewBag.ListCountry = list;
+
+
+            foreach (var itemLang in list)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var pro = db.stores.FirstOrDefault(x => x.IdCurrentItem == id && x.CodeLanguage == itemLang.language.ToLower());
+                if (pro == null)
+                {
+
+                    if (proItem != null)
+                    {
+
+
+                        var tblItem = new store
+                        {
+                            CodeLanguage = itemLang.language.ToLower(),
+                            Name = proItem.Name,
+                            Location = proItem.Location,
+                            Description = proItem.Description,
+                            UrlImage = proItem.UrlImage,
+                            IdCurrentItem = proItem.IdCurrentItem
+                        };
+
+                        db.stores.Add(tblItem);
+
+                    }
+
+                }
+
             }
-            store store = db.stores.Find(id);
-            if (store == null)
-            {
-                return HttpNotFound();
-            }
-            return View(store);
+            db.SaveChanges();
+            var item = db.stores.ToList().Where(x => x.IdCurrentItem == id).ToList();
+            return View(new AllModel { listStore = item, tblStore = proItem });
         }
 
         // POST: /Store/Edit/5
@@ -105,31 +163,47 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Edit( store store, HttpPostedFileBase[] inputfile)
+        public ActionResult Edit(AllModel model, HttpPostedFileBase[] inputfile)
         {
-            if (ModelState.IsValid)
+            if (model.tblStoreArray != null)
             {
-                if (inputfile != null)
+                foreach (var item in model.tblStoreArray)
                 {
-                    for (int i = 0; i < inputfile.Length; i++)
+                    var tem = db.stores.Find(item.Id);
+
+                 
+                    tem.CodeLanguage = item.CodeLanguage.ToLower();
+                    tem.Name = item.Name;
+                    tem.Location = item.Location;
+                    tem.Description = item.Description;
+
+                    tem.UrlImage = item.UrlImage;
+                    db.Entry(tem).State = EntityState.Modified;
+                    if (inputfile != null)
                     {
-                        if (inputfile[i] != null)
+                        for (int i = 0; i < inputfile.Length; i++)
                         {
+                            if (inputfile[i] != null)
+                            {
 
-                            string path = "";
-                            path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
-                            inputfile[i].SaveAs(path);
-                            store.UrlImage = "/Content/ProductImage/" + inputfile[i].FileName;
+                                string path = "";
+                                path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
+                                inputfile[i].SaveAs(path);
+                                tem.UrlImage = "/Content/ProductImage/" + inputfile[i].FileName;
 
 
+                            }
                         }
                     }
+
                 }
-                db.Entry(store).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
             }
-            return View(store);
+
+            db.SaveChanges();
+
+
+            return RedirectToAction("Index");
         }
 
         // GET: /Store/Delete/5

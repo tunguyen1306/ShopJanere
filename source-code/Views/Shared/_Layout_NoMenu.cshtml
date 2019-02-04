@@ -5,25 +5,25 @@
 <head>
     @{
         veebdbEntities data = new veebdbEntities();
-        var user = new AllLoggedUserInfo();
+        //var user = new AllLoggedUserInfo();
 
 
 
-        if (Session["LoggedAccount"] == null)
-        {
-            var tem = data.users.FirstOrDefault(m => m.Id == 7);
-            if (tem != null)
-            {
-                Session["LoggedAccount"] = null;
-                AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
-                Session["LoggedAccount"] = userFullInfo;
-                user = userFullInfo;
-            }
-        }
-        else
-        {
-            user = (AllLoggedUserInfo)Session["LoggedAccount"];
-        }
+        //if (Session["LoggedAccount"] == null)
+        //{
+        //    var tem = data.users.FirstOrDefault(m => m.Id == 7);
+        //    if (tem != null)
+        //    {
+        //        Session["LoggedAccount"] = null;
+        //        AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+        //        Session["LoggedAccount"] = userFullInfo;
+        //        user = userFullInfo;
+        //    }
+        //}
+        //else
+        //{
+        //    user = (AllLoggedUserInfo)Session["LoggedAccount"];
+        //}
         var slider = data.sliders.Where(m => m.Status == 1);
         var setting = data.settings.ToList();
         var seo = data.seos.FirstOrDefault(x => x.type == 1);
@@ -78,7 +78,7 @@
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 @Html.Partial("Partial/_pLanguage")
-                               <span style="color: white;">
+                               @*<span style="color: white;">
 
                                     Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id = user.user.Id })
 
@@ -89,7 +89,7 @@
                                 </a>
                                 <a href="@Url.Action("UpdateCart", "Home")">
                                     <img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span>
-                                </a>
+                                </a>*@
                             </div>
                         </div>
                         @{
@@ -97,14 +97,14 @@
                             var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                         }
                         <div class="row" style="color:white;">
-                            <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Home</div></a>
+                            <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langHome">Home</div></a>
                             @if (controllerName == "Home" && (actionName == "BulkProducts" || actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Catalogue" || actionName == "Category"))
                             {
-                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Products</div></a>
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus langProducts" >Products</div></a>
                             }
                             else
                             {
-                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langProducts">Products</div></a>
                             }
                             @* @if (controllerName=="Home" && actionName == "BulkProducts")
                                 {
@@ -116,11 +116,11 @@
                                 }*@
                             @if (controllerName == "Home" && actionName == "Download")
                             {
-                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Dowload</div></a>
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus langDowload">Dowload</div></a>
                             }
                             else
                             {
-                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Download</div></a>
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal langDowload">Download</div></a>
                             }
                             @*@if (controllerName == "Home" && actionName == "Warehouses")
                                 {
@@ -132,11 +132,11 @@
                                 }*@
                             @if (controllerName == "Home" && actionName == "Stores")
                             {
-                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Store</div></a>
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus langStore">Store</div></a>
                             }
                             else
                             {
-                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Store</div></a>
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal langStore">Store</div></a>
                             }
 
                         </div>
@@ -176,9 +176,9 @@
         <div class="container">
             <footer>
                 <ul style="font-size:20px;">
-                    <li><span class="txtFooter">© OÜ Janere</span> </li>
-                    <li><span class="txtFooter">Reg. no. 10001584</span> </li>
-                    <li><span class="txtFooter">Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</span> </li>
+                    <li><span class="txtFooter txtFooter1">© OÜ Janere</span> </li>
+                    <li><span class="txtFooter txtFooter2">Reg. no. 10001584</span> </li>
+                    <li><span class="txtFooter txtFooter3">Põldmäe tee 14, Vatsla küla, Saue vald, 76915 Estonia</span> </li>
                 </ul>
             </footer>
         </div>
@@ -222,7 +222,16 @@
     @Scripts.Render("~/bundles/myscript")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/CustomJs.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Content/admin/js/moment.min.js"></script>
+    <script src="~/Content/admin/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $('.datepicker').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd/mm/yyyy'
+            });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

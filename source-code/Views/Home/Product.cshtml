@@ -203,7 +203,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2">Phone :</label>
                             <div class="col-md-10">
-                                <input id="phone" name="phone" class="form-control" />
+                                <input id="phone" name="phone" class="form-control checkNumber" />
 
                             </div>
                         </div>
@@ -224,19 +224,23 @@
                         </div>
 
                         <div class="form-group">
-
-                            <div class="alert alert-danger hidden" role="alert">
-                                <strong>
-                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Error!
-                                </strong>
-                                <div class="show-alert"></div>
+                            <label class="control-label col-md-2"></label>
+                            <div class="col-md-10">
+                               
+                                <div class="alert alert-danger hidden" role="alert">
+                                    <strong>
+                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Error!
+                                    </strong>
+                                    <div class="show-alert"></div>
+                                </div>
+                                <div class="alert alert-success hidden" role="alert">
+                                    <strong>
+                                        <i class="fa fa-check-circle" aria-hidden="true"></i>Success
+                                    </strong>
+                                    <div class="show-alert-success"></div>
+                                </div>
                             </div>
-                            <div class="alert alert-success hidden" role="alert">
-                                <strong>
-                                    <i class="fa fa-check-circle" aria-hidden="true"></i>Success
-                                </strong>
-                                <div class="show-alert-success"></div>
-                            </div>
+                         
                         </div>
                     </div>
                 </form>

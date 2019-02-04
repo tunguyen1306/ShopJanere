@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult IndexAjax(string search=null,int start = 0, int view = 10)
         {
-            var listMetagroup =db.metagrups.Where(x=>x.IsActive==true && x.PARENTNO==0).Select(x=>new AllModel {tblMasterMetaGroup = x}).ToList();
+            var listMetagroup =db.metagrups.Where(x=>x.IsActive==true && x.PARENTNO==0 && x.CodeLanguage == "english").Select(x=>new AllModel {tblMasterMetaGroup = x}).ToList();
 
             if (search!=null)
             {
@@ -50,51 +50,63 @@ namespace WebApplication1.Controllers
         {
             if (model.tblMasterMetaGroupArray != null)
             {
-                foreach (var item in model.tblMasterMetaGroupArray)
-                {
-                    
-                        item.PARENTNO = 0;
-                        item.IsActive = model.tblMasterMetaGroup.IsActive;
-                        item.CREATED = DateTime.Now;
-                        db.metagrups.Add(item);
-                        db.SaveChanges();
-                        if (inputfile != null)
-                        {
-                            for (int i = 0; i < inputfile.Length; i++)
-                            {
-                                if (inputfile[i] != null)
-                                {
-                                    var fname = item.METAGROUPCODE + "." +
-                                              inputfile[i].FileName.Split('.').Last();
-                                    string path = Server.MapPath("~/Content/MetagroupImage");
-                                    if (!Directory.Exists(path))
-                                        Directory.CreateDirectory(path);
-                                    path = Path.Combine(path + "/", fname);
-                                    inputfile[i].SaveAs(path);
 
-                                }
-                            }
-                        }
-                    
+                var matagroup = new metagrup();
+                matagroup.PARENTNO = 0;
+                matagroup.IsActive = model.tblMasterMetaGroup.IsActive;
+                matagroup.CREATED = DateTime.Now;
+                matagroup.METAGROUPNAME = model.tblMasterMetaGroupArray[0].METAGROUPNAME;
+                matagroup.METAGROUPCODE = model.tblMasterMetaGroupArray[0].METAGROUPCODE;
+                matagroup.CodeLanguage = model.tblMasterMetaGroupArray[0].CodeLanguage;
+                db.metagrups.Add(matagroup);
+                db.SaveChanges();
+                var updatematagroup = db.metagrups.Find(matagroup.METAGROUPNO);
+                updatematagroup.IdCurrentItem = matagroup.METAGROUPNO;
+                db.Entry(updatematagroup).State = EntityState.Modified;
+                db.SaveChanges();
+                foreach (var item in model.tblMasterMetaGroupArray.Skip(1).ToList())
+                {
+
+                    item.PARENTNO = 0;
+                    item.IsActive = model.tblMasterMetaGroup.IsActive;
+                    item.CREATED = DateTime.Now;
+                    item.IdCurrentItem = updatematagroup.IdCurrentItem;
+                    db.metagrups.Add(item);
 
                 }
+                db.SaveChanges();
+                if (inputfile != null)
+                {
+                    for (int i = 0; i < inputfile.Length; i++)
+                    {
+                        if (inputfile[i] != null)
+                        {
+                            var fname = matagroup.IdCurrentItem + "." +
+                                      inputfile[i].FileName.Split('.').Last();
+                            string path = Server.MapPath("~/Content/MetagroupImage");
+                            if (!Directory.Exists(path))
+                                Directory.CreateDirectory(path);
+                            path = Path.Combine(path + "/", fname);
+                            inputfile[i].SaveAs(path);
+
+                        }
+                    }
+                }
             }
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
         }
 
-        public ActionResult Edit(string code)
+        public ActionResult Edit(int code)
         {
-            var proMaster = db.metagrups.FirstOrDefault(x => x.METAGROUPCODE == code);
-            if (code == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var list = db.countries.Where(x => x.status == 1).ToList();
+           
+            var proMaster = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == code);
+
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
             foreach (var itemLang in list)
             {
-                var pro = db.metagrups.FirstOrDefault(x => x.METAGROUPCODE == code && x.CodeLanguage == itemLang.language.ToLower());
+                var pro = db.metagrups.FirstOrDefault(x => x.IdCurrentItem == code && x.CodeLanguage == itemLang.language.ToLower());
                 if (pro == null)
                 {
 
@@ -108,15 +120,16 @@ namespace WebApplication1.Controllers
                         tblItem.IsActive = proMaster.IsActive;
                         tblItem.PARENTNO = proMaster.PARENTNO;
                         tblItem.CodeLanguage = itemLang.language.ToLower();
+                        tblItem.IdCurrentItem = proMaster.IdCurrentItem;
                         db.metagrups.Add(tblItem);
-                        
+
                     }
 
                 }
 
             }
             db.SaveChanges();
-            var item = db.metagrups.ToList().Where(x => x.METAGROUPCODE.ToLower() == code.ToLower()).ToList();
+            var item = db.metagrups.ToList().Where(x => x.IdCurrentItem == code).ToList();
             return View(new AllModel { listMasterMetaGroup = item, tblMasterMetaGroup = proMaster });
         }
         [HttpPost]
@@ -143,7 +156,7 @@ namespace WebApplication1.Controllers
                         {
                             if (inputfile[i] != null)
                             {
-                                var fname = item.METAGROUPCODE + "." +
+                                var fname = item.IdCurrentItem + "." +
                                           inputfile[i].FileName.Split('.').Last();
                                 string path = Server.MapPath("~/Content/MetagroupImage");
                                 if (!Directory.Exists(path))
@@ -259,7 +272,8 @@ namespace WebApplication1.Controllers
         {
             var listMetagroup = (from cat in db.metagrups
                                     join catl in db.metagrups on cat.PARENTNO equals catl.METAGROUPNO
-                                 select new AllModel { tblMetaGroup = cat ,tblMasterMetaGroup = catl }).Where(x => x.tblMetaGroup.IsActive == true && x.tblMetaGroup.PARENTNO!=0).ToList();
+                           
+                                 select new AllModel { tblMetaGroup = cat ,tblMasterMetaGroup = catl }).Where(x => x.tblMetaGroup.IsActive == true && x.tblMetaGroup.CodeLanguage == "english"  && x.tblMetaGroup.PARENTNO!=0).ToList();
             if (search != null)
             {
                 listMetagroup = listMetagroup.Where(x => x.tblMetaGroup.METAGROUPNAME.ToLower().Contains(search.ToLower())).ToList();
@@ -278,7 +292,7 @@ namespace WebApplication1.Controllers
         public ActionResult CreateMetaGroup()
         {
             var listMasterMetaGroup = db.metagrups.Where(x => x.PARENTNO == 0).ToList();
-            listMasterMetaGroup.Insert(0,new metagrup {METAGROUPNO = 0,METAGROUPNAME = "Select Master Meta Group" });
+            listMasterMetaGroup.Insert(0,new metagrup {IdCurrentItem = 0,METAGROUPNAME = "Select Master Meta Group" });
             ViewBag.ListMasterMetaGroup = listMasterMetaGroup;
             return View(new AllModel { tblMetaGroup = new metagrup() });
         }
@@ -288,33 +302,47 @@ namespace WebApplication1.Controllers
         {
             if (model.tblMetaGroupArray != null)
             {
-                foreach (var item in model.tblMetaGroupArray)
+
+                var matagroup = new metagrup();
+                matagroup.PARENTNO = model.tblMetaGroup.PARENTNO;
+                matagroup.IsActive = model.tblMetaGroup.IsActive;
+                matagroup.CREATED = DateTime.Now;
+                matagroup.METAGROUPNAME = model.tblMetaGroupArray[0].METAGROUPNAME;
+                matagroup.METAGROUPCODE = model.tblMetaGroupArray[0].METAGROUPCODE;
+                matagroup.CodeLanguage ="english";
+                db.metagrups.Add(matagroup);
+                db.SaveChanges();
+                var updatematagroup = db.metagrups.Find(matagroup.METAGROUPNO);
+                updatematagroup.IdCurrentItem = matagroup.METAGROUPNO;
+                db.Entry(updatematagroup).State = EntityState.Modified;
+                db.SaveChanges();
+                foreach (var item in model.tblMetaGroupArray.Skip(1).ToList())
                 {
 
-                    item.PARENTNO = 0;
+                    item.PARENTNO = model.tblMetaGroup.PARENTNO;
                     item.IsActive = model.tblMetaGroup.IsActive;
                     item.CREATED = DateTime.Now;
+                    item.IdCurrentItem = updatematagroup.IdCurrentItem;
                     db.metagrups.Add(item);
-                    db.SaveChanges();
-                    if (inputfile != null)
-                    {
-                        for (int i = 0; i < inputfile.Length; i++)
-                        {
-                            if (inputfile[i] != null)
-                            {
-                                var fname = item.METAGROUPCODE + "." +
-                                          inputfile[i].FileName.Split('.').Last();
-                                string path = Server.MapPath("~/Content/MetagroupImage");
-                                if (!Directory.Exists(path))
-                                    Directory.CreateDirectory(path);
-                                path = Path.Combine(path + "/", fname);
-                                inputfile[i].SaveAs(path);
 
-                            }
+                }
+                db.SaveChanges();
+                if (inputfile != null)
+                {
+                    for (int i = 0; i < inputfile.Length; i++)
+                    {
+                        if (inputfile[i] != null)
+                        {
+                            var fname = matagroup.IdCurrentItem + "." +
+                                      inputfile[i].FileName.Split('.').Last();
+                            string path = Server.MapPath("~/Content/MetagroupImage");
+                            if (!Directory.Exists(path))
+                                Directory.CreateDirectory(path);
+                            path = Path.Combine(path + "/", fname);
+                            inputfile[i].SaveAs(path);
+
                         }
                     }
-
-
                 }
             }
        
@@ -322,21 +350,18 @@ namespace WebApplication1.Controllers
 
         }
 
-        public ActionResult EditMetaGroup(string code)
+        public ActionResult EditMetaGroup(int code)
         {
             var listMasterMetaGroup = db.metagrups.Where(x => x.PARENTNO == 0).ToList();
             listMasterMetaGroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Master Meta Group" });
             ViewBag.ListMasterMetaGroup = listMasterMetaGroup;
-            var proMaster = db.metagrups.FirstOrDefault(x => x.METAGROUPCODE == code);
-            if (code == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var proMaster = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == code);
+          
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
             foreach (var itemLang in list)
             {
-                var pro = db.metagrups.FirstOrDefault(x => x.METAGROUPCODE == code && x.CodeLanguage == itemLang.language.ToLower());
+                var pro = db.metagrups.FirstOrDefault(x => x.IdCurrentItem == code && x.CodeLanguage == itemLang.language.ToLower());
                 if (pro == null)
                 {
 
@@ -350,6 +375,7 @@ namespace WebApplication1.Controllers
                         tblItem.IsActive = proMaster.IsActive;
                         tblItem.PARENTNO = proMaster.METAGROUPNO;
                         tblItem.CodeLanguage = itemLang.language.ToLower();
+                        tblItem.IdCurrentItem = proMaster.IdCurrentItem;
                         db.metagrups.Add(tblItem);
 
                     }
@@ -358,7 +384,7 @@ namespace WebApplication1.Controllers
 
             }
             db.SaveChanges();
-            var item = db.metagrups.ToList().Where(x => x.METAGROUPCODE.ToLower() == code.ToLower()).ToList();
+            var item = db.metagrups.ToList().Where(x => x.IdCurrentItem== code).ToList();
             return View(new AllModel { listMetaGroup = item, tblMetaGroup = proMaster });
         }
         [HttpPost]
@@ -384,7 +410,7 @@ namespace WebApplication1.Controllers
                         {
                             if (inputfile[i] != null)
                             {
-                                var fname = item.METAGROUPCODE + "." +
+                                var fname = item.IdCurrentItem + "." +
                                           inputfile[i].FileName.Split('.').Last();
                                 string path = Server.MapPath("~/Content/MetagroupImage");
                                 if (!Directory.Exists(path))
@@ -465,35 +491,54 @@ namespace WebApplication1.Controllers
 
             if (model.tblGroupArray != null)
             {
-                foreach (var item in model.tblGroupArray)
+
+
+                var groupF = new artgrp();
+
+                groupF.METAGROUPNO = model.tblGroup.METAGROUPNO;
+                groupF.IsActive = model.tblGroup.IsActive;
+                groupF.CREATED = DateTime.Now;
+                groupF.LASTCHANGE = DateTime.Now;
+                groupF.EXPORTABLE = "T";
+                groupF.CodeLanguage = model.tblGroupArray[0].CodeLanguage.ToLower();
+                groupF.GROUPCODE = model.tblGroupArray[0].GROUPCODE;
+                groupF.GROUPNAME = model.tblGroupArray[0].GROUPNAME;
+                db.artgrps.Add(groupF);
+                db.SaveChanges();
+                var updategroupF = db.artgrps.Find(groupF.GROUPNO);
+                updategroupF.IdCurrentItem = groupF.GROUPNO;
+                db.Entry(updategroupF).State = EntityState.Modified;
+                db.SaveChanges();
+                foreach (var item in model.tblGroupArray.Skip(1).ToList())
                 {
+                   
+                        item.METAGROUPNO = model.tblGroup.METAGROUPNO;
+                        item.IsActive = model.tblGroup.IsActive;
+                        item.CREATED = DateTime.Now;
+                        item.LASTCHANGE = DateTime.Now;
+                        item.EXPORTABLE = "T";
+                        item.IdCurrentItem = groupF.IdCurrentItem;
+                        db.artgrps.Add(item);
+                    
 
-                    item.METAGROUPNO = model.tblGroup.METAGROUPNO;
-                    item.IsActive = model.tblGroup.IsActive;
-                    item.CREATED = DateTime.Now;
-                    item.LASTCHANGE = DateTime.Now;
-                    item.EXPORTABLE = "T";
-                    db.artgrps.Add(item);
-                    db.SaveChanges();
-                    if (inputfile != null)
+                }
+                db.SaveChanges();
+                if (inputfile != null)
+                {
+                    for (int i = 0; i < inputfile.Length; i++)
                     {
-                        for (int i = 0; i < inputfile.Length; i++)
+                        if (inputfile[i] != null)
                         {
-                            if (inputfile[i] != null)
-                            {
-                                var fname = item.GROUPCODE + "." +
-                                          inputfile[i].FileName.Split('.').Last();
-                                string path = Server.MapPath("~/Content/MetagroupImage");
-                                if (!Directory.Exists(path))
-                                    Directory.CreateDirectory(path);
-                                path = Path.Combine(path + "/", fname);
-                                inputfile[i].SaveAs(path);
+                            var fname = "" + "." +
+                                      inputfile[i].FileName.Split('.').Last();
+                            string path = Server.MapPath("~/Content/MetagroupImage");
+                            if (!Directory.Exists(path))
+                                Directory.CreateDirectory(path);
+                            path = Path.Combine(path + "/", fname);
+                            inputfile[i].SaveAs(path);
 
-                            }
                         }
                     }
-
-
                 }
             }
 
@@ -504,21 +549,18 @@ namespace WebApplication1.Controllers
 
         }
 
-        public ActionResult EditGroup(string code)
+        public ActionResult EditGroup(int id)
         {
             var listMasterGroup = db.metagrups.Where(x => x.PARENTNO != 0).ToList();
             listMasterGroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.ListMasterGroup = listMasterGroup;
-            var proMaster = db.artgrps.FirstOrDefault(x => x.GROUPCODE == code);
-            if (code == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var proMaster = db.artgrps.FirstOrDefault(x => x.GROUPNO == id);
+           
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
             foreach (var itemLang in list)
             {
-                var pro = db.artgrps.FirstOrDefault(x => x.GROUPCODE == code && x.CodeLanguage == itemLang.language.ToLower());
+                var pro = db.artgrps.FirstOrDefault(x => x.IdCurrentItem == id && x.CodeLanguage == itemLang.language.ToLower());
                 if (pro == null)
                 {
 
@@ -533,6 +575,7 @@ namespace WebApplication1.Controllers
                         tblItem.EXPORTABLE = proMaster.EXPORTABLE;
                         tblItem.METAGROUPNO = proMaster.METAGROUPNO;
                         tblItem.CodeLanguage = itemLang.language.ToLower();
+                        tblItem.IdCurrentItem = proMaster.IdCurrentItem;
                         db.artgrps.Add(tblItem);
 
                     }
@@ -541,7 +584,7 @@ namespace WebApplication1.Controllers
 
             }
             db.SaveChanges();
-            var item = db.artgrps.ToList().Where(x => x.GROUPCODE.ToLower() == code.ToLower()).ToList();
+            var item = db.artgrps.ToList().Where(x => x.IdCurrentItem == id).ToList();
             return View(new AllModel { listGroup = item, tblGroup = proMaster });
         }
         [HttpPost]

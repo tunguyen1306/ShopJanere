@@ -40,7 +40,14 @@
                                 <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
                             </a>
                             <a href="@Url.Action("UpdateCart", "Home")">
-                                <img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span>
+                                <img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;"/>
+                                <span style="color: white;">Cart</span>
+                                <span class="txtCountCart">123</span>
+                                <style>
+                                    .txtCountCart {
+                                        
+                                    }
+                                </style>
                             </a>
                         </div>
                     </div>
@@ -49,32 +56,32 @@
                         var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                     }
                     <div class="row" style="color:white;">
-                        <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Home</div></a>
+                        <a href="@Url.Action("Index", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langHome">Home</div></a>
                         @if (controllerName == "Home" && (actionName == "BulkProducts" || actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Catalogue" || actionName == "Category"))
                         {
-                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus">Products</div></a>
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-focus langProducts">Products</div></a>
                         }
                         else
                         {
-                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal">Products</div></a>
+                            <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langProducts">Products</div></a>
                         }
 
                         @if (controllerName == "Home" && actionName == "Download")
                         {
-                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Dowload</div></a>
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus langDownload">Dowload</div></a>
                         }
                         else
                         {
-                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Download</div></a>
+                            <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal langDownload">Download</div></a>
                         }
 
                         @if (controllerName == "Home" && actionName == "Stores")
                         {
-                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Store</div></a>
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus langStore">Store</div></a>
                         }
                         else
                         {
-                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Store</div></a>
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal langStore">Store</div></a>
                         }
 
                     </div>

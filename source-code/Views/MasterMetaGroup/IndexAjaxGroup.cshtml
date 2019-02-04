@@ -42,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.tblGroup.CodeLanguage)
             </td>
             <td scope="col" class="manage_column column_action">
-                <a class="edit_action" href="@Url.Action("EditGroup", "MasterMetaGroup", new {code = item.tblGroup.GROUPCODE})"><i class="fas fa-edit"></i></a>
+                <a class="edit_action" href="@Url.Action("EditGroup", "MasterMetaGroup", new {id = item.tblGroup.IdCurrentItem})"><i class="fas fa-edit"></i></a>
                 <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("DeleteGroup", "MasterMetaGroup", new {id = item.tblGroup.GROUPNO})"><i class="fas fa-times"></i></a>
 
             </td>

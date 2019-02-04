@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebApplication1.shippingfee>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+
+<h1>shippingfee</h1>
+<div class="page_action">
+    <a href="@Url.Action("Create","Shipping")">Add New</a>
+   
+</div>
+
+ <div class="row wrap_filter" style="margin-top: 10px;">
+    <div class="col-sm-4">
+        
+    </div>
+    <div class="col-sm-8 right">
+        @*<label>Filter</label>
+
+        @Html.DropDownList("filter_shippingfee", new SelectList(((List<WebApplication1.country>)ViewBag.ListTypeshippingfee), "id", "name"), new { @class = "filter" })*@
+       
+        @*<input type="button" id="do_filter_action" onclick="" class="button btn-sm" value="Go">*@
+    </div>
+</div><!-- wrap_filter -->
+
+
+@using (Ajax.BeginForm("IndexAjax",null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "shippingfee-result",
+    OnBegin = "shippingfeesearchOnBegin",
+    OnSuccess = "shippingfeesearchOnSuccess"
+}, new { @class = "" }))
+{
+
+    <button style="display: none;" type="submit" id="shippingfee-btsubmit">Search</button>
+}
+<div id="shippingfee-result">
+    @{
+        Html.RenderAction("IndexAjax", "Shipping");
+    }
+
+
+</div>
+<script>
+
+    
+    //#region tdg form
+
+    function shippingfee_seacrch() {
+        $('#shippingfee-btsubmit').click();
+    }
+    shippingfee_seacrch();
+    function shippingfeesearchOnBegin() {
+
+    }
+
+    function shippingfeesearchOnSuccess() {
+
+
+    }
+    //#endregion
+
+</script>

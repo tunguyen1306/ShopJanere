@@ -130,6 +130,7 @@ namespace WebApplication1.Controllers
                         addToList.METAGROUPNAME = MasterMetaList[i].METAGROUPNAME;
                         addToList.METAGROUPCODE = MasterMetaList[i].METAGROUPCODE;
                         addToList.METAGROUPNO = MasterMetaList[i].METAGROUPNO;
+                        addToList.IdCurrentItem = MasterMetaList[i].IdCurrentItem;
                         showItems.Add(addToList);
                     }
                 }
@@ -143,6 +144,7 @@ namespace WebApplication1.Controllers
                         addToList.METAGROUPNAME = MasterMetaList[i].METAGROUPNAME;
                         addToList.METAGROUPCODE = MasterMetaList[i].METAGROUPCODE;
                         addToList.METAGROUPNO = MasterMetaList[i].METAGROUPNO;
+                        addToList.IdCurrentItem = MasterMetaList[i].IdCurrentItem;
                         showItems.Add(addToList);
                     }
                 }
@@ -614,7 +616,18 @@ namespace WebApplication1.Controllers
                 ViewBag.Link = seo.link;
                 ViewBag.Keyword = seo.keyword;
             }
-            return View(data.files.Where(m => m.Status == "Active").ToList());
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var list = data.files.Where(x =>x.Status=="Active" && x.CodeLanguage == lang.ToLower()).ToList();
+            return View(list);
         }
 
         public ActionResult Store()
@@ -996,22 +1009,53 @@ namespace WebApplication1.Controllers
         public ActionResult GetGroup()
         {
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            obj = data.metagrups.Where(x=>x.CodeLanguage==lang.ToLower()).ToList();
             SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetMetaGroup()
         {
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            obj = data.metagrups.Where(x => x.CodeLanguage == lang.ToLower()).ToList();
             SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetMetaGroupMenu(int mastermetagroupid)
         {
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m => m.PARENTNO == mastermetagroupid).ToList();
-            SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+          
+            obj = data.metagrups.Where(m => m.CodeLanguage == lang.ToLower()&& m.PARENTNO == mastermetagroupid).ToList();
+            SelectList obg = new SelectList(obj, "IdCurrentItem", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
         public ActionResult MasterGroup()
@@ -1076,8 +1120,18 @@ namespace WebApplication1.Controllers
         public ActionResult GetMasterGroup()
         {
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m => m.PARENTNO == 0).ToList();
-            SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            obj = data.metagrups.Where(m => m.PARENTNO == 0 && m.CodeLanguage==lang.ToLower()).ToList();
+            SelectList obg = new SelectList(obj, "IdCurrentItem", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetCatalogue(int metagroupId)
@@ -1090,8 +1144,18 @@ namespace WebApplication1.Controllers
         public ActionResult GetGroupMenu(int metagroupId)
         {
             List<artgrp> obj = new List<artgrp>();
-            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId).ToList();
-            SelectList obg = new SelectList(obj, "GroupNo", "GroupName", 0);
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId && m.CodeLanguage==lang.ToLower()).ToList();
+            SelectList obg = new SelectList(obj, "IdCurrentItem", "GroupName", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Catalogue(int metagroupId)
@@ -1117,7 +1181,17 @@ namespace WebApplication1.Controllers
         public ActionResult Group(int metagroupId)
         {
             List<artgrp> obj = new List<artgrp>();
-            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId && m.CodeLanguage==lang.ToLower()).ToList();
             Session["Group"] = data.metagrups.Where(m => m.METAGROUPNO == metagroupId).FirstOrDefault().METAGROUPNAME;
             return View(obj);
         }
@@ -1175,14 +1249,34 @@ namespace WebApplication1.Controllers
         public ActionResult GetItem()
         {
             List<item> obj = new List<item>();
-            obj = data.items.Take(1000).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            obj = data.items.Where(x=>x.CodeLanguage==lang.ToLower()).Take(1000).ToList();
             SelectList obg = new SelectList(obj, "ARTCODE", "ARTNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetItemById(int catId)
         {
             List<item> obj = new List<item>();
-            obj = data.items.Where(m => m.CATEGORYNO == catId).Take(1000).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            obj = data.items.Where(m => m.CATEGORYNO == catId && m.CodeLanguage==lang.ToLower()).Take(1000).ToList();
             SelectList obg = new SelectList(obj, "ARTCODE", "ARTNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -1217,7 +1311,18 @@ namespace WebApplication1.Controllers
         }
         public ActionResult FileList()
         {
-            return PartialView("Partial1", data.files.ToList());
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var list = data.files.Where(x=>x.CodeLanguage==lang.ToLower()).ToList();
+            return PartialView("Partial1", list);
         }
 
         /*public ActionResult GetMaterial()
@@ -1299,16 +1404,8 @@ namespace WebApplication1.Controllers
         {
 
             var lang = "";
-            var httpCookie = Request.Cookies["Language"];
-            if (httpCookie != null)
-            {
-                lang = httpCookie.Value;
-            }
-            else
-            {
-                lang = "english";
-            }
-            var list = data.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.CodeLanguage == lang && x.tblitem.ARTCODE.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTCODE }).ToList();
+           
+            var list = data.barcodes.Select(x => new AllModel { tblBarcode = x }).Where(x =>  x.tblBarcode.BARCODE1.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblBarcode.LINENO, label = x.tblBarcode.BARCODE1 }).ToList();
             return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
 

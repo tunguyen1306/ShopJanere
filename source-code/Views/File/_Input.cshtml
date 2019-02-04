@@ -1,45 +1,138 @@
-﻿@model WebApplication1.file
+﻿@model WebApplication1.Models.AllModel
+
+@{
+    veebdbEntities db = new veebdbEntities();
+    var listLanguge = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
+    var indexT = 1;
+    var indexT1 = 1;
+}
 <div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>file Code</label>
+    @if (Model.tblFile.Id == 0)
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in listLanguge)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.language">@item.language</a></li>
+                indexT++;
+            }
 
-            @Html.TextBoxFor(x => x.Title, new {@class = "form-control"})
 
+        </ul>
+
+
+        <div class="tab-content">
+
+            @foreach (var item in listLanguge)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblFileArray.Index" value="@(guid)" />
+                <div id="@item.language" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Title @item.language</label>
+                                <input type="text" class="form-control" name="tblFileArray[@(guid)].Title" value="@Model.tblFile.Title" />
+                                <input type="hidden" value="@item.language" name="tblFileArray[@(guid)].CodeLanguage" />
+
+                            </div>
+                            <div class="form-group">
+                                <label>Description @item.language</label>
+                                <input type="text" class="form-control" name="tblFileArray[@(guid)].Description" value="@Model.tblFile.Description" />
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
-        <div class="form-group">
-            <label>file Name</label>
+    }
+    else
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in Model.listFile)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.CodeLanguage">@item.CodeLanguage.ToUpper()</a></li>
+                indexT++;
+            }
 
-            @Html.TextBoxFor(x => x.Description, new {@class = "form-control"})
 
+        </ul>
+
+        <div class="tab-content">
+
+            @foreach (var item in Model.listFile)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblFileArray.Index" value="@(guid)" />
+                <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Title @(item.CodeLanguage)</label>
+                                <input type="text" class="form-control" name="tblFileArray[@(guid)].Title"  value="@item.Title" />
+                                <input type="hidden" value="@item.CodeLanguage" name="tblFileArray[@(guid)].CodeLanguage" />
+                                <input type="hidden" value="@item.Id" name="tblFileArray[@(guid)].Id" />
+                              
+
+                            </div>
+                            <div class="form-group">
+                                <label>Description @(item.CodeLanguage)</label>
+                                <input type="text" class="form-control" name="tblFileArray[@(guid)].Description" value="@item.Description" />
+                              
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
 
+    }
 
-    </div>
+</div>
+
+
+
+
+
+<div class="row">
+   
     <div class="col-sm-6">
         <div class="form-group">
             <label>File</label>
             <input type="file" name="inputfile" class="form-control"/>
 
         </div>
-        @if (Model.Id > 0)
+        @if (Model.tblFile.Id > 0)
         {
             <div class="form-group">
-                <label> File Name:</label>@Model.FileName <br/>
-                <label> Link File:</label>@Model.FileAddress
+                <label> File Name:</label>@Model.tblFile.FileName <br/>
+                <label> Link File:</label>@Model.tblFile.FileAddress
 
             </div>
         }
     </div>
 
 </div>
-@Html.HiddenFor(x=>x.Id)
-@Html.HiddenFor(x=>x.FileAddress)
-@Html.HiddenFor(x=>x.FileName)
-@Html.HiddenFor(x=>x.Status)
-@Html.HiddenFor(x=>x.Kind)
-@Html.HiddenFor(x=>x.UploadBy)
-@Html.HiddenFor(x=>x.UploadDate)
+
+@Html.HiddenFor(x=>x.tblFile.FileAddress)
+@Html.HiddenFor(x=>x.tblFile.FileName)
+@Html.HiddenFor(x=>x.tblFile.Status)
+@Html.HiddenFor(x=>x.tblFile.Kind)
+@Html.HiddenFor(x=>x.tblFile.UploadBy)
+@Html.HiddenFor(x=>x.tblFile.UploadDate)
 
 <script>
 
@@ -51,18 +144,13 @@
             rules: {
                 Title: {
                     required: true
-                },
-                inputfile: {
-                    required: true
-                   
                 }
                
 
             },
 
             messages: {
-                Title: "Title do not empty",
-                inputfile: "Select file"
+                Title: "Title do not empty"
                
 
             },

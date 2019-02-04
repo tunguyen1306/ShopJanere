@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
         public ActionResult IndexAjax(string keywork=null,string tab = "all", int start = 0, int view = 10, int groupId = 0, int storeId = 0, int stockId = 0, int warehouseId = 0)
         {
 
-            var listProduct = db.items.Where(x => x.ARTNO > 0);
+            var listProduct = db.items.Where(x => x.ARTNO > 0 && x.CodeLanguage=="english");
             if (keywork!=null)
             {
                 listProduct = listProduct.Where(x => x.ARTNO.ToString().Contains(keywork) || x.ARTNAME.ToString().Contains(keywork) || x.ARTCODE.ToString().Contains(keywork) || x.INFO.ToString().Contains(keywork) || x.LEN.ToString().Contains(keywork) || x.WEIGHT.ToString().Contains(keywork) || x.HEIGHT.ToString().Contains(keywork));
@@ -186,14 +186,44 @@ namespace WebApplication1.Controllers
                 if (model.tblProductArray!=null)
                 {
                     var artCode = Guid.NewGuid().ToString().Substring(0, 8).ToUpper() ;
-                    foreach (var item in model.tblProductArray.ToList())
+                    var itemF= new item();
+                    itemF.ARTTYPE = 1;
+
+                    itemF.CREATED = DateTime.Now;
+                    itemF.LASTCHANGE = DateTime.Now;
+                    itemF.ARTCODE = artCode;
+                    itemF.ARTNAME = model.tblProductArray[0].ARTNAME;
+                    itemF.INFO = model.tblProductArray[0].INFO;
+                    itemF.CodeLanguage = model.tblProductArray[0].CodeLanguage.ToLower();
+                    itemF.GROUPNO = model.tblitem.GROUPNO;
+                    itemF.IsBestSeller = model.tblitem.IsBestSeller;
+                    itemF.EXPORTABLE = model.tblitem.EXPORTABLE;
+                    itemF.SPECIALOFFER = model.tblitem.SPECIALOFFER;
+                    itemF.STOCKITEM = model.tblitem.STOCKITEM;
+                    itemF.AUTHORIZABLE = model.tblitem.AUTHORIZABLE;
+                    itemF.RESTRICTED = model.tblitem.RESTRICTED;
+                    itemF.NOTPOST = model.tblitem.NOTPOST;
+                    itemF.NOTADDPOSTAGEFEE = model.tblitem.NOTADDPOSTAGEFEE;
+                    itemF.WIDTH = model.tblitem.WIDTH;
+                    itemF.WEIGHT = model.tblitem.WEIGHT;
+                    itemF.LEN = model.tblitem.LEN;
+                    itemF.HEIGHT = model.tblitem.HEIGHT;
+                    itemF.WEBPRICE = model.tblitem.WEBPRICE;
+                    db.items.Add(itemF);
+                    db.SaveChanges();
+                    var updateItem = db.items.Find(itemF.ARTNO);
+                    updateItem.IdCurrentItem = itemF.ARTNO;
+                    db.Entry(updateItem).State=EntityState.Modified;
+                    db.SaveChanges();
+                    foreach (var item in model.tblProductArray.Skip(1).ToList())
                     {
+                        
                         var tblItem = new item();
                         tblItem.ARTTYPE = 1;
                       
                         tblItem.CREATED = DateTime.Now;
                         tblItem.LASTCHANGE = DateTime.Now;
-                        tblItem.ARTCODE = artCode;
+                        tblItem.ARTCODE = itemF.ARTCODE;
                         tblItem.ARTNAME = item.ARTNAME;
                         tblItem.INFO = item.INFO;
                         tblItem.CodeLanguage = item.CodeLanguage.ToLower();
@@ -210,11 +240,12 @@ namespace WebApplication1.Controllers
                         tblItem.WEIGHT = model.tblitem.WEIGHT;
                         tblItem.LEN = model.tblitem.LEN;
                         tblItem.HEIGHT = model.tblitem.HEIGHT;
+                        tblItem.IdCurrentItem = itemF.IdCurrentItem;
+                        tblItem.WEBPRICE = model.tblitem.WEBPRICE;
                         db.items.Add(tblItem);
                     }
                     db.SaveChanges();
-                    var getArt = db.items.Where(x => x.ARTCODE == artCode).ToList();
-                    foreach (var itemArt in getArt)
+                    if (inputfile!=null)
                     {
                         for (int i = 0; i < inputfile.Length; i++)
                         {
@@ -225,20 +256,24 @@ namespace WebApplication1.Controllers
                                 path = Path.Combine(Server.MapPath("/Content/ProductImage"), Path.GetFileName(inputfile[i].FileName));
 
                                 inputfile[i].SaveAs(path);
-                                var tblPic = new artlink
+                                var i1 = itemF.IdCurrentItem > 0 ? itemF.IdCurrentItem:0;
+                                if (i1 != null)
                                 {
-                                    ARTNO = itemArt.ARTNO,
-                                    LASTCHANGE = DateTime.Now,
-                                    CREATED = DateTime.Now,
-                                    LINK = inputfile[i].FileName
+                                    var tblPic = new artlink
+                                    {
+                                        ARTNO =(int)i1,
+                                        LASTCHANGE = DateTime.Now,
+                                        CREATED = DateTime.Now,
+                                        LINK = inputfile[i].FileName
 
-                                };
-                                db.artlinks.Add(tblPic);
+                                    };
+                                    db.artlinks.Add(tblPic);
+                                }
                                 db.SaveChanges();
                             }
                         }
                     }
-              
+                    
 
                 }
 
@@ -263,9 +298,9 @@ namespace WebApplication1.Controllers
         }
 
         // GET: /Product/Edit/5
-        public ActionResult Edit(string code)
+        public ActionResult Edit(int id)
         {
-            var proItem = db.items.FirstOrDefault(x => x.ARTCODE == code);
+            var proItem = db.items.FirstOrDefault(x => x.ARTNO == id);
             var category = db.categories.ToList();
             category.Insert(0, new category { CATEGORYNO = 0, CATEGORYNAME = "Select Category" });
             ViewBag.CategoryList = category;
@@ -276,15 +311,15 @@ namespace WebApplication1.Controllers
             metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.MetaGroupList = metagroup;
           
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
-            if (code == null)
+            if (id ==0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             foreach (var itemLang in list)
             {
-                var pro = db.items.FirstOrDefault(x => x.ARTCODE == code && x.CodeLanguage == itemLang.language.ToLower());
+                var pro = db.items.FirstOrDefault(x => x.IdCurrentItem == id && x.CodeLanguage == itemLang.language.ToLower());
                 if (pro==null)
                 {
                   
@@ -314,6 +349,7 @@ namespace WebApplication1.Controllers
                         tblItem.WEIGHT = proItem.WEIGHT;
                         tblItem.LEN = proItem.LEN;
                         tblItem.HEIGHT = proItem.HEIGHT;
+                        tblItem.IdCurrentItem = proItem.IdCurrentItem;
                         db.items.Add(tblItem);
                         var tblLink = db.artlinks.FirstOrDefault(x => x.ARTNO == proItem.ARTNO);
                         if (tblLink!=null)
@@ -336,7 +372,7 @@ namespace WebApplication1.Controllers
                
             }
             db.SaveChanges();
-            var item = db.items.ToList().Where(x=>x.ARTCODE.ToLower()==code.ToLower()).ToList();
+            var item = db.items.ToList().Where(x=>x.IdCurrentItem==id).ToList();
             return View(new AllModel { listProduct = item,tblitem = proItem });
     
         }
@@ -384,6 +420,7 @@ namespace WebApplication1.Controllers
                     tem.WEIGHT = model.tblitem.WEIGHT;
                     tem.HEIGHT = model.tblitem.HEIGHT;
                     tem.LEN = model.tblitem.LEN;
+                    tem.IdCurrentItem = model.tblitem.IdCurrentItem;
 
                     db.Entry(tem).State = EntityState.Modified;
                     if (inputfile!=null)

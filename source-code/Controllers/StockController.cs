@@ -121,7 +121,9 @@ namespace WebApplication1.Controllers
                
                 return HttpNotFound();
             }
-            return View(new AllModel { tblStock = stock });
+            var item= db.items.FirstOrDefault(x=>x.ARTNO== stock.ARTNO);
+            var stockcods = db.stockcods.FirstOrDefault(x=>x.STOCKNO== stock.STOCKNO);
+            return View(new AllModel { tblStock = stock,tblitem = item ,tblStockCod = stockcods });
 
         }
 

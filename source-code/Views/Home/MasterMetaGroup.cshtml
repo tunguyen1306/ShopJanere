@@ -9,8 +9,8 @@
     {
         for (int i = 0; i < 5; i++)
         {
-            var imageName = MasterMetaList[i].METAGROUPNO + ".jpg";
-             <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = MasterMetaList[i].METAGROUPNO })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/@imageName" width="100%" class="img__img" /><p class="img__description">@MasterMetaList[i].METAGROUPNAME</p></div></a>
+            var imageName = MasterMetaList[i].IdCurrentItem + ".jpg";
+             <a href="@Url.Action("MetaGroup", "Home", new { masterGroupID = MasterMetaList[i].IdCurrentItem })"><div class="img__wrap" style="float:left;width:20%"><img src="~/Content/MetagroupImage/@imageName" width="100%" class="img__img" /><p class="img__description">@MasterMetaList[i].METAGROUPNAME</p></div></a>
         }
     }
 }

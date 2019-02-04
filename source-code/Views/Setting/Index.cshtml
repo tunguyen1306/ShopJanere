@@ -20,7 +20,7 @@
     <div class="col-sm-8 right">
         <label>Filter</label>
 
-        @Html.DropDownList("filter_setting", new SelectList(((List<WebApplication1.settingtype>)ViewBag.ListTypeSetting), "id", "name"), new { @class = "filter" })
+        @Html.DropDownList("filter_setting", new SelectList(((List<WebApplication1.settingtype>)ViewBag.ListTypeSetting), "code", "name"), new { @class = "filter" })
        
         @*<input type="button" id="do_filter_action" onclick="" class="button btn-sm" value="Go">*@
     </div>

@@ -19,7 +19,7 @@ namespace WebApplication1.Controllers
         // GET: /city/
         public ActionResult Index()
         {
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             list.Insert(0, new country { id = 0, name = "Select Country" });
             ViewBag.ListTypecity = list;
             return View();
@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
         // GET: /city/Create
         public ActionResult Create()
         {
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
 
             return View(new city());
@@ -81,7 +81,7 @@ namespace WebApplication1.Controllers
         // GET: /city/Edit/5
         public ActionResult Edit(int? id)
         {
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
 
             if (id == null)

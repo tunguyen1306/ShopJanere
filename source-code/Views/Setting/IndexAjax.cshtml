@@ -4,6 +4,7 @@
         <tr>
 
 
+            <th scope="col" id="barcode" class="manage_column column_name">Code</th>
             <th scope="col" id="barcode" class="manage_column column_name">Name</th>
             <th scope="col" id="barcode" class="manage_column column_name">Type</th>
            
@@ -16,9 +17,11 @@
       {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.tblSetting.code)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.tblSetting.name)
             </td>
-            
             <td>
                 @Html.DisplayFor(modelItem => item.tblSettingType.name)
             </td>

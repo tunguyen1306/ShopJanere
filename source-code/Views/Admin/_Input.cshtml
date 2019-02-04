@@ -3,7 +3,7 @@
 @model WebApplication1.Models.AllModel
 @{
     veebdbEntities db = new veebdbEntities();
-    var listLanguge = db.countries.Where(x => x.status == 1).ToList();
+    var listLanguge = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
     var indexT = 1;
     var indexT1 = 1;
 }
@@ -38,7 +38,12 @@
 
 
                     <span>Link: http://shop.janere.ee/product?Code=123456</span>
+                    <div class="form-group">
+                        <label>Price @itemLang.language</label>
+                        <input type="text" class="form-control" name="tblProductArray[@(guid)].WEBPRICE" value="@Model.tblitem.WEBPRICE" />
 
+
+                    </div>
                     <div class="product_group">
                         <label>Description @itemLang.language</label>
                         <div class="row">

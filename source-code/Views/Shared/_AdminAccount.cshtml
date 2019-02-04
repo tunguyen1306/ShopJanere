@@ -5,25 +5,25 @@
     @{
 
         veebdbEntities data = new veebdbEntities();
-        var user = new AllLoggedUserInfo();
+        //var user = new AllLoggedUserInfo();
 
 
 
-        if (Session["LoggedAccount"] == null)
-        {
-            var tem = data.users.FirstOrDefault(m => m.Id == 7);
-            if (tem != null)
-            {
-                Session["LoggedAccount"] = null;
-                AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
-                Session["LoggedAccount"] = userFullInfo;
-                user = userFullInfo;
-            }
-        }
-        else
-        {
-            user = (AllLoggedUserInfo)Session["LoggedAccount"];
-        }
+        //if (Session["LoggedAccount"] == null)
+        //{
+        //    var tem = data.users.FirstOrDefault(m => m.Id == 7);
+        //    if (tem != null)
+        //    {
+        //        Session["LoggedAccount"] = null;
+        //        AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
+        //        Session["LoggedAccount"] = userFullInfo;
+        //        user = userFullInfo;
+        //    }
+        //}
+        //else
+        //{
+        //    user = (AllLoggedUserInfo)Session["LoggedAccount"];
+        //}
         var seo = data.seos.FirstOrDefault(x => x.type == 1);
     }
     @if (seo != null)
@@ -77,13 +77,13 @@
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 @Html.Partial("Partial/_pLanguage")
 
-                                <span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>
+                                @*<span style="color: white;"> Hi , <a href="@Url.Action("AccountInfo", "Account", new { id = user.user.Id })">@user.user.display</a>  </span>
 
 
                                 <a href="@Url.Action("Login", "Home")">
                                     <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
                                 </a>
-                                <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>
+                                <a href="@Url.Action("UpdateCart", "Home")"><img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span></a>*@
 
                             </div>
                         </div>

@@ -10,6 +10,7 @@ namespace WebApplication1.Helper
 {
     public class PayPalConfiguration
     {
+        veebdbEntities db =new veebdbEntities();
         public string ClientId;
         public string ClientSecret;
         private string host = "";
@@ -25,16 +26,21 @@ namespace WebApplication1.Helper
         // Create the configuration map that contains mode and other optional configuration details.
         public Dictionary<string, string> GetConfig()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("mode", WebConfigurationManager.AppSettings["mode"]);
-            dic.Add("connectionTimeout", WebConfigurationManager.AppSettings["connectionTimeout"]);
-            dic.Add("requestRetries", WebConfigurationManager.AppSettings["requestRetries"]);
-            dic.Add("clientId", WebConfigurationManager.AppSettings["clientId"]);
-            dic.Add("clientSecret", WebConfigurationManager.AppSettings["clientSecret"]);
+            var mode = db.settings.FirstOrDefault(x => x.typeId == "paypal" && x.code == "mode");
+            var connectionTimeout = db.settings.FirstOrDefault(x => x.typeId == "paypal" && x.code == "connectionTimeout");
+            var requestRetries = db.settings.FirstOrDefault(x => x.typeId == "paypal" && x.code == "requestRetries");
+            var clientId = db.settings.FirstOrDefault(x => x.typeId == "paypal" && x.code == "clientId");
+            var clientSecret = db.settings.FirstOrDefault(x => x.typeId == "paypal" && x.code == "clientSecret");
+            Dictionary <string, string> dic = new Dictionary<string, string>();
+            dic.Add("mode", mode != null ? mode.link : WebConfigurationManager.AppSettings["mode"]);
+            dic.Add("connectionTimeout", connectionTimeout != null ? connectionTimeout.link : WebConfigurationManager.AppSettings["connectionTimeout"]);
+            dic.Add("requestRetries", requestRetries != null ? requestRetries.link : WebConfigurationManager.AppSettings["requestRetries"]);
+            dic.Add("clientId", clientId != null ? clientId.link : WebConfigurationManager.AppSettings["clientId"]);
+            dic.Add("clientSecret", clientSecret != null ? clientSecret.link : WebConfigurationManager.AppSettings["clientSecret"]);
 
-            ClientId = WebConfigurationManager.AppSettings["clientId"];
-            ClientSecret = WebConfigurationManager.AppSettings["clientSecret"];
-            //var temp = ConfigManager.Instance.GetProperties();
+            ClientId = clientId != null ? clientId.link : WebConfigurationManager.AppSettings["clientId"];
+            ClientSecret = clientSecret != null ? clientSecret.link : WebConfigurationManager.AppSettings["clientSecret"];
+         
             return dic;
         }
 

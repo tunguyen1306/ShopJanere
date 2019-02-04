@@ -59,7 +59,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_phone, new { @class = "form-control checkNumber" })
+                                <div class="row">
+                                    <div class="col-lg-4" style="padding-right: 0px !important;">@Html.TextBoxFor(x => x.tblUserData.delivery_state, new { @class = "form-control checkNumber" }) </div>
+                                    <div class="col-lg-8" style="padding-left: 5px !important;">@Html.TextBoxFor(x => x.tblUserData.delivery_phone, new { @class = "form-control checkNumber" })</div>
+                                </div>
+                              
                             </div>
                             <div class="form-group">
                                 <label>Address Line 1</label>
@@ -70,19 +74,16 @@
                                 @Html.TextBoxFor(x => x.tblUserData.delivery_address2, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
-                                <label>Suburd </label>
+                                <label>City </label>
                                 @Html.TextBoxFor(x => x.tblUserData.delivery_suburb, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Post Code </label>
                                 @Html.TextBoxFor(x => x.tblUserData.delivery_postcode, new { @class = "form-control" })
                             </div>
+                          
                             <div class="form-group">
                                 <label>State </label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_state, new { @class = "form-control" })
-                            </div>
-                            <div class="form-group">
-                                <label>Contry </label>
                                 @Html.TextBoxFor(x => x.tblUserData.delivery_contry, new { @class = "form-control" })
                             </div>
 
@@ -99,7 +100,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_phone, new { @class = "form-control checkNumber" })
+                                <div class="row">
+                                    <div class="col-lg-4" style="padding-right: 0px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_state, new { @class = "form-control checkNumber" }) </div>
+                                    <div class="col-lg-8" style="padding-left: 5px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_phone, new { @class = "form-control checkNumber" })</div>
+                                </div>
+                             
                             </div>
                             <div class="form-group">
                                 <label>Address Line 1</label>
@@ -110,19 +115,16 @@
                                 @Html.TextBoxFor(x => x.tblUserData.billing_address2, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
-                                <label>Suburd </label>
+                                <label>City </label>
                                 @Html.TextBoxFor(x => x.tblUserData.billing_suburb, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Post Code </label>
                                 @Html.TextBoxFor(x => x.tblUserData.billing_poscode, new { @class = "form-control" })
                             </div>
+                           
                             <div class="form-group">
                                 <label>State </label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_state, new { @class = "form-control" })
-                            </div>
-                            <div class="form-group">
-                                <label>Contry </label>
                                 @Html.TextBoxFor(x => x.tblUserData.billing_country, new { @class = "form-control" })
                             </div>
 
@@ -205,7 +207,7 @@
    
             'tblUser.display': {required: true},
             'tblUserData.delivery_email': { required: true },
-            'tblUserData.delivery_address1': { email: true, required: true },
+            'tblUserData.delivery_address1': { required: true },
             'tblUserData.delivery_name': { required: true },
             'tblUserData.delivery_phone': { required: true },
             'tblUserData.contact_phone': { required: true },

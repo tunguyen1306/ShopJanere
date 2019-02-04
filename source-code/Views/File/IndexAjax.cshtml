@@ -7,6 +7,7 @@
             <th scope="col" id="CATEGORYCODE" class="manage_column column_name">Title</th>
             <th scope="col" id="CATEGORYCODE" class="manage_column column_name">File Name</th>
             <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Description</th>
+            <th scope="col" id="CATEGORYNAME" class="manage_column column_location">Language</th>
             <th scope="col" class="manage_column column_number"></th>
 
         </tr>
@@ -24,8 +25,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodeLanguage)
+            </td>
             <td scope="col" class="manage_column column_action">
-                <a class="edit_action" href="@Url.Action("Edit", "File", new {id = item.Id})"><i class="fas fa-edit"></i></a>
+                <a class="edit_action" href="@Url.Action("Edit", "File", new {code = item.IdCurrentItem})"><i class="fas fa-edit"></i></a>
                 <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("FileDeletes", "File", new {id = item.Id})"><i class="fas fa-times"></i></a>
 
 

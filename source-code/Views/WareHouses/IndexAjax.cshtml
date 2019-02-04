@@ -30,7 +30,7 @@
                     @Html.DisplayFor(modelItem => item.tblStockCod.CodeLanguage)
                 </td>
                 <td scope="col" class="manage_column column_action">
-                    <a class="edit_action" href="@Url.Action("Edit", "WareHouses", new {code = item.tblStockCod.STOCKCODE})"><i class="fas fa-edit"></i></a>
+                    <a class="edit_action" href="@Url.Action("Edit", "WareHouses", new {code = item.tblStockCod.IdCurrentItem})"><i class="fas fa-edit"></i></a>
                     <a class="delete_action" onclick="return confirm('Are you want delete ?')" href="@Url.Action("Delete", "WareHouses", new {id = item.tblStockCod.STOCKNO})"><i class="fas fa-times"></i></a>
 
 

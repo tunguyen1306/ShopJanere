@@ -79,7 +79,7 @@ namespace WebApplication1.Controllers
         // GET: /vocabulary/Create
         public ActionResult Create()
         {
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
 
             return View(new AllModel {tblVocabulary = new vocabulary()});
@@ -135,7 +135,7 @@ namespace WebApplication1.Controllers
         // GET: /vocabulary/Edit/5
         public ActionResult Edit(string code)
         {
-            var list = db.countries.Where(x => x.status == 1).ToList();
+            var list = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
             ViewBag.ListCountry = list;
             if (code == null)
             {

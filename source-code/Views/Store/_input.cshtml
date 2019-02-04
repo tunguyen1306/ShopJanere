@@ -1,43 +1,133 @@
-﻿@model WebApplication1.store
+﻿@model WebApplication1.Models.AllModel
+@{
+    veebdbEntities db = new veebdbEntities();
+    var listLanguge = db.countries.Where(x => x.status == 1 && x.islanguage == 1).ToList();
+    var indexT = 1;
+    var indexT1 = 1;
+}
 <div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>Store Name</label>
-     
-            @Html.TextBoxFor(x=>x.Name,new {@class= "form-control" })
+    @if (Model.tblStore.Id == 0)
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in listLanguge)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.language">@item.language</a></li>
+                indexT++;
+            }
 
+
+        </ul>
+
+
+        <div class="tab-content">
+
+            @foreach (var item in listLanguge)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblStoreArray.Index" value="@(guid)" />
+                <div id="@item.language" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                          
+                            <div class="form-group">
+                                <label> Group Name @item.language</label>
+                                <input type="text" class="form-control" name="tblStoreArray[@(guid)].NAME" value="@Model.tblStore.Name"/>
+                                <input type="hidden" value="@item.language" name="tblStoreArray[@(guid)].CodeLanguage" />
+                            </div>
+                            <div class="form-group">
+                                <label> Location @item.language</label>
+                                <input type="text" class="form-control" name="tblStoreArray[@(guid)].Location" value="@Model.tblStore.Location" />
+                            </div>
+                            <div class="form-group">
+                                <label> Description @item.language</label>
+                                <input type="text" class="form-control" name="tblStoreArray[@(guid)].Description" value="@Model.tblStore.Description" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
-       
+    }
+    else
+    {
+        <ul class="nav nav-tabs">
+            @foreach (var item in Model.listStore)
+            {
+                <li class="@(indexT == 1 ? "active" : "")"><a data-toggle="tab" href="#@item.CodeLanguage">@item.CodeLanguage.ToUpper()</a></li>
+                indexT++;
+            }
 
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>Location Name</label>
-           
-           
-            @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
+
+        </ul>
+
+        <div class="tab-content">
+
+            @foreach (var item in Model.listStore)
+            {
+                var guid = Guid.NewGuid().ToString();
+
+                <input type="hidden" name="tblStoreArray.Index" value="@(guid)" />
+                <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                           
+                            <div class="form-group">
+                                <label>Group Name @item.CodeLanguage</label>
+                                <input type="text" class="form-control" name="tblStoreArray[@(guid)].NAME" value="@item.Name"/>
+
+                                <input type="hidden" value="@item.CodeLanguage" name="tblStoreArray[@(guid)].CodeLanguage" />
+                                <input type="hidden" value="@item.Id" name="tblStoreArray[@(guid)].Id" />
+
+                            </div>
+                            <div class="form-group">
+                                <label> Location @item.CodeLanguage</label>
+                                <input type="text" class="form-control" name="tblStoreArray[@(guid)].Location" value="@Model.tblStore.Location" />
+                            </div>
+                            <div class="form-group">
+                                <label> Description @item.CodeLanguage</label>
+                                <input type="text" class="form-control" name="tblStoreArray[@(guid)].Description" value="@Model.tblStore.Description" />
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                indexT1++;
+            }
         </div>
-       
 
-    </div>
-</div>
-<div class="row">
+    }
 
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label class="control-label">Images <span class="required">*</span></label>
 
-            <div>
-                <style>
-                    .thumb {
-                        height: 75px;
-                        border: 1px solid #000;
-                        margin: 10px 5px 0 0;
-                    }
-                </style>
+    <div class="row">
 
-                <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*" />
-                <script>
+
+        <div class="row">
+            <div class="col-sm-6">
+              
+               
+                <div class="form-group">
+                    <label class="control-label">Images <span class="required">*</span></label>
+
+                    <div>
+                        <style>
+                            .thumb {
+                                height: 75px;
+                                border: 1px solid #000;
+                                margin: 10px 5px 0 0;
+                            }
+                        </style>
+
+                        <input type="file" class="form-control" id="files" name="inputfile" multiple accept="image/*" />
+                        <script>
                     function handleFileSelect(evt) {
                         var files = evt.target.files; // FileList object
 
@@ -70,57 +160,53 @@
                     }
 
                     document.getElementById('files').addEventListener('change', handleFileSelect, false);
-                </script>
+                        </script>
 
-            </div>
-            <div>
-                <output id="list"></output>
-            </div>
-            <div>
-                <output>
-                    @{
-                        if (!string.IsNullOrEmpty(Model.UrlImage))
-                        {
-                            
-                            <span style="position: relative">
-                                <input type="hidden" name="urlimage" id="hdImage" value="@Model.UrlImage" />
-
-
-                                @if (!string.IsNullOrEmpty(Model.UrlImage))
+                    </div>
+                    <div>
+                        <output id="list"></output>
+                    </div>
+                    <div>
+                        <output>
+                            @{
+                                if (!string.IsNullOrEmpty(Model.tblStore.UrlImage))
                                 {
-                                    <i class="delete_action fa fa-times" rel="@Model.UrlImage" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
+                                    var image = Model.tblStore.UrlImage;
+                                    <span style="position: relative">
+                                        <input type="hidden" name="UrlImage" id="hdImage" value="@Model.tblStore.UrlImage" />
 
-                                    <img alt="Janere" class="thumb" src="@Model.UrlImage">
 
+                                        @if (System.IO.File.Exists(Server.MapPath( Model.tblStore.UrlImage)))
+                                        {
+                                            <i class="delete_action fa fa-times" rel="@Model.tblStore.UrlImage" style="position: absolute; right: 0px; top: -30px; cursor: pointer;"></i>
+
+                                            <img alt="Janere" class="thumb" src="@Model.tblStore.UrlImage">
+
+                                        }
+                                        else
+                                        {
+
+                                            <img alt="Janere" class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
+
+                                        }
+                                    </span>
                                 }
-                                else
-                                {
-
-                                    <img alt="Janere" class="thumb" src="~/Content/ProductImage/notavailable.jpg" />
-
-                                }
-                            </span>
-                        }
 
 
-                    }
-                </output>
+                            }
+                        </output>
+                    </div>
+
+                </div>
+
             </div>
 
-        </div>
-
-        <div class="form-group">
-            <label>Description</label>
-
-            @Html.TextAreaFor(x => x.Description, new {@class = "form-control"})
 
         </div>
 
     </div>
 </div>
 
-
-@Html.HiddenFor(x=>x.Id)
 
 <script>
 
@@ -130,10 +216,14 @@
             focusInvalid: false,
             ignore: "",
             rules: {
-                Name: {
+                GROUPCODE: {
                     required: true
                 },
-                Location: {
+                NAME: {
+                    required: true
+
+                },
+                PARENTNO: {
                     required: true
 
                 }
@@ -142,8 +232,9 @@
             },
 
             messages: {
-                Name: "Store Name do not empty",
-                Location: "Location Name do not empty"
+                GROUPCODE: "Group Code do not empty",
+                NAME: "Group Name do not empty",
+                PARENTNO: "Select Master Meta Group",
 
 
             },
