@@ -39,7 +39,7 @@
         <div class="form-group">
             <label>Confirm Password</label>
 
-            @Html.TextBoxFor(x => x.password, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.password, new { @class = "form-control",@type = "password" })
         </div>
         @if (ViewBag.Role == 5)
         {

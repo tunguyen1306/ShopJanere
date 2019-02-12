@@ -382,7 +382,7 @@ namespace WebApplication1.Controllers
             item item = db.items.Find(id);
             if (item != null && item.GROUPNO != null)
             {
-                var groupNo = db.artgrps.FirstOrDefault(x => x.GROUPNO == item.GROUPNO);
+                var groupNo = db.artgrps.FirstOrDefault(x => x.GROUPNO == item.GROUPNO && x.CodeLanguage=="english");
                 if (groupNo != null && groupNo.METAGROUPNO != null)
                 {
                     var metagroupNo = db.metagrups.FirstOrDefault(x => x.METAGROUPNO == groupNo.METAGROUPNO);
@@ -409,6 +409,7 @@ namespace WebApplication1.Controllers
                     tem.GROUPNO = model.tblitem.GROUPNO;
                     tem.INFO = item.INFO;
                     tem.IsBestSeller = model.tblitem.IsBestSeller;
+                    tem.WEBPRICE =item.WEBPRICE;
                     tem.EXPORTABLE = model.tblitem.EXPORTABLE;
                     tem.STOCKITEM = model.tblitem.STOCKITEM;
                     tem.SPECIALOFFER = model.tblitem.SPECIALOFFER;
@@ -420,7 +421,7 @@ namespace WebApplication1.Controllers
                     tem.WEIGHT = model.tblitem.WEIGHT;
                     tem.HEIGHT = model.tblitem.HEIGHT;
                     tem.LEN = model.tblitem.LEN;
-                    tem.IdCurrentItem = model.tblitem.IdCurrentItem;
+                 
 
                     db.Entry(tem).State = EntityState.Modified;
                     if (inputfile!=null)

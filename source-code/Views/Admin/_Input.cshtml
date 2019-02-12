@@ -157,18 +157,22 @@
                 <output>
 
                     @{
-                    var listPicture = db.artlinks.Where(x => x.ARTNO == Model.tblitem.ARTNO).ToList();
-                    foreach (var item in listPicture)
-                    {
-                        if (!string.IsNullOrEmpty(item.LINK))
+                        if (Model.tblitem.ARTNO > 0)
                         {
+                            var listPicture = db.artlinks.Where(x => x.ARTNO == Model.tblitem.ARTNO).ToList();
+                            foreach (var item in listPicture)
+                            {
+                                if (!string.IsNullOrEmpty(item.LINK))
+                                {
 
-                <div class="col-sm-2 cusDiv">
-                    <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
-                    <img alt="Janere" class="thumb" src="@("/Content/ProductImage/" + item.LINK)" title="@item.LINK">
-                </div>
+                                    <div class="col-sm-2 cusDiv">
+                                        <a class="delete_action btnDeleteImg" rel="@item.LINENO"><i class="fas fa-times"></i></a>
+                                        <img alt="Janere" class="thumb" src="@("/Content/ProductImage/" + item.LINK)" title="@item.LINK">
+                                    </div>
+                                }
+                            }
+
                         }
-                    }
 
 
 
@@ -314,10 +318,11 @@
 <script>
             $(document).ready(function() {
                 $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.ARTNO : 0), function (data) {
+
                     $('#METAGROUPNO').val(data.METAGROUPNO);
                     onPageChange(data.METAGROUPNO);
                     setTimeout(function() {
-                        $('#radio_' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.GROUPNO : 0)).attr('checked','checked');
+                       $('#radio_' + @(Model.tblitem.ARTNO>0 ? (Model.tblitem.GROUPNO>0? Model.tblitem.GROUPNO : 0) : 0)).attr('checked','checked');
                     }, 1000);
                 });
             });

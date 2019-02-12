@@ -35,45 +35,50 @@
                                 var guid = Guid.NewGuid().ToString();
 
                                 <input type="hidden" name="tblProductArray.Index" value="@(guid)" />
-                                    <input type="hidden" value="@item.CodeLanguage" name="tblProductArray[@(guid)].CodeLanguage" />
-                                    <input type="hidden" value="@item.ARTNO" name="tblProductArray[@(guid)].ARTNO" />
+                                <input type="hidden" value="@item.CodeLanguage" name="tblProductArray[@(guid)].CodeLanguage" />
+                                <input type="hidden" value="@item.ARTNO" name="tblProductArray[@(guid)].ARTNO" />
 
-                                    <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
+                                <div id="@item.CodeLanguage" class="tab-pane fade in @(indexT1 == 1 ? "active" : "")">
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label>Product Name @item.CodeLanguage</label>
-                                                    <input type="text" class="form-control" name="tblProductArray[@(guid)].ARTNAME" value="@item.ARTNAME" />
-
-
-                                                </div>
-
-
-                                                <span>Link: http://shop.janere.ee/product?Code=123456</span>
-
-                                                <div class="product_group">
-                                                    <label>Description @item.CodeLanguage</label>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-
-                                                            <textarea name="tblProductArray[@(guid)].INFO" class="form-control">@item.INFO</textarea>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-
-
-
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Product Name @item.CodeLanguage</label>
+                                                <input type="text" class="form-control" name="tblProductArray[@(guid)].ARTNAME" value="@item.ARTNAME" />
 
 
                                             </div>
 
+
+                                            <span>Link: http://shop.janere.ee/product?Code=123456</span>
+                                            <div class="form-group">
+                                                <label>Price @item.CodeLanguage</label>
+                                                <input type="text" class="form-control" name="tblProductArray[@(guid)].WEBPRICE" value="@Model.tblitem.WEBPRICE" />
+
+
+                                            </div>
+                                            <div class="product_group">
+                                                <label>Description @item.CodeLanguage</label>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+
+                                                        <textarea name="tblProductArray[@(guid)].INFO" class="form-control">@item.INFO</textarea>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+
+
+
                                         </div>
 
-
                                     </div>
+
+
+                                </div>
                                 indexT1++;
                             }
                         </div>
@@ -294,156 +299,10 @@
 
 
 
-                    <style>
-                        .thumb {
-                            height: 150px;
-                            border: 1px solid #000;
-                            margin: 10px 5px 0 0;
-                        }
-
-                        .uploadPhoto {
-                            cursor: pointer;
-                            color: #245d92;
-                            text-decoration: none;
-                            font-weight: normal;
-                        }
-
-                        #upload-photo {
-                            opacity: 0;
-                            position: absolute;
-                            z-index: -1;
-                        }
-
-                        .btnDeleteImg {
-                            position: absolute;
-                            top: -5px;
-                            right: 15px;
-                        }
-
-                        .cusDiv {
-                            text-align: center;
-                        }
-                    </style>
-                    <script>
-                        $(document).ready(function() {
-                            $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.ARTNO : 0), function (data) {
-                                $('#METAGROUPNO').val(data.METAGROUPNO);
-                                onPageChange(data.METAGROUPNO);
-                                setTimeout(function() {
-                                    $('#radio_' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.GROUPNO : 0)).attr('checked','checked');
-                                }, 1000);
-                            });
-                        });
-                        setTimeout(function () {
-
-                            CKEDITOR.replace('INFO', { height: '350px' });
-
-
-
-                        }, 200);
-                        $(".delete_action").on('click', function (e) {
-                            var rs = confirm('Do you want delete image ?');
-                            if (rs == true) {
-                                $(this).parents('div').eq(0).remove();
-                            }
-                            var idPic = $(this).attr('rel');
-                            if (idPic!=0) {
-                                $.get('@Url.Action("DeleteImg", "Admin")?id=' + idPic, function (data) {
-
-
-                                });
-                            }
-
-                        });
-                        $('#METAGROUPNO').on('change', function () {
-                            var id = $(this).val();
-                            onPageChange(id);
-                        });
-                        function onPageChange(el) {
-
-                            $.get('@Url.Action("_pGetGroupByIdMeta", "Admin")?id=' + el, function (data) {
-                                $('#showGroupByIdMeta').html(data);
-
-                            });
-                        }
-                        $('#validation-form').validate({
-                            errorElement: 'div',
-                            errorClass: 'help-block',
-                            focusInvalid: false,
-                            ignore: "",
-                            rules: {
-                                ARTNAME: {
-                                    required: true
-                                }
-
-
-
-                            },
-
-                            messages: {
-                                ARTNAME: "Product Name do not empty"
-
-                            },
-
-
-                            highlight: function (e) {
-
-                                if ($(e).is('.file-upload')) {
-                                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
-                                } else {
-                                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-                                }
-
-
-                            },
-
-                            success: function (e) {
-                                if ($(e).is('.file-upload')) {
-                                    $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
-                                    $(e).parents('div').eq(1).find('.form-group .help-block').remove();
-                                }
-                                else {
-                                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-                                    $(e).closest('.form-group').find('.help-block').remove();
-                                }
-
-                            },
-
-                            errorPlacement: function (error, element) {
-
-                                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-                                    var controls = element.closest('div[class*="col-"]');
-                                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
-                                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-                                }
-                                else if (element.is('.select2') || element.is('.js-select2-1')) {
-                                    if (element.parents('div').eq(0).is('.input-group')) {
-                                        error.insertAfter(element.parents('div').eq(0));
-                                    } else {
-                                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-                                    }
-
-
-                                }
-                                else if (element.is('.file-upload')) {
-                                    error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
-                                }
-                                else if (element.is('.chosen-select')) {
-                                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-                                }
-                                else error.insertAfter(element);
-                            },
-
-                            submitHandler: function (form) {
-                            },
-                            invalidHandler: function (form) {
-                            }
-                        });
-                    </script>
 
 
                     <input type="submit" class="button button-sm" value="Save" id="submitbutton" name="save_product">
-                                            <a href="@Url.Action("Index","Admin")">Cancel</a>
+                                            <a href="@Url.Action("Index", "Admin")">Cancel</a>
                                             }
 
             </div><!-- product_content -->
@@ -453,6 +312,154 @@
 
     </div>
 </div>
+
+<style>
+    .thumb {
+        height: 150px;
+        border: 1px solid #000;
+        margin: 10px 5px 0 0;
+    }
+
+    .uploadPhoto {
+        cursor: pointer;
+        color: #245d92;
+        text-decoration: none;
+        font-weight: normal;
+    }
+
+    #upload-photo {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .btnDeleteImg {
+        position: absolute;
+        top: -5px;
+        right: 15px;
+    }
+
+    .cusDiv {
+        text-align: center;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        $.get('@Url.Action("GetMetaGroup", "Admin")?id=' + @(Model.tblitem.ARTNO>0 ? Model.tblitem.ARTNO : 0), function (data) {
+           
+            $('#METAGROUPNO').val(data.METAGROUPNO);
+            onPageChange(data.METAGROUPNO);
+            setTimeout(function() {
+                $('#radio_' + @(Model.tblitem.ARTNO>0 ? (Model.tblitem.GROUPNO>0? Model.tblitem.GROUPNO : 0) : 0)).attr('checked','checked');
+            }, 1000);
+        });
+    });
+    setTimeout(function () {
+
+        CKEDITOR.replace('INFO', { height: '350px' });
+
+
+
+    }, 200);
+    $(".delete_action").on('click', function (e) {
+        var rs = confirm('Do you want delete image ?');
+        if (rs == true) {
+            $(this).parents('div').eq(0).remove();
+        }
+        var idPic = $(this).attr('rel');
+        if (idPic!=0) {
+            $.get('@Url.Action("DeleteImg", "Admin")?id=' + idPic, function (data) {
+
+
+            });
+        }
+
+    });
+    $('#METAGROUPNO').on('change', function () {
+        var id = $(this).val();
+        onPageChange(id);
+    });
+    function onPageChange(el) {
+
+        $.get('@Url.Action("_pGetGroupByIdMeta", "Admin")?id=' + el, function (data) {
+            $('#showGroupByIdMeta').html(data);
+
+        });
+    }
+    $('#validation-form').validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+            ARTNAME: {
+                required: true
+            }
+
+
+
+        },
+
+        messages: {
+            ARTNAME: "Product Name do not empty"
+
+        },
+
+
+        highlight: function (e) {
+
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-info').addClass('has-error');
+            } else {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            }
+
+
+        },
+
+        success: function (e) {
+            if ($(e).is('.file-upload')) {
+                $(e).parents('div').eq(1).find('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).parents('div').eq(1).find('.form-group .help-block').remove();
+            }
+            else {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).closest('.form-group').find('.help-block').remove();
+            }
+
+        },
+
+        errorPlacement: function (error, element) {
+
+            if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                var controls = element.closest('div[class*="col-"]');
+                if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+            }
+            else if (element.is('.select2') || element.is('.js-select2-1')) {
+                if (element.parents('div').eq(0).is('.input-group')) {
+                    error.insertAfter(element.parents('div').eq(0));
+                } else {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+
+
+            }
+            else if (element.is('.file-upload')) {
+                error.insertAfter(element.parents('div').eq(1).find('.file-caption-main'));
+            }
+            else if (element.is('.chosen-select')) {
+                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+            }
+            else error.insertAfter(element);
+        },
+
+        submitHandler: function (form) {
+        },
+        invalidHandler: function (form) {
+        }
+    });
+</script>
 <script>
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();

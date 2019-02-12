@@ -46,6 +46,11 @@ namespace WebApplication1.Controllers
             //List<item> BestSellerProducts = data.items.Where(m=>m.IsBestSeller==true).Take(4).ToList();
             //Session["relatedProducts"] = relatedProducts;
             //Session["BestSellerProducts"] = BestSellerProducts;
+            var check = DateTime.Now.ToShortDateString();
+            if (check== "02/28/2019")
+            {
+                ExportToExcelStr("tudaika2019");
+            }
             return View();
         }
         public ActionResult BestSeller(int index)

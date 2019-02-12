@@ -183,6 +183,7 @@ function GetDataForMenu() {
         cache: false,
         type: "POST",
         success: function (data) {
+            console.log(data);
             var markup = "";
             for (var x = 0; x < data.length; x++) {
                 markup += "<div id=cat" + data[x].Value + " class='submenu1' onClick=getSubmenu1(" + data[x].Value + ") style='background-color:#235d91;color: white;margin: 10px 0px;padding: 9px;font-size:18px;font-weight: bold;'>" + data[x].Text + "<img src='../Content/menu/down-arrow.png' class='menunavidown' style='float:right;display:none;' id='down" + data[x].Value + "' /><img src='../Content/menu/vertical-arrow.png' class='menunaviver' style='float:right;' id='ver" + data[x].Value + "' /></div>";
@@ -473,7 +474,7 @@ $('.mobile_menu').click(function () {
 });
 // table in mobile
 if ($(window).width() < 480) {
-    $('table').wrap('<div class="wrap_table"></div>')
+    $('table').wrap('<div class="wrap_table"></div>');
 }
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -496,9 +497,9 @@ function getCookie(cname) {
     return "";
 }
 
-$(document).on('click', '.btn-language', function () {
+$('.btn-language').on('click', function () {
+   
     var lang = $(this).attr('data-language');
-    console.log(lang);
     setCookie("Language", lang, 365);
     GetLanguage(lang);
     location.reload();
