@@ -432,7 +432,7 @@ namespace WebApplication1.Controllers
                
             }
             db.SaveChanges();
-            var item = db.items.ToList().Where(x=>x.IdCurrentItem==id && x.EXPORTABLE == "T").ToList();
+            var item = db.items.ToList().Where(x=>x.IdCurrentItem==id).ToList();
             return View(new AllModel { listProduct = item,tblitem = proItem });
     
         }
@@ -559,7 +559,7 @@ namespace WebApplication1.Controllers
             var groupList = new List<artgrp>();
             if (id != 0)
             {
-                groupList = db.artgrps.ToList().Where(x => x.METAGROUPNO == id).ToList();
+                groupList = db.artgrps.ToList().Where(x => x.METAGROUPNO == id && x.CodeLanguage=="english").ToList();
             }
             return PartialView(groupList);
         }
