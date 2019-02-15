@@ -129,7 +129,17 @@
 
     <div class="container body-content owl-carousel" style="clear:both;margin-top:20px;">
         @{
-            var product = data.items.Where(m => m.IsBestSeller == true).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var product = data.items.Where(m => m.IsBestSeller == true && m.EXPORTABLE=="T" && m.CodeLanguage==lang).ToList();
             Session["BestSellerProducts"] = product;
 
             foreach (var item in product)

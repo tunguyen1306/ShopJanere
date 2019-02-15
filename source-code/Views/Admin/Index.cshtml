@@ -55,7 +55,7 @@
 
 
 
-@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+@using (Ajax.BeginForm("IndexAjax", new { tab = ViewBag.Tab }, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "product-result",

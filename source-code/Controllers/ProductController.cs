@@ -35,7 +35,7 @@ namespace WebApplication1.Controllers
         public ActionResult IndexAjax(string tab="all",int start = 0, int view = 10, int cat = 0, int str = 0, int stk = 0, int wh = 0)
         {
 
-            var listProduct = db.items.Where(x => x.ARTNO > 0);
+            var listProduct = db.items.Where(x => x.ARTNO > 0 && x.EXPORTABLE == "T");
             if (cat != 0)
             {
                 listProduct = listProduct.Where(x => x.CATEGORYNO == cat);

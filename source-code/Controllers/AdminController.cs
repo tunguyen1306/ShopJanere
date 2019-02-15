@@ -36,7 +36,16 @@ namespace WebApplication1.Controllers
         public ActionResult IndexAjax(string keywork=null,string tab = "all", int start = 0, int view = 10, int groupId = 0, int storeId = 0, int stockId = 0, int warehouseId = 0)
         {
 
-            var listProduct = db.items.Where(x => x.ARTNO > 0 && x.CodeLanguage=="english");
+            var listProduct = db.items.Where(x => x.ARTNO > 0  && x.CodeLanguage=="english");
+
+            if (tab== "trashed")
+            {
+                listProduct = db.items.Where(x =>  x.EXPORTABLE == "F");
+            }
+            if (tab== "published")
+            {
+                listProduct = db.items.Where(x =>  x.EXPORTABLE == "T");
+            }
             if (keywork!=null)
             {
                 listProduct = listProduct.Where(x => x.ARTNO.ToString().Contains(keywork) || x.ARTNAME.ToString().Contains(keywork) || x.ARTCODE.ToString().Contains(keywork) || x.INFO.ToString().Contains(keywork) || x.LEN.ToString().Contains(keywork) || x.WEIGHT.ToString().Contains(keywork) || x.HEIGHT.ToString().Contains(keywork));
@@ -57,11 +66,6 @@ namespace WebApplication1.Controllers
             {
                 listProduct = listProduct.Where(x => x.CATEGORYNO == warehouseId);
             }
-
-
-          
-
-
             var _count = listProduct.Count();
             ViewBag.Start = start;
             ViewBag.View = view;
@@ -76,7 +80,7 @@ namespace WebApplication1.Controllers
             }
 
 
-
+            ViewBag.Tab = tab;
             var datas = db_data.Select(t => new AllModel {  tblitem = t }).ToList();
             return PartialView(datas);
 
@@ -325,31 +329,87 @@ namespace WebApplication1.Controllers
                   
                     if (proItem!=null)
                     {
-                       
 
-                        var tblItem = new item();
-                        tblItem.ARTTYPE = 1;
 
-                        tblItem.CREATED = DateTime.Now;
-                        tblItem.LASTCHANGE = DateTime.Now;
-                        tblItem.ARTCODE = proItem.ARTCODE;
-                        tblItem.ARTNAME = proItem.ARTNAME;
-                        tblItem.INFO = proItem.INFO;
-                        tblItem.CodeLanguage = itemLang.language.ToLower();
-                        tblItem.GROUPNO = proItem.GROUPNO;
-                        tblItem.IsBestSeller = proItem.IsBestSeller;
-                        tblItem.EXPORTABLE = proItem.EXPORTABLE;
-                        tblItem.SPECIALOFFER = proItem.SPECIALOFFER;
-                        tblItem.STOCKITEM = proItem.STOCKITEM;
-                        tblItem.AUTHORIZABLE = proItem.AUTHORIZABLE;
-                        tblItem.RESTRICTED = proItem.RESTRICTED;
-                        tblItem.NOTPOST = proItem.NOTPOST;
-                        tblItem.NOTADDPOSTAGEFEE = proItem.NOTADDPOSTAGEFEE;
-                        tblItem.WIDTH = proItem.WIDTH;
-                        tblItem.WEIGHT = proItem.WEIGHT;
-                        tblItem.LEN = proItem.LEN;
-                        tblItem.HEIGHT = proItem.HEIGHT;
-                        tblItem.IdCurrentItem = proItem.IdCurrentItem;
+                        //var tblItem = new item();
+                        //tblItem.ARTTYPE = 1;
+
+                        //tblItem.CREATED = DateTime.Now;
+                        //tblItem.LASTCHANGE = DateTime.Now;
+                        //tblItem.ARTCODE = proItem.ARTCODE;
+                        //tblItem.ARTNAME = proItem.ARTNAME;
+                        //tblItem.INFO = proItem.INFO;
+                        //tblItem.CodeLanguage = itemLang.language.ToLower();
+                        //tblItem.GROUPNO = proItem.GROUPNO;
+                        //tblItem.IsBestSeller = proItem.IsBestSeller;
+                        //tblItem.EXPORTABLE = proItem.EXPORTABLE;
+                        //tblItem.SPECIALOFFER = proItem.SPECIALOFFER;
+                        //tblItem.STOCKITEM = proItem.STOCKITEM;
+                        //tblItem.AUTHORIZABLE = proItem.AUTHORIZABLE;
+                        //tblItem.RESTRICTED = proItem.RESTRICTED;
+                        //tblItem.NOTPOST = proItem.NOTPOST;
+                        //tblItem.NOTADDPOSTAGEFEE = proItem.NOTADDPOSTAGEFEE;
+                        //tblItem.WIDTH = proItem.WIDTH;
+                        //tblItem.WEIGHT = proItem.WEIGHT;
+                        //tblItem.LEN = proItem.LEN;
+                        //tblItem.HEIGHT = proItem.HEIGHT;
+                        //tblItem.IdCurrentItem = proItem.IdCurrentItem;
+                        var tblItem = new item
+                        {
+                            ARTCODE = proItem.ARTCODE,
+                            ARTNAME = proItem.ARTNAME,
+                            LONGNAME = proItem.LONGNAME,
+                            ARTTYPE = proItem.ARTTYPE,
+                            EXPORTABLE = proItem.EXPORTABLE,
+                            STOCKITEM = proItem.STOCKITEM,
+                            PRODUCERNO = proItem.PRODUCERNO,
+                            CATEGORYNO = proItem.CATEGORYNO,
+                            COLORNO = proItem.COLORNO,
+                            INFO = proItem.INFO,
+                            WEBPRICE = proItem.WEBPRICE,
+                            SPECIALOFFER = proItem.SPECIALOFFER,
+                            PICTURENAME = proItem.PICTURENAME,
+                            NEWUNTIL = proItem.NEWUNTIL,
+                            GROUPNO = proItem.GROUPNO,
+                            AUTHORIZABLE = proItem.AUTHORIZABLE,
+                            RESTRICTED = proItem.RESTRICTED,
+                            NOTPOST = proItem.NOTPOST,
+                            NOTADDPOSTAGEFEE = proItem.NOTADDPOSTAGEFEE,
+                            WEIGHT = proItem.WEIGHT,
+                            COLLATIONUNIT = proItem.COLLATIONUNIT,
+                            INFO1 = proItem.INFO1,
+                            INFO2 = proItem.INFO2,
+                            INFO3 = proItem.INFO3,
+                            INFO4 = proItem.INFO4,
+                            INFO5 = proItem.INFO5,
+                            INFO6 = proItem.INFO6,
+                            LEN = proItem.LEN,
+                            HEIGHT = proItem.HEIGHT,
+                            WIDTH = proItem.WIDTH,
+                            UNITNAME = proItem.UNITNAME,
+                            UNITDESCR = proItem.UNITDESCR,
+                            CHECKBOX1 = proItem.CHECKBOX1,
+                            CHECKBOX2 = proItem.CHECKBOX2,
+                            CHECKBOX3 = proItem.CHECKBOX3,
+                            CHECKBOX4 = proItem.CHECKBOX4,
+                            CHECKBOX5 = proItem.CHECKBOX5,
+                            CHECKBOX6 = proItem.CHECKBOX6,
+                            VAT = proItem.VAT,
+                            PACKAGEVOLUME = proItem.PACKAGEVOLUME,
+                            PACKAGEVOLUME2 = proItem.PACKAGEVOLUME2,
+                            SIZENO = proItem.SIZENO,
+                            SIZETBLNO = proItem.SIZETBLNO,
+                            SUPPLYCYCLENO = proItem.SUPPLYCYCLENO,
+                            DISCGROUP = proItem.DISCGROUP,
+                            WEBID = proItem.WEBID,
+                            PAYMENTTERM = proItem.PAYMENTTERM,
+                            LASTCHANGE = proItem.LASTCHANGE,
+                            CREATED = proItem.CREATED,
+                            IsBestSeller = proItem.IsBestSeller,
+                            CodeLanguage = itemLang.language.ToLower(),
+                            IdCurrentItem = proItem.IdCurrentItem,
+                        };
+
                         db.items.Add(tblItem);
                         var tblLink = db.artlinks.FirstOrDefault(x => x.ARTNO == proItem.ARTNO);
                         if (tblLink!=null)
@@ -372,7 +432,7 @@ namespace WebApplication1.Controllers
                
             }
             db.SaveChanges();
-            var item = db.items.ToList().Where(x=>x.IdCurrentItem==id).ToList();
+            var item = db.items.ToList().Where(x=>x.IdCurrentItem==id && x.EXPORTABLE == "T").ToList();
             return View(new AllModel { listProduct = item,tblitem = proItem });
     
         }
@@ -558,7 +618,7 @@ namespace WebApplication1.Controllers
                         {
                             try
                             {
-                                var check = db.items.ToList().FirstOrDefault(x => x.ARTCODE.ToLower() == a.ARTCODE.ToLower());
+                                var check = db.items.ToList().FirstOrDefault(x => x.ARTCODE.ToLower() == a.ARTCODE.ToLower() && x.EXPORTABLE == "T");
                                 if (check == null)
                                 {
                                     var proId = db.items.OrderByDescending(x => x.ARTNO).FirstOrDefault();
@@ -652,8 +712,12 @@ namespace WebApplication1.Controllers
                 var _items = db.items.Where(x => _ids.Contains(x.ARTNO));
                 foreach (var item in _items)
                 {
+                    var update = db.items.Find(item.ARTNO);
+                    update.EXPORTABLE = "F";
+                    db.Entry(update).State=EntityState.Modified;
                     // update
                 }
+                db.SaveChanges();
                 _status = true;
             }
             catch (Exception)
