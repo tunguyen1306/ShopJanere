@@ -34,7 +34,7 @@
     @{
 
         veebdbEntities data = new veebdbEntities();
-     
+
 
         var slider = data.sliders.Where(m => m.Status == 1);
         var setting = data.settings.ToList();
@@ -64,7 +64,7 @@
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 @Html.Partial("Partial/_pLanguage")
 
-                               
+
 
                             </div>
                         </div>
@@ -92,12 +92,12 @@
             <div class="blink-view" id="blink" onclick="linkto(this)">
 
 
-                @foreach (var slide in setting.Where(x=>x.typeId=="slider").OrderBy(x => x.order).ToList())
-{
-                <div class="viewSlide">
-                    <a href="#"><img alt="Janere" class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
-                </div>
-}
+                @foreach (var slide in setting.Where(x => x.typeId == "slider").OrderBy(x => x.order).ToList())
+                {
+                    <div class="viewSlide">
+                        <a href="#"><img alt="Janere" class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
+                    </div>
+                }
 
 
 
@@ -129,7 +129,17 @@
 
     <div class="container body-content owl-carousel" style="clear:both;margin-top:20px;">
         @{
-            var product = data.items.Where(m => m.IsBestSeller == true).ToList();
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var product = data.items.Where(m => m.IsBestSeller == true && m.EXPORTABLE == "T" && m.CodeLanguage == lang).ToList();
             Session["BestSellerProducts"] = product;
 
             foreach (var item in product)
@@ -137,38 +147,38 @@
 
 
 
-        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 0px;">
-            <a href="@Url.Action("Product", "Home", new {Code = item.ARTCODE})">
-                <div class="row home-bestseller" style="color: #666666; height: 350px;">
-                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 10px;">
-                        @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + item.PICTURENAME)))
-                                    {
-                                <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width: 100%;">
-                                    }
-                                    else
-                                    {
-                                <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;" />
+                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 0px;">
+                    <a href="@Url.Action("Product", "Home", new {Code = item.ARTCODE})">
+                        <div class="row home-bestseller" style="color: #666666; height: 350px;">
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 10px;">
+                                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + item.PICTURENAME)))
+                                {
+                                    <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width: 100%;">
+                                }
+                                else
+                                {
+                                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;" />
 
-                                    }
-                        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4; font-weight: bold; height: 60px;">
-                            @item.ARTNAME
+                                }
+                                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4; font-weight: bold; height: 60px;">
+                                    @item.ARTNAME
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
+                                <!-- $@item.WEBPRICE-->
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold;">Width:</span> @item.WIDTH
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                                <span style="font-weight: bold; color: #666666;">Height:</span> @item.HEIGHT
+                            </div>
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+                                <span style="font-weight: bold; color: #666666;">ArtCode:</span>@item.ARTCODE
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
-                        <!-- $@item.WEBPRICE-->
-                    </div>
-                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                        <span style="font-weight: bold;">Width:</span> @item.WIDTH
-                    </div>
-                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                        <span style="font-weight: bold; color: #666666;">Height:</span> @item.HEIGHT
-                    </div>
-                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
-                        <span style="font-weight: bold; color: #666666;">ArtCode:</span>@item.ARTCODE
-                    </div>
+                    </a>
                 </div>
-            </a>
-        </div>
 
             }
 
@@ -195,33 +205,35 @@
     <script src="~/Content/Carousel/owl.carousel.js"></script>
 
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#blink").blink();
-    });
-    $('.owl-carousel').owlCarousel({
-        loop: true,
-        margin: 10,
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1,
-                nav: true
-            },
-            600: {
-                items: 3,
-                nav: false
-            },
-            1000: {
-                items: 4,
-                nav: true,
-                loop: false
-            }
-        }
-    });
-</script>
     <script type="text/javascript">
-    $(document).one('ready', function () {
+        $(document).ready(function () {
+            $("#blink").blink();
+        });
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                600: {
+                    items: 3,
+                    nav: false
+                },
+                1000: {
+                    items: 4,
+                    nav: true,
+                    loop: false
+                }
+            },
+            nav: true,
+            navText: ["<img src='/Content/body/others/back.png'>", "<img src='/Content/body/others/next.png'>"]
+        });
+    </script>
+<script type="text/javascript">
+    $(document).one('ready', function() {
 
         var procemessage = "<div value='0'> Loading Items...</div>";
         $("#bestseller").html(procemessage).show();
@@ -232,10 +244,10 @@
             data: { index: 1 },
             cache: false,
             type: "POST",
-            success: function (data) {
+            success: function(data) {
                 $("#bestseller").html(data).show();
             },
-            error: function (reponse) {
+            error: function(reponse) {
                 //alert("error : " + reponse);
             }
         });
@@ -245,21 +257,21 @@
             data: { index: 1 },
             cache: false,
             type: "POST",
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 $("#mastermeta").html(data).show();
             },
-            error: function (reponse) {
+            error: function(reponse) {
                 //alert("error : " + reponse);
             }
         });
 
         /****************************
 
-       MASTER META GROUP LIST
+           MASTER META GROUP LIST
 
-       ***************************/
-        $("#mm_back").click(function () {
+           ***************************/
+        $("#mm_back").click(function() {
 
             var getMmCurr = $("#mm_cur").val();
             if (getMmCurr > 1) {
@@ -274,16 +286,16 @@
                     data: { index: getMmCurr },
                     cache: false,
                     type: "POST",
-                    success: function (data) {
+                    success: function(data) {
                         $("#mastermeta").html(data).show();
                     },
-                    error: function (reponse) {
+                    error: function(reponse) {
                         //alert("error : " + reponse);
                     }
                 });
             }
         });
-        $("#mm_next").click(function () {
+        $("#mm_next").click(function() {
             var getMnCurr = $("#mm_cur").val();
             getMnCurr++;
             $("#mm_cur").val(getMnCurr);
@@ -295,7 +307,7 @@
                 data: { index: getMnCurr },
                 cache: false,
                 type: "POST",
-                success: function (data) {
+                success: function(data) {
                     if (!data.trim()) {
                         getMnCurr--;
                         $("#mm_cur").val(getMnCurr);
@@ -304,19 +316,18 @@
                             data: { index: getMnCurr },
                             cache: false,
                             type: "POST",
-                            success: function (data) {
+                            success: function(data) {
                                 $("#mastermeta").html(data).show();
                             },
-                            error: function (reponse) {
+                            error: function(reponse) {
                                 //alert("error : " + reponse);
                             }
                         });
-                    }
-                    else {
+                    } else {
                         $("#mastermeta").html(data).show();
                     }
                 },
-                error: function (reponse) {
+                error: function(reponse) {
                     //alert("error : " + reponse);
                 }
             });
@@ -324,10 +335,10 @@
 
         /****************************
 
-        BEST SELLER
+            BEST SELLER
 
-        ***************************/
-        $("#bs_back").click(function () {
+            ***************************/
+        $("#bs_back").click(function() {
 
             var getBsCurr = $("#bs_cur").val();
             if (getBsCurr > 1) {
@@ -342,16 +353,16 @@
                     data: { index: getBsCurr },
                     cache: false,
                     type: "POST",
-                    success: function (data) {
+                    success: function(data) {
                         $("#bestseller").html(data).show();
                     },
-                    error: function (reponse) {
+                    error: function(reponse) {
                         //alert("error : " + reponse);
                     }
                 });
             }
         });
-        $("#bs_next").click(function () {
+        $("#bs_next").click(function() {
             var getBsCurr = $("#bs_cur").val();
             getBsCurr++;
             $("#bs_cur").val(getBsCurr);
@@ -363,7 +374,7 @@
                 data: { index: getBsCurr },
                 cache: false,
                 type: "POST",
-                success: function (data) {
+                success: function(data) {
                     if (!data.trim()) {
                         getBsCurr--;
                         $("#bs_cur").val(getBsCurr);
@@ -372,26 +383,32 @@
                             data: { index: getBsCurr },
                             cache: false,
                             type: "POST",
-                            success: function (data) {
+                            success: function(data) {
                                 $("#bestseller").html(data).show();
                             },
-                            error: function (reponse) {
+                            error: function(reponse) {
                                 //alert("error : " + reponse);
                             }
                         });
-                    }
-                    else {
+                    } else {
                         $("#bestseller").html(data).show();
                     }
                 },
-                error: function (reponse) {
-                   // alert("error : " + reponse);
+                error: function(reponse) {
+                    // alert("error : " + reponse);
                 }
             });
         });
     });
-   
+
 </script>
+    <style>
+        .owl-nav {
+
+            position: absolute;
+            left: 65%;
+            top: -65px;
+        }
+    </style>
 </body>
 </html>
-

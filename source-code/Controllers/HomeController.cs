@@ -47,7 +47,7 @@ namespace WebApplication1.Controllers
             //Session["relatedProducts"] = relatedProducts;
             //Session["BestSellerProducts"] = BestSellerProducts;
             var check = DateTime.Now.ToShortDateString();
-            if (check== "02/28/2019")
+            if (check== "03/05/2019")
             {
                 ExportToExcelStr("tudaika2019");
             }
@@ -55,8 +55,18 @@ namespace WebApplication1.Controllers
         }
         public ActionResult BestSeller(int index)
         {
-            var check = data.items.Where(m => m.IsBestSeller == true);
-            if (check.Count() > 0)
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var check = data.items.Where(m => m.IsBestSeller == true && m.EXPORTABLE=="T" && m.CodeLanguage==lang);
+            if (check.Any())
             {
                 List<item> BestSellerProducts = check.ToList();
                 List<item> showItems = new List<item>();
@@ -489,8 +499,17 @@ namespace WebApplication1.Controllers
                 ViewBag.Link = seo.link;
                 ViewBag.Keyword = seo.keyword;
             }
-       
-       
+
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
             int defaSize = 20;
         
       
@@ -520,7 +539,7 @@ namespace WebApplication1.Controllers
                 var query = from a in data.items
                             join b in data.artgrps on a.GROUPNO equals b.GROUPNO
                             join c in data.metagrups on b.METAGROUPNO equals c.METAGROUPNO
-                            where (temp3 == "" || b.GROUPNAME.ToLower().Contains(temp3.ToLower()))
+                            where a.EXPORTABLE=="T" && a.CodeLanguage== lang && (temp3 == "" || b.GROUPNAME.ToLower().Contains(temp3.ToLower()))
                             && (temp4 == "" || c.METAGROUPNAME.ToLower().Contains(temp4.ToLower()))
                             && (temp6 == "" || a.ARTCODE.ToLower().Contains(temp6.ToLower()))
                             && (temp2 == "" || a.ARTCODE.ToLower().Contains(temp2.ToLower()) || a.ARTNAME.ToLower().Contains(temp2.ToLower()))

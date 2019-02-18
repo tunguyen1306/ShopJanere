@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
         // GET: /stock/Create
         public ActionResult Create()
         {
-            ViewBag.ListProduct = db.items.ToList();
+            ViewBag.ListProduct = db.items.Where(x=>x.EXPORTABLE=="T").ToList();
             ViewBag.ListWareHouse = db.stockcods.ToList();
 
             return View(new AllModel {tblStock = new stock(),tblStockCod = new stockcod(),tblitem = new item()});
@@ -108,7 +108,7 @@ namespace WebApplication1.Controllers
         // GET: /stock/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.ListProduct = db.items.ToList();
+            ViewBag.ListProduct = db.items.Where(x=>x.EXPORTABLE=="T").ToList();
             ViewBag.ListWareHouse = db.stockcods.ToList();
             if (id == null)
             {
@@ -183,7 +183,7 @@ namespace WebApplication1.Controllers
         {
 
           
-            var list = db.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower())).ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME }).ToList();
+            var list = db.items.Select(x => new AllModel { tblitem = x }).Where(x => x.tblitem.ARTNAME.ToLower().Contains(query.ToLower()) && x.tblitem.EXPORTABLE == "T").ToList().Select(x => new { value = x.tblitem.ARTNO, label = x.tblitem.ARTNAME }).ToList();
             return Json(new { status = true, data = list }, JsonRequestBehavior.AllowGet);
         }
     }
