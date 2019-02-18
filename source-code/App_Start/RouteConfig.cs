@@ -41,6 +41,21 @@ namespace WebApplication1
             url: "product/{code}",
             defaults: new { controller = "Home", action = "Product", code = UrlParameter.Optional });
 
+
+            routes.MapRoute(
+           name: "group-metagroupId",
+           url: "group/{metagroupId}",
+           defaults: new { controller = "Home", action = "Group", metagroupId = UrlParameter.Optional });
+        routes.MapRoute(
+           name: "metagroup-masterGroupID",
+           url: "metagroup/{masterGroupID}",
+           defaults: new { controller = "Home", action = "MetaGroup", masterGroupID = UrlParameter.Optional });
+
+ routes.MapRoute(
+           name: "products-ddlGetGroupno",
+           url: "products/{ddlGetGroupno}",
+           defaults: new { controller = "Home", action = "Products", ddlGetGroupno = UrlParameter.Optional });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
