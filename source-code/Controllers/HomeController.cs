@@ -185,6 +185,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult Product(string Code = "")
         {
+            var id = int.Parse(Code.Split('-').Last());
             var lang = "";
             var httpCookie = Request.Cookies["Language"];
             if (httpCookie != null)
@@ -195,7 +196,7 @@ namespace WebApplication1.Controllers
             {
                 lang = "english";
             }
-            var result = data.items.Where(m => m.ARTCODE == Code && m.CodeLanguage==lang.ToLower()).FirstOrDefault();
+            var result = data.items.Where(m => m.IdCurrentItem == id && m.CodeLanguage==lang.ToLower()).FirstOrDefault();
             if (result != null)
             {
                 var _stock = data.stocks.Where(t => t.ARTNO == result.ARTNO).ToList();
@@ -1098,7 +1099,7 @@ namespace WebApplication1.Controllers
             {
                 lang = "english";
             }
-            obj = data.metagrups.Where(x=>x.CodeLanguage==lang.ToLower()).ToList();
+            obj = data.metagrups.Where(x=>x.CodeLanguage==lang.ToLower() && x.IsActive == true).ToList();
             SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -1115,7 +1116,7 @@ namespace WebApplication1.Controllers
             {
                 lang = "english";
             }
-            obj = data.metagrups.Where(x => x.CodeLanguage == lang.ToLower()).ToList();
+            obj = data.metagrups.Where(x => x.CodeLanguage == lang.ToLower() && x.IsActive==true).ToList();
             SelectList obg = new SelectList(obj, "METAGROUPNO", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -1133,7 +1134,7 @@ namespace WebApplication1.Controllers
                 lang = "english";
             }
           
-            obj = data.metagrups.Where(m => m.CodeLanguage == lang.ToLower()&& m.PARENTNO == mastermetagroupid).ToList();
+            obj = data.metagrups.Where(m => m.CodeLanguage == lang.ToLower()&& m.PARENTNO == mastermetagroupid && m.IsActive == true).ToList();
             SelectList obg = new SelectList(obj, "IdCurrentItem", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -1163,7 +1164,7 @@ namespace WebApplication1.Controllers
                 lang = "english";
             }
             List<metagrup> obj = new List<metagrup>();
-            obj = data.metagrups.Where(m => m.PARENTNO == 0 && m.CodeLanguage==lang.ToLower()).ToList();
+            obj = data.metagrups.Where(m => m.PARENTNO == 0 && m.CodeLanguage==lang.ToLower() && m.IsActive == true).ToList();
             return View(obj);
         }
         public ActionResult MetaGroup(int masterGroupID)
@@ -1209,7 +1210,7 @@ namespace WebApplication1.Controllers
             {
                 lang = "english";
             }
-            obj = data.metagrups.Where(m => m.PARENTNO == 0 && m.CodeLanguage==lang.ToLower()).ToList();
+            obj = data.metagrups.Where(m => m.PARENTNO == 0 && m.CodeLanguage==lang.ToLower() && m.IsActive == true).ToList();
             SelectList obg = new SelectList(obj, "IdCurrentItem", "METAGROUPNAME", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -1233,7 +1234,7 @@ namespace WebApplication1.Controllers
             {
                 lang = "english";
             }
-            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId && m.CodeLanguage==lang.ToLower()).ToList();
+            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId && m.CodeLanguage==lang.ToLower() && m.IsActive == true).ToList();
             SelectList obg = new SelectList(obj, "IdCurrentItem", "GroupName", 0);
             return Json(obg, JsonRequestBehavior.AllowGet);
         }
@@ -1270,7 +1271,7 @@ namespace WebApplication1.Controllers
             {
                 lang = "english";
             }
-            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId && m.CodeLanguage==lang.ToLower()).ToList();
+            obj = data.artgrps.Where(m => m.METAGROUPNO == metagroupId && m.CodeLanguage==lang.ToLower() && m.IsActive == true).ToList();
             Session["Group"] = data.metagrups.Where(m => m.METAGROUPNO == metagroupId).FirstOrDefault().METAGROUPNAME;
             return View(obj);
         }

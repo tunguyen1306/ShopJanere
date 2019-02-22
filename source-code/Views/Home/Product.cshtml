@@ -1,4 +1,5 @@
-﻿@model WebApplication1.item
+﻿@using WebApplication1.Helper
+@model WebApplication1.item
 
 @{
     ViewBag.Title = "Product Detail";
@@ -46,7 +47,7 @@
             @{
                 if (listPic.Any())
                 {
-                    foreach (var item in listPic)
+                    foreach (var item in listPic.Where(x=>x.ARTNO==Model.ARTNO))
                     {
                         <div class="col-lg-3" style="padding: 2px 2px 2px 2px;">
                             @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + (!string.IsNullOrEmpty(item.LINK) ? item.LINK : ""))))
@@ -299,11 +300,11 @@
             List<item> relatedProducts = new List<item>();
             if (Session["BestSellerProducts"] != null)
             {
-                relatedProducts = (List<item>)Session["BestSellerProducts"];
+                relatedProducts = ((List<item>)Session["BestSellerProducts"]).Where(x=>x.EXPORTABLE=="T").ToList();
             }
             else
             {
-                relatedProducts = (List<item>)Session["relatedProducts"];
+                relatedProducts = ((List<item>)Session["relatedProducts"]).Where(x => x.EXPORTABLE == "T").ToList();
             }
 
 
@@ -312,7 +313,7 @@
                 for (int i = 0; i < 4; i++)
                 {
                     <div class="col-lg-3">
-                        <a href="@Url.Action("Product", "Home", new { Code = @relatedProducts[i].ARTCODE })">
+                        <a href="@Url.Action("Product", "Home", new { Code = relatedProducts[i].ARTNAME.UrlFrendly()+"-"+ relatedProducts[i].IdCurrentItem})">
                             <div class="row" style="color: #666666;">
                                 <div class="col-lg-12">
                                     @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + @relatedProducts[i].PICTURENAME)))
