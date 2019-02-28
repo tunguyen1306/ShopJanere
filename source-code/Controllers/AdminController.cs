@@ -529,12 +529,14 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var list = db.items.Where(x => x.IdCurrentItem == id).ToList();
             foreach (var item1 in list)
             {
                 var update = db.items.Find(item1.ARTNO);
                 update.EXPORTABLE = "F";
                 db.Entry(update).State = EntityState.Modified;
+
             }
             return RedirectToAction("Index");
         }

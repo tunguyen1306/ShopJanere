@@ -12,10 +12,13 @@
     <a href="@Url.Action("Create","SettingType")">Add New</a>
    
 </div>
+<ul class="sub_action">
+    <li class="active"><a href="@Url.Action("Index", "SettingType", new {tab= "published" })">Published</a></li>
+    <li><a href="@Url.Action("Index","SettingType",new {tab="trashed"})">Trashed</a></li>
+</ul>
 
 
-
-@using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+@using (Ajax.BeginForm("IndexAjax",  new { tab = ViewBag.Tab }, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "settingtype-result",

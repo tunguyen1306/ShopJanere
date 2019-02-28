@@ -13,21 +13,14 @@
    
 </div>
 
-@* <div class="row wrap_filter" style="margin-top: 10px;">
-    <div class="col-sm-4">
-        
-    </div>
-    <div class="col-sm-8 right">
-        <label>Filter</label>
-
-        @Html.DropDownList("filter_Promotion", new SelectList(((List<WebApplication1.Promotiontype>)ViewBag.ListTypePromotion), "id", "name"), new { @class = "filter" })
-       
-       
-    </div>
-</div>*@
+<ul class="sub_action">
+    <li class="active"><a href="@Url.Action("Index", "Promotion", new {tab= "published" })">Published</a></li>
+    <li><a href="@Url.Action("Index","Promotion",new {tab="trashed"})">Trashed</a></li>
+</ul>
 
 
-@using (Ajax.BeginForm("IndexAjax", new {type = ViewBag.Type }, new AjaxOptions
+
+@using (Ajax.BeginForm("IndexAjax", new {type = ViewBag.Type, tab = ViewBag.Tab }, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "Promotion-result",

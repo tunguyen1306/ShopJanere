@@ -15,17 +15,19 @@ namespace WebApplication1.Controllers
         private veebdbEntities db = new veebdbEntities();
 
         // GET: /settingtype/
-        public ActionResult Index()
+        public ActionResult Index(string tab="all")
         {
+            ViewBag.Tab = tab;
             return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10)
+        public ActionResult IndexAjax(string tab=null,int start = 0, int view = 10)
         {
             var listsettingtype = db.settingtypes.ToList();
+            listsettingtype = tab == "trashed" ? listsettingtype.Where(x => x.status == 0).ToList() : listsettingtype.Where(x => x.status == 1).ToList();
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = listsettingtype.Count;
-            listsettingtype= listsettingtype.Skip(start).Take(view).ToList();
+            listsettingtype= listsettingtype.OrderBy(x=>x.id).Skip(start).Take(view).ToList();
             ViewBag.ViewOf = listsettingtype.Count;
           
             return PartialView(listsettingtype);
@@ -104,8 +106,12 @@ namespace WebApplication1.Controllers
         public ActionResult Delete(int? id)
         {
             settingtype settingtype = db.settingtypes.Find(id);
-            db.settingtypes.Remove(settingtype);
-            db.SaveChanges();
+            if (settingtype != null)
+            {
+                settingtype.status = 0;
+                db.Entry(settingtype).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
