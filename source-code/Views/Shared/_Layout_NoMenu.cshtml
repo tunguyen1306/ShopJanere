@@ -5,27 +5,6 @@
 <head>
     @{
         veebdbEntities data = new veebdbEntities();
-        //var user = new AllLoggedUserInfo();
-
-
-
-        //if (Session["LoggedAccount"] == null)
-        //{
-        //    var tem = data.users.FirstOrDefault(m => m.Id == 7);
-        //    if (tem != null)
-        //    {
-        //        Session["LoggedAccount"] = null;
-        //        AllLoggedUserInfo userFullInfo = new AllLoggedUserInfo(tem);
-        //        Session["LoggedAccount"] = userFullInfo;
-        //        user = userFullInfo;
-        //    }
-        //}
-        //else
-        //{
-        //    user = (AllLoggedUserInfo)Session["LoggedAccount"];
-        //}
-        var slider = data.sliders.Where(m => m.Status == 1);
-        var setting = data.settings.ToList();
         var seo = data.seos.FirstOrDefault(x => x.type == 1);
     }
     <meta charset="utf-8" />
@@ -62,8 +41,8 @@
     <link href="~/Content/CusWeb.css" rel="stylesheet" />
 </head>
 <body>
-
-    <div class="navbar navbar-inverse" style="background-color: #171717">
+    @Html.Partial("Partial/_pMenu")
+    @*<div class="navbar navbar-inverse" style="background-color: #171717">
         <div class="container">
             <div class="navbar-header" style="width:100%">
                 <div class="row">
@@ -78,18 +57,6 @@
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
                                 @Html.Partial("Partial/_pLanguage")
-                               @*<span style="color: white;">
-
-                                    Hi , @Html.ActionLink(user.user.display, "EditInfo", new { id = user.user.Id })
-
-                                </span>
-
-                                <a href="@Url.Action("Login", "Home")">
-                                    <img alt="Janere" src="~/Content/head/myaccount.png" style="margin-left: 10px;" />
-                                </a>
-                                <a href="@Url.Action("UpdateCart", "Home")">
-                                    <img alt="Janere" src="~/Content/head/cart.png" style="margin-left: 10px;" /><span style="color: white;">Cart</span>
-                                </a>*@
                             </div>
                         </div>
                         @{
@@ -106,14 +73,7 @@
                             {
                             <a href="@Url.Action("MasterGroup", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 top-menu-normal langProducts">Products</div></a>
                             }
-                            @* @if (controllerName=="Home" && actionName == "BulkProducts")
-                                {
-                                    <a href="@Url.Action("Products", "Home")"><div class="col-lg-2 top-menu-focus">Bulk Items</div></a>
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("BulkProducts", "Home")"><div class="col-lg-2 top-menu-normal">Bulk Items</div></a>
-                                }*@
+                          
                             @if (controllerName == "Home" && actionName == "Download")
                             {
                             <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus langDowload">Dowload</div></a>
@@ -122,21 +82,14 @@
                             {
                             <a href="@Url.Action("Download", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal langDowload">Download</div></a>
                             }
-                            @*@if (controllerName == "Home" && actionName == "Warehouses")
-                                {
-                                    <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus">Warehouse</div></a>
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("Warehouses", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal">Warehouse</div></a>
-                                }*@
+                           
                             @if (controllerName == "Home" && actionName == "Stores")
                             {
-                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus langStore">Store</div></a>
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-focus langStores">Stores</div></a>
                             }
                             else
                             {
-                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal langStore">Store</div></a>
+                            <a href="@Url.Action("Stores", "Home")"><div class="col-lg-2 col-md-2 col-sm-2 col-xs-4  top-menu-normal langStores">Stores</div></a>
                             }
 
                         </div>
@@ -144,7 +97,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
 <div class="container body-content">
 
@@ -184,34 +137,6 @@
         </div>
     </div>
 
-    @*<div style="background-color: #235d91">
-        <div class="container">
-            <footer>
-                <div class="row" style="padding: 10px 0px; text-align: center;">
-                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
-                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding:10px 0px;">
-                        <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: white; ">+372 658 0300</span></a>
-
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3" style="padding: 10px 0px;">
-                        <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" /><span style="color: white; ">janere@janere.ee</span></a>
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="https://www.facebook.com/janere.ee"><img alt="Janere" src="~/Content/foot/facebook.png" /></a></div>
-                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"><a href="skype:oujanere?chat"><img alt="Janere" src="~/Content/foot/skype.png" /></a></div>
-                    <div class="col-lg-3 col-md-2 col-sm-1 col-xs-1">	&nbsp;</div>
-                </div>
-            </footer>
-        </div>
-    </div>
-    <div style="background-color: #171717">
-        <div class="container">
-            <footer>
-                <div class="row" style="padding: 10px 0px; text-align: center;">
-                    <img alt="Janere" src="~/Content/foot/line2.JPG" width="100%" />
-                </div>
-            </footer>
-        </div>
-    </div>*@
     <style>
         .txtFooter {
             font-size: 14px !important;

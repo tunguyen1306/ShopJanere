@@ -118,7 +118,20 @@
 @Html.HiddenFor(x=>x.id)
 
 <script>
+    $(".delete_action").on('click', function (e) {
+        var rs = confirm('Do you want delete image ?');
+        if (rs == true) {
+            $(this).parents('div').eq(0).remove();
+        }
+        var idPic = $(this).attr('rel');
+        if (idPic != 0) {
+            $.get('@Url.Action("DeleteImg", "Admin")?id=' + idPic, function (data) {
 
+
+            });
+        }
+
+    });
         $('#validation-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',

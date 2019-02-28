@@ -263,7 +263,7 @@ img{max-width: 100%;}
 	-moz-columns: 3;
 }
 .product_group_list li {
-	margin-bottom: 7px;
+	margin: 41px;
 }
 .product_group_list li input {margin-right: 5px;}
 .product_detail .form-control {

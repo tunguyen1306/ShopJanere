@@ -461,7 +461,17 @@ namespace WebApplication1.Controllers
                 ViewBag.Link = seo.link;
                 ViewBag.Keyword = seo.keyword;
             }
-            var restult = data.stores;
+            var lang = "";
+            var httpCookie = Request.Cookies["Language"];
+            if (httpCookie != null)
+            {
+                lang = httpCookie.Value;
+            }
+            else
+            {
+                lang = "english";
+            }
+            var restult = data.stores.Where(x=>x.CodeLanguage== lang).ToList();
             return View(restult);
         }
         public ActionResult Warehouses()
@@ -1502,7 +1512,11 @@ namespace WebApplication1.Controllers
             }
             else
             {
+               
                 dataVo = dataVo.Where(x => x.language.ToLower() == "english").ToList();
+                HttpCookie StudentCookies = new HttpCookie("Language");
+                StudentCookies.Value = "English";
+                StudentCookies.Expires = DateTime.Now.AddYears(1);
             }
             return Json(dataVo.ToList());
 

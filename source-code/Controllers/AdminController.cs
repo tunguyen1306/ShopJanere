@@ -48,7 +48,8 @@ namespace WebApplication1.Controllers
             }
             if (keywork!=null)
             {
-                listProduct = listProduct.Where(x => x.ARTNO.ToString().Contains(keywork) || x.ARTNAME.ToString().Contains(keywork) || x.ARTCODE.ToString().Contains(keywork) || x.INFO.ToString().Contains(keywork) || x.LEN.ToString().Contains(keywork) || x.WEIGHT.ToString().Contains(keywork) || x.HEIGHT.ToString().Contains(keywork));
+                //|| x.LEN.ToString().Contains(keywork) || x.WEIGHT.ToString().Contains(keywork) || x.HEIGHT.ToString().Contains(keywork)
+                listProduct = listProduct.Where(x => x.ARTNAME.Contains(keywork) || x.ARTCODE.Contains(keywork) || x.INFO.Contains(keywork) );
             }
             if (groupId != 0)
             {
@@ -139,7 +140,7 @@ namespace WebApplication1.Controllers
             ViewBag.WarhouseList = db.warehouses.ToList();
             ViewBag.stockList = db.stockcods.ToList();
             ViewBag.StoreList = db.stores.ToList();
-            var metagroup = db.metagrups.ToList();
+            var metagroup = db.metagrups.Where(x=>x.IsActive==true).ToList();
             metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.MetaGroupList = metagroup;
             return View(new AllModel { tblitem = new item() });
@@ -311,7 +312,7 @@ namespace WebApplication1.Controllers
             ViewBag.WarhouseList = db.warehouses.ToList();
             ViewBag.stockList = db.stockcods.ToList();
             ViewBag.StoreList = db.stores.ToList();
-            var metagroup = db.metagrups.ToList();
+            var metagroup = db.metagrups.Where(x => x.IsActive == true).ToList();
             metagroup.Insert(0, new metagrup { METAGROUPNO = 0, METAGROUPNAME = "Select Meta Group" });
             ViewBag.MetaGroupList = metagroup;
           
@@ -432,7 +433,9 @@ namespace WebApplication1.Controllers
                
             }
             db.SaveChanges();
-            var item = db.items.ToList().Where(x=>x.IdCurrentItem==id).ToList();
+
+            var listCode = list.Select(y => y.language.ToLower()).ToList();
+            var item = db.items.ToList().Where(x=>x.IdCurrentItem==id && listCode.Contains(x.CodeLanguage)).ToList();
             return View(new AllModel { listProduct = item,tblitem = proItem });
     
         }
@@ -526,12 +529,14 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            item item = db.items.Find(id);
-            if (item == null)
+            var list = db.items.Where(x => x.IdCurrentItem == id).ToList();
+            foreach (var item1 in list)
             {
-                return HttpNotFound();
+                var update = db.items.Find(item1.ARTNO);
+                update.EXPORTABLE = "F";
+                db.Entry(update).State = EntityState.Modified;
             }
-            return View(item);
+            return RedirectToAction("Index");
         }
 
         // POST: /Product/Delete/5
@@ -712,9 +717,14 @@ namespace WebApplication1.Controllers
                 var _items = db.items.Where(x => _ids.Contains(x.ARTNO));
                 foreach (var item in _items)
                 {
-                    var update = db.items.Find(item.ARTNO);
-                    update.EXPORTABLE = "F";
-                    db.Entry(update).State=EntityState.Modified;
+                    var list = db.items.Where(x => x.IdCurrentItem == item.ARTNO).ToList();
+                    foreach (var item1 in list)
+                    {
+                        var update = db.items.Find(item1.ARTNO);
+                        update.EXPORTABLE = "F";
+                        db.Entry(update).State = EntityState.Modified;
+                    }
+                  
                     // update
                 }
                 db.SaveChanges();

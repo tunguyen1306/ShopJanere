@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<artgrp>
 
-<ul class="product_group_list" >
+<div class="row">
     @foreach (var item in Model)
     {
-
-        <li>
-
+        <div class="col-lg-3">
             <div class="radio">
                 <label><input type="radio" id="radio_@item.GROUPNO" value="@item.GROUPNO" name="tblitem.GROUPNO">@item.GROUPNAME</label>
             </div>
-
-        </li>
-
+        </div>
     }
-</ul>
+    
+</div>

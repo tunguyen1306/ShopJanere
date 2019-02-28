@@ -129,7 +129,9 @@ namespace WebApplication1.Controllers
 
             }
             db.SaveChanges();
-            var item = db.metagrups.ToList().Where(x => x.IdCurrentItem == code).ToList();
+            var listCode = list.Select(y => y.language.ToLower()).ToList();
+           
+            var item = db.metagrups.ToList().Where(x => x.IdCurrentItem == code && listCode.Contains(x.CodeLanguage)).ToList();
             return View(new AllModel { listMasterMetaGroup = item, tblMasterMetaGroup = proMaster });
         }
         [HttpPost]
@@ -186,10 +188,14 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var list = db.metagrups.Where(x=>x.IdCurrentItem==id).ToList();
+            foreach (var item in list)
+            {
+                metagrup metagrup = db.metagrups.Find(item.METAGROUPNO);
+                metagrup.IsActive = false;
+                db.Entry(metagrup).State = EntityState.Modified;
+            }
           
-            metagrup metagrup = db.metagrups.Find(id);
-            metagrup.IsActive = false;
-            db.Entry(metagrup).State=EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -222,9 +228,15 @@ namespace WebApplication1.Controllers
                 var _items = db.metagrups.Where(x => _ids.Contains(x.METAGROUPNO));
                 foreach (var item in _items)
                 {
-                    var meta = db.metagrups.Find(item.METAGROUPNO);
-                    meta.IsActive = false;
-                    db.Entry(meta).State = EntityState.Modified;
+
+                    var list = db.metagrups.Where(x => x.IdCurrentItem == item.METAGROUPNO).ToList();
+                    foreach (var item1 in list)
+                    {
+                        metagrup metagrup = db.metagrups.Find(item1.METAGROUPNO);
+                        metagrup.IsActive = false;
+                        db.Entry(metagrup).State = EntityState.Modified;
+                    }
+                   
                    
                 }
                 db.SaveChanges();
@@ -247,10 +259,16 @@ namespace WebApplication1.Controllers
                 var _items = db.artgrps.Where(x => _ids.Contains(x.GROUPNO));
                 foreach (var item in _items)
                 {
-                    var meta = db.artgrps.Find(item.GROUPNO);
-                    meta.IsActive = false;
-                    db.Entry(meta).State = EntityState.Modified;
-                   
+
+                    var list = db.artgrps.Where(x => x.IdCurrentItem == item.GROUPNO).ToList();
+                    foreach (var item1 in list)
+                    {
+                        artgrp metagrup = db.artgrps.Find(item1.GROUPNO);
+                        metagrup.IsActive = false;
+                        db.Entry(metagrup).State = EntityState.Modified;
+                    }
+
+
                 }
                 db.SaveChanges();
                 _status = true;
@@ -384,7 +402,9 @@ namespace WebApplication1.Controllers
 
             }
             db.SaveChanges();
-            var item = db.metagrups.ToList().Where(x => x.IdCurrentItem== code).ToList();
+            var listCode = list.Select(y => y.language.ToLower()).ToList();
+
+            var item = db.metagrups.ToList().Where(x => x.IdCurrentItem == code && listCode.Contains(x.CodeLanguage)).ToList();
             return View(new AllModel { listMetaGroup = item, tblMetaGroup = proMaster });
         }
         [HttpPost]
@@ -441,9 +461,14 @@ namespace WebApplication1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            metagrup metagrup = db.metagrups.Find(id);
-            metagrup.IsActive = false;
-            db.Entry(metagrup).State = EntityState.Modified;
+            var list = db.metagrups.Where(x => x.IdCurrentItem == id).ToList();
+            foreach (var item in list)
+            {
+                metagrup metagrup = db.metagrups.Find(item.METAGROUPNO);
+                metagrup.IsActive = false;
+                db.Entry(metagrup).State = EntityState.Modified;
+            }
+
             db.SaveChanges();
             return RedirectToAction("IndexMetaGroup");
         }
@@ -584,7 +609,8 @@ namespace WebApplication1.Controllers
 
             }
             db.SaveChanges();
-            var item = db.artgrps.ToList().Where(x => x.IdCurrentItem == id).ToList();
+            var listCode = list.Select(y => y.language.ToLower()).ToList();
+            var item = db.artgrps.ToList().Where(x => x.IdCurrentItem == id && listCode.Contains(x.CodeLanguage)).ToList();
             return View(new AllModel { listGroup = item, tblGroup = proMaster });
         }
         [HttpPost]
@@ -639,11 +665,16 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var list = db.artgrps.Where(x => x.IdCurrentItem == id).ToList();
+            foreach (var item in list)
+            {
+                artgrp artgrp = db.artgrps.Find(item.GROUPNO);
+                artgrp.IsActive = false;
+                db.Entry(artgrp).State = EntityState.Modified;
+            }
 
-            metagrup metagrup = db.metagrups.Find(id);
-            metagrup.IsActive = false;
-            db.Entry(metagrup).State = EntityState.Modified;
             db.SaveChanges();
+           
             return RedirectToAction("IndexGroup");
         }
 

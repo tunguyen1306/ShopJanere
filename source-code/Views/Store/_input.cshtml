@@ -210,6 +210,15 @@
 
 <script>
 
+
+    $(".delete_action").on('click', function (e) {
+        var rs = confirm('Do you want to remove this image ?');
+        if (rs == true) {
+            $(this).parents('div').eq(0).remove();
+        }
+
+
+    });
         $('#validation-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',

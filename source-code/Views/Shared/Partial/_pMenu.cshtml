@@ -1,0 +1,40 @@
+﻿<div class="navbar navbar-inverse" style="background-color: #171717">
+    <div class="container">
+        <div class="navbar-header">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-0">
+                    <a href="@Url.Action("Index", "Home")"><img alt="Janere" src="~/Content/head/logo.png" width="100%" style="padding: 33px 0px;" /></a>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="row" style="text-align: center; padding: 8px 0px;">
+                        <div class="col-lg-7 col-md-7  col-sm-6 col-xs-12">
+                            <a href="tel:+372 658 0300"> <img alt="Janere" src="~/Content/head/contact-phone.png" /><span style="color: #8a8a8a; ">p:+372 658 0300</span></a>
+                            <a href="mailto:janere@janere.ee"> <img alt="Janere" src="~/Content/head/contact-email.png" style="margin-left: 10px;" /><span style="color: #8a8a8a; ">&nbsp; e:janere@janere.ee</span></a>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12" style="text-align: right; margin-top: 7px;">
+                            @Html.Partial("Partial/_pLanguage")
+
+
+
+                        </div>
+                    </div>
+                    <div class="head-menu">
+                        <a class="mobile_menu"><span></span><span></span><span></span></a>
+                        <div class="wrap-head-main-menu">
+                            @{
+                                var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                                var actionName = this.ViewContext.RouteData.Values["action"].ToString();
+                            }
+                            <ul class="head-main-menu">
+                                <li class="@(controllerName == "Home"  && actionName == "Index" ? "active":"")"><a href="@Url.Action("Index", "Home")" class="langHome">Home</a></li>
+                                <li class="@((controllerName == "Home" && (actionName == "BulkProducts" || actionName == "MasterGroup" || actionName == "MetaGroup" || actionName == "Group" || actionName == "Products" || actionName == "Product" )) ? "active" : "")"><a  href="@Url.Action("MasterGroup", "Home")" class="langProducts">Products</a></li>
+                                <li class="@(controllerName == "Home" && actionName == "Download" ? "active":"")"><a href="@Url.Action("Download", "Home")" class="langDownload">Download</a></li>
+                                <li class="@(controllerName == "Home" && actionName == "Stores" ? "active":"")"><a href="@Url.Action("Stores", "Home")" class="langStores">Stores</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -49,7 +49,10 @@
     }
 </head>
 <body>
-    <div class="navbar navbar-inverse" style="background-color: #171717">
+
+    @Html.Partial("Partial/_pMenu")
+
+@*<div class="navbar navbar-inverse" style="background-color: #171717">
         <div class="container">
             <div class="navbar-header">
                 <div class="row">
@@ -76,7 +79,7 @@
                                     <li class="active"><a href="@Url.Action("Index", "Home")" class="langHome">Home</a></li>
                                     <li><a href="@Url.Action("MasterGroup", "Home")" class="langProducts">Products</a></li>
                                     <li><a href="@Url.Action("Download", "Home")" class="langDownload">Download</a></li>
-                                    <!--<li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>-->
+                                    <li><a href="@Url.Action("Warehouses", "Home")">Warehouse</a></li>
                                     <li><a href="@Url.Action("Stores", "Home")" class="langStores">Stores</a></li>
                                 </ul>
                             </div>
@@ -85,154 +88,154 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
 
-    <section class="blink-slider">
-        <div class="blink-slider">
-            <div class="blink-view" id="blink" onclick="linkto(this)">
+<section class="blink-slider">
+    <div class="blink-slider">
+        <div class="blink-view" id="blink" onclick=" linkto(this) ">
 
 
-                @foreach (var slide in setting.Where(x => x.typeId == "slider").OrderBy(x => x.order).ToList())
-                {
-                    <div class="viewSlide">
-                        <a href="#"><img alt="Janere" class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
-                    </div>
-                }
+            @foreach (var slide in setting.Where(x => x.typeId == "slider").OrderBy(x => x.order).ToList())
+            {
+                <div class="viewSlide">
+                    <a href="#"><img alt="Janere" class="fullImg" src="@slide.urlimage" id="@slide.id"></a>
+                </div>
+            }
 
 
 
-            </div>
-            <div class="blink-control" id="blink-control">
-            </div>
         </div>
-    </section>
+        <div class="blink-control" id="blink-control">
+        </div>
+    </div>
+</section>
 
-    <h2 class="heading_title navi_slider">
-        <span class="langMasterMetaGroups">Master Meta Groups</span>
-        <img alt="Janere" src="~/Content/body/others/back.png" id="mm_back" />
-        <input type="hidden" value="1" id="mm_cur" />
-        <img alt="Janere" src="~/Content/body/others/next.png" id="mm_next" />
-    </h2>
-    <div class="product_category" id="mastermeta">
-        @{
-            List<item> relatedProducts = (List<item>)Session["relatedProducts"];
-        }
+<h2 class="heading_title navi_slider">
+    <span class="langMasterMetaGroups">Master Meta Groups</span>
+    <img alt="Janere" src="~/Content/body/others/back.png" id="mm_back"/>
+    <input type="hidden" value="1" id="mm_cur"/>
+    <img alt="Janere" src="~/Content/body/others/next.png" id="mm_next"/>
+</h2>
+<div class="product_category" id="mastermeta">
+    @{
+        List<item> relatedProducts = (List<item>) Session["relatedProducts"];
+    }
 
-    </div><!-- product_category -->
+</div><!-- product_category -->
 
-    <h2 class="heading_title navi_slider">
-        <span class="langBestSellers">Best Sellers</span>
-        @*<img alt="Janere" src="~/Content/body/others/back.png" id="bs_back" />
+<h2 class="heading_title navi_slider">
+    <span class="langBestSellers">Best Sellers</span>
+    @*<img alt="Janere" src="~/Content/body/others/back.png" id="bs_back" />
             <input type="hidden" value="1" id="bs_cur" />
             <img alt="Janere" src="~/Content/body/others/next.png" id="bs_next" />*@
-    </h2>
+</h2>
 
-    <div class="container body-content owl-carousel" style="clear:both;margin-top:20px;">
-        @{
-            var lang = "";
-            var httpCookie = Request.Cookies["Language"];
-            if (httpCookie != null)
-            {
-                lang = httpCookie.Value;
-            }
-            else
-            {
-                lang = "english";
-            }
-            var product = data.items.Where(m => m.IsBestSeller == true && m.EXPORTABLE == "T" && m.CodeLanguage == lang).ToList();
-            Session["BestSellerProducts"] = product;
+<div class="container body-content owl-carousel" style="clear: both; margin-top: 20px;">
+    @{
+        var lang = "";
+        var httpCookie = Request.Cookies["Language"];
+        if (httpCookie != null)
+        {
+            lang = httpCookie.Value;
+        }
+        else
+        {
+            lang = "english";
+        }
+        var product = data.items.Where(m => m.IsBestSeller == true && m.EXPORTABLE == "T" && m.CodeLanguage == lang).ToList();
+        Session["BestSellerProducts"] = product;
 
-            foreach (var item in product)
-            {
+        foreach (var item in product)
+        {
 
 
 
-                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 0px;">
-                    <a href="@Url.Action("Product", "Home", new {Code = item.ARTNAME.UrlFrendly()+"-"+ item.IdCurrentItem})">
-                        <div class="row home-bestseller" style="color: #666666; height: 350px;">
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 10px;">
-                                @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + item.PICTURENAME)))
-                                {
-                                    <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width: 100%;">
-                                }
-                                else
-                                {
-                                    <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;" />
+            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 0px;">
+                <a href="@Url.Action("Product", "Home", new {Code = item.ARTNAME.UrlFrendly() + "-" + item.IdCurrentItem})">
+                    <div class="row home-bestseller" style="color: #666666; height: 350px;">
+                        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="padding: 10px;">
+                            @if (System.IO.File.Exists(Server.MapPath("~/Content/ProductImage/" + item.PICTURENAME)))
+                            {
+                                <img alt="Janere" src="~/Content/ProductImage/@item.PICTURENAME" style="width: 100%;">
+                            }
+                            else
+                            {
+                                <img alt="Janere" src="~/Content/ProductImage/notavailable.jpg" style="width: 100%;"/>
 
-                                }
-                                <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4; font-weight: bold; height: 60px;">
-                                    @item.ARTNAME
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
-                                <!-- $@item.WEBPRICE-->
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                                <span style="font-weight: bold;">Width:</span> @item.WIDTH
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                                <span style="font-weight: bold; color: #666666;">Height:</span> @item.HEIGHT
-                            </div>
-                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
-                                <span style="font-weight: bold; color: #666666;">ArtCode:</span>@item.ARTCODE
+                            }
+                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #59b1f4; font-weight: bold; height: 60px;">
+                                @item.ARTNAME
                             </div>
                         </div>
-                    </a>
-                </div>
-
-            }
+                        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="font-size: 20.43px; color: #002f6c">
+                            <!-- $@item.WEBPRICE-->
+                        </div>
+                        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                            <span style="font-weight: bold;">Width:</span> @item.WIDTH
+                        </div>
+                        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                            <span style="font-weight: bold; color: #666666;">Height:</span> @item.HEIGHT
+                        </div>
+                        <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12" style="margin-bottom: 15px;">
+                            <span style="font-weight: bold; color: #666666;">ArtCode:</span>@item.ARTCODE
+                        </div>
+                    </div>
+                </a>
+            </div>
 
         }
 
-
-    </div>
-
+    }
 
 
-    @Html.Partial("Partial/_pFooter")
+</div>
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/myscript")
-    @Scripts.Render("~/bundles/bootstrap")
-    <link href="~/Content/Carousel/owl.theme.default.min.css" rel="stylesheet" />
-    <link href="~/Content/Carousel/owl.carousel.min.css" rel="stylesheet" />
-    @RenderSection("scripts", required: false)
-    <link rel="stylesheet" href="~/Content/blink.css">
-    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>-->
-    <script src="~/Content/jquery.blink.js"></script>
-    <script src="~/Content/Carousel/owl.carousel.js"></script>
+
+@Html.Partial("Partial/_pFooter")
 
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#blink").blink();
-        });
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                    nav: true
-                },
-                600: {
-                    items: 3,
-                    nav: false
-                },
-                1000: {
-                    items: 4,
-                    nav: true,
-                    loop: false
-                }
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/myscript")
+@Scripts.Render("~/bundles/bootstrap")
+<link href="~/Content/Carousel/owl.theme.default.min.css" rel="stylesheet"/>
+<link href="~/Content/Carousel/owl.carousel.min.css" rel="stylesheet"/>
+@RenderSection("scripts", required: false)
+<link rel="stylesheet" href="~/Content/blink.css">
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>-->
+<script src="~/Content/jquery.blink.js"></script>
+<script src="~/Content/Carousel/owl.carousel.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#blink").blink();
+    });
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                nav: true
             },
-            nav: true,
-            navText: ["<img src='/Content/body/others/back.png'>", "<img src='/Content/body/others/next.png'>"]
-        });
-    </script>
+            600: {
+                items: 3,
+                nav: false
+            },
+            1000: {
+                items: 4,
+                nav: true,
+                loop: false
+            }
+        },
+        nav: true,
+        navText: ["<img src='/Content/body/others/back.png'>", "<img src='/Content/body/others/next.png'>"]
+    });
+</script>
 <script type="text/javascript">
     $(document).one('ready', function() {
 
@@ -403,13 +406,13 @@
     });
 
 </script>
-    <style>
-        .owl-nav {
+<style>
+    .owl-nav {
 
-            position: absolute;
-            left: 65%;
-            top: -65px;
-        }
-    </style>
+        position: absolute;
+        left: 65%;
+        top: -65px;
+    }
+</style>
 </body>
 </html>

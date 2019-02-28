@@ -537,6 +537,7 @@ function GetLanguage(lang) {
        contentType: "application/json;charset=utf-8",
        success: function (data) {
            console.log(data);
+          
            $.each(data, function (i, o) {
                if (o.code.lastIndexOf("ip_") != -1)
                    $('.' + o.code).val(o.name);

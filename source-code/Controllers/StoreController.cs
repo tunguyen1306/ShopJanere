@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult IndexAjax(int start = 0, int view = 10)
         {
-            var listStore = db.stores.ToList();
+            var listStore = db.stores.Where(x=>x.CodeLanguage=="english").ToList();
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = listStore.Count;
@@ -154,7 +154,9 @@ namespace WebApplication1.Controllers
 
             }
             db.SaveChanges();
-            var item = db.stores.ToList().Where(x => x.IdCurrentItem == id).ToList();
+            var listCode = list.Select(y => y.language.ToLower()).ToList();
+           
+            var item = db.stores.ToList().Where(x => x.IdCurrentItem == id&& listCode.Contains(x.CodeLanguage)).ToList();
             return View(new AllModel { listStore = item, tblStore = proItem });
         }
 
@@ -209,8 +211,12 @@ namespace WebApplication1.Controllers
         // GET: /Store/Delete/5
         public ActionResult Delete(int? id)
         {
-            store store = db.stores.Find(id);
-            db.stores.Remove(store);
+            var list = db.stores.Where(x => x.IdCurrentItem == id).ToList();
+            foreach (var item in list)
+            {
+                store store = db.stores.Find(item.Id);
+                db.stores.Remove(store);
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
