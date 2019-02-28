@@ -16,19 +16,22 @@ namespace WebApplication1.Controllers
         private veebdbEntities db = new veebdbEntities();
 
         // GET: /country/
-        public ActionResult Index()
+        public ActionResult Index(string tab="all")
         {
+            ViewBag.Tab = tab;
             return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10)
+        public ActionResult IndexAjax(string tab=null,int start = 0, int view = 10)
         {
             var listcountry = db.countries.ToList();
+
+            listcountry = tab == "trashed" ? listcountry.Where(x => x.status == 0).ToList() : listcountry.Where(x => x.status == 1).ToList();
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = listcountry.Count;
             listcountry= listcountry.Skip(start).Take(view).ToList();
             ViewBag.ViewOf = listcountry.Count;
-          
+            ViewBag.Tab = tab;
             return PartialView(listcountry);
         }
         // GET: /country/Details/5
@@ -138,8 +141,13 @@ namespace WebApplication1.Controllers
         public ActionResult Delete(int? id)
         {
             country country = db.countries.Find(id);
-            db.countries.Remove(country);
-            db.SaveChanges();
+            if (country!=null)
+            {
+                country.status = 0;
+                db.Entry(country).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+     
             return RedirectToAction("Index");
         }
 

@@ -17,27 +17,29 @@ namespace WebApplication1.Controllers
         private veebdbEntities db = new veebdbEntities();
 
       
-        public ActionResult Index()
+        public ActionResult Index(string tab="all")
         {
+            ViewBag.Tab = tab;
             return View();
         }
 
-        public ActionResult IndexAjax(string search=null,int start = 0, int view = 10)
+        public ActionResult IndexAjax(string tab = null,string search=null,int start = 0, int view = 10)
         {
-            var listMetagroup =db.metagrups.Where(x=>x.IsActive==true && x.PARENTNO==0 && x.CodeLanguage == "english").Select(x=>new AllModel {tblMasterMetaGroup = x}).ToList();
-
+            var listMetagroup =db.metagrups.Where(x=> x.PARENTNO==0 && x.CodeLanguage == "english").Select(x=>new AllModel {tblMasterMetaGroup = x});
+            listMetagroup = tab == "trashed" ? listMetagroup.Where(x => x.tblMasterMetaGroup.IsActive == false) : listMetagroup.Where(x => x.tblMasterMetaGroup.IsActive == true);
+           
             if (search!=null)
             {
-                listMetagroup =listMetagroup.Where(x => x.tblMasterMetaGroup.METAGROUPNAME.ToLower().Contains(search.ToLower())).ToList();
+                listMetagroup =listMetagroup.Where(x => x.tblMasterMetaGroup.METAGROUPNAME.ToLower().Contains(search.ToLower()));
             }
-
+            var count = listMetagroup.Count();
             ViewBag.Start = start;
             ViewBag.View = view;
-            ViewBag.Total = listMetagroup.Count;
-            listMetagroup = listMetagroup.Skip(start).Take(view).ToList();
-            ViewBag.ViewOf = listMetagroup.Count;
-
-            return PartialView(listMetagroup);
+            ViewBag.Total = count;
+           var listMetagroup1 = listMetagroup.OrderBy(x=>x.tblMasterMetaGroup.METAGROUPNO).Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = count;
+            ViewBag.Tab = tab;
+            return PartialView(listMetagroup1);
         }
 
         public ActionResult Create()
@@ -263,30 +265,33 @@ namespace WebApplication1.Controllers
             return Json(new { status = _status, mgs = msg });
         }
         #region
-        public ActionResult IndexMetaGroup()
+        public ActionResult IndexMetaGroup(string tab = "all")
         {
+            ViewBag.Tab = tab;
             return View();
         }
 
-        public ActionResult IndexAjaxMetaGroup(string search=null,int start = 0, int view = 10)
+        public ActionResult IndexAjaxMetaGroup(string tab=null,string search=null,int start = 0, int view = 10)
         {
             var listMetagroup = (from cat in db.metagrups
                                     join catl in db.metagrups on cat.PARENTNO equals catl.METAGROUPNO
                            
-                                 select new AllModel { tblMetaGroup = cat ,tblMasterMetaGroup = catl }).Where(x => x.tblMetaGroup.IsActive == true && x.tblMetaGroup.CodeLanguage == "english"  && x.tblMetaGroup.PARENTNO!=0).ToList();
+                                 select new AllModel { tblMetaGroup = cat ,tblMasterMetaGroup = catl }).Where(x => x.tblMetaGroup.CodeLanguage == "english"  && x.tblMetaGroup.PARENTNO!=0);
+            listMetagroup = tab == "trashed" ? listMetagroup.Where(x => x.tblMetaGroup.IsActive == false) : listMetagroup.Where(x => x.tblMetaGroup.IsActive == true);
             if (search != null)
             {
-                listMetagroup = listMetagroup.Where(x => x.tblMetaGroup.METAGROUPNAME.ToLower().Contains(search.ToLower())).ToList();
+                listMetagroup = listMetagroup.Where(x => x.tblMetaGroup.METAGROUPNAME.ToLower().Contains(search.ToLower()));
             }
 
 
+            var count = listMetagroup.Count();
             ViewBag.Start = start;
             ViewBag.View = view;
-            ViewBag.Total = listMetagroup.Count;
-            listMetagroup = listMetagroup.Skip(start).Take(view).ToList();
-            ViewBag.ViewOf = listMetagroup.Count;
-
-            return PartialView(listMetagroup);
+            ViewBag.Total = count;
+            var listMetagroup1 = listMetagroup.OrderBy(x=>x.tblMetaGroup.METAGROUPNO).Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = count;
+            ViewBag.Tab = tab;
+            return PartialView(listMetagroup1);
         }
 
         public ActionResult CreateMetaGroup()
@@ -451,30 +456,34 @@ namespace WebApplication1.Controllers
         #endregion
 
         #region
-        public ActionResult IndexGroup()
+        public ActionResult IndexGroup(string tab = "all")
         {
+            ViewBag.Tab = tab;
             return View();
         }
 
-        public ActionResult IndexAjaxGroup(string search = null, int start = 0, int view = 10)
+        public ActionResult IndexAjaxGroup(string tab=null,string search = null, int start = 0, int view = 10)
         {
+
+
+
             var listGroup = (from cat in db.artgrps
-                             join catl in db.metagrups on cat.METAGROUPNO equals catl.METAGROUPNO
-                             where cat.IsActive==true
-                             select new AllModel { tblGroup = cat, tblMetaGroup = catl }).ToList();
+                join catl in db.metagrups on cat.METAGROUPNO equals catl.METAGROUPNO
+                select new AllModel {tblGroup = cat, tblMetaGroup = catl});
+            listGroup = tab == "trashed" ? listGroup.Where(x => x.tblGroup.IsActive == false) : listGroup.Where(x => x.tblGroup.IsActive == true);
+
             if (search != null)
             {
-                listGroup = listGroup.Where(x => x.tblGroup.GROUPNAME.ToLower().Contains(search.ToLower())).ToList();
+                listGroup = listGroup.Where(x => x.tblGroup.GROUPNAME.ToLower().Contains(search.ToLower()));
             }
-
-
+            var count = listGroup.Count();
             ViewBag.Start = start;
             ViewBag.View = view;
-            ViewBag.Total = listGroup.Count;
-            listGroup = listGroup.Skip(start).Take(view).ToList();
-            ViewBag.ViewOf = listGroup.Count;
-
-            return PartialView(listGroup);
+            ViewBag.Total = count;
+            var listGroup1 = listGroup.OrderBy(x=>x.tblGroup.GROUPNO).Skip(start).Take(view).ToList();
+            ViewBag.ViewOf = count;
+            ViewBag.Tab = tab;
+            return PartialView(listGroup1);
         }
 
         public ActionResult CreateGroup()

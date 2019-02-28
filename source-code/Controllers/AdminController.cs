@@ -527,11 +527,14 @@ namespace WebApplication1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             item item = db.items.Find(id);
-            if (item == null)
+            
+            if (item != null)
             {
-                return HttpNotFound();
+                item.EXPORTABLE = "F";
+                db.Entry(item).State = EntityState.Modified;
+                db.SaveChanges();
             }
-            return View(item);
+            return RedirectToAction("Index");
         }
 
         // POST: /Product/Delete/5

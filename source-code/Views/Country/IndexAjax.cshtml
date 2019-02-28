@@ -6,6 +6,7 @@
 
             <th scope="col" id="barcode" class="manage_column column_name">Code</th>
             <th scope="col" id="barcode" class="manage_column column_name">Name</th>
+            <th scope="col" id="barcode" class="manage_column column_name">IsLanguage</th>
             <th scope="col" id="barcode" class="manage_column column_location">Status</th>
   
             <th scope="col" class="manage_column column_number"></th>
@@ -23,7 +24,10 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                @(item.status == 1 ? "True" : "False")
+                @(item.islanguage == 1 ? "Active" : "No Actice")
+            </td>
+            <td>
+                @(item.status == 1 ? "Active" : "No Actice")
             </td>
            
 

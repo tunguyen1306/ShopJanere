@@ -13,7 +13,10 @@
    
 </div>
 
-
+<ul class="sub_action">
+    <li class="active"><a href="@Url.Action("IndexMetaGroup", "MasterMetaGroup", new {tab= "published" })">Published</a></li>
+    <li><a href="@Url.Action("IndexMetaGroup","MasterMetaGroup",new {tab="trashed"})">Trashed</a></li>
+</ul>
 
  <div class="row wrap_filter" style="margin-top: 10px;">
     <div class="col-sm-4">
@@ -31,7 +34,7 @@
 
     </div>
 </div><!-- wrap_filter -->
-@using (Ajax.BeginForm("IndexAjaxMetaGroup", null, new AjaxOptions
+@using (Ajax.BeginForm("IndexAjaxMetaGroup", new { tab = ViewBag.Tab }, new AjaxOptions
 {
     HttpMethod = "GET",
     UpdateTargetId = "metagrup-result",

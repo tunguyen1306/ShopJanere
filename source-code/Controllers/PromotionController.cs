@@ -17,23 +17,21 @@ namespace WebApplication1.Controllers
         private veebdbEntities db = new veebdbEntities();
 
         // GET: /Promotion/
-        public ActionResult Index()
+        public ActionResult Index(string tab="all")
         {
-            //var list= db.Promotiontypes.Where(x => x.status == 1).ToList();
-            //list.Insert(0, new Promotiontype {id = 0, name = "Type"});
-            //ViewBag.ListTypePromotion = list;
+            ViewBag.Tab = tab;
             return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10, int type = 0)
+        public ActionResult IndexAjax(string tab=null,int start = 0, int view = 10, int type = 0)
         {
             var listPromotion = db.promotions.Select(x => new AllModel { tblPromotion = x }).ToList();
-
+            listPromotion = tab == "trashed" ? listPromotion.Where(x => x.tblPromotion.STATUS == 0).ToList() : listPromotion.Where(x => x.tblPromotion.STATUS == 1).ToList();
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = listPromotion.Count;
             listPromotion = listPromotion.Skip(start).Take(view).ToList();
             ViewBag.ViewOf = listPromotion.Count;
-
+            ViewBag.Tab = tab;
             return PartialView(listPromotion);
         }
         // GET: /Promotion/Details/5
@@ -212,8 +210,13 @@ namespace WebApplication1.Controllers
         public ActionResult Delete(int? id)
         {
             promotion Promotion = db.promotions.Find(id);
-            db.promotions.Remove(Promotion);
-            db.SaveChanges();
+           
+            if (Promotion != null)
+            {
+                Promotion.STATUS = 0;
+                db.Entry(Promotion).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
