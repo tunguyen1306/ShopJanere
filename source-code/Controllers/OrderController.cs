@@ -23,23 +23,42 @@ namespace WebApplication1.Controllers
     public class OrderController : Controller
     {
         private veebdbEntities db = new veebdbEntities();
-        public ActionResult Index()
+        public ActionResult Index(string tab="all")
         {
             var listOrderStatus = db.orderstatus.ToList();
             listOrderStatus.Insert(0,new orderstatu{id = 0,name = "Select Action"});
             ViewBag.OrderStatus = listOrderStatus;
-
-
+            ViewBag.Tab = tab;
+            ViewBag.idMenu = tab;
             return View();
         }
-        public ActionResult IndexAjax(string datepicker = null, string search_order = null, int start = 0, int view = 10)
+        public ActionResult IndexAjax(string tab="all",string datepicker = null, string search_order = null, int start = 0, int view = 10)
         {
-
+            ViewBag.idMenu = tab;
             var listOrder = db.orders;
-
+            var listStatus = db.orderstatus.Select(x => x.id.ToString()).ToList();
 
             var listAll = (from pro in listOrder
                            select new { tblOrder = pro });
+            if (tab != "all")
+            {
+                
+                if (tab=="1")
+                {
+                    listAll = listAll.Where(x => x.tblOrder.status == tab || x.tblOrder.status==null);
+                }
+                else
+                {
+                    listAll = listAll.Where(x => x.tblOrder.status == tab);
+                }
+            }
+            else
+            {
+                listAll = listAll.Where(x => listStatus.Contains(x.tblOrder.status));
+            }
+           
+            
+            
 
             if (!string.IsNullOrEmpty(datepicker))
             {
@@ -56,7 +75,7 @@ namespace WebApplication1.Controllers
             ViewBag.Total = _count;
             ViewBag.ViewOf = _count;
             var db_data = listAll.OrderBy(t => t.tblOrder.ocid).Skip(start).Take(view).OrderByDescending(x => x.tblOrder.status).ToList();
-
+            ViewBag.Tab = tab;
 
             var datas = db_data.Select(t => new AllModel { tblOrder = t.tblOrder }).ToList();
             return PartialView(datas);
@@ -293,8 +312,11 @@ namespace WebApplication1.Controllers
                 foreach (var item in _items.ToList())
                 {
                     var tbl = db.orders.Find(item.ocid);
-                    tbl.status = status;
-                    db.Entry(tbl).State = EntityState.Modified;
+                    if (tbl != null)
+                    {
+                        tbl.status = status;
+                        db.Entry(tbl).State = EntityState.Modified;
+                    }
                     db.SaveChanges();
                 }
                 _status = true;

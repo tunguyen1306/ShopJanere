@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    veebdbEntities db = new veebdbEntities();
 }
 <div id="main_content" class="col-sm-12">
     <h1>All Order</h1>
@@ -10,7 +11,13 @@
     </div>
 
     <ul class="sub_action">
-        <li class="active"><a href="@Url.Action("Index","Order",new {tab="all"})">All</a></li>
+        <li class="active"><a href="@Url.Action("Index", "Order", new {tab= "all" })">New Order</a></li>
+        @foreach (var item in db.orderstatus)
+        {
+            <li class="@(ViewBag.idMenu == item.id.ToString() ? "active" : "")"><a href="@Url.Action("Index", "Order", new {tab = item.id.ToString()})">@item.name</a></li>
+        }
+
+
 
     </ul>
      <div class="row wrap_filter" style="margin-top: 10px;">
@@ -35,7 +42,7 @@
             <button type="submit" id="search_orders" class="button btn-sm search_orders" value="Search"><i class="fas fa-search"></i></button>
         </div>
     </div><!-- wrap_filter -->
-    @using (Ajax.BeginForm("IndexAjax", null, new AjaxOptions
+    @using (Ajax.BeginForm("IndexAjax", new { tab = ViewBag.Tab }, new AjaxOptions
     {
         HttpMethod = "GET",
         UpdateTargetId = "Order-result",

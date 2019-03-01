@@ -16,20 +16,22 @@ namespace WebApplication1.Controllers
         private veebdbEntities db = new veebdbEntities();
 
         // GET: /AccountLogin/
-        public ActionResult Index()
+        public ActionResult Index(string tab ="all")
         {
-
-            return View(db.users);
+            ViewBag.Tab = tab;
+            return View();
         }
-        public ActionResult IndexAjax(int start = 0, int view = 10)
+        public ActionResult IndexAjax(string tab = null,int start = 0, int view = 10)
         {
             var listuser = db.users.ToList();
+
+            listuser = tab == "trashed" ? listuser.Where(x => x.status == "deactive").ToList() : listuser.Where(x => x.status == "active").ToList();
             ViewBag.Start = start;
             ViewBag.View = view;
             ViewBag.Total = listuser.Count;
             listuser = listuser.Skip(start).Take(view).ToList();
             ViewBag.ViewOf = listuser.Count;
-
+            ViewBag.Tab = tab;
             return PartialView(listuser);
         }
 
@@ -235,8 +237,13 @@ namespace WebApplication1.Controllers
         public ActionResult Delete(int? id)
         {
             var user = db.users.Find(id);
-            db.users.Remove(user);
-            db.SaveChanges();
+            if (user!=null)
+            {
+                user.status = "deactive";
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+           
             return RedirectToAction("Index");
         }
 
