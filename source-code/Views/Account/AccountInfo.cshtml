@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 <label>Phone</label>
                                 <div class="row">
-                                    <div class="col-lg-4" style="padding-right: 0px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_state, new { @class = "form-control checkNumber" }) </div>
+                                    <div class="col-lg-4" style="padding-right: 0px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_state, new {@size="4",@min="1", @class = "form-control checkNumber" }) </div>
                                     <div class="col-lg-8" style="padding-left: 5px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_phone, new { @class = "form-control checkNumber" })</div>
                                 </div>
                              
@@ -206,28 +206,30 @@
         rules: {
    
             'tblUser.display': {required: true},
-            'tblUserData.delivery_email': { required: true },
+            'tblUserData.delivery_email': { email: true, required: true },
+            'tblUserData.billing_email': { email: true, required: true },
             'tblUserData.delivery_address1': { required: true },
-            'tblUserData.delivery_name': { required: true },
+            'tblUserData.delivery_name': {required: true },
             'tblUserData.delivery_phone': { required: true },
             'tblUserData.contact_phone': { required: true },
             'tblUserData.firstname': {required: true},
             'tblUser.email': {email: true,required: true}
-          
-
-
-
         },
 
         messages: {
             tblUser: {
                 'tblUser.display': "Display name do not empty",
+                'tblUser.email': { required: "Email do not empty", 'tblUser.email': "Please enter a valid email address." }
+               
+            },
+            tblUserData: {
+             
                 'tblUserData.delivery_address1': "Address do not empty",
                 'tblUserData.delivery_email': { required: "Email do not empty", 'tblUserData.delivery_email': "Please enter a valid email address." },
+                'tblUserData.billing_email': { required: "Email do not empty", 'tblUserData.billing_email': "Please enter a valid email address." },
                 'tblUserData.delivery_name': "Delivery name do not empty",
                 'tblUserData.contact_phone': "Phone do not empty",
                 'tblUserData.delivery_phone': "Delivery phone do not empty",
-                'tblUser.email': { required: "Email do not empty", 'tblUser.email': "Please enter a valid email address." },
                 'tblUserData.firstname': "First Name do not empty"
             }
 

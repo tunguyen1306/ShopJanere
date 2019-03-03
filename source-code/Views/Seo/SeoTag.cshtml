@@ -95,7 +95,7 @@
         var page = $(this).val();
 
         $.get('@Url.Action("GetSeoTag", "Seo")?page=' + page, function (data) {
-            console.log(data);
+           
             if (data.result != "" || data.result!=null) {
                 $('#title').val(data.result.title);
                 $('#hdId').val(data.result.id);
