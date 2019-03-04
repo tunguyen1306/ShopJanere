@@ -12,7 +12,7 @@
         <div id="main_content" class="col-sm-12 checkout_page">
 
             <div class="product_content">
-                @using (Html.BeginForm("AccountInfo", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @id = "validation-form" }))
+                @using (Html.BeginForm("AccountInfo", "Account", FormMethod.Post, new {enctype = "multipart/form-data", @id = "validation-form"}))
                 {
 
 
@@ -23,68 +23,72 @@
                             <h3>CONTACT INFO</h3>
                             <div class="form-group">
                                 <label>Display Name</label>
-                                @Html.TextBoxFor(x => x.tblUser.display, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUser.display, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Firsname</label>
-                                @Html.TextBoxFor(x => x.tblUserData.firstname, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.firstname, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Lastname</label>
-                                @Html.TextBoxFor(x => x.tblUserData.lasname, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.lasname, new {@class = "form-control"})
                             </div>
 
                             <div class="form-group">
                                 <label>Email</label>
-                                @Html.TextBoxFor(x => x.tblUser.email, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUser.email, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                @Html.TextBoxFor(x => x.tblUserData.contact_phone, new { @class = "form-control checkNumber" })
+                                @Html.TextBoxFor(x => x.tblUserData.contact_phone, new {@class = "form-control checkNumber"})
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <h3>DELIVERY INFO</h3>
                             <div class="form-group">
                                 <label>Company Name</label>
-                                @Html.TextBoxFor(x => x.tblUserData.company_name, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.company_name, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_name, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_name, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_email, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_email, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
                                 <div class="row">
-                                    <div class="col-lg-4" style="padding-right: 0px !important;">@Html.TextBoxFor(x => x.tblUserData.delivery_state, new { @class = "form-control checkNumber" }) </div>
-                                    <div class="col-lg-8" style="padding-left: 5px !important;">@Html.TextBoxFor(x => x.tblUserData.delivery_phone, new { @class = "form-control checkNumber" })</div>
+                                    <div class="col-lg-4" style="padding-right: 0px !important;">
+                                        @Html.TextBoxFor(x => x.tblUserData.delivery_state, new {@class = "form-control checkNumber"})
+                                    </div>
+                                    <div class="col-lg-8" style="padding-left: 5px !important;">
+                                        @Html.TextBoxFor(x => x.tblUserData.delivery_phone, new {@class = "form-control checkNumber CodePhone"})
+                                    </div>
                                 </div>
-                              
+
                             </div>
                             <div class="form-group">
                                 <label>Address Line 1</label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_address1, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_address1, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Address Line 2</label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_address2, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_address2, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>City </label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_suburb, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_suburb, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Post Code </label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_postcode, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_postcode, new {@class = "form-control"})
                             </div>
-                          
+
                             <div class="form-group">
                                 <label>State </label>
-                                @Html.TextBoxFor(x => x.tblUserData.delivery_contry, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.delivery_contry, new {@class = "form-control"})
                             </div>
 
                         </div>
@@ -92,40 +96,42 @@
                             <h3>BILLING INFO</h3>
                             <div class="form-group">
                                 <label>Name</label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_name, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_name, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_email, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_email, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
                                 <div class="row">
-                                    <div class="col-lg-4" style="padding-right: 0px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_state, new {@size="4",@min="1", @class = "form-control checkNumber" }) </div>
-                                    <div class="col-lg-8" style="padding-left: 5px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_phone, new { @class = "form-control checkNumber" })</div>
+                                    <div class="col-lg-4" style="padding-right: 0px !important;">
+                                        @Html.TextBoxFor(x => x.tblUserData.billing_state, new {@size = "4", @min = "1", @class = "form-control checkNumber"})
+                                    </div>
+                                    <div class="col-lg-8" style="padding-left: 5px !important;">@Html.TextBoxFor(x => x.tblUserData.billing_phone, new {@class = "form-control checkNumber"})</div>
                                 </div>
-                             
+
                             </div>
                             <div class="form-group">
                                 <label>Address Line 1</label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_address1, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_address1, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Address Line 2</label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_address2, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_address2, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>City </label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_suburb, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_suburb, new {@class = "form-control"})
                             </div>
                             <div class="form-group">
                                 <label>Post Code </label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_poscode, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_poscode, new {@class = "form-control"})
                             </div>
-                           
+
                             <div class="form-group">
                                 <label>State </label>
-                                @Html.TextBoxFor(x => x.tblUserData.billing_country, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.tblUserData.billing_country, new {@class = "form-control"})
                             </div>
 
                         </div>
@@ -142,7 +148,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <input type="submit" class="btn btn-default" value="Save" id="submitbutton" name="save_product">
-                                <a href="@Url.Action("Index","AccountLogin")">Cancel</a>
+                                <a href="@Url.Action("Index", "AccountLogin")">Cancel</a>
                             </div>
 
                         </div>
@@ -160,16 +166,16 @@
                         </div>
                         <div class="form-group">
 
-                            @if (((int)ViewBag.Notification) == 1)
+                            @if (((int) ViewBag.Notification) == 1)
                             {
                                 <div class="alert alert-success " role="alert">
                                     <strong>
                                         <i class="fa fa-check-circle" aria-hidden="true"></i>Success:
                                     </strong>
-                                    <div class="show-alert-success">Update  success</div>
+                                    <div class="show-alert-success">Update success</div>
                                 </div>
                             }
-                            else if (((int)ViewBag.Notification) == 0)
+                            else if (((int) ViewBag.Notification) == 0)
                             {
                                 <div class="alert alert-danger " role="alert">
                                     <strong>
@@ -190,8 +196,14 @@
 
     </div>
 </div>
-<script>
 
+<script>
+    //var input = document.querySelector("#phone");
+    //window.intlTelInput(input, {
+       
+    //    utilsScript: "CodePhone/utils.js"
+
+    //});
     $("#submitbutton").on('click', function (e) {
         e.preventDefault();
         if ($('#validation-form').valid()) {
@@ -209,9 +221,11 @@
             'tblUserData.delivery_email': { email: true, required: true },
             'tblUserData.billing_email': { email: true, required: true },
             'tblUserData.delivery_address1': { required: true },
-            'tblUserData.delivery_name': {required: true },
+            'tblUserData.delivery_name': { required: true},
             'tblUserData.delivery_phone': { required: true },
             'tblUserData.contact_phone': { required: true },
+            'tblUserData.delivery_state': { required: true, minlength: 1, maxlength: 4 },
+            'tblUserData.billing_state': { required: true, minlength: 1, maxlength: 4 },
             'tblUserData.firstname': {required: true},
             'tblUser.email': {email: true,required: true}
         },
@@ -226,6 +240,8 @@
              
                 'tblUserData.delivery_address1': "Address do not empty",
                 'tblUserData.delivery_email': { required: "Email do not empty", 'tblUserData.delivery_email': "Please enter a valid email address." },
+                'tblUserData.delivery_state': { required: "Phone Code do not empty" },
+                'tblUserData.billing_state': { required: "Phone Code do not empty" },
                 'tblUserData.billing_email': { required: "Email do not empty", 'tblUserData.billing_email': "Please enter a valid email address." },
                 'tblUserData.delivery_name': "Delivery name do not empty",
                 'tblUserData.contact_phone': "Phone do not empty",

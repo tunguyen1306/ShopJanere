@@ -43,6 +43,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/CusWeb.css" rel="stylesheet" />
+
+    <link href="~/Content/CodePhone/intlTelInput.css" rel="stylesheet" />
     <script src="~/Content/admin/js/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="~/Content/admin/js/admin.js"></script>
@@ -57,6 +59,9 @@
     <script src="~/Content/admin/js/bootstrap3-typeahead.min.js"></script>
     <script src="~/Content/admin/js/moment.min.js"></script>
     <script src="~/Content/admin/js/bootstrap-datepicker.min.js"></script>
+
+    <script src="~/Content/CodePhone/intlTelInput.js"></script>
+
 </head>
 <body>
 
@@ -133,6 +138,7 @@
             todayHighlight: true,
             format: 'dd/mm/yyyy'
         });
+       
     </script>
     <style>
         form.loading {
@@ -152,6 +158,7 @@
 </div>
 
 <script>
+
     $(".checkNumber").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
