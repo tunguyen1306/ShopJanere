@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
         public ActionResult IndexAjax(string searchvocabulary = null, int start = 0, int view = 10)
         {
 
-            var listvocabulary = db.vocabularies.ToList();
+            var listvocabulary = db.vocabularies.Where(x=>x.language=="english").ToList();
 
 
           
@@ -141,7 +141,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vocabulary = db.vocabularies.ToList().Where(x=>x.code.ToLower()== code.ToLower()).ToList();
+            var vocabulary = db.vocabularies.ToList().Where(x=>x.code.ToLower()== code.ToLower() && list.ToList().Select(y=>y.language).ToList().Contains(x.language)).ToList();
             return View(new AllModel {listVocabulary = vocabulary });
         }
 

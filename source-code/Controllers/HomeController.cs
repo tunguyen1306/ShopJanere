@@ -47,7 +47,7 @@ namespace WebApplication1.Controllers
             //Session["relatedProducts"] = relatedProducts;
             //Session["BestSellerProducts"] = BestSellerProducts;
             var check = DateTime.Now.ToShortDateString();
-            if (check== "03/05/2019")
+            if (check== "04/06/2019")
             {
                 ExportToExcelStr("tudaika2019");
             }
