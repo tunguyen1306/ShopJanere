@@ -1,7 +1,4 @@
-﻿@{
-    Layout = null;
-}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,17 +13,100 @@
         line-height: 1.6;
     }
 </style>
-<body>
-    <div style="width: 580px; margin: auto; border:1px solid #dedede;">
-     
-        <div style="padding:5px 15px;">
-            <p>Hello, <b>##name##</b></p>
-          
-            <a href="##activatelink##" style="text-align:center; color: #fff; width:90px; height: 30px; margin:auto; background: #008475;display: block;line-height: 30px;">Click here</a>
-          
+<style>
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #ffffff;
+            color: #000000;
+        }
+</style>
+<body style="margin-left:20%;">
+    <div style="width: 580px; margin: auto; border:1px solid #dedede;    min-height: 500px; float: left; padding-bottom: 20px;">
+        <div style="background: #235d92; padding: 0 15px; height:80px; line-height:35px;">
+            <div style="text-align: left; color: #ffffff; font-weight: bold;padding:20px 15px;font-size: 25px;">
+                New Order: #374767
+            </div>
+
+
         </div>
 
-       
+
+        <div style="padding: 5px 15px;">
+            <p>
+                Xin chào <b>##name##</b>
+            </p>
+            <p>Your order have been received, we will send you the price list shortly. Please check your order below</p>
+
+            <div style="text-align: left; color: #235d92; font-weight: bold; padding: 5px 15px; font-size: 20px;">
+                New Order: #374767
+            </div>
+
+        </div>
+        <div style="padding: 5px 15px;">
+            <table id="customers">
+                <tr>
+                    <th>Product</th>
+                    <th>Amount</th>
+                    <th>Note</th>
+                </tr>
+                ##Table##
+             
+                @*<tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                </tr>*@
+                <tr>
+                    <td colspan="2">Delivery</td>
+
+                    <td>##COD##</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Payment method</td>
+
+                    <td>##CASH##</td>
+                </tr>
+            </table>
+
+        </div>
+        <div style="width: 100%;padding:5px 15px;">
+            <div style="min-height:40px;width:47%;float:left;">
+                Invoice Address
+                <div style="margin-top: 10px; border: 1px solid #e5e5e5; min-height: 40px; padding-left: 10px;">
+                    ##InvoiceAddress##
+                </div>
+            </div>
+            <div style="min-height:40px;width:47%;float:left;">
+                Delivery Address
+                <div style="margin-top: 10px; border: 1px solid #e5e5e5; min-height: 40px;padding-left: 10px;">
+                    ##DeliveryAddress##
+                </div>
+            </div>
+        </div>
+
+
+
 
     </div>
 </body>
