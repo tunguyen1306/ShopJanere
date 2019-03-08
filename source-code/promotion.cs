@@ -18,11 +18,13 @@ namespace WebApplication1
         public string PROMOTIONCODE { get; set; }
         public string PROMOTIONNAME { get; set; }
         public short TYPENO { get; set; }
-        public string FIRSTDATE { get; set; }
-        public string LASTDATE { get; set; }
+        public System.DateTime FIRSTDATE { get; set; }
+        public Nullable<System.DateTime> LASTDATE { get; set; }
         public System.DateTime LASTCHANGE { get; set; }
         public System.DateTime CREATED { get; set; }
         public string VALUEPROMOTION { get; set; }
         public int QUANTITY { get; set; }
+        public Nullable<int> STATUS { get; set; }
+        public string TYPEUSERS { get; set; }
     }
 }

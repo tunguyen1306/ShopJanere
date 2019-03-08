@@ -21,5 +21,7 @@ namespace WebApplication1
         public System.DateTime LASTCHANGE { get; set; }
         public System.DateTime CREATED { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string CodeLanguage { get; set; }
+        public Nullable<int> IdCurrentItem { get; set; }
     }
 }

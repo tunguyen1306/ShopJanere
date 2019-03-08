@@ -28,6 +28,7 @@ namespace WebApplication1
         public Nullable<float> taxRate { get; set; }
         public Nullable<float> PriceInTax { get; set; }
         public Nullable<float> PriceExTax { get; set; }
-        public int itemId { get; set; }
+        public Nullable<int> itemId { get; set; }
+        public Nullable<int> stockId { get; set; }
     }
 }

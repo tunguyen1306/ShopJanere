@@ -467,6 +467,7 @@ namespace WebApplication1.Controllers
                 {
                     var tem = db.items.Find(item.ARTNO);
                     tem.WEBPRICE = model.tblitem.WEBPRICE;
+                   
                     tem.CATEGORYNO = model.tblitem.CATEGORYNO;
                     tem.ARTNAME = item.ARTNAME;
                     tem.GROUPNO = model.tblitem.GROUPNO;

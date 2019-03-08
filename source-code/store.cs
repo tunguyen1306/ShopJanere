@@ -18,5 +18,8 @@ namespace WebApplication1
         public string Name { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
+        public string UrlImage { get; set; }
+        public string CodeLanguage { get; set; }
+        public Nullable<int> IdCurrentItem { get; set; }
     }
 }

@@ -80,5 +80,12 @@ namespace WebApplication1
         public Nullable<int> ocupdatedby { get; set; }
         public Nullable<System.DateTime> oclastupdated { get; set; }
         public string notes { get; set; }
+        public Nullable<System.DateTime> d_date { get; set; }
+        public Nullable<int> cityid { get; set; }
+        public Nullable<int> countryid { get; set; }
+        public Nullable<float> feeshipping { get; set; }
+        public Nullable<int> paid_status { get; set; }
+        public string paid_key { get; set; }
+        public Nullable<float> paid_amount { get; set; }
     }
 }

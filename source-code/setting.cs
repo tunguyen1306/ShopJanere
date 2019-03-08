@@ -17,13 +17,14 @@ namespace WebApplication1
         public int id { get; set; }
         public string name { get; set; }
         public Nullable<int> status { get; set; }
-        public Nullable<int> typeId { get; set; }
+        public string typeId { get; set; }
         public Nullable<System.DateTime> createdate { get; set; }
         public Nullable<System.DateTime> lastupdate { get; set; }
         public string description { get; set; }
         public string urlimage { get; set; }
         public string link { get; set; }
         public Nullable<int> order { get; set; }
+        public Nullable<int> IdGroup { get; set; }
         public string code { get; set; }
     }
 }

@@ -307,6 +307,6 @@ CKFinder.lang['vi'] =
 
 	Search :
 	{
-		searchPlaceholder : 'Tìm kiếm'
+		searchPlaceholder : 'Search kiếm'
 	}
 };

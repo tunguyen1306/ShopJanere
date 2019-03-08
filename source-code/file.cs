@@ -23,5 +23,7 @@ namespace WebApplication1
         public string UploadBy { get; set; }
         public string Status { get; set; }
         public string FileAddress { get; set; }
+        public string CodeLanguage { get; set; }
+        public Nullable<int> IdCurrentItem { get; set; }
     }
 }

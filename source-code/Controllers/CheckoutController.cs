@@ -114,7 +114,7 @@ namespace WebApplication1.Controllers
 
                             if (tblUser != null)
                             {
-                                if (tblUser.tblUser.Id==7 || tblUser.tblUser.Id==1)
+                                if (tblUser.tblUser.Id == 7 || tblUser.tblUser.Id == 1)
                                 {
                                     order = new order();
                                 }
@@ -137,7 +137,7 @@ namespace WebApplication1.Controllers
                                     order.b_postcode = tblUser.tblUserData.billing_poscode;
                                     order.b_country = tblUser.tblUserData.billing_country;
                                 }
-                               
+
 
                             }
                         }
@@ -368,7 +368,7 @@ namespace WebApplication1.Controllers
                         }
                         else
                         {
-                            SendTemplateEmail(order.d_email, order.d_email, "", "Order Success #"+ order.ocid+""+DateTime.Now.Day, 1, Cart, order);
+                            SendTemplateEmail(order.d_email, order.d_email, "", "Order Success #" + order.ocid + "" + DateTime.Now.Day, 1, Cart, order);
                             SendTemplateEmail(order.d_email, order.d_email, "", "Order Success #" + order.ocid + "" + DateTime.Now.Day, 3, Cart, order);
                             return RedirectToAction("Thankyou");
                         }
@@ -388,48 +388,52 @@ namespace WebApplication1.Controllers
                         }
                     }
                 }
-               
-              
+
+
             }
             return RedirectToAction("Create");
         }
-        public bool SendTemplateEmail(string recepientEmail, string username, string key, string Subject, int type,ShoppingCart shoppingCart=null,order order=null)
+        public bool SendTemplateEmail(string recepientEmail, string username, string key, string Subject, int type, ShoppingCart shoppingCart = null, order order = null)
         {
             bool t = false;
             //Type =1 MailOrder
             //Type =2 ForgetPass
+
+            var tblSetting = db.settings.FirstOrDefault(x => x.code == "MailToManager");
             string body = string.Empty;
             var activelink = "";
 
             if (type == 1)
             {
-                
+
                 if (!string.IsNullOrEmpty(username))
                 {
 
                     var tble = "";
-                    if (shoppingCart!=null)
+                    if (shoppingCart != null)
                     {
                         foreach (var item in shoppingCart.cartItem.ToList())
                         {
-                            tble += "<tr><td>"+ item.Name + "</td><td>" + item.Qty + "</td><td>Germany</td></tr>";
+                            tble += "<tr><td>" + item.Name + "</td><td>" + item.Qty + "</td><td>Germany</td></tr>";
                         }
                     }
-                    
+
                     body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_OrderSuccessTemplateMail.cshtml");
                     body = body.Replace("##name##", username);
                     body = body.Replace("##Table##", tble);
-                    if (order!=null)
+                    if (order != null)
                     {
-                        var invoiceAdd ="First Name: "+order.fname  +"\t\n"+"Last Name: " + order.lname + "\t\n" + "Phone: " + order.phone;
-                        var deliveryAddress = "";
+                        var invoiceAdd = "First Name: " + order.fname + "<br>" + "Last Name: " + order.lname + "<br>" + "Phone: " + order.phone + "<br>" + "Address: " + order.addr1 + "," + order.addr2 + "," + order.addr3;
+                        var deliveryAddress = "First Name: " + order.d_fname + "<br>" + "Last Name: " + order.d_lname + "<br>" + "Phone: " + order.d_phone + "<br>" + "Address: " + order.d_addr1 + "," + order.d_addr2 + "," + order.d_addr3;
                         body = body.Replace("##COD##", order.payoption);
                         body = body.Replace("##CASH##", order.payoption);
                         body = body.Replace("##InvoiceAddress##", invoiceAdd);
                         body = body.Replace("##DeliveryAddress##", deliveryAddress);
+                        body = body.Replace("##nameorder##", deliveryAddress);
+                        body = body.Replace("##Order##", "#"+order.ocid + "" + DateTime.Now.Day);
                     }
-                  
-                    
+
+
 
 
                 }
@@ -437,13 +441,34 @@ namespace WebApplication1.Controllers
             if (type == 3)
             {
 
-               
-                    recepientEmail= ConfigurationManager.AppSettings["MailToManager"];
-                    body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_OrderSuccessTemplateMailMa.cshtml");
-                    body = body.Replace("##name##", ConfigurationManager.AppSettings["MailToManager"]);
+                var tble = "";
+                if (shoppingCart != null)
+                {
+                    foreach (var item in shoppingCart.cartItem.ToList())
+                    {
+                        tble += "<tr><td>" + item.Name + "</td><td>" + item.Qty + "</td><td>Germany</td></tr>";
+                    }
+                }
+
+                recepientEmail = (tblSetting != null ? tblSetting.name : "tien131091@gmail.com");
+                body = ViewRenderer.RenderPartialView("~/Views/Shared/Partial/_OrderSuccessTemplateMailMa.cshtml");
+                body = body.Replace("##name##", (tblSetting != null ? tblSetting.name : "tien131091@gmail.com"));
+             
+                body = body.Replace("##Table##", tble);
+                if (order != null)
+                {
+                    var invoiceAdd = "First Name: " + order.fname + "<br>" + "Last Name: " + order.lname + "<br>" + "Phone: " + order.phone + "<br>" + "Address: " + order.addr1 + "," + order.addr2 + "," + order.addr3;
+                    var deliveryAddress = "First Name: " + order.d_fname + "<br>" + "Last Name: " + order.d_lname + "<br>" + "Phone: " + order.d_phone + "<br>" + "Address: " + order.d_addr1 + "," + order.d_addr2 + "," + order.d_addr3;
+                    body = body.Replace("##COD##", order.payoption);
+                    body = body.Replace("##CASH##", order.payoption);
+                    body = body.Replace("##InvoiceAddress##", invoiceAdd);
+                    body = body.Replace("##DeliveryAddress##", deliveryAddress);
+                    body = body.Replace("##nameorder##", username);
+                    body = body.Replace("##Order##", "#" + order.ocid + "" + DateTime.Now.Day);
+                }
 
 
-                
+
             }
             if (type == 2)
             {
@@ -582,18 +607,18 @@ namespace WebApplication1.Controllers
 
         public ActionResult GetFeeShipDefault()
         {
-            
-                var feeship = db.shippingfees.Where(x => x.status==1 && x.cityid == null || x.cityid == 0).ToList();
 
-                return Json(new { result = feeship }, JsonRequestBehavior.AllowGet);
-          
+            var feeship = db.shippingfees.Where(x => x.status == 1 && x.cityid == null || x.cityid == 0).ToList();
+
+            return Json(new { result = feeship }, JsonRequestBehavior.AllowGet);
+
 
         }
         public ActionResult GetFeeShipByCity(int id = 0)
         {
             if (id != 0)
             {
-                var feeship = db.shippingfees.Where(x => x.status == 1 && x.cityid == id || x.cityid==null || x.cityid==0).ToList();
+                var feeship = db.shippingfees.Where(x => x.status == 1 && x.cityid == id || x.cityid == null || x.cityid == 0).ToList();
 
                 return Json(new { result = feeship }, JsonRequestBehavior.AllowGet);
             }

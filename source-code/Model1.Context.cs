@@ -25,7 +25,6 @@ namespace WebApplication1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<accountlogin> accountlogins { get; set; }
         public virtual DbSet<artdimension> artdimensions { get; set; }
         public virtual DbSet<artgrp> artgrps { get; set; }
         public virtual DbSet<artlink> artlinks { get; set; }
@@ -36,22 +35,23 @@ namespace WebApplication1
         public virtual DbSet<card> cards { get; set; }
         public virtual DbSet<catalogue> catalogues { get; set; }
         public virtual DbSet<category> categories { get; set; }
+        public virtual DbSet<city> cities { get; set; }
         public virtual DbSet<color> colors { get; set; }
+        public virtual DbSet<country> countries { get; set; }
         public virtual DbSet<cumain> cumains { get; set; }
         public virtual DbSet<cuperson> cupersons { get; set; }
         public virtual DbSet<custgroup> custgroups { get; set; }
         public virtual DbSet<eligibility> eligibilities { get; set; }
+        public virtual DbSet<email> emails { get; set; }
         public virtual DbSet<file> files { get; set; }
         public virtual DbSet<invoice> invoices { get; set; }
         public virtual DbSet<invoice_log> invoice_log { get; set; }
-        public virtual DbSet<item> items { get; set; }
         public virtual DbSet<langname> langnames { get; set; }
         public virtual DbSet<language> languages { get; set; }
         public virtual DbSet<menu> menus { get; set; }
         public virtual DbSet<metagrup> metagrups { get; set; }
         public virtual DbSet<order> orders { get; set; }
         public virtual DbSet<orderdetail> orderdetails { get; set; }
-        public virtual DbSet<ordersetting> ordersettings { get; set; }
         public virtual DbSet<orderstatu> orderstatus { get; set; }
         public virtual DbSet<ordritm> ordritms { get; set; }
         public virtual DbSet<outitem> outitems { get; set; }
@@ -62,8 +62,10 @@ namespace WebApplication1
         public virtual DbSet<promotion> promotions { get; set; }
         public virtual DbSet<promotionrule> promotionrules { get; set; }
         public virtual DbSet<role> roles { get; set; }
+        public virtual DbSet<seo> seos { get; set; }
         public virtual DbSet<setting> settings { get; set; }
         public virtual DbSet<settingtype> settingtypes { get; set; }
+        public virtual DbSet<shippingfee> shippingfees { get; set; }
         public virtual DbSet<slider> sliders { get; set; }
         public virtual DbSet<stgrp> stgrps { get; set; }
         public virtual DbSet<stgrp2> stgrp2 { get; set; }
@@ -77,6 +79,9 @@ namespace WebApplication1
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<user_role> user_role { get; set; }
         public virtual DbSet<userdata> userdatas { get; set; }
+        public virtual DbSet<vocabulary> vocabularies { get; set; }
         public virtual DbSet<warehouse> warehouses { get; set; }
+        public virtual DbSet<ordersetting> ordersettings { get; set; }
+        public virtual DbSet<item> items { get; set; }
     }
 }

@@ -21,5 +21,9 @@ namespace WebApplication1
         public string status { get; set; }
         public System.DateTime createdate { get; set; }
         public System.DateTime updatedate { get; set; }
+        public Nullable<int> type { get; set; }
+        public Nullable<decimal> discount { get; set; }
+        public Nullable<decimal> paidorder { get; set; }
+        public string email { get; set; }
     }
 }

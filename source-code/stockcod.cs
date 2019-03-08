@@ -19,5 +19,7 @@ namespace WebApplication1
         public string STOCKNAME { get; set; }
         public System.DateTime LASTCHANGE { get; set; }
         public System.DateTime CREATED { get; set; }
+        public string CodeLanguage { get; set; }
+        public Nullable<int> IdCurrentItem { get; set; }
     }
 }
