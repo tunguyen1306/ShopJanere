@@ -98,7 +98,22 @@
             <div class="row" style="color: #666666">
                 <input type="hidden" name="code[0]" value="@Model.ARTCODE" />
                 <input type="hidden" name="price[0]" value="@Model.WEBPRICE" />
-                <div class="col-lg-12" style="font-size: 30px; color: #2ea3f2; font-weight: bold">@Model.ARTNAME</div>
+                <div class="col-lg-12" style="font-size: 30px; color: #2ea3f2; font-weight: bold">
+
+                    @{
+                        var tblItem = db.artnames.FirstOrDefault(x => x.ARTNO == Model.ARTNO);
+                        if (tblItem != null)
+                        {
+                            @(tblItem.NAME)
+                        }
+                        else
+                        {
+
+                            @(Model.ARTNAME)
+                        }
+                    }
+                   
+                </div>
                 <div class="col-lg-12" style="font-size: 36px; color: #002f6c; font-weight: bold;">@(MvcApplication.MoneySymbol)@Model.WEBPRICE</div>
                 <div class="col-lg-4">
                     <span style="font-weight: bold">Width:</span> @Model.WIDTH Mm
@@ -330,8 +345,22 @@
                                     }
 
                                 </div>
-                                <div class="col-lg-12" style="font-size: 13.54px; color: #59b1f4;padding:10px 15px;font-weight:bold;">
-                                    @relatedProducts[i].ARTNAME
+                                <div class="col-lg-12" style="font-size: 13.54px; color: #59b1f4; padding: 10px 15px; font-weight: bold;">
+
+
+                                    @{
+                                        var tblItem = db.artnames.FirstOrDefault(x => x.ARTNO == relatedProducts[i].ARTNO);
+                                        if (tblItem != null)
+                                        {
+                                            @(tblItem.NAME)
+                                        }
+                                        else
+                                        {
+
+                                            @(relatedProducts[i].ARTNAME)
+                                        }
+                                    }
+                                    
                                 </div>
                                 <div class="col-lg-12" style="font-size: 13.54px; color: #002f6c;font-weight:bold;">
                                     <!--$@relatedProducts[i].WEBPRICE-->
